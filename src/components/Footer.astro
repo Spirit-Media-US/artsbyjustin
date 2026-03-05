@@ -1,0 +1,39 @@
+---
+const year = new Date().getFullYear();
+---
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="wordmark">Arts by Justin</span>
+      <p>Mixed media artist. Original works, commissions, and prints.</p>
+    </div>
+    <nav class="footer-nav">
+      <a href="/portfolio">Portfolio</a>
+      <a href="/commissions">Commissions</a>
+      <a href="/shop">Shop</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+    </nav>
+    <div class="footer-social">
+      <a href="https://instagram.com/artsbyjustin" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="footer-bottom"><span>© {year} Arts by Justin. All rights reserved.</span></div>
+</footer>
+<style>
+  footer { background: #1A1A18; color: #EDE8DF; padding: 4rem 2.5rem 2rem; margin-top: 6rem; }
+  .footer-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr auto auto; gap: 3rem; align-items: start; padding-bottom: 3rem; border-bottom: 1px solid rgba(237,232,223,0.1); }
+  .wordmark { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; display: block; margin-bottom: 0.75rem; }
+  .footer-brand p { font-size: 0.875rem; color: #8B7355; max-width: 260px; line-height: 1.6; }
+  .footer-nav { display: flex; flex-direction: column; gap: 0.75rem; }
+  .footer-nav a { font-size: 0.875rem; letter-spacing: 0.05em; text-transform: uppercase; color: #8B7355; transition: color 0.2s; }
+  .footer-nav a:hover { color: #EDE8DF; }
+  .footer-social a { color: #8B7355; transition: color 0.2s; }
+  .footer-social a:hover { color: #C4622D; }
+  .footer-bottom { max-width: 1280px; margin: 2rem auto 0; font-size: 0.8rem; color: #8B7355; }
+  @media (max-width: 768px) { .footer-inner { grid-template-columns: 1fr; gap: 2rem; } }
+</style>
