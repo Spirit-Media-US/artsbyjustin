@@ -8,8 +8,16 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "astro": "^4.0.0",
     "@astrojs/tailwind": "^5.0.0",
+    "@sanity/astro": "^3.2.11",
+    "@sanity/client": "^7.16.0",
+    "@sanity/image-url": "^2.0.3",
+    "@sanity/vision": "^5.13.0",
+    "astro": "^4.0.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "sanity": "^5.13.0",
+    "styled-components": "^6.3.11",
     "tailwindcss": "^3.4.0"
   }
 }
