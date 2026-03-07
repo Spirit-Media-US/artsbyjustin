@@ -58,6 +58,17 @@ export default {
       options: { hotspot: true },
     },
     {
+      name: 'galleryImages',
+      title: 'Gallery Images',
+      type: 'array',
+      of: [
+        {
+          type: 'image',
+          options: { hotspot: true },
+        },
+      ],
+    },
+    {
       name: 'commissionInfo',
       title: 'Commission Information',
       type: 'text',

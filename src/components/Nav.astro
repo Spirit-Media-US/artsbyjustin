@@ -1,4 +1,6 @@
 ---
+import { sanityClient, urlFor } from '../lib/sanity';
+
 const currentPath = Astro.url.pathname;
 const links = [
   { href: '/portfolio', label: 'Portfolio' },
@@ -7,10 +9,22 @@ const links = [
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
 ];
+
+const siteSettings = await sanityClient.fetch(`*[_type == "siteSettings"][0]`);
+const { artistName = 'Arts by Justin', logo } = siteSettings || {};
 ---
 <header id="site-header">
   <nav>
-    <a href="/" class="wordmark">Arts by Justin</a>
+    <a href="/" class="wordmark">
+      {logo && logo.asset 
+        ? <img 
+            src={urlFor(logo).width(180).url()} 
+            alt={artistName}
+            class="logo-image"
+          />
+        : artistName
+      }
+    </a>
     <button class="menu-toggle" aria-label="Toggle menu" id="menuToggle">
       <span></span><span></span><span></span>
     </button>
@@ -36,7 +50,8 @@ const links = [
   }
   #site-header.scrolled { box-shadow: 0 2px 24px rgba(26,26,24,0.08); }
   nav { width: 100%; max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
-  .wordmark { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.01em; color: #1A1A18; }
+  .wordmark { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.01em; color: #1A1A18; display: flex; align-items: center; }
+  .logo-image { height: 48px; width: auto; }
   .nav-links { display: flex; list-style: none; gap: 2.5rem; align-items: center; }
   .nav-link { font-family: 'DM Sans', sans-serif; font-size: 0.875rem; letter-spacing: 0.06em; text-transform: uppercase; color: #3D3D3A; position: relative; padding-bottom: 2px; transition: color 0.2s; }
   .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: #C4622D; transition: width 0.3s ease; }
