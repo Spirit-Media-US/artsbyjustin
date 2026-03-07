@@ -52,6 +52,12 @@ export default {
       type: 'number',
     },
     {
+      name: 'price',
+      title: 'Price (in USD)',
+      type: 'number',
+      description: 'Leave empty if not for sale',
+    },
+    {
       name: 'available',
       title: 'Available for Sale',
       type: 'boolean',

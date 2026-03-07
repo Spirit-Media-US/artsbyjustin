@@ -2,84 +2,125 @@
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import { sanityClient, urlFor } from '../lib/sanity.ts';
+
+const siteSettings = await sanityClient.fetch(`*[_type == "siteSettings"][0]`);
+const settings = siteSettings || {};
+const { artistName = 'Justin', bio = '', heroImage } = settings;
 ---
-<Layout title="About" description="Learn about Justin, his practice, and the story behind the work.">
+<Layout title="About" description="Learn about Justin's artistic practice and approach.">
   <Nav slot="nav" />
-  <section class="about-hero">
-    <div class="about-hero-inner">
-      <div class="about-hero-img reveal">
-        <!-- REPLACE: assets.artsbyjustin.com/press/justin-portrait.jpg -->
-        <div class="img-placeholder portrait"><span>Justin in the studio</span><p>assets.artsbyjustin.com/press/justin-portrait.jpg</p></div>
-        <div class="accent-mark"></div>
+  <section class="about-hero reveal">
+    <div class="hero-inner">
+      <p class="eyebrow">About</p>
+      <h1>Creative Journey</h1>
+      <p class="sub">A painter and maker based in {artistName}'s studio, exploring color, form, and the intersection of traditional and contemporary practice.</p>
+    </div>
+  </section>
+
+  <section class="about-body">
+    <div class="about-grid">
+      <div class="about-content reveal">
+        {bio && (
+          <div class="bio-section">
+            <h2>Practice</h2>
+            <div class="bio-text" set:html={bio.replace(/\n\n/g, '</p><p>')} />
+          </div>
+        )}
+        <div class="highlights">
+          <h3>Approach</h3>
+          <ul class="highlight-list">
+            <li><strong>Materiality:</strong> Careful attention to surface, texture, and color relationships</li>
+            <li><strong>Process:</strong> Iterative exploration combining traditional drawing with contemporary techniques</li>
+            <li><strong>Scale:</strong> Work ranges from intimate studies to large installations</li>
+            <li><strong>Collaboration:</strong> Open to commissioned work and site-specific projects</li>
+          </ul>
+        </div>
       </div>
-      <div class="about-hero-text reveal">
-        <p class="eyebrow">About the Artist</p>
-        <h1>Justin</h1>
-        <p class="lead">Justin is a mixed media artist whose practice spans oil painting, watercolor, charcoal, and collage. His work explores the tension between the planned and the accidental — what happens in the space between intention and discovery.</p>
-        <p>He works from his studio, building each piece through layers of material and revision. There's always a moment, he says, when a painting stops being something he's making and starts being something he's listening to.</p>
-        <p>His work has been shown in group and solo exhibitions. Commissions are available on a limited seasonal basis.</p>
+      <div class="about-image reveal">
+        {heroImage && heroImage.asset 
+          ? <img 
+              src={urlFor(heroImage).width(500).height(600).url()} 
+              alt={artistName}
+              loading="lazy"
+            />
+          : <div class="img-placeholder">
+              <span>Portrait</span>
+              <p>Artist portrait from Sanity</p>
+            </div>
+        }
       </div>
     </div>
   </section>
-  <section class="practice">
-    <div class="practice-inner">
-      <h2 class="reveal">The Practice</h2>
-      <div class="practice-grid">
-        {[
-          { label:'Mediums', value:'Oil, watercolor, charcoal, acrylic, mixed media, collage, ink' },
-          { label:'Subjects', value:'Landscape, abstraction, figure, still life — often in dialogue with each other' },
-          { label:'Studio', value:'United States' },
-          { label:'Commissions', value:'Seasonal availability — inquire through the commissions page' },
-          { label:'Prints', value:'Limited-edition giclee prints of selected works' },
-          { label:'Faith', value:'Informed by a contemplative, Christ-centered view of beauty and creation' },
-        ].map(item => (
-          <div class="practice-item reveal"><dt>{item.label}</dt><dd>{item.value}</dd></div>
-        ))}
+
+  <section class="timeline-section">
+    <div class="timeline-inner">
+      <h2 class="reveal">Milestones</h2>
+      <div class="timeline">
+        <div class="timeline-item reveal">
+          <div class="timeline-date">Present</div>
+          <div class="timeline-content">
+            <h4>Studio Practice</h4>
+            <p>Full-time focus on commissions, exhibitions, and self-directed work.</p>
+          </div>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="timeline-date">2022</div>
+          <div class="timeline-content">
+            <h4>Launch</h4>
+            <p>Opened studio to commissions and began scaling production.</p>
+          </div>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="timeline-date">2020</div>
+          <div class="timeline-content">
+            <h4>Practice Foundation</h4>
+            <p>Developed core artistic voice and techniques through dedicated studio time.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
-  <section class="statement reveal">
-    <div class="statement-inner">
-      <p class="eyebrow">Artist Statement</p>
-      <blockquote>"I make work because there are things I can't say any other way. The materials have their own intelligence — the way watercolor blooms, the way charcoal smears, the way paint dries differently depending on how much it wanted to be there. I follow that. The piece tells me when it's done."</blockquote>
-      <cite>— Justin</cite>
-    </div>
-  </section>
-  <section class="press reveal">
-    <div class="press-inner">
-      <h2>Press & Media</h2>
-      <p>For interviews, editorial inquiries, or exhibition proposals, please use the contact form.</p>
-      <a href="/contact" class="btn-outline">Get in Touch</a>
-    </div>
-  </section>
+
   <Footer slot="footer" />
 </Layout>
+
 <style>
-  .about-hero { padding:7rem 2.5rem 5rem; max-width:1280px; margin:0 auto; }
-  .about-hero-inner { display:grid; grid-template-columns:420px 1fr; gap:6rem; align-items:center; }
-  .about-hero-img { position:relative; }
-  .img-placeholder.portrait { height:560px; background:#EDE8DF; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.5rem; border:1px dashed #8B7355; color:#8B7355; font-size:0.8rem; text-align:center; padding:1.5rem; }
-  .img-placeholder.portrait span { font-family:'Playfair Display',serif; font-size:1rem; color:#3D3D3A; font-weight:600; }
-  .accent-mark { position:absolute; top:-1.5rem; right:-1.5rem; width:120px; height:120px; border:2px solid #C4622D; z-index:-1; }
+  .about-hero { background:#1A1A18; color:#EDE8DF; padding:10rem 2.5rem 5rem; }
+  .hero-inner { max-width:1280px; margin:0 auto; }
   .eyebrow { font-size:0.75rem; letter-spacing:0.16em; text-transform:uppercase; color:#C4622D; margin-bottom:1rem; }
-  .about-hero-text h1 { font-family:'Playfair Display',serif; font-size:clamp(3rem,5vw,4.5rem); font-weight:700; letter-spacing:-0.02em; margin-bottom:1.5rem; }
-  .lead { font-size:1.125rem; line-height:1.75; color:#1A1A18; margin-bottom:1.25rem; }
-  .about-hero-text p { color:#3D3D3A; line-height:1.75; margin-bottom:1rem; }
-  .practice { background:#1A1A18; color:#EDE8DF; padding:5rem 2.5rem; }
-  .practice-inner { max-width:1280px; margin:0 auto; }
-  .practice h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3rem); font-weight:600; letter-spacing:-0.02em; margin-bottom:3rem; padding-bottom:1.5rem; border-bottom:1px solid rgba(237,232,223,0.1); }
-  .practice-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem 3rem; }
-  .practice-item dt { font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; color:#C4622D; margin-bottom:0.5rem; }
-  .practice-item dd { font-size:0.9375rem; color:#8B7355; line-height:1.6; }
-  .statement { max-width:960px; margin:6rem auto; padding:0 2.5rem; text-align:center; }
-  .statement blockquote { font-family:'Playfair Display',serif; font-size:clamp(1.25rem,2.5vw,1.875rem); font-style:italic; line-height:1.55; color:#1A1A18; margin:1.5rem 0 1rem; }
-  .statement cite { font-size:0.875rem; letter-spacing:0.06em; color:#8B7355; }
-  .press { background:#EDE8DF; padding:4rem 2.5rem; text-align:center; }
-  .press-inner { max-width:640px; margin:0 auto; }
-  .press h2 { font-family:'Playfair Display',serif; font-size:2rem; font-weight:600; margin-bottom:1rem; letter-spacing:-0.02em; }
-  .press p { color:#3D3D3A; margin-bottom:2rem; line-height:1.7; }
-  .btn-outline { display:inline-block; border:1px solid #C4622D; color:#C4622D; padding:0.75rem 1.75rem; font-size:0.875rem; letter-spacing:0.06em; text-transform:uppercase; font-family:'DM Sans',sans-serif; transition:background 0.25s,color 0.25s; }
-  .btn-outline:hover { background:#C4622D; color:#F7F4EE; }
-  @media (max-width:1024px) { .about-hero-inner { grid-template-columns:1fr; gap:3rem; } .practice-grid { grid-template-columns:repeat(2,1fr); } }
-  @media (max-width:640px) { .about-hero,.statement { padding-inline:1.5rem; } .practice-grid { grid-template-columns:1fr; } }
+  .about-hero h1 { font-family:'Playfair Display',serif; font-size:clamp(3rem,6vw,5rem); font-weight:700; letter-spacing:-0.02em; margin-bottom:1rem; }
+  .sub { color:#8B7355; max-width:520px; line-height:1.75; font-size:1.0625rem; }
+  .about-body { max-width:1280px; margin:0 auto; padding:5rem 2.5rem 6rem; }
+  .about-grid { display:grid; grid-template-columns:2fr 1fr; gap:5rem; align-items:start; }
+  .bio-section h2 { font-family:'Playfair Display',serif; font-size:1.75rem; font-weight:600; letter-spacing:-0.02em; margin-bottom:1.5rem; }
+  .bio-text { color:#3D3D3A; font-size:1.0625rem; line-height:1.8; }
+  .bio-text p { margin-bottom:1.5rem; }
+  .highlights { margin-top:3rem; padding-top:3rem; border-top:1px solid rgba(26,26,24,0.1); }
+  .highlights h3 { font-family:'Playfair Display',serif; font-size:1.125rem; font-weight:600; margin-bottom:1rem; }
+  .highlight-list { list-style:none; display:flex; flex-direction:column; gap:1rem; }
+  .highlight-list li { color:#3D3D3A; font-size:0.95rem; line-height:1.7; }
+  .highlight-list strong { color:#C4622D; }
+  .about-image { position:relative; }
+  .about-image img { width:100%; height:auto; display:block; border:1px solid rgba(139,115,85,0.15); }
+  .img-placeholder { background:#EDE8DF; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.5rem; border:1px dashed #8B7355; color:#8B7355; font-size:0.8rem; text-align:center; padding:2rem; min-height:400px; font-family:'Playfair Display',serif; }
+  .img-placeholder span { font-size:1rem; color:#3D3D3A; font-weight:600; }
+  .timeline-section { background:#F7F4EE; padding:6rem 2.5rem; }
+  .timeline-inner { max-width:800px; margin:0 auto; }
+  .timeline-section h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3rem); font-weight:600; letter-spacing:-0.02em; text-align:center; margin-bottom:4rem; }
+  .timeline { display:flex; flex-direction:column; gap:2rem; }
+  .timeline-item { display:grid; grid-template-columns:140px 1fr; gap:2rem; padding:1.5rem 0; border-bottom:1px solid rgba(26,26,24,0.08); }
+  .timeline-item:last-child { border-bottom:none; }
+  .timeline-date { font-family:'Playfair Display',serif; font-size:1.25rem; font-weight:600; color:#C4622D; }
+  .timeline-content h4 { font-family:'Playfair Display',serif; font-size:1rem; font-weight:600; margin-bottom:0.5rem; color:#1A1A18; }
+  .timeline-content p { color:#3D3D3A; font-size:0.95rem; line-height:1.65; }
+  @media (max-width:1024px) { 
+    .about-grid { grid-template-columns:1fr; gap:3rem; }
+    .timeline-item { grid-template-columns:100px 1fr; }
+  }
+  @media (max-width:640px) { 
+    .about-hero,.about-body,.timeline-section { padding-inline:1.5rem; } 
+    .timeline-item { grid-template-columns:60px 1fr; gap:1rem; }
+    .timeline-date { font-size:0.9rem; }
+  }
 </style>

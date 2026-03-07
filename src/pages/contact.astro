@@ -2,79 +2,156 @@
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import { sanityClient } from '../lib/sanity.ts';
+
+const siteSettings = await sanityClient.fetch(`*[_type == "siteSettings"][0]`);
+const settings = siteSettings || {};
+const { 
+  artistName = 'Justin', 
+  email = '', 
+  phone = '', 
+  instagramUrl = '', 
+  facebookUrl = '' 
+} = settings;
 ---
-<Layout title="Contact" description="Get in touch with Justin — for general inquiries, commissions, press, or collaborations.">
+<Layout title="Contact" description="Get in touch with Justin about commissions, inquiries, and collaborations.">
   <Nav slot="nav" />
+
   <section class="contact-hero reveal">
-    <div class="hero-inner">
-      <p class="eyebrow">Contact</p>
-      <h1>Let's Talk</h1>
-      <p class="sub">Whether you have a question about a painting, a commission idea, or just want to say hello — Justin reads every message himself.</p>
-    </div>
+    <h1>Get In Touch</h1>
+    <p>Have a question or interested in working together? We'd love to hear from you.</p>
   </section>
-  <section class="contact-body">
+
+  <section class="contact-section">
     <div class="contact-grid">
-      <div class="contact-info reveal">
-        <div class="info-block"><h3>General Inquiries</h3><p>Questions about existing work, availability, or anything else.</p><a href="mailto:hello@artsbyjustin.com" class="email-link">hello@artsbyjustin.com</a></div>
-        <div class="info-block"><h3>Commissions</h3><p>Ready to discuss a custom piece? Use the form below, or visit the <a href="/commissions">Commissions page</a> for full process details.</p></div>
-        <div class="info-block"><h3>Press & Collaboration</h3><p>For editorial, exhibition, or partnership inquiries, please note "Press" in your message.</p></div>
-        <div class="info-block"><h3>Response Time</h3><p>Justin typically responds within 3–5 business days.</p></div>
-        <div class="social-links">
-          <p class="social-label">Follow the Work</p>
-          <a href="https://instagram.com/artsbyjustin" target="_blank" rel="noopener" class="social-link">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-            @artsbyjustin
-          </a>
-        </div>
-      </div>
       <div class="contact-form reveal">
         <h2>Send a Message</h2>
-        <!--
-          REPLACE with GoHighLevel embed code.
-          GHL: Settings → Forms → "Arts by Justin — General Contact" → Embed
-          Tag: source:abj-contact  |  Pipeline: General Inquiry
-        -->
-        <div class="form-placeholder">
-          <p>GoHighLevel General Contact Form</p>
-          <p class="form-note">Tag: <code>source:abj-contact</code> · Pipeline: General Inquiry</p>
+        <form id="contact-form" method="POST">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required />
+          </div>
+          <div class="form-group">
+            <label for="email-input">Email</label>
+            <input type="email" id="email-input" name="email" required />
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" required />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="6" required></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Send Message</button>
+          <div id="form-status" style="margin-top:1rem; font-size:0.9rem;"></div>
+        </form>
+      </div>
+
+      <div class="contact-info reveal">
+        <h2>Connect</h2>
+        <div class="info-block">
+          <h3>Email</h3>
+          {email ? (
+            <a href={`mailto:${email}`}>{email}</a>
+          ) : (
+            <p style="color:#8B7355;">Email address from Sanity</p>
+          )}
         </div>
-        <div class="newsletter-section">
-          <h3>Stay in the Loop</h3>
-          <p>New work, prints, and upcoming shows — sent occasionally, never spammy.</p>
-          <!-- Tag: source:abj-newsletter  Pipeline: Newsletter -->
-          <div class="form-placeholder small"><p>GHL Newsletter Signup</p><p class="form-note">Tag: <code>source:abj-newsletter</code></p></div>
+        {phone && (
+          <div class="info-block">
+            <h3>Phone</h3>
+            <a href={`tel:${phone}`}>{phone}</a>
+          </div>
+        )}
+        <div class="info-block">
+          <h3>Follow</h3>
+          <div class="social-links">
+            {instagramUrl && (
+              <a href={instagramUrl} target="_blank" rel="noopener noreferrer" class="social-link">Instagram</a>
+            )}
+            {facebookUrl && (
+              <a href={facebookUrl} target="_blank" rel="noopener noreferrer" class="social-link">Facebook</a>
+            )}
+          </div>
+        </div>
+        <div class="info-block">
+          <h3>Commission Inquiries</h3>
+          <p>For custom work, use the contact form or email directly. See the <a href="/commissions">commissions page</a> for process details.</p>
         </div>
       </div>
     </div>
   </section>
+
+  <div id="ghl-widget-container" style="display:none;"></div>
+
   <Footer slot="footer" />
 </Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('contact-form');
+    const statusDiv = document.getElementById('form-status');
+
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData);
+        
+        statusDiv.textContent = 'Sending...';
+        statusDiv.style.color = '#C4622D';
+        
+        try {
+          const response = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+
+          if (response.ok) {
+            statusDiv.textContent = '✓ Message sent! We\'ll get back to you soon.';
+            statusDiv.style.color = '#C4622D';
+            form.reset();
+          } else {
+            throw new Error('Failed to send');
+          }
+        } catch (err) {
+          statusDiv.textContent = '✗ Error sending message. Please try again or email directly.';
+          statusDiv.style.color = '#8B7355';
+        }
+      });
+    }
+  });
+</script>
+
 <style>
-  .contact-hero { background:#1A1A18; color:#EDE8DF; padding:10rem 2.5rem 5rem; }
-  .hero-inner { max-width:1280px; margin:0 auto; }
-  .eyebrow { font-size:0.75rem; letter-spacing:0.16em; text-transform:uppercase; color:#C4622D; margin-bottom:1rem; }
-  .contact-hero h1 { font-family:'Playfair Display',serif; font-size:clamp(3rem,6vw,5rem); font-weight:700; letter-spacing:-0.02em; margin-bottom:1rem; }
-  .sub { color:#8B7355; max-width:520px; line-height:1.75; font-size:1.0625rem; }
-  .contact-body { max-width:1280px; margin:0 auto; padding:5rem 2.5rem 6rem; }
-  .contact-grid { display:grid; grid-template-columns:340px 1fr; gap:5rem; align-items:start; }
-  .contact-info { display:flex; flex-direction:column; gap:2.5rem; }
-  .info-block h3 { font-family:'Playfair Display',serif; font-size:1rem; font-weight:600; margin-bottom:0.5rem; }
-  .info-block p { font-size:0.9rem; color:#3D3D3A; line-height:1.65; }
-  .info-block a { color:#C4622D; }
-  .info-block a:hover { text-decoration:underline; }
-  .email-link { display:inline-block; margin-top:0.5rem; font-size:0.875rem; color:#C4622D !important; }
-  .social-label { font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; color:#8B7355; margin-bottom:0.75rem; }
-  .social-link { display:inline-flex; align-items:center; gap:0.5rem; font-size:0.875rem; color:#3D3D3A; transition:color 0.2s; }
-  .social-link:hover { color:#C4622D; }
-  .contact-form h2 { font-family:'Playfair Display',serif; font-size:1.75rem; font-weight:600; letter-spacing:-0.02em; margin-bottom:2rem; padding-bottom:1rem; border-bottom:1px solid rgba(26,26,24,0.1); }
-  .form-placeholder { background:#EDE8DF; border:2px dashed #8B7355; padding:3rem 2rem; text-align:center; color:#8B7355; margin-bottom:2.5rem; }
-  .form-placeholder.small { padding:2rem; margin-bottom:0; }
-  .form-placeholder p { margin-bottom:0.5rem; font-weight:500; }
-  .form-note { font-size:0.8rem; }
-  .form-note code { background:rgba(26,26,24,0.08); padding:0.1rem 0.4rem; font-family:monospace; font-size:0.75rem; }
-  .newsletter-section { padding-top:2.5rem; border-top:1px solid rgba(26,26,24,0.08); }
-  .newsletter-section h3 { font-family:'Playfair Display',serif; font-size:1.25rem; font-weight:600; margin-bottom:0.5rem; }
-  .newsletter-section p { color:#3D3D3A; font-size:0.9rem; line-height:1.6; margin-bottom:1.5rem; }
-  @media (max-width:1024px) { .contact-grid { grid-template-columns:1fr; gap:3rem; } }
-  @media (max-width:640px) { .contact-hero,.contact-body { padding-inline:1.5rem; } }
+  .contact-hero { background:#1A1A18; color:#EDE8DF; padding:10rem 2.5rem 5rem; text-align:center; }
+  .contact-hero h1 { font-family:'Playfair Display',serif; font-size:clamp(3rem,6vw,5rem); font-weight:700; letter-spacing:-0.02em; margin-bottom:1.5rem; }
+  .contact-hero p { color:#8B7355; max-width:600px; margin:0 auto; font-size:1.0625rem; line-height:1.75; }
+  .contact-section { max-width:1000px; margin:0 auto; padding:6rem 2.5rem; }
+  .contact-grid { display:grid; grid-template-columns:1.5fr 1fr; gap:4rem; }
+  .contact-form h2,.contact-info h2 { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:600; margin-bottom:2rem; color:#1A1A18; }
+  .form-group { margin-bottom:1.5rem; }
+  .form-group label { display:block; margin-bottom:0.5rem; color:#1A1A18; font-size:0.9rem; letter-spacing:0.06em; text-transform:uppercase; font-family:'DM Sans',sans-serif; }
+  .form-group input,.form-group textarea { width:100%; padding:0.75rem; border:1px solid rgba(26,26,24,0.15); background:#FAFAF8; font-family:'DM Sans',sans-serif; font-size:0.95rem; transition:border 0.2s; }
+  .form-group input:focus,.form-group textarea:focus { outline:none; border-color:#C4622D; }
+  .form-group textarea { resize:vertical; }
+  .btn-submit { width:100%; background:#C4622D; color:#F7F4EE; padding:0.875rem; font-size:0.875rem; letter-spacing:0.06em; text-transform:uppercase; font-family:'DM Sans',sans-serif; border:none; cursor:pointer; transition:background 0.25s; }
+  .btn-submit:hover { background:#A8501F; }
+  .contact-info { }
+  .info-block { margin-bottom:2.5rem; }
+  .info-block h3 { font-family:'Playfair Display',serif; font-size:1rem; font-weight:600; margin-bottom:0.75rem; color:#1A1A18; }
+  .info-block p { color:#3D3D3A; font-size:0.95rem; line-height:1.7; }
+  .info-block a { color:#C4622D; text-decoration:none; transition:color 0.2s; }
+  .info-block a:hover { color:#A8501F; }
+  .social-links { display:flex; flex-direction:column; gap:0.5rem; }
+  .social-link { font-size:0.9rem; }
+  @media (max-width:1024px) { 
+    .contact-grid { grid-template-columns:1fr; gap:3rem; }
+  }
+  @media (max-width:640px) { 
+    .contact-hero,.contact-section { padding-inline:1.5rem; }
+  }
 </style>

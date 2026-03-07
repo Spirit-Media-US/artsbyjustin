@@ -31,14 +31,31 @@ export default {
       type: 'string',
     },
     {
-      name: 'instagram',
+      name: 'phone',
+      title: 'Phone Number',
+      type: 'string',
+    },
+    {
+      name: 'instagramUrl',
       title: 'Instagram URL',
       type: 'url',
     },
     {
-      name: 'facebook',
+      name: 'facebookUrl',
       title: 'Facebook URL',
       type: 'url',
+    },
+    {
+      name: 'heroImage',
+      title: 'Hero Image (Homepage)',
+      type: 'image',
+      options: { hotspot: true },
+    },
+    {
+      name: 'logo',
+      title: 'Logo',
+      type: 'image',
+      options: { hotspot: true },
     },
     {
       name: 'commissionInfo',

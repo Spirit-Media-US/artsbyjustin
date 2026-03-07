@@ -2,86 +2,146 @@
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-const prints = [
-  { title:'Layered Light', series:'Mixed Media', edition:'Edition of 50', sizes:['8×10','11×14','18×24'], available:true },
-  { title:'Field Notes I', series:'Watercolor', edition:'Edition of 30', sizes:['8×10','12×16'], available:true },
-  { title:'Still Ground', series:'Acrylic & Collage', edition:'Edition of 25', sizes:['11×14','18×24'], available:true },
-  { title:'Open Study', series:'Mixed Media', edition:'Edition of 40', sizes:['8×10','11×14'], available:true },
-  { title:'Soft Boundary', series:'Watercolor', edition:'Edition of 20', sizes:['9×12'], available:false },
-  { title:'Impression No. 3', series:'Charcoal', edition:'Edition of 15', sizes:['18×24'], available:true },
-];
+import { sanityClient, urlFor } from '../lib/sanity.ts';
+
+const [siteSettings, shopItems] = await Promise.all([
+  sanityClient.fetch(`*[_type == "siteSettings"][0]`),
+  sanityClient.fetch(`
+    *[_type == "artwork" && available == true] | order(order asc, _createdAt desc) {
+      _id,
+      title,
+      image,
+      medium,
+      year,
+      price
+    }
+  `)
+]);
+
+const settings = siteSettings || {};
+const { artistName = 'Justin' } = settings;
 ---
-<Layout title="Shop" description="Limited-edition giclee prints of Justin's original paintings. Archival quality, artist-signed.">
+<Layout title="Shop" description="Limited edition prints and original works available for purchase.">
   <Nav slot="nav" />
-  <section class="shop-hero">
-    <div class="reveal">
-      <p class="eyebrow">Shop</p>
-      <h1>Prints & Editions</h1>
-      <p class="sub">Limited-edition giclee prints of selected original works. Printed on archival paper, signed and numbered by Justin.</p>
-    </div>
+
+  <section class="shop-hero reveal">
+    <h1>Shop</h1>
+    <p>Limited edition prints, originals, and curated works available for purchase.</p>
   </section>
-  <div class="info-strip">
-    <div class="info-strip-inner">
-      {[{label:'Print Process',value:'Giclee on 100% cotton rag'},{label:'Editions',value:'Limited — 15 to 50 per print'},{label:'Signed',value:'Each print signed & numbered'},{label:'Shipping',value:'Flat-packed or rolled in tube'}].map(item => (
-        <div class="info-item"><dt>{item.label}</dt><dd>{item.value}</dd></div>
-      ))}
-    </div>
-  </div>
+
   <section class="shop-grid-section">
-    <div class="shop-grid">
-      {prints.map((print,i) => (
-        <article class={`print-card reveal ${!print.available?'sold-out':''}`} style={`animation-delay:${(i%3)*0.07}s`}>
-          <div class="print-img-placeholder">
-            <span>{print.title}</span>
-            {!print.available && <div class="sold-overlay">Sold Out</div>}
-          </div>
-          <div class="print-meta">
-            <div><h3>{print.title}</h3><p class="series">{print.series}</p><p class="edition">{print.edition}</p>
-              <div class="sizes">{print.sizes.map(s => <span class="size-tag">{s}"</span>)}</div>
-            </div>
-            {print.available ? <a href="/contact?inquiry=print" class="btn-small">Inquire</a> : <span class="badge-sold">Sold Out</span>}
-          </div>
-        </article>
-      ))}
+    <div class="shop-inner">
+      {shopItems && shopItems.length > 0 ? (
+        <div class="shop-grid">
+          {shopItems.map((item: any, i: number) => (
+            <article class="shop-card reveal" style={`animation-delay:${(i%4)*0.07}s`}>
+              <div class="shop-image">
+                {item.image && item.image.asset
+                  ? <img 
+                      src={urlFor(item.image).width(400).height(500).fit('crop').url()} 
+                      alt={item.title}
+                      loading="lazy"
+                    />
+                  : <div class="img-placeholder"><span>{item.title}</span></div>
+                }
+              </div>
+              <div class="shop-meta">
+                <h3>{item.title}</h3>
+                <p class="meta-info">
+                  {[item.medium, item.year].filter(Boolean).join(' · ')}
+                </p>
+                {item.price && (
+                  <p class="price">${item.price.toFixed(2)}</p>
+                )}
+                <button class="btn-add-to-cart" data-item-id={item._id}>
+                  Add to Cart
+                </button>
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div class="no-items reveal" style="text-align:center; padding:4rem 2rem; color:#8B7355;">
+          <p>Shop coming soon. Check back for available works.</p>
+        </div>
+      )}
     </div>
   </section>
-  <section class="shop-note reveal">
-    <div class="shop-note-inner">
-      <h2>How to Purchase</h2>
-      <p>To purchase a print, click "Inquire" on any available edition. Justin processes print orders directly — you'll receive a response within 2–3 business days with sizing options, pricing, and payment details.</p>
-      <p>Looking for something not listed? Use the <a href="/contact">contact page</a> to ask about other available works or upcoming print releases.</p>
+
+  <section class="shipping-info">
+    <div class="shipping-inner">
+      <h2 class="reveal">Shop Information</h2>
+      <div class="info-grid reveal">
+        <div class="info-block">
+          <h4>Shipping</h4>
+          <p>Orders ship within 1-2 weeks. Domestic and international shipping available. Tracking provided with all orders.</p>
+        </div>
+        <div class="info-block">
+          <h4>Returns</h4>
+          <p>If you're not satisfied with your purchase, we offer a 30-day return window. Contact us to arrange returns.</p>
+        </div>
+        <div class="info-block">
+          <h4>Originals</h4>
+          <p>Interested in acquiring an original work? Contact Justin directly for availability, pricing, and custom requests.</p>
+        </div>
+      </div>
     </div>
   </section>
+
   <Footer slot="footer" />
 </Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const cartBtns = document.querySelectorAll('.btn-add-to-cart');
+    
+    cartBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const itemId = btn.dataset.itemId;
+        // TODO: Integrate with Shopify, Stripe, or custom cart
+        alert(`Added to cart: ${itemId}`);
+      });
+    });
+  });
+</script>
+
 <style>
-  .shop-hero { padding:10rem 2.5rem 4rem; max-width:1280px; margin:0 auto; }
-  .eyebrow { font-size:0.75rem; letter-spacing:0.16em; text-transform:uppercase; color:#C4622D; margin-bottom:1rem; }
-  .shop-hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.5rem,5vw,4.5rem); font-weight:700; letter-spacing:-0.02em; margin-bottom:1rem; }
-  .sub { color:#3D3D3A; max-width:520px; line-height:1.75; font-size:1.0625rem; }
-  .info-strip { background:#EDE8DF; padding:2.5rem; border-top:1px solid rgba(26,26,24,0.08); border-bottom:1px solid rgba(26,26,24,0.08); }
-  .info-strip-inner { max-width:1280px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:2rem; }
-  .info-item dt { font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; color:#C4622D; margin-bottom:0.4rem; }
-  .info-item dd { font-size:0.9rem; color:#3D3D3A; line-height:1.5; }
-  .shop-grid-section { max-width:1280px; margin:4rem auto; padding:0 2.5rem; }
-  .shop-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2.5rem; }
-  .print-card { position:relative; }
-  .print-card.sold-out { opacity:0.7; }
-  .print-img-placeholder { background:#EDE8DF; height:300px; display:flex; align-items:flex-end; justify-content:space-between; padding:1rem; border:1px solid rgba(139,115,85,0.15); position:relative; overflow:hidden; color:#8B7355; font-family:'Playfair Display',serif; font-size:0.875rem; font-style:italic; }
-  .sold-overlay { position:absolute; inset:0; background:rgba(26,26,24,0.4); display:flex; align-items:center; justify-content:center; font-family:'DM Sans',sans-serif; font-size:0.8rem; letter-spacing:0.12em; text-transform:uppercase; color:#EDE8DF; }
-  .print-meta { display:flex; justify-content:space-between; align-items:flex-end; padding:1rem 0 0; gap:1rem; }
-  .print-meta h3 { font-family:'Playfair Display',serif; font-size:1rem; font-weight:600; margin-bottom:0.2rem; }
-  .series,.edition { font-size:0.8rem; color:#8B7355; margin-top:0.2rem; }
-  .sizes { display:flex; gap:0.4rem; margin-top:0.6rem; flex-wrap:wrap; }
-  .size-tag { font-size:0.7rem; background:rgba(26,26,24,0.06); padding:0.2rem 0.5rem; color:#3D3D3A; }
-  .btn-small { display:inline-block; background:#C4622D; color:#F7F4EE; padding:0.5rem 1.25rem; font-size:0.75rem; letter-spacing:0.06em; text-transform:uppercase; font-family:'DM Sans',sans-serif; white-space:nowrap; transition:background 0.25s; flex-shrink:0; align-self:flex-end; }
-  .btn-small:hover { background:#A8501F; }
-  .badge-sold { font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:#8B7355; white-space:nowrap; flex-shrink:0; }
-  .shop-note { background:#1A1A18; color:#EDE8DF; padding:5rem 2.5rem; margin-top:2rem; }
-  .shop-note-inner { max-width:760px; margin:0 auto; }
-  .shop-note h2 { font-family:'Playfair Display',serif; font-size:2rem; font-weight:600; margin-bottom:1.25rem; letter-spacing:-0.02em; }
-  .shop-note p { color:#8B7355; line-height:1.75; margin-bottom:1rem; font-size:0.9375rem; }
-  .shop-note a { color:#C4622D; text-decoration:underline; }
-  @media (max-width:1024px) { .info-strip-inner { grid-template-columns:repeat(2,1fr); } .shop-grid { grid-template-columns:repeat(2,1fr); } }
-  @media (max-width:640px) { .shop-hero,.shop-grid-section { padding-inline:1.5rem; } .shop-grid { grid-template-columns:1fr; } }
+  .shop-hero { background:#1A1A18; color:#EDE8DF; padding:10rem 2.5rem 5rem; text-align:center; }
+  .shop-hero h1 { font-family:'Playfair Display',serif; font-size:clamp(3rem,6vw,5rem); font-weight:700; letter-spacing:-0.02em; margin-bottom:1.5rem; }
+  .shop-hero p { color:#8B7355; max-width:600px; margin:0 auto; font-size:1.0625rem; line-height:1.75; }
+  .shop-grid-section { background:#F7F4EE; padding:5rem 2.5rem 6rem; }
+  .shop-inner { max-width:1280px; margin:0 auto; }
+  .shop-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2rem; }
+  .shop-card { }
+  .shop-image { background:#EDE8DF; height:400px; overflow:hidden; border:1px solid rgba(139,115,85,0.15); }
+  .shop-image img { width:100%; height:100%; object-fit:cover; transition:transform 0.4s; }
+  .shop-card:hover .shop-image img { transform:scale(1.03); }
+  .shop-meta { padding:1rem 0; }
+  .shop-meta h3 { font-family:'Playfair Display',serif; font-size:0.95rem; font-weight:600; margin-bottom:0.25rem; }
+  .meta-info { font-size:0.75rem; color:#8B7355; margin-bottom:0.5rem; }
+  .price { font-family:'DM Sans',sans-serif; font-weight:600; color:#C4622D; font-size:1rem; margin-bottom:0.75rem; }
+  .btn-add-to-cart { display:block; width:100%; background:#C4622D; color:#F7F4EE; border:none; padding:0.75rem; font-size:0.75rem; letter-spacing:0.06em; text-transform:uppercase; font-family:'DM Sans',sans-serif; cursor:pointer; transition:background 0.25s; }
+  .btn-add-to-cart:hover { background:#A8501F; }
+  .img-placeholder { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.5rem; border:1px dashed #8B7355; color:#8B7355; font-size:0.8rem; text-align:center; padding:2rem; width:100%; height:400px; font-family:'Playfair Display',serif; box-sizing:border-box; }
+  .img-placeholder span { font-size:1rem; color:#3D3D3A; font-weight:600; }
+  .no-items { color:#8B7355; }
+  .shipping-info { max-width:1280px; margin:0 auto; padding:6rem 2.5rem; }
+  .shipping-inner { }
+  .shipping-info h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3rem); font-weight:600; letter-spacing:-0.02em; text-align:center; margin-bottom:3rem; }
+  .info-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:3rem; }
+  .info-block h4 { font-family:'Playfair Display',serif; font-size:1.125rem; font-weight:600; margin-bottom:0.75rem; color:#1A1A18; }
+  .info-block p { color:#3D3D3A; font-size:0.95rem; line-height:1.7; }
+  @media (max-width:1024px) { 
+    .shop-grid { grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+    .info-grid { grid-template-columns:repeat(2,1fr); }
+    .shop-grid-section { padding:4rem 2.5rem 5rem; }
+  }
+  @media (max-width:768px) { 
+    .shop-grid { grid-template-columns:repeat(2,1fr); gap:1.5rem; }
+    .info-grid { grid-template-columns:1fr; }
+  }
+  @media (max-width:640px) { 
+    .shop-hero,.shop-grid-section,.shipping-info { padding-inline:1.5rem; } 
+    .shop-grid { grid-template-columns:1fr; }
+  }
 </style>
