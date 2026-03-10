@@ -11,10 +11,11 @@ const {
   email = '', 
   phone = '', 
   instagramUrl = '', 
-  facebookUrl = '' 
+  facebookUrl = '',
+  tagline = 'Mixed media artist. Original works, commissions, and prints.'
 } = settings;
 ---
-<Layout title="Contact" description="Get in touch with Justin about commissions, inquiries, and collaborations.">
+<Layout title="Contact" description={`Get in touch with ${artistName} about commissions, inquiries, and collaborations.`}>
   <Nav slot="nav" />
 
   <section class="contact-hero reveal">

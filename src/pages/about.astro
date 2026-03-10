@@ -6,9 +6,14 @@ import { sanityClient, urlFor } from '../lib/sanity.ts';
 
 const siteSettings = await sanityClient.fetch(`*[_type == "siteSettings"][0]`);
 const settings = siteSettings || {};
-const { artistName = 'Justin', bio = '', heroImage } = settings;
+const { 
+  artistName = 'Justin', 
+  bio = '', 
+  heroImage,
+  tagline = 'Mixed media artist. Original works, commissions, and prints.'
+} = settings;
 ---
-<Layout title="About" description="Learn about Justin's artistic practice and approach.">
+<Layout title="About" description={tagline}>
   <Nav slot="nav" />
   <section class="about-hero reveal">
     <div class="hero-inner">
@@ -24,7 +29,17 @@ const { artistName = 'Justin', bio = '', heroImage } = settings;
         {bio && (
           <div class="bio-section">
             <h2>Practice</h2>
-            <div class="bio-text" set:html={bio.replace(/\n\n/g, '</p><p>')} />
+            <div class="bio-text">
+              {bio.split('\n\n').map((paragraph: string) => (
+                <p>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+        )}
+        {!bio && (
+          <div class="bio-section">
+            <h2>Practice</h2>
+            <p style="color:#8B7355;">Artist bio coming soon. Add content in Sanity CMS under Site Settings.</p>
           </div>
         )}
         <div class="highlights">
