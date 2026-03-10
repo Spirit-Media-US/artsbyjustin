@@ -5,6 +5,6 @@ export default defineConfig({
   integrations: [tailwind()],
   site: 'https://artsbyjustin.com',
   vite: {
-    server: { allowedHosts: ['preview.spiritmediapublishing.com'] },
+    server: { allowedHosts: true },
   },
 });
