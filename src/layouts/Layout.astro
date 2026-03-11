@@ -3,7 +3,12 @@ export interface Props {
   title: string;
   description?: string;
 }
-const { title, description = "Mixed media artist. Original paintings, commissions, and prints." } = Astro.props;
+
+import { sanityClient } from '../lib/sanity';
+const siteSettings = await sanityClient.fetch(`*[_type == "siteSettings"][0]`);
+const defaultDescription = siteSettings?.tagline || "Mixed media artist. Original paintings, commissions, and prints.";
+
+const { title, description = defaultDescription } = Astro.props;
 const fullTitle = title === "Home" ? "Arts by Justin" : `${title} — Arts by Justin`;
 ---
 <!DOCTYPE html>
