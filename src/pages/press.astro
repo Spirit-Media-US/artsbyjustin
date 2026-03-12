@@ -1,0 +1,596 @@
+---
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Press & Recognition — Arts by Justin</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --black:#080808;--dark:#111;--card:#161616;
+  --gold:#c9a84c;--gold-light:#e8c97a;
+  --white:#f0f0f0;--gray:#777;--gray2:#aaa;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--black);color:var(--white);font-family:'Inter',sans-serif;overflow-x:hidden;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.2rem 3rem;display:flex;justify-content:space-between;align-items:center;background:rgba(8,8,8,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.04);}
+.logo{font-family:'Playfair Display',serif;font-size:1.3rem;letter-spacing:2px;}
+.logo span{color:var(--gold);}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{color:var(--gray2);text-decoration:none;font-size:0.78rem;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.3s;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.nav-cta{background:var(--gold);color:var(--black);padding:0.55rem 1.4rem;font-size:0.75rem;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;text-decoration:none;}
+
+/* HERO */
+.hero{padding:0;background:var(--black);position:relative;overflow:hidden;min-height:100vh;display:grid;grid-template-columns:1fr 1fr;}
+.hero-left{padding:10rem 3rem 6rem;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2;background:linear-gradient(135deg,#080808,#0f0800,#080808);}
+.hero-left::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 0% 50%,rgba(201,168,76,0.08),transparent 70%);}
+.hero-right{position:relative;overflow:hidden;}
+.hero-right img{width:100%;height:100%;object-fit:cover;object-position:center top;filter:brightness(0.75);}
+.hero-right::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,#080808 0%,transparent 30%),linear-gradient(to top,#080808 0%,transparent 30%);}
+.hero-tag{display:inline-flex;align-items:center;gap:0.8rem;margin-bottom:2rem;position:relative;}
+.hero-line{width:30px;height:1px;background:var(--gold);}
+.hero-tag span{font-size:0.68rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,5vw,4.5rem);line-height:1.1;margin-bottom:1.5rem;position:relative;}
+.hero h1 em{color:var(--gold);font-style:italic;}
+.hero p{color:var(--gray2);font-size:1rem;max-width:480px;line-height:1.9;font-weight:300;position:relative;}
+.gold-bar{width:60px;height:2px;background:var(--gold);margin:2rem 0 0;}
+
+/* HIGHLIGHT STATS */
+.highlights{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.04);border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);}
+.highlight{padding:2.5rem;text-align:center;background:var(--black);}
+.highlight-num{font-family:'Playfair Display',serif;font-size:2.8rem;color:var(--gold);line-height:1;margin-bottom:0.4rem;}
+.highlight-label{font-size:0.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--gray);}
+
+/* FEATURED AWARD */
+.featured-award{padding:6rem 3rem;background:linear-gradient(135deg,#0d0800,#150a00);display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+.award-visual{position:relative;}
+.award-img-wrap{aspect-ratio:4/3;position:relative;overflow:hidden;border:1px solid rgba(201,168,76,0.2);}
+.award-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:center;}
+.award-img-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 60%,rgba(13,8,0,0.6));}
+.award-accent{position:absolute;top:-1rem;left:-1rem;width:50%;height:50%;border:1px solid rgba(201,168,76,0.25);z-index:2;}
+.award-year-badge{position:absolute;bottom:-1rem;right:-1rem;background:var(--gold);color:var(--black);padding:0.6rem 1.2rem;font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;font-weight:700;z-index:3;}
+.label{font-size:0.68rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;}
+.bar{width:50px;height:2px;background:var(--gold);margin-bottom:2rem;}
+.featured-award h2{font-family:'Playfair Display',serif;font-size:2.5rem;line-height:1.2;margin-bottom:0.5rem;}
+.featured-award .subtitle{color:var(--gold-light);font-size:1rem;font-style:italic;margin-bottom:1.5rem;}
+.featured-award p{color:var(--gray2);font-size:0.93rem;line-height:1.9;font-weight:300;margin-bottom:1rem;}
+.location-tag{display:inline-flex;align-items:center;gap:0.6rem;margin-top:1rem;padding:0.6rem 1.2rem;border:1px solid rgba(201,168,76,0.3);color:var(--gold);font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;}
+
+/* PHOTO GALLERY STRIP */
+.gallery-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:var(--black);}
+.gallery-strip-item{aspect-ratio:3/4;overflow:hidden;position:relative;}
+.gallery-strip-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease,filter 0.4s;}
+.gallery-strip-item:hover img{transform:scale(1.06);filter:brightness(0.9);}
+.gallery-strip-item::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.4),transparent 50%);pointer-events:none;}
+
+/* AWARDS GRID */
+.awards{padding:6rem 3rem;background:var(--dark);}
+.section-intro{text-align:center;margin-bottom:4rem;}
+.section-intro h2{font-family:'Playfair Display',serif;font-size:2.2rem;margin-bottom:0.8rem;}
+.section-intro p{color:var(--gray2);font-size:0.9rem;font-weight:300;}
+.awards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.award-card{background:var(--card);border:1px solid rgba(255,255,255,0.05);padding:2.5rem;position:relative;overflow:hidden;transition:border-color 0.3s,transform 0.3s;}
+.award-card:hover{border-color:rgba(201,168,76,0.3);transform:translateY(-4px);}
+.award-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--gold),var(--gold-light),transparent);}
+.award-card.congressional::before{background:linear-gradient(to right,#1a3a6e,#4a7aae,transparent);}
+.award-badge{display:inline-block;font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;padding:0.3rem 0.8rem;margin-bottom:1.2rem;font-weight:600;}
+.badge-gold{background:rgba(201,168,76,0.15);color:var(--gold);border:1px solid rgba(201,168,76,0.3);}
+.badge-blue{background:rgba(26,58,110,0.3);color:#6a9ade;border:1px solid rgba(74,122,174,0.3);}
+.badge-green{background:rgba(0,100,50,0.2);color:#4ada8a;border:1px solid rgba(0,150,80,0.3);}
+.award-icon-sm{font-size:2rem;margin-bottom:1rem;display:block;}
+.award-card h3{font-family:'Playfair Display',serif;font-size:1.2rem;line-height:1.3;margin-bottom:0.4rem;}
+.award-card .awrd-org{font-size:0.78rem;color:var(--gold);letter-spacing:1px;margin-bottom:0.8rem;}
+.award-card p{color:var(--gray2);font-size:0.82rem;line-height:1.7;}
+.award-card .yr{position:absolute;top:2rem;right:2rem;font-family:'Playfair Display',serif;font-size:1.8rem;color:rgba(255,255,255,0.04);font-weight:700;}
+
+/* CONGRESSIONAL LETTER */
+.congress{padding:6rem 3rem;background:var(--black);display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+.congress-doc{background:#f8f6f0;color:#111;padding:3rem;position:relative;font-family:'Georgia',serif;}
+.congress-doc::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(to right,#1a3a6e,#4a7aae);}
+.congress-header{text-align:center;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid #ddd;}
+.congress-header .seal{font-size:1.5rem;margin-bottom:0.5rem;}
+.congress-header h4{font-size:0.85rem;font-weight:600;color:#1a3a6e;letter-spacing:1px;text-transform:uppercase;}
+.congress-header p{font-size:0.75rem;color:#555;margin-top:0.2rem;}
+.congress-body{font-size:0.82rem;line-height:1.8;color:#333;}
+.congress-body .salutation{margin-bottom:1rem;}
+.congress-body .para{margin-bottom:0.8rem;}
+.congress-body .sig{margin-top:1.5rem;font-style:italic;}
+.congress-sig-name{font-weight:600;font-style:normal;margin-top:0.3rem;}
+.congress-text h2{font-family:'Playfair Display',serif;font-size:2.2rem;margin-bottom:0.8rem;line-height:1.2;}
+.congress-text p{color:var(--gray2);font-size:0.93rem;line-height:1.9;font-weight:300;margin-bottom:1rem;}
+.congress-quote{margin:2rem 0;padding:1.5rem;border-left:2px solid #4a7aae;background:rgba(26,58,110,0.08);}
+.congress-quote p{font-family:'Playfair Display',serif;font-style:italic;color:#8ab0de;font-size:0.98rem;line-height:1.7;}
+
+/* PRESS FEATURES */
+.press{padding:6rem 3rem;background:var(--dark);}
+.press-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem;}
+.press-card{background:var(--card);border:1px solid rgba(255,255,255,0.05);overflow:hidden;transition:border-color 0.3s,transform 0.3s;cursor:pointer;}
+.press-card:hover{border-color:rgba(201,168,76,0.25);transform:translateY(-4px);}
+.press-card-img{width:100%;aspect-ratio:16/9;overflow:hidden;}
+.press-card-img img{width:100%;height:100%;object-fit:cover;object-position:center top;transition:transform 0.5s;}
+.press-card:hover .press-card-img img{transform:scale(1.05);}
+.press-card-top{padding:1.2rem 2rem 0.8rem;background:linear-gradient(135deg,#111,#1a1500);}
+.press-pub{font-size:1.1rem;font-weight:700;letter-spacing:1px;margin-bottom:0.3rem;}
+.press-type{font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);}
+.press-card-body{padding:1.5rem 2rem 2rem;}
+.press-card h3{font-family:'Playfair Display',serif;font-size:1rem;line-height:1.4;margin-bottom:0.6rem;}
+.press-card p{color:var(--gray2);font-size:0.8rem;line-height:1.7;margin-bottom:1rem;}
+.press-card .press-date{font-size:0.68rem;letter-spacing:2px;text-transform:uppercase;color:var(--gray);}
+.press-read{font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);text-decoration:none;display:inline-flex;align-items:center;gap:0.4rem;margin-top:0.8rem;transition:gap 0.2s;}
+.press-read:hover{gap:0.8rem;}
+
+/* FULL-WIDTH PHOTO FEATURE */
+.photo-feature{position:relative;height:70vh;overflow:hidden;}
+.photo-feature img{width:100%;height:100%;object-fit:cover;object-position:center 20%;}
+.photo-feature-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(8,8,8,0.85) 0%,rgba(8,8,8,0.3) 60%,transparent 100%);}
+.photo-feature-content{position:absolute;top:50%;left:3rem;transform:translateY(-50%);max-width:500px;}
+.photo-feature-content .label{margin-bottom:0.8rem;}
+.photo-feature-content h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);line-height:1.2;margin-bottom:1rem;}
+.photo-feature-content p{color:var(--gray2);font-size:0.93rem;line-height:1.8;font-weight:300;}
+
+/* NOMINATION HIGHLIGHT */
+.nomination{padding:5rem 3rem;background:linear-gradient(135deg,#080808,#0a0a14);text-align:center;}
+.nom-badge{display:inline-block;border:1px solid var(--gold);color:var(--gold);font-size:0.68rem;letter-spacing:3px;text-transform:uppercase;padding:0.4rem 1.2rem;margin-bottom:2rem;}
+.nomination h2{font-family:'Playfair Display',serif;font-size:2.2rem;margin-bottom:1rem;}
+.nomination p{color:var(--gray2);max-width:580px;margin:0 auto 2rem;font-size:0.93rem;line-height:1.9;font-weight:300;}
+.nom-detail{display:inline-flex;align-items:center;gap:1rem;padding:1rem 2rem;border:1px solid rgba(255,255,255,0.08);color:var(--gray2);font-size:0.82rem;}
+.nom-detail span{color:var(--gold);}
+
+/* ARTIST PHOTO PAIR */
+.photo-pair{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--black);}
+.photo-pair-item{position:relative;overflow:hidden;}
+.photo-pair-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.6s;}
+.photo-pair-item:hover img{transform:scale(1.04);}
+.photo-pair-caption{position:absolute;bottom:0;left:0;right:0;padding:1.5rem;background:linear-gradient(to top,rgba(0,0,0,0.8),transparent);font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:rgba(201,168,76,0.8);}
+
+/* TIMELINE */
+.timeline{padding:6rem 3rem;background:var(--black);}
+.timeline-inner{max-width:800px;margin:0 auto;position:relative;}
+.timeline-inner::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,var(--gold),transparent);}
+.tl-item{padding:0 0 3rem 3rem;position:relative;}
+.tl-item::before{content:'';position:absolute;left:-4px;top:6px;width:9px;height:9px;background:var(--gold);border-radius:50%;}
+.tl-year{font-size:0.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem;}
+.tl-item h3{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:0.4rem;}
+.tl-item p{color:var(--gray2);font-size:0.85rem;line-height:1.7;}
+
+/* CTA */
+.cta{padding:7rem 3rem;background:linear-gradient(135deg,#0d0800,#150900);text-align:center;}
+.cta h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);margin-bottom:1rem;line-height:1.2;}
+.cta h2 em{color:var(--gold);font-style:italic;}
+.cta p{color:var(--gray2);margin-bottom:2.5rem;font-size:0.93rem;line-height:1.8;font-weight:300;}
+.btn-gold{background:var(--gold);color:var(--black);padding:0.85rem 2rem;font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;transition:all 0.3s;margin:0 0.5rem;text-decoration:none;display:inline-block;}
+.btn-gold:hover{background:var(--gold-light);}
+.btn-ghost{background:transparent;color:var(--white);padding:0.85rem 2rem;font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;border:1px solid rgba(255,255,255,0.2);cursor:pointer;transition:all 0.3s;margin:0 0.5rem;text-decoration:none;display:inline-block;}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+
+/* FOOTER */
+footer{background:#040404;padding:3rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,0.05);}
+.f-logo{font-family:'Playfair Display',serif;font-size:1.1rem;}
+.f-logo span{color:var(--gold);}
+.f-links{display:flex;gap:2rem;}
+.f-links a{color:var(--gray);text-decoration:none;font-size:0.75rem;letter-spacing:1px;text-transform:uppercase;transition:color 0.3s;}
+.f-links a:hover{color:var(--gold);}
+.f-copy{color:var(--gray);font-size:0.72rem;}
+
+@media(max-width:1024px){
+  .hero{grid-template-columns:1fr;}
+  .hero-right{height:50vh;}
+  .featured-award{grid-template-columns:1fr;gap:3rem;}
+  .awards-grid{grid-template-columns:1fr 1fr;}
+  .congress{grid-template-columns:1fr;gap:3rem;}
+  .press-grid{grid-template-columns:1fr 1fr;}
+  .highlights{grid-template-columns:repeat(2,1fr);}
+  .photo-pair{grid-template-columns:1fr;}
+}
+@media(max-width:640px){
+  nav{padding:1rem 1.5rem;}
+  .nav-links{display:none;}
+  .hero-left{padding:8rem 1.5rem 4rem;}
+  .featured-award,.awards,.congress,.press,.timeline,.cta,.nomination{padding-inline:1.5rem;}
+  .awards-grid{grid-template-columns:1fr;}
+  .press-grid{grid-template-columns:1fr;}
+  .gallery-strip{grid-template-columns:repeat(2,1fr);}
+  footer{flex-direction:column;gap:1.5rem;text-align:center;padding:2rem 1.5rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" style="text-decoration:none;color:inherit;"><span class="logo">Arts <span>by</span> Justin</span></a>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/about">The Story</a></li>
+    <li><a href="/portfolio">Portfolio</a></li>
+    <li><a href="/commissions">Commissions</a></li>
+    <li><a href="/press" class="active">Press</a></li>
+  </ul>
+  <a href="/shop" class="nav-cta">Shop Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">
+      <div class="hero-line"></div>
+      <span>Recognition & Press</span>
+      <div class="hero-line"></div>
+    </div>
+    <h1>Honored.<br/><em>Recognized.</em><br/>Featured.</h1>
+    <p>From a small village in Northeast India to international stages — Justin Keishing's art and story have been recognized by publications, award bodies, and institutions around the world.</p>
+    <div class="gold-bar"></div>
+  </div>
+  <div class="hero-right">
+    <img src="https://cdn.sanity.io/images/oqoqh3p3/production/0ca95129d6d4f6d7906d7c5fca04770c987737f6-2730x4096.jpg" alt="Justin Keishing — Artist"/>
+  </div>
+</section>
+
+<!-- HIGHLIGHT STATS -->
+<div class="highlights">
+  <div class="highlight">
+    <div class="highlight-num">1</div>
+    <div class="highlight-label">International Artist of the Year</div>
+  </div>
+  <div class="highlight">
+    <div class="highlight-num">3+</div>
+    <div class="highlight-label">Major Awards & Honors</div>
+  </div>
+  <div class="highlight">
+    <div class="highlight-num">4+</div>
+    <div class="highlight-label">Press Features</div>
+  </div>
+  <div class="highlight">
+    <div class="highlight-num">1</div>
+    <div class="highlight-label">Letter from U.S. Congress</div>
+  </div>
+</div>
+
+<!-- FEATURED AWARD -->
+<section class="featured-award">
+  <div class="award-visual">
+    <div class="award-accent"></div>
+    <div class="award-img-wrap">
+      <img src="https://cdn.sanity.io/images/oqoqh3p3/production/13062fa3e35ae8d926b490c155a64abda6037699-1358x926.jpg" alt="Artist of the Year — Florence, Italy 2025"/>
+    </div>
+    <div class="award-year-badge">Florence · January 2025</div>
+  </div>
+  <div>
+    <p class="label">Highest Honor</p>
+    <div class="bar"></div>
+    <h2>International Prize<br/>Artist of the Year</h2>
+    <p class="subtitle">Palazzo Pitti, Florence, Italy · 2025</p>
+    <p>Justin Keishing was awarded the International Prize — Artist of the Year 2025 by Effetto Arte Fondazione in collaboration with Russo, presented at the historic Palazzo Pitti in Florence, Italy on January 25th, 2025.</p>
+    <p>The award recognized Justin's artistic value and global impact — a remarkable achievement for a self-taught artist from Northeast India now based in Raleigh, North Carolina.</p>
+    <p>His "Empress" painting was featured across two full pages in the official Artist of the Year international publication — <em>Master Artists to Collect</em>.</p>
+    <div class="location-tag">📍 Palazzo Pitti · Florence, Italy · January 25, 2025</div>
+  </div>
+</section>
+
+<!-- GALLERY STRIP -->
+<div class="gallery-strip">
+  <div class="gallery-strip-item">
+    <img src="https://cdn.sanity.io/images/oqoqh3p3/production/206f139dbbdef97c494412f828b09b5e90c02426-3000x4000.jpg" alt="Artwork by Justin Keishing"/>
+  </div>
+  <div class="gallery-strip-item">
+    <img src="https://cdn.sanity.io/images/oqoqh3p3/production/b43f0ad0aaa2fc715b9fc21c167ce61b2655b78e-3068x4096.jpg" alt="Artwork by Justin Keishing"/>
+  </div>
+  <div class="gallery-strip-item">
+    <img src="https://cdn.sanity.io/images/oqoqh3p3/production/f3a9d25d94594823daa99b03f822163d2bb87403-2730x4096.jpg" alt="Artwork by Justin Keishing"/>
+  </div>
+  <div class="gallery-strip-item">
+    <img src="https://cdn.sanity.io/images/oqoqh3p3/production/bd955a438c41cc596b4438c8eff37378f6c6f2ce-4096x2785.jpg" alt="Artwork by Justin Keishing"/>
+  </div>
+</div>
+
+<!-- AWARDS GRID -->
+<section class="awards">
+  <div class="section-intro">
+    <p class="label" style="text-align:center;">Awards & Honors</p>
+    <div class="bar" style="margin:0.5rem auto 1rem;"></div>
+    <h2>A Record of Recognition</h2>
+    <p>Each honor a milestone. Each award a reminder that purpose-driven art leaves a mark.</p>
+  </div>
+  <div class="awards-grid">
+    <div class="award-card">
+      <div class="yr">2025</div>
+      <span class="award-icon-sm">🏆</span>
+      <span class="award-badge badge-gold">International Award</span>
+      <h3>International Prize — Artist of the Year</h3>
+      <div class="awrd-org">Effetto Arte Fondazione · Florence, Italy</div>
+      <p>Awarded at the historic Palazzo Pitti for artistic value and global impact. Featured in the official "Master Artists to Collect" publication.</p>
+    </div>
+    <div class="award-card">
+      <div class="yr">2022</div>
+      <span class="award-icon-sm">🥇</span>
+      <span class="award-badge badge-gold">Community Honor</span>
+      <h3>Cary Magazine Movers & Shakers 2022</h3>
+      <div class="awrd-org">Cary Magazine · North Carolina</div>
+      <p>Named one of Western Wake's most impactful young professionals — individuals making a difference through business, creativity, and community impact.</p>
+    </div>
+    <div class="award-card congressional">
+      <div class="yr">2022</div>
+      <span class="award-icon-sm">🇺🇸</span>
+      <span class="award-badge badge-blue">Congressional Recognition</span>
+      <h3>Letter from U.S. House of Representatives</h3>
+      <div class="awrd-org">Congresswoman Deborah K. Ross · NC 2nd District</div>
+      <p>Personal letter of congratulations from U.S. Congresswoman Deborah K. Ross recognizing Justin's lasting impact in Wake County through art and nonprofit work.</p>
+    </div>
+    <div class="award-card">
+      <div class="yr">2025</div>
+      <span class="award-icon-sm">⭐</span>
+      <span class="award-badge badge-gold">Nomination</span>
+      <h3>Raleigh Magazine — Kingpin 30s List</h3>
+      <div class="awrd-org">Raleigh Magazine · 2025</div>
+      <p>Nominated by Raleigh Magazine's Editor-in-Chief as a millennial maverick shaping today's world — recognized among the elite cast of 30s finalists.</p>
+    </div>
+    <div class="award-card">
+      <div class="yr">2022</div>
+      <span class="award-icon-sm">🎨</span>
+      <span class="award-badge badge-green">Nomination</span>
+      <h3>Best Artist Nominee</h3>
+      <div class="awrd-org">International Category</div>
+      <p>Nominated in the Best Artist category alongside international artists — recognition of Justin's growing global presence and artistic reputation.</p>
+    </div>
+    <div class="award-card">
+      <div class="yr">2021</div>
+      <span class="award-icon-sm">🌟</span>
+      <span class="award-badge badge-gold">Platform Achievement</span>
+      <h3>Etsy Star Seller</h3>
+      <div class="awrd-org">Etsy.com · United States</div>
+      <p>Achieved Star Seller status on Etsy — a recognition of exceptional customer service, consistent sales, and outstanding reviews from collectors across America.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FULL-WIDTH PHOTO FEATURE -->
+<div class="photo-feature">
+  <img src="https://cdn.sanity.io/images/oqoqh3p3/production/79f9b5ee6718180013f9f77caf99ad95a0175916-4030x3022.jpg" alt="Justin Keishing at Palazzo Pitti, Florence"/>
+  <div class="photo-feature-overlay"></div>
+  <div class="photo-feature-content">
+    <p class="label">Florence, Italy · January 2025</p>
+    <h2>The Moment<br/>the World Took Notice</h2>
+    <p>Standing inside the historic Palazzo Pitti, receiving the International Prize — Artist of the Year. A self-taught artist from a small village in Northeast India, now recognized on the world stage.</p>
+  </div>
+</div>
+
+<!-- CONGRESSIONAL LETTER -->
+<section class="congress">
+  <div class="congress-doc">
+    <div class="congress-header">
+      <div class="seal">🦅</div>
+      <h4>Congress of the United States</h4>
+      <p>House of Representatives · Washington, DC</p>
+    </div>
+    <div class="congress-body">
+      <p class="salutation">Dear Mr. Keishing,</p>
+      <p class="para">On behalf of North Carolina's Second Congressional District, I would like to extend my heartfelt congratulations on being named a Cary Mover & Shaker. This achievement is a testament to the lasting impact you are making in Wake County.</p>
+      <p class="para">Your commitment to your art and achieving your goals is admirable. It gives me great hope to know that determined minds such as yours are contributing to the beauty of our community.</p>
+      <p class="para">I am grateful for what you have contributed to this area through your nonprofit work and through your art.</p>
+      <p class="sig">Very truly yours,</p>
+      <p class="congress-sig-name">Deborah K. Ross<br/><span style="font-weight:300;font-size:0.78rem;">Member of Congress · July 6, 2022</span></p>
+    </div>
+  </div>
+  <div class="congress-text">
+    <p class="label">Congressional Recognition</p>
+    <div class="bar"></div>
+    <h2>A Letter from<br/>the U.S. Congress</h2>
+    <p>In July 2022, Justin received a personal letter of congratulations from U.S. Congresswoman Deborah K. Ross, representing North Carolina's 2nd Congressional District.</p>
+    <p>The letter recognized Justin's recognition as a Cary Mover & Shaker and his lasting impact in Wake County through both his art and his nonprofit work with Global Hope India.</p>
+    <div class="congress-quote">
+      <p>"Your commitment to your art and achieving your goals is admirable. It gives me great hope to know that determined minds such as yours are contributing to the beauty of our community."</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRESS FEATURES -->
+<section class="press">
+  <div class="section-intro">
+    <p class="label" style="text-align:center;">Press & Media</p>
+    <div class="bar" style="margin:0.5rem auto 1rem;"></div>
+    <h2>In the News</h2>
+    <p>Justin's story has been told across print, digital, and community publications — locally, nationally, and internationally.</p>
+  </div>
+  <div class="press-grid">
+
+    <div class="press-card">
+      <div class="press-card-img">
+        <img src="https://cdn.sanity.io/images/oqoqh3p3/production/28cf7961bfa771031152630fc04c56dffe1b2bd2-1320x1604.jpg" alt="Cary Magazine Feature"/>
+      </div>
+      <div class="press-card-top">
+        <div class="press-pub">Cary Magazine</div>
+        <div class="press-type">Print Feature · Full Spread</div>
+      </div>
+      <div class="press-card-body">
+        <h3>Meet the 2022 Movers & Shakers — Justin Keishing</h3>
+        <p>A full feature spread in Cary Magazine's celebrated Movers & Shakers issue — telling Justin's origin story, his journey from India to North Carolina, and his "Chase Your Dreams" series.</p>
+        <div class="press-date">May 2022</div>
+        <a href="#" class="press-read">Read Feature →</a>
+      </div>
+    </div>
+
+    <div class="press-card">
+      <div class="press-card-img">
+        <img src="https://cdn.sanity.io/images/oqoqh3p3/production/c3244071dda31dde815285cd3bdf6e86f5574593-2894x2611.jpg" alt="Ukhrul Times Feature"/>
+      </div>
+      <div class="press-card-top" style="background:linear-gradient(135deg,#111,#0a1500);">
+        <div class="press-pub">Ukhrul Times</div>
+        <div class="press-type">Newspaper Feature</div>
+      </div>
+      <div class="press-card-body">
+        <h3>"Every Canvas is a Journey All Its Own"</h3>
+        <p>A deep-dive feature on Justin's remarkable journey — from a poor orphan boy in Northeast India to becoming a star seller artist in America. Subtitled: "Painting your way out of pain."</p>
+        <div class="press-date">May 9, 2022 · By Soror Shaiza</div>
+        <a href="#" class="press-read">Read Article →</a>
+      </div>
+    </div>
+
+    <div class="press-card">
+      <div class="press-card-img">
+        <img src="https://cdn.sanity.io/images/oqoqh3p3/production/6fd936b45bf939ab7dddafce90e275fd097f5fea-1284x2573.jpg" alt="VoyageRaleigh Feature"/>
+      </div>
+      <div class="press-card-top" style="background:linear-gradient(135deg,#111,#00100a);">
+        <div class="press-pub">VoyageRaleigh</div>
+        <div class="press-type">Digital Feature · Local Stories</div>
+      </div>
+      <div class="press-card-body">
+        <h3>"Check Out Justin Keishing's Story"</h3>
+        <p>Featured in VoyageRaleigh's "Raleigh's Most Inspiring Stories" series — covering Justin's challenges, his faith journey, and how he found his artistic voice during the COVID pandemic.</p>
+        <div class="press-date">January 15, 2026</div>
+        <a href="#" class="press-read">Read Article →</a>
+      </div>
+    </div>
+
+    <div class="press-card">
+      <div class="press-card-img">
+        <img src="https://cdn.sanity.io/images/oqoqh3p3/production/0426b2863395965050a9dd19899502f2b283116f-3464x3464.jpg" alt="Raleigh Magazine Nomination"/>
+      </div>
+      <div class="press-card-top" style="background:linear-gradient(135deg,#111,#14000a);">
+        <div class="press-pub">Raleigh Magazine</div>
+        <div class="press-type">Nomination · 2025</div>
+      </div>
+      <div class="press-card-body">
+        <h3>Kingpin 30s — Millennial Mavericks Shaping the World</h3>
+        <p>Nominated by Raleigh Magazine's Editor-in-Chief Melissa Howsam as one of Raleigh's elite millennial leaders — "totally crushing it and promising to be names we'll hear for decades to come."</p>
+        <div class="press-date">February 2025</div>
+        <a href="#" class="press-read">View Nomination →</a>
+      </div>
+    </div>
+
+    <div class="press-card">
+      <div class="press-card-img">
+        <img src="https://cdn.sanity.io/images/oqoqh3p3/production/1b8670b5fb4ba996c8664c9c83e8bf7123709dcb-3024x4032.jpg" alt="Artist of the Year Publication"/>
+      </div>
+      <div class="press-card-top" style="background:linear-gradient(135deg,#111,#100a00);">
+        <div class="press-pub">Artist of the Year 2025</div>
+        <div class="press-type">International Publication</div>
+      </div>
+      <div class="press-card-body">
+        <h3>"Master Artists to Collect" — International Publication</h3>
+        <p>Justin's "Empress" painting was featured across two full pages in the official Artist of the Year 2025 international publication — distributed globally alongside the Florence award ceremony.</p>
+        <div class="press-date">Florence, Italy · January 2025</div>
+        <a href="#" class="press-read">View Publication →</a>
+      </div>
+    </div>
+
+    <div class="press-card">
+      <div class="press-card-img">
+        <img src="https://cdn.sanity.io/images/oqoqh3p3/production/2380ba91fad41d9f9512e13985704b544f6c4961-3024x4032.jpg" alt="Spirit Media Feature"/>
+      </div>
+      <div class="press-card-top" style="background:linear-gradient(135deg,#111,#0a0014);">
+        <div class="press-pub">Spirit Media</div>
+        <div class="press-type">Feature & Announcement</div>
+      </div>
+      <div class="press-card-body">
+        <h3>Congratulations — Cary Movers & Shakers & Etsy Star Seller</h3>
+        <p>Spirit Media featured and announced Justin's Movers & Shakers recognition and his achievement as an Etsy Star Seller — amplifying his story to the North Carolina community.</p>
+        <div class="press-date">2022</div>
+        <a href="#" class="press-read">View Feature →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- RALEIGH NOMINATION HIGHLIGHT -->
+<section class="nomination">
+  <div class="nom-badge">Latest Recognition</div>
+  <h2>Nominated by <em style="color:var(--gold);font-style:italic;">Raleigh Magazine</em></h2>
+  <p>In February 2025, Raleigh Magazine's Editor-in-Chief personally nominated Justin as one of Raleigh's Kingpin 30s — millennial leaders who are "shaping today's world and promising to be names we'll hear ringing loud for decades to come."</p>
+  <div class="nom-detail">
+    <span>Raleigh Magazine</span> · Kingpin 30s Finalists · <span>February 2025</span>
+  </div>
+</section>
+
+<!-- ARTIST PHOTO PAIR -->
+<div class="photo-pair">
+  <div class="photo-pair-item" style="aspect-ratio:3/2;">
+    <img src="https://cdn.sanity.io/images/oqoqh3p3/production/b8c57386182cb4c7c5edc377a73f1822c53dfe8c-3024x3780.jpg" alt="Justin Keishing — Artist at work"/>
+    <div class="photo-pair-caption">The Artist at Work</div>
+  </div>
+  <div class="photo-pair-item" style="aspect-ratio:3/2;">
+    <img src="https://cdn.sanity.io/images/oqoqh3p3/production/bd955a438c41cc596b4438c8eff37378f6c6f2ce-4096x2785.jpg" alt="Justin Keishing — Award ceremony"/>
+    <div class="photo-pair-caption">Award Ceremony · Florence 2025</div>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<section class="timeline">
+  <div class="section-intro" style="margin-bottom:4rem;">
+    <p class="label" style="text-align:center;">The Journey</p>
+    <div class="bar" style="margin:0.5rem auto 1rem;"></div>
+    <h2>Recognition Timeline</h2>
+    <p>From first art show to international prize — every milestone on the way.</p>
+  </div>
+  <div class="timeline-inner">
+    <div class="tl-item">
+      <div class="tl-year">June 2021</div>
+      <h3>First Art Show</h3>
+      <p>Justin enters his first art show and is immediately surprised by the public's reaction — people love and purchase his work, launching his career as a professional artist.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2021</div>
+      <h3>Etsy Star Seller</h3>
+      <p>Achieves Star Seller status on Etsy — his online store grows rapidly with collectors across the United States, UK, France, Canada, and India.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">May 2022</div>
+      <h3>Cary Magazine — Movers & Shakers</h3>
+      <p>Named a 2022 Mover & Shaker by Cary Magazine. Full feature spread published in the May 2022 issue. Receives a glass trophy at the official ceremony.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">May 2022</div>
+      <h3>Ukhrul Times Feature</h3>
+      <p>"Every Canvas is a Journey All Its Own" — a full newspaper feature on Justin's journey from Northeast India to America, published in the Ukhrul Times.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">July 2022</div>
+      <h3>Letter from U.S. Congress</h3>
+      <p>Receives a personal letter from Congresswoman Deborah K. Ross recognizing his impact in Wake County through art and nonprofit work.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">January 2025</div>
+      <h3>International Prize — Artist of the Year</h3>
+      <p>Awarded the International Prize — Artist of the Year 2025 at Palazzo Pitti, Florence, Italy. Featured in the "Master Artists to Collect" international publication.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">February 2025</div>
+      <h3>Raleigh Magazine — Kingpin 30s Nomination</h3>
+      <p>Nominated by Raleigh Magazine's Editor-in-Chief as one of Raleigh's elite millennial leaders shaping the world.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">January 2026</div>
+      <h3>VoyageRaleigh Feature</h3>
+      <p>"Check Out Justin Keishing's Story" published in VoyageRaleigh's Most Inspiring Stories series — reaching a wide digital audience.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <h2>The story is<br/><em>still being written.</em></h2>
+  <p>Press inquiries, gallery partnerships, and commission requests are always welcome.<br/>Let's create something worth recognizing.</p>
+  <a href="/contact" class="btn-gold">Press & Media Inquiries →</a>
+  <a href="/portfolio" class="btn-ghost">View Portfolio →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="/" style="text-decoration:none;color:inherit;"><span class="f-logo">Arts <span>by</span> Justin</span></a>
+  <div class="f-links">
+    <a href="/">Home</a>
+    <a href="/portfolio">Portfolio</a>
+    <a href="/commissions">Commissions</a>
+    <a href="/contact">Contact</a>
+  </div>
+  <span class="f-copy">© 2026 Arts by Justin · Justin Keishing</span>
+</footer>
+
+</body>
+</html>

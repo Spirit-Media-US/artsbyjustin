@@ -1,147 +1,439 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Nav from '../components/Nav.astro';
-import Footer from '../components/Footer.astro';
-import { sanityClient, urlFor } from '../lib/sanity.ts';
-
-const [siteSettings, shopItems] = await Promise.all([
-  sanityClient.fetch(`*[_type == "siteSettings"][0]`),
-  sanityClient.fetch(`
-    *[_type == "artwork" && available == true] | order(order asc, _createdAt desc) {
-      _id,
-      title,
-      image,
-      medium,
-      year,
-      price
-    }
-  `)
-]);
-
-const settings = siteSettings || {};
-const { artistName = 'Justin' } = settings;
 ---
-<Layout title="Shop" description="Limited edition prints and original works available for purchase.">
-  <Nav slot="nav" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Shop â Arts by Justin</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--black:#080808;--dark:#111;--card:#161616;--gold:#c9a84c;--gold-light:#e8c97a;--white:#f0f0f0;--gray:#777;--gray2:#aaa;}
+html{scroll-behavior:smooth;}
+body{background:var(--black);color:var(--white);font-family:'Inter',sans-serif;overflow-x:hidden;}
 
-  <section class="shop-hero reveal">
-    <h1>Shop</h1>
-    <p>Limited edition prints, originals, and curated works available for purchase.</p>
-  </section>
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:1.2rem 3rem;display:flex;justify-content:space-between;align-items:center;background:rgba(8,8,8,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.04);transition:padding 0.3s;}
+nav.scrolled{padding:0.8rem 3rem;border-bottom-color:rgba(201,168,76,0.15);}
+.logo{font-family:'Playfair Display',serif;font-size:1.3rem;letter-spacing:2px;}
+.logo span{color:var(--gold);}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{color:var(--gray2);text-decoration:none;font-size:0.78rem;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.3s;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white);}
+.mobile-menu{display:none;position:fixed;inset:0;top:60px;background:rgba(8,8,8,0.98);z-index:190;flex-direction:column;align-items:center;justify-content:center;gap:2rem;}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{color:var(--gray2);text-decoration:none;font-size:1.1rem;letter-spacing:3px;text-transform:uppercase;}
 
-  <section class="shop-grid-section">
-    <div class="shop-inner">
-      {shopItems && shopItems.length > 0 ? (
-        <div class="shop-grid">
-          {shopItems.map((item: any, i: number) => (
-            <article class="shop-card reveal" style={`animation-delay:${(i%4)*0.07}s`}>
-              <div class="shop-image">
-                {item.image && item.image.asset
-                  ? <img 
-                      src={urlFor(item.image).width(400).height(500).fit('crop').url()} 
-                      alt={item.title}
-                      loading="lazy"
-                    />
-                  : <div class="img-placeholder"><span>{item.title}</span></div>
-                }
-              </div>
-              <div class="shop-meta">
-                <h3>{item.title}</h3>
-                <p class="meta-info">
-                  {[item.medium, item.year].filter(Boolean).join(' · ')}
-                </p>
-                {item.price && (
-                  <p class="price">${item.price.toFixed(2)}</p>
-                )}
-                <button class="btn-add-to-cart" data-item-id={item._id}>
-                  Add to Cart
-                </button>
-              </div>
-            </article>
-          ))}
-        </div>
-      ) : (
-        <div class="no-items reveal" style="text-align:center; padding:4rem 2rem; color:#8B7355;">
-          <p>Shop coming soon. Check back for available works.</p>
-        </div>
-      )}
-    </div>
-  </section>
+/* HERO */
+.hero{padding:9rem 3rem 5rem;text-align:center;background:linear-gradient(135deg,#080808,#0f0800,#080808);position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,0.07),transparent 65%);}
+.hero-tag{display:inline-flex;align-items:center;gap:0.8rem;margin-bottom:1.5rem;opacity:0;animation:fadeUp 0.8s 0.2s forwards;}
+.hero-line{width:30px;height:1px;background:var(--gold);}
+.hero-tag span{font-size:0.68rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,5vw,4.5rem);line-height:1.1;margin-bottom:1rem;opacity:0;animation:fadeUp 0.8s 0.4s forwards;}
+.hero h1 em{color:var(--gold);font-style:italic;}
+.hero p{color:var(--gray2);max-width:560px;margin:0 auto 2.5rem;font-size:0.95rem;line-height:1.9;font-weight:300;opacity:0;animation:fadeUp 0.8s 0.6s forwards;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 
-  <section class="shipping-info">
-    <div class="shipping-inner">
-      <h2 class="reveal">Shop Information</h2>
-      <div class="info-grid reveal">
-        <div class="info-block">
-          <h4>Shipping</h4>
-          <p>Orders ship within 1-2 weeks. Domestic and international shipping available. Tracking provided with all orders.</p>
+/* FILTER */
+.filter-bar{display:flex;justify-content:center;gap:0.5rem;flex-wrap:wrap;padding:0 3rem 4rem;}
+.filter-btn{background:transparent;color:var(--gray2);border:1px solid rgba(255,255,255,0.08);padding:0.6rem 1.4rem;font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;font-family:'Inter',sans-serif;}
+.filter-btn:hover,.filter-btn.active{background:var(--gold);color:var(--black);border-color:var(--gold);font-weight:600;}
+
+/* SHOP GRID */
+.shop-section{padding:2rem 3rem 6rem;}
+.shop-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;}
+.shop-card{background:var(--card);position:relative;display:flex;flex-direction:column;cursor:pointer;transition:transform 0.3s;}
+.shop-card:hover{transform:translateY(-4px);}
+.shop-img{aspect-ratio:3/4;overflow:hidden;position:relative;}
+.shop-img-bg{width:100%;height:100%;background-size:cover;background-position:center top;transition:transform 0.6s,filter 0.4s;filter:brightness(0.85);}
+.shop-card:hover .shop-img-bg{transform:scale(1.05);filter:brightness(1);}
+.shop-badge{position:absolute;top:0.8rem;left:0.8rem;font-size:0.55rem;letter-spacing:1.5px;text-transform:uppercase;padding:0.3rem 0.7rem;font-weight:600;}
+.badge-available{background:rgba(201,168,76,0.9);color:var(--black);}
+.badge-sold{background:rgba(180,30,30,0.9);color:#fff;}
+.badge-print{background:rgba(255,255,255,0.15);color:var(--white);border:1px solid rgba(255,255,255,0.2);backdrop-filter:blur(4px);}
+.badge-resin{background:rgba(0,180,180,0.8);color:#fff;}
+.shop-info{padding:1.2rem;flex:1;display:flex;flex-direction:column;gap:0.5rem;border-top:1px solid rgba(255,255,255,0.05);}
+.shop-cat{font-size:0.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);}
+.shop-title{font-family:'Playfair Display',serif;font-size:1rem;line-height:1.3;}
+.shop-meta{font-size:0.68rem;color:var(--gray2);letter-spacing:0.5px;}
+.shop-price{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--gold);margin-top:auto;padding-top:0.5rem;}
+.shop-price.sold{color:var(--gray);font-size:1rem;font-family:'Inter',sans-serif;letter-spacing:1px;text-transform:uppercase;}
+.shop-actions{padding:0 1.2rem 1.2rem;display:flex;flex-direction:column;gap:0.5rem;}
+.btn-gold{background:var(--gold);color:var(--black);padding:0.7rem 1.5rem;font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;transition:all 0.3s;text-align:center;text-decoration:none;display:block;}
+.btn-gold:hover{background:var(--gold-light);}
+.btn-ghost{background:transparent;color:var(--white);padding:0.7rem 1.5rem;font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;border:1px solid rgba(255,255,255,0.15);cursor:pointer;transition:all 0.3s;text-align:center;text-decoration:none;display:block;}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+
+/* PRINTS SECTION */
+.prints-section{padding:6rem 3rem;background:var(--dark);}
+.section-header{margin-bottom:3rem;}
+.section-header h2{font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:0.5rem;}
+.section-header h2 em{color:var(--gold);font-style:italic;}
+.section-header p{color:var(--gray2);font-size:0.9rem;line-height:1.8;max-width:560px;}
+.label{font-size:0.68rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;}
+.bar{width:50px;height:2px;background:var(--gold);margin-bottom:1.5rem;}
+.prints-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:3px;}
+.print-card{background:var(--card);display:flex;overflow:hidden;min-height:280px;}
+.print-img{width:220px;flex-shrink:0;background-size:cover;background-position:center top;}
+.print-info{padding:2.5rem;display:flex;flex-direction:column;justify-content:space-between;flex:1;}
+.print-size{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--white);margin-bottom:0.3rem;}
+.print-dims{font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--gray2);margin-bottom:1rem;}
+.print-features{display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1.5rem;}
+.print-feature{display:flex;align-items:center;gap:0.6rem;font-size:0.78rem;color:var(--gray2);}
+.print-feature::before{content:'â¦';color:var(--gold);font-size:0.6rem;}
+.print-price-row{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem;}
+.print-price{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);}
+.print-note{font-size:0.68rem;color:var(--gray);letter-spacing:1px;text-transform:uppercase;line-height:1.5;}
+.custom-size-band{background:rgba(201,168,76,0.04);border:1px solid rgba(201,168,76,0.15);padding:2.5rem 3rem;margin-top:3px;display:flex;justify-content:space-between;align-items:center;gap:2rem;flex-wrap:wrap;}
+.custom-size-band h3{font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:0.4rem;}
+.custom-size-band p{color:var(--gray2);font-size:0.85rem;max-width:500px;}
+
+/* INQUIRY MODAL */
+.inquiry-modal{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0);pointer-events:none;transition:background 0.3s;display:flex;align-items:center;justify-content:center;}
+.inquiry-modal.open{background:rgba(0,0,0,0.9);pointer-events:all;}
+.inq-box{background:#111;border:1px solid rgba(201,168,76,0.2);max-width:520px;width:92%;padding:3rem;opacity:0;transform:translateY(20px);transition:all 0.4s;position:relative;max-height:90vh;overflow-y:auto;}
+.inquiry-modal.open .inq-box{opacity:1;transform:translateY(0);}
+.inq-title{font-family:'Playfair Display',serif;font-size:1.6rem;margin-bottom:0.4rem;}
+.inq-sub{font-size:0.8rem;color:var(--gray2);letter-spacing:1px;margin-bottom:2rem;}
+.inq-for{background:rgba(201,168,76,0.06);border-left:2px solid var(--gold);padding:0.8rem 1rem;margin-bottom:2rem;font-size:0.85rem;color:var(--gray2);}
+.inq-for strong{color:var(--white);}
+.form-row{margin-bottom:1.2rem;}
+.form-row label{display:block;font-size:0.68rem;letter-spacing:2px;text-transform:uppercase;color:var(--gray2);margin-bottom:0.5rem;}
+.form-row input,.form-row textarea,.form-row select{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:var(--white);padding:0.75rem 1rem;font-family:'Inter',sans-serif;font-size:0.88rem;outline:none;transition:border-color 0.3s;}
+.form-row input:focus,.form-row textarea:focus,.form-row select:focus{border-color:var(--gold);}
+.form-row textarea{min-height:100px;resize:vertical;}
+.form-row select option{background:#111;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.inq-close{position:absolute;top:1rem;right:1rem;width:36px;height:36px;background:transparent;border:1px solid rgba(255,255,255,0.1);color:var(--gray2);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.3s;}
+.inq-close:hover{border-color:var(--gold);color:var(--gold);}
+.form-success{text-align:center;padding:2rem 0;display:none;}
+.form-success .check{font-size:3rem;margin-bottom:1rem;}
+.form-success h3{font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:0.5rem;}
+.form-success p{color:var(--gray2);font-size:0.88rem;line-height:1.7;}
+
+/* FOOTER */
+footer{background:#040404;padding:3rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,0.05);flex-wrap:wrap;gap:1.5rem;}
+.f-logo{font-family:'Playfair Display',serif;font-size:1.1rem;}
+.f-logo span{color:var(--gold);}
+.f-links{display:flex;gap:2rem;flex-wrap:wrap;}
+.f-links a{color:var(--gray);text-decoration:none;font-size:0.75rem;letter-spacing:1px;text-transform:uppercase;transition:color 0.3s;}
+.f-links a:hover{color:var(--gold);}
+.f-copy{color:var(--gray);font-size:0.72rem;}
+
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s,transform 0.7s;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem;}
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .hero{padding:7rem 1.5rem 3rem;}
+  .filter-bar{padding:0 1.5rem 2.5rem;}
+  .shop-section{padding:2rem 1.5rem 4rem;}
+  .shop-grid{grid-template-columns:repeat(2,1fr);}
+  .prints-section{padding:4rem 1.5rem;}
+  .prints-grid{grid-template-columns:1fr;}
+  .print-card{flex-direction:column;}
+  .print-img{width:100%;height:220px;}
+  .custom-size-band{flex-direction:column;text-align:center;padding:2rem 1.5rem;}
+  footer{flex-direction:column;text-align:center;padding:2rem 1.5rem;}
+}
+@media(max-width:480px){
+  .shop-grid{grid-template-columns:repeat(2,1fr);}
+  .form-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<nav id="mainNav">
+  <a href="/" style="text-decoration:none;color:inherit;"><span class="logo">Arts <span>by</span> Justin</span></a>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/about">The Story</a></li>
+    <li><a href="/portfolio">Portfolio</a></li>
+    <li><a href="/press">Press</a></li>
+    <li><a href="/shop" class="active">Shop</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/" onclick="toggleMobile()">Home</a>
+  <a href="/about" onclick="toggleMobile()">The Story</a>
+  <a href="/portfolio" onclick="toggleMobile()">Portfolio</a>
+  <a href="/press" onclick="toggleMobile()">Press</a>
+  <a href="/shop" onclick="toggleMobile()">Shop</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag"><div class="hero-line"></div><span>The Shop</span><div class="hero-line"></div></div>
+  <h1>Own a Piece of<br/><em>the Story.</em></h1>
+  <p>Original paintings, fine art prints, and resin pieces â each one carrying the energy, purpose, and boldness that defines Arts by Justin. Find yours today.</p>
+</section>
+
+<!-- FILTER -->
+<div class="filter-bar">
+  <button class="filter-btn active" onclick="filterShop('all',this)">All</button>
+  <button class="filter-btn" onclick="filterShop('original',this)">Originals</button>
+  <button class="filter-btn" onclick="filterShop('print',this)">Prints</button>
+  <button class="filter-btn" onclick="filterShop('resin',this)">Resin Art</button>
+</div>
+
+<!-- SHOP GRID -->
+<section class="shop-section">
+  <div class="shop-grid" id="shopGrid"></div>
+</section>
+
+<!-- PRINTS SECTION -->
+<section class="prints-section" id="printsSection">
+  <div class="section-header reveal">
+    <p class="label">Fine Art Prints</p>
+    <div class="bar"></div>
+    <h2>Take the Art Home â<br/><em>Any Painting. Two Sizes.</em></h2>
+    <p>Can't get enough of a piece? Every artwork in Justin's collection is available as a high-quality fine art print. Choose your size, order instantly, and it ships straight to your door.</p>
+  </div>
+  <div class="prints-grid reveal">
+    <div class="print-card">
+      <div class="print-img" style="background:url('https://res.cloudinary.com/dztkjeayt/image/upload/v1772764073/7F349BFB-3ACD-47D6-9AC5-56FFEB7345B9_jlvpk9.jpg') center top/cover no-repeat;"></div>
+      <div class="print-info">
+        <div>
+          <div class="print-size">11 Ã 17"</div>
+          <div class="print-dims">Standard Fine Art Print</div>
+          <div class="print-features">
+            <div class="print-feature">Premium archival paper</div>
+            <div class="print-feature">Vibrant, fade-resistant inks</div>
+            <div class="print-feature">Ships in protective tube</div>
+            <div class="print-feature">Ready to frame</div>
+          </div>
         </div>
-        <div class="info-block">
-          <h4>Returns</h4>
-          <p>If you're not satisfied with your purchase, we offer a 30-day return window. Contact us to arrange returns.</p>
-        </div>
-        <div class="info-block">
-          <h4>Originals</h4>
-          <p>Interested in acquiring an original work? Contact Justin directly for availability, pricing, and custom requests.</p>
+        <div>
+          <div class="print-price-row">
+            <div class="print-price">$89</div>
+            <div class="print-note">Free shipping<br/>within the US</div>
+          </div>
+          <a class="btn-gold" href="https://artsbyjustin.etsy.com" target="_blank">Buy Now â $89 â</a>
         </div>
       </div>
     </div>
-  </section>
+    <div class="print-card">
+      <div class="print-img" style="background:url('https://res.cloudinary.com/dztkjeayt/image/upload/v1772764073/A34786D0-51D9-4524-B2A2-C2723CECE012_ugjrze.jpg') center top/cover no-repeat;"></div>
+      <div class="print-info">
+        <div>
+          <div class="print-size">12 Ã 18"</div>
+          <div class="print-dims">Large Fine Art Print</div>
+          <div class="print-features">
+            <div class="print-feature">Premium archival paper</div>
+            <div class="print-feature">Vibrant, fade-resistant inks</div>
+            <div class="print-feature">Ships in protective tube</div>
+            <div class="print-feature">Ready to frame</div>
+          </div>
+        </div>
+        <div>
+          <div class="print-price-row">
+            <div class="print-price">$99</div>
+            <div class="print-note">Free shipping<br/>within the US</div>
+          </div>
+          <a class="btn-gold" href="https://artsbyjustin.etsy.com" target="_blank">Buy Now â $99 â</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="custom-size-band reveal">
+    <div>
+      <h3>Need a Different Size?</h3>
+      <p>Want something bigger for a feature wall, or smaller for a tight space? Justin can accommodate custom print sizes on request â just reach out via the shop.</p>
+    </div>
+    <a class="btn-ghost" href="https://artsbyjustin.etsy.com" target="_blank">Visit the Etsy Shop â</a>
+  </div>
+</section>
 
-  <Footer slot="footer" />
-</Layout>
+<!-- INQUIRY MODAL -->
+<div class="inquiry-modal" id="inquiryModal" onclick="closeInquiry(event)">
+  <div class="inq-box" onclick="event.stopPropagation()">
+    <button class="inq-close" onclick="closeInquiry()">â</button>
+    <div id="inqForm">
+      <div class="inq-title" id="inqTitle">Get in Touch</div>
+      <div class="inq-sub">Justin will respond within 2â3 business days</div>
+      <div class="inq-for" id="inqFor" style="display:none;"></div>
+      <div class="form-grid">
+        <div class="form-row"><label>First Name</label><input type="text" id="inqFirst" placeholder="Jordan"/></div>
+        <div class="form-row"><label>Last Name</label><input type="text" id="inqLast" placeholder="Smith"/></div>
+      </div>
+      <div class="form-row"><label>Email</label><input type="email" id="inqEmail" placeholder="you@example.com"/></div>
+      <div class="form-row">
+        <label>I'm interested inâ¦</label>
+        <select id="inqType">
+          <option value="purchase">Purchasing an original</option>
+          <option value="print">Custom print size</option>
+          <option value="general">General inquiry</option>
+        </select>
+      </div>
+      <div class="form-row"><label>Message</label><textarea id="inqMsg" placeholder="Tell Justin what you're looking forâ¦"></textarea></div>
+      <button class="btn-gold" style="width:100%;padding:1rem;" onclick="submitInquiry()">Send Message â</button>
+    </div>
+    <div class="form-success" id="inqSuccess">
+      <div class="check">â¦</div>
+      <h3>Message Sent</h3>
+      <p>Thank you! Justin will be in touch within 2â3 business days.</p>
+    </div>
+  </div>
+</div>
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const cartBtns = document.querySelectorAll('.btn-add-to-cart');
-    
-    cartBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const itemId = btn.dataset.itemId;
-        // TODO: Integrate with Shopify, Stripe, or custom cart
-        alert(`Added to cart: ${itemId}`);
-      });
-    });
+<footer>
+  <a href="/" style="text-decoration:none;color:inherit;"><span class="f-logo">Arts <span>by</span> Justin</span></a>
+  <div class="f-links">
+    <a href="/">Home</a>
+    <a href="/portfolio">Portfolio</a>
+    <a href="/about">The Story</a>
+    <a href="/contact">Contact</a>
+  </div>
+  <span class="f-copy">Â© 2026 Arts by Justin Â· Justin Keishing Â· Raleigh, NC</span>
+</footer>
+
+<script is:inline>
+const ETSY = 'https://artsbyjustin.etsy.com';
+
+const shopItems = [
+  {id:1,  type:'original', title:'Music of Life',                    series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/3669243308f8d95c334488fe66124be3aedbc883-2999x3999.jpg'},
+  {id:2,  type:'original', title:'Wild Energy',                      series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/1c27a44e01ae441fc047cc29d2ae477b8f0ac2d4-3234x4851.jpg'},
+  {id:3,  type:'original', title:'Flame of Freedom',                 series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/890ed67df641aca8bdf6042bc9645bd1e499e195-2545x3831.jpg'},
+  {id:4,  type:'original', title:'Flight of Dream',                  series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/8cfa2d8ab45d7d7cd811f6fd76508a473e038809-1617x2448.jpg'},
+  {id:5,  type:'original', title:'The Perfect Swing',                series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/6f30b2b126a00f6f76a9739f1c0b798f2cfa1371-3824x5155.jpg'},
+  {id:6,  type:'original', title:'Gentleman of Whiskey and Cigar',   series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/1eba7647c8484ae02ba78e77f59bee67734f6f09-3954x5246.jpg'},
+  {id:7,  type:'original', title:'Beat the Dream',                   series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/b89ae2635f71d3533500d284eddecfd18849020e-2666x4096.jpg'},
+  {id:8,  type:'original', title:'Where Dreams Land',                series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/d3499a6176e71441ec31176550b06aecc6317a5f-3044x4096.jpg'},
+  {id:9,  type:'original', title:'Color of Commitment',              series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/ae8d25eae04051e0a3e15b1857389b2ec1faa316-2748x4096.jpg'},
+  {id:10, type:'original', title:'In His Hand',                      series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/babf45dcf48be8e113c0c9284a03cb175f66371a-3162x3792.jpg'},
+  {id:11, type:'original', title:'Destiny',                          series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/be9d3aa5a1c37da50cc92451e264031c355f1082-2744x4095.jpg'},
+  {id:12, type:'original', title:'Born to Swing',                    series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/b391824cd0e5e61cb4220212c815183946c626ec-2998x4002.jpg'},
+  {id:37, type:'original', title:'LeBron James',                     series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/dfb8ae0b828407b9525edc4bf854e50b7b2f8bc6-4096x3042.jpg'},
+  {id:38, type:'original', title:'Lions',                            series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/79a498557c242cd7a6de89454ff174fbac2c3cdc-2462x3308.jpg'},
+  {id:39, type:'original', title:'Color of Us',                      series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/0ef86d600935d92d8e0e44edd6d14d96b59f8b94-3264x4096.jpg'},
+  {id:40, type:'original', title:'Chasing',                          series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/f2767b437239d497c34529ccca1c3a3d0ef14b35-2578x3927.jpg'},
+  {id:41, type:'original', title:'Air of Dreams',                    series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/4b8b17cebe8c93131c3be7cfc7e24e6a1b9b62ec-3500x2346.jpg'},
+  {id:42, type:'original', title:'The Lion of Judah',                series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/bf396d1709bef11c8d85d2a35bd9bb784addb732-2977x3815.jpg'},
+  {id:44, type:'original', title:'Dreams From Within',             series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/8fc72ba99d1868371c152917aab906305c6ae4aa-2698x4096.jpg'},
+  {id:45, type:'original', title:'Swing for the Dream',           series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/0d55113ac18348a1846cf96c12faa51884dc5c24-2684x4096.jpg'},
+  {id:46, type:'original', title:'Paws on the Dream Road',        series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/4067ae71e510d1da30c89df4ad71aff1fca6757e-3151x3807.jpg'},
+  {id:43, type:'original', title:'Michael Jordan',                   series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/8392f3f18e36555a949d1635f65864ebfc20a7c3-2685x4096.jpg'},
+  {id:13, type:'resin', title:'Resin Flow I',    series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/688634d481105ed2103a6ac63a4990e14b3a8187-2154x2690.jpg'},
+  {id:14, type:'resin', title:'Resin Flow II',   series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/808d763af9ad5b12d8a11f4583af128ab4c83890-2049x3069.jpg'},
+  {id:15, type:'resin', title:'Resin Flow III',  series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/cdcfebd19465b89d313682e1750b5ec760f0b185-3201x3201.jpg'},
+  {id:16, type:'resin', title:'Resin Flow IV',   series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/df022857f5a4579167acfafa71a457b405b4a48e-3000x4000.jpg'},
+  {id:23, type:'resin', title:'Resin Flow V',    series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/e42855eb8b2305c062f88aee83cdcf4508d5d392-1853x3465.jpg'},
+  {id:24, type:'resin', title:'Resin Flow VI',   series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/9da445cf8364cb9b2b1ef312efe4ff047237f219-4032x3024.jpg'},
+  {id:25, type:'resin', title:'Resin Flow VII',  series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/cb0ea2187ccc0b63fb1b4d89e735b585d121957b-5712x4284.jpg'},
+  {id:26, type:'resin', title:'Resin Flow VIII', series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/6476959257e805e017a2ae9a0661df94bb56ccaa-3024x4032.jpg'},
+  {id:27, type:'resin', title:'Resin Flow IX',   series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/f0cc7b9ed0c4209c978943dbf02d99cf44d25979-3465x3465.jpg'},
+  {id:28, type:'resin', title:'Resin Flow X',    series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/393026338f8ae4481238cf916df239779b73c654-3000x4000.jpg'},
+  {id:29, type:'resin', title:'Resin Flow XI',   series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/31a38aa298efcab93d7d9fe81d75f54ba5479191-3464x3464.jpg'},
+  {id:30, type:'resin', title:'Resin Flow XII',  series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/5fffc5aa444bbf283ed4d53a2a584fd27861692d-3072x4096.jpg'},
+  {id:31, type:'resin', title:'Resin Flow XIII', series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/0e468758bee6b005ddf4521eb6a7f6622ffd4c94-3000x4000.jpg'},
+  {id:32, type:'resin', title:'Resin Flow XIV',  series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/a6e4496e1736103170ef67d2f618c6fbb3e18f5f-3465x3465.jpg'},
+  {id:33, type:'resin', title:'Resin Flow XV',   series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/c8b37911615637799d97ae8f09ef69170f44c686-4032x3024.jpg'},
+  {id:34, type:'resin', title:'Resin Flow XVI',  series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/79a91a2398b25ed31dc4812b5a244224d619a661-4284x5712.jpg'},
+  {id:17, type:'print', title:'SOAR â Fine Art Print',             series:'Chase Your Dreams', medium:'Fine Art Print', size:'11Ã17" or 12Ã18"', year:'2024', sold:false, price:'From $89', img:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764073/7F349BFB-3ACD-47D6-9AC5-56FFEB7345B9_jlvpk9.jpg'},
+  {id:18, type:'print', title:'MJ Â· North Carolina â Print',       series:'Chase Your Dreams', medium:'Fine Art Print', size:'11Ã17" or 12Ã18"', year:'2023', sold:false, price:'From $89', img:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764074/720AB739-426E-4A61-8F87-C9A02418F073_dshgtt.jpg'},
+  {id:19, type:'print', title:'The Crowned Lion â Print',          series:'Chase Your Dreams', medium:'Fine Art Print', size:'11Ã17" or 12Ã18"', year:'2024', sold:false, price:'From $89', img:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764074/CF7EC701-3AE5-4016-B257-AFC316897BFA_tmk55p.jpg'},
+  {id:20, type:'print', title:'Hurricanes â Fine Art Print',       series:'Chase Your Dreams', medium:'Fine Art Print', size:'11Ã17" or 12Ã18"', year:'2023', sold:false, price:'From $89', img:'https://res.cloudinary.com/dztkjeayt/image/upload/f_jpg/v1772764084/IMG_1151_zpo5cj.heic'},
+  {id:21, type:'print', title:'Ghost Rider â Fine Art Print',      series:'Chase Your Dreams', medium:'Fine Art Print', size:'11Ã17" or 12Ã18"', year:'2024', sold:false, price:'From $89', img:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764084/104544B2-B9C3-4C26-BE98-A7DFEB514A3C_efz3ud.jpg'},
+  {id:22, type:'print', title:'Skater â Fine Art Print',           series:'Chase Your Dreams', medium:'Fine Art Print', size:'11Ã17" or 12Ã18"', year:'2024', sold:false, price:'From $89', img:'https://res.cloudinary.com/dztkjeayt/image/upload/f_jpg/v1772764067/IMG_4729_dqr0sx.heic'},
+  {id:35, type:'print', title:'LeBron Â· Lakers â Fine Art Print',  series:'Chase Your Dreams', medium:'Fine Art Print', size:'11Ã17" or 12Ã18"', year:'2023', sold:false, price:'From $89', img:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764074/69C88F04-62F3-44FF-A719-75ADA0F583AF_tjcdmy.jpg'},
+  {id:36, type:'print', title:"The Creator's Hand â Fine Art Print", series:'Chase Your Dreams', medium:'Fine Art Print', size:'11Ã17" or 12Ã18"', year:'2024', sold:false, price:'From $89', img:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764084/E94CB8D4-B895-4956-B7F5-CBB3CA46560F_ngybmr.jpg'},
+];
+
+function getBadge(item){
+  if(item.type==='print') return '<span class="shop-badge badge-print">Fine Art Print</span>';
+  if(item.type==='resin') return '<span class="shop-badge badge-resin">Resin Art</span>';
+  if(item.sold) return '<span class="shop-badge badge-sold">Sold</span>';
+  return '<span class="shop-badge badge-available">Available</span>';
+}
+
+function getActions(item){
+  if(item.type==='print'){
+    return `<a class="btn-gold" href="${ETSY}" target="_blank">Shop Prints on Etsy â</a>`;
+  }
+  if(item.sold){
+    return `<button class="btn-ghost" onclick="openInquiry(${item.id},'general')">Inquire About Similar Work â</button>`;
+  }
+  if(item.type==='resin'){
+    return `<a class="btn-gold" href="${ETSY}" target="_blank">Request Pricing on Etsy â</a>`;
+  }
+  return `<a class="btn-gold" href="${ETSY}" target="_blank">Buy on Etsy â ${item.price} â</a>
+          <button class="btn-ghost" onclick="openInquiry(${item.id},'print')">Inquire About a Print</button>`;
+}
+
+function buildShop(filter){
+  const grid = document.getElementById('shopGrid');
+  grid.innerHTML = '';
+  const items = filter==='all' ? shopItems : shopItems.filter(i=>i.type===filter);
+  items.forEach(item=>{
+    const card = document.createElement('div');
+    card.className = 'shop-card';
+    card.innerHTML = `
+      <div class="shop-img">
+        <div class="shop-img-bg" style="background:url('${item.img}') center top/cover no-repeat;"></div>
+        ${getBadge(item)}
+      </div>
+      <div class="shop-info">
+        <div class="shop-cat">${item.series}</div>
+        <div class="shop-title">${item.title}</div>
+        <div class="shop-meta">${item.medium} Â· ${item.size} Â· ${item.year}</div>
+        <div class="shop-price ${item.sold?'sold':''}">${item.sold?'Sold':item.price}</div>
+      </div>
+      <div class="shop-actions">${getActions(item)}</div>`;
+    grid.appendChild(card);
   });
-</script>
+  document.getElementById('printsSection').style.display = (filter==='original') ? 'none' : '';
+}
 
-<style>
-  .shop-hero { background:#1A1A18; color:#EDE8DF; padding:10rem 2.5rem 5rem; text-align:center; }
-  .shop-hero h1 { font-family:'Playfair Display',serif; font-size:clamp(3rem,6vw,5rem); font-weight:700; letter-spacing:-0.02em; margin-bottom:1.5rem; }
-  .shop-hero p { color:#8B7355; max-width:600px; margin:0 auto; font-size:1.0625rem; line-height:1.75; }
-  .shop-grid-section { background:#F7F4EE; padding:5rem 2.5rem 6rem; }
-  .shop-inner { max-width:1280px; margin:0 auto; }
-  .shop-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2rem; }
-  .shop-card { }
-  .shop-image { background:#EDE8DF; height:400px; overflow:hidden; border:1px solid rgba(139,115,85,0.15); }
-  .shop-image img { width:100%; height:100%; object-fit:cover; transition:transform 0.4s; }
-  .shop-card:hover .shop-image img { transform:scale(1.03); }
-  .shop-meta { padding:1rem 0; }
-  .shop-meta h3 { font-family:'Playfair Display',serif; font-size:0.95rem; font-weight:600; margin-bottom:0.25rem; }
-  .meta-info { font-size:0.75rem; color:#8B7355; margin-bottom:0.5rem; }
-  .price { font-family:'DM Sans',sans-serif; font-weight:600; color:#C4622D; font-size:1rem; margin-bottom:0.75rem; }
-  .btn-add-to-cart { display:block; width:100%; background:#C4622D; color:#F7F4EE; border:none; padding:0.75rem; font-size:0.75rem; letter-spacing:0.06em; text-transform:uppercase; font-family:'DM Sans',sans-serif; cursor:pointer; transition:background 0.25s; }
-  .btn-add-to-cart:hover { background:#A8501F; }
-  .img-placeholder { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.5rem; border:1px dashed #8B7355; color:#8B7355; font-size:0.8rem; text-align:center; padding:2rem; width:100%; height:400px; font-family:'Playfair Display',serif; box-sizing:border-box; }
-  .img-placeholder span { font-size:1rem; color:#3D3D3A; font-weight:600; }
-  .no-items { color:#8B7355; }
-  .shipping-info { max-width:1280px; margin:0 auto; padding:6rem 2.5rem; }
-  .shipping-inner { }
-  .shipping-info h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3rem); font-weight:600; letter-spacing:-0.02em; text-align:center; margin-bottom:3rem; }
-  .info-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:3rem; }
-  .info-block h4 { font-family:'Playfair Display',serif; font-size:1.125rem; font-weight:600; margin-bottom:0.75rem; color:#1A1A18; }
-  .info-block p { color:#3D3D3A; font-size:0.95rem; line-height:1.7; }
-  @media (max-width:1024px) { 
-    .shop-grid { grid-template-columns:repeat(3,1fr); gap:1.5rem; }
-    .info-grid { grid-template-columns:repeat(2,1fr); }
-    .shop-grid-section { padding:4rem 2.5rem 5rem; }
-  }
-  @media (max-width:768px) { 
-    .shop-grid { grid-template-columns:repeat(2,1fr); gap:1.5rem; }
-    .info-grid { grid-template-columns:1fr; }
-  }
-  @media (max-width:640px) { 
-    .shop-hero,.shop-grid-section,.shipping-info { padding-inline:1.5rem; } 
-    .shop-grid { grid-template-columns:1fr; }
-  }
-</style>
+function filterShop(f, btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  buildShop(f);
+}
+
+function openInquiry(id, type){
+  document.getElementById('inqForm').style.display='';
+  document.getElementById('inqSuccess').style.display='none';
+  const sel = document.getElementById('inqType');
+  const titleEl = document.getElementById('inqTitle');
+  if(type==='print'){sel.value='print';titleEl.textContent='Inquire About a Print';}
+  else{sel.value='general';titleEl.textContent='Get in Touch';}
+  const f = document.getElementById('inqFor');
+  if(id){
+    const item = shopItems.find(x=>x.id===id);
+    f.style.display='';
+    f.innerHTML=`Regarding: <strong>${item.title}</strong> Â· ${item.medium}, ${item.size}`;
+  } else f.style.display='none';
+  document.getElementById('inquiryModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeInquiry(e){
+  if(e&&e.target!==document.getElementById('inquiryModal'))return;
+  document.getElementById('inquiryModal').classList.remove('open');
+  document.body.style.overflow='';
+}
+function submitInquiry(){
+  if(!document.getElementById('inqFirst').value.trim()||!document.getElementById('inqEmail').value.trim()){alert('Please fill in your name and email.');return;}
+  document.getElementById('inqForm').style.display='none';
+  document.getElementById('inqSuccess').style.display='block';
+  setTimeout(()=>{document.getElementById('inquiryModal').classList.remove('open');document.body.style.overflow='';},3500);
+}
+
+window.addEventListener('scroll',()=>document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>60));
+function toggleMobile(){document.getElementById('mobileMenu').classList.toggle('open');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('inquiryModal').classList.remove('open');document.body.style.overflow='';}});
+const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.15});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+buildShop('all');
+</script>
+</body>
+</html>
+
