@@ -1,7 +1,5 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Nav from '../components/Nav.astro';
-import Footer from '../components/Footer.astro';
 import { sanityClient } from '../lib/sanity.ts';
 
 const siteSettings = await sanityClient.fetch(`*[_type == "siteSettings"][0]`);
@@ -16,7 +14,7 @@ const {
 } = settings;
 ---
 <Layout title="Contact" description={`Get in touch with ${artistName} about commissions, inquiries, and collaborations.`}>
-  <Nav slot="nav" />
+  
 
   <section class="contact-hero reveal">
     <h1>Get In Touch</h1>
@@ -86,7 +84,7 @@ const {
 
   <div id="ghl-widget-container" style="display:none;"></div>
 
-  <Footer slot="footer" />
+  
 </Layout>
 
 <script>

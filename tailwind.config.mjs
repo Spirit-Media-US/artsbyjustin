@@ -4,16 +4,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        cream:    '#F7F4EE',
-        ink:      '#1A1A18',
-        rust:     '#C4622D',
-        umber:    '#8B7355',
-        linen:    '#EDE8DF',
-        charcoal: '#3D3D3A',
+        black:        '#080808',
+        dark:         '#111111',
+        card:         '#161616',
+        gold:         '#c9a84c',
+        'gold-light': '#e8c97a',
+        white:        '#f0f0f0',
+        gray:         '#777777',
+        gray2:        '#aaaaaa',
       },
       fontFamily: {
         display: ['"Playfair Display"', 'Georgia', 'serif'],
-        body:    ['"DM Sans"', 'system-ui', 'sans-serif'],
+        body:    ['"Inter"', 'system-ui', 'sans-serif'],
       },
     },
   },

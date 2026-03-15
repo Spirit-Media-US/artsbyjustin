@@ -1,73 +1,117 @@
 ---
-import { sanityClient, urlFor } from '../lib/sanity';
-
 const currentPath = Astro.url.pathname;
-const links = [
-  { href: '/portfolio', label: 'Portfolio' },
-  { href: '/commissions', label: 'Commissions' },
-  { href: '/shop', label: 'Shop' },
-  { href: '/about', label: 'About' },
-  { href: '/contact', label: 'Contact' },
-];
-
-const siteSettings = await sanityClient.fetch(`*[_type == "siteSettings"][0]`);
-const { artistName = 'Arts by Justin', logo } = siteSettings || {};
+const isHome = currentPath === '/';
+const isAbout = currentPath === '/about';
+const isCommissions = currentPath === '/commissions';
+const isPress = currentPath === '/press';
 ---
 <header id="site-header">
   <nav>
-    <a href="/" class="wordmark">
-      {logo && logo.asset 
-        ? <img 
-            src={urlFor(logo).width(180).url()} 
-            alt={artistName}
-            class="logo-image"
-          />
-        : artistName
-      }
-    </a>
+    <a href="/" class="wordmark">Arts <span>by</span> Justin</a>
     <button class="menu-toggle" aria-label="Toggle menu" id="menuToggle">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links" id="navLinks">
-      {links.map(link => (
-        <li>
-          <a href={link.href} class:list={['nav-link', { active: currentPath.startsWith(link.href) }]}>
-            {link.label}
-          </a>
-        </li>
-      ))}
+      <li><a href="/" class:list={['nav-link', { active: isHome }]}>Home</a></li>
+      <li><a href="/about" class:list={['nav-link', { active: isAbout }]}>The Story</a></li>
+      <li><a href="/" class:list={['nav-link', { active: isHome }]}>Portfolio</a></li>
+      <li><a href="/commissions" class:list={['nav-link', { active: isCommissions }]}>Commissions</a></li>
+      <li><a href="/press" class:list={['nav-link', { active: isPress }]}>Press</a></li>
+      <li><a href="/shop" class="nav-cta">Shop Now</a></li>
     </ul>
   </nav>
 </header>
 <style>
   #site-header {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    padding: 0 2.5rem; height: 72px; display: flex; align-items: center;
-    background: rgba(247,244,238,0.88);
-    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(26,26,24,0.08);
-    transition: box-shadow 0.3s ease;
+    position: sticky;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    padding: 1.2rem 3rem;
+    display: flex;
+    align-items: center;
+    background: rgba(8,8,8,0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
   }
-  #site-header.scrolled { box-shadow: 0 2px 24px rgba(26,26,24,0.08); }
-  nav { width: 100%; max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
-  .wordmark { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.01em; color: #1A1A18; display: flex; align-items: center; }
-  .logo-image { height: 48px; width: auto; }
-  .nav-links { display: flex; list-style: none; gap: 2.5rem; align-items: center; }
-  .nav-link { font-family: 'DM Sans', sans-serif; font-size: 0.875rem; letter-spacing: 0.06em; text-transform: uppercase; color: #3D3D3A; position: relative; padding-bottom: 2px; transition: color 0.2s; }
-  .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: #C4622D; transition: width 0.3s ease; }
-  .nav-link:hover, .nav-link.active { color: #1A1A18; }
-  .nav-link:hover::after, .nav-link.active::after { width: 100%; }
-  .menu-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
-  .menu-toggle span { display: block; width: 24px; height: 1.5px; background: #1A1A18; transition: all 0.3s ease; }
+  nav {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .wordmark {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    color: #f0f0f0;
+  }
+  .wordmark span { color: #c9a84c; }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    align-items: center;
+  }
+  .nav-link {
+    font-family: 'Inter', sans-serif;
+    color: #aaa;
+    font-size: 0.78rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-link:hover, .nav-link.active { color: #c9a84c; }
+  .nav-cta {
+    background: #c9a84c;
+    color: #080808;
+    padding: 0.55rem 1.4rem;
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.3s;
+  }
+  .nav-cta:hover { background: #e8c97a; }
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .menu-toggle span {
+    display: block;
+    width: 24px;
+    height: 1.5px;
+    background: #f0f0f0;
+    transition: all 0.3s ease;
+  }
   @media (max-width: 768px) {
-    #site-header { padding: 0 1.5rem; }
+    #site-header { padding: 1rem 1.5rem; }
     .menu-toggle { display: flex; }
-    .nav-links { position: fixed; top: 72px; left: 0; right: 0; flex-direction: column; background: #F7F4EE; padding: 2rem; gap: 1.5rem; border-bottom: 1px solid rgba(26,26,24,0.1); transform: translateY(-100%); opacity: 0; pointer-events: none; transition: all 0.3s ease; }
+    .nav-links {
+      position: fixed;
+      top: 61px; left: 0; right: 0;
+      flex-direction: column;
+      background: rgba(8,8,8,0.98);
+      padding: 2rem;
+      gap: 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transform: translateY(-110%);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
     .nav-links.open { transform: translateY(0); opacity: 1; pointer-events: all; }
+    .nav-cta { text-align: center; }
   }
 </style>
 <script>
-  const header = document.getElementById('site-header');
-  window.addEventListener('scroll', () => header?.classList.toggle('scrolled', window.scrollY > 20));
-  document.getElementById('menuToggle')?.addEventListener('click', () => document.getElementById('navLinks')?.classList.toggle('open'));
+  document.getElementById('menuToggle')?.addEventListener('click', () => {
+    document.getElementById('navLinks')?.classList.toggle('open');
+  });
 </script>
