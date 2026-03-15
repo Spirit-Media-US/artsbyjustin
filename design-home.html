@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Arts by Justin — Art With a Purpose</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --black:#080808;--dark:#111;--card:#161616;
+  --gold:#c9a84c;--gold-light:#e8c97a;
+  --white:#f0f0f0;--gray:#777;--gray2:#aaa;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--black);color:var(--white);font-family:'Inter',sans-serif;overflow-x:hidden;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.2rem 3rem;display:flex;justify-content:space-between;align-items:center;background:rgba(8,8,8,0.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.04);}
+.logo{font-family:'Playfair Display',serif;font-size:1.3rem;letter-spacing:2px;}
+.logo span{color:var(--gold);}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{color:var(--gray2);text-decoration:none;font-size:0.78rem;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.3s;}
+.nav-links a:hover{color:var(--gold);}
+.nav-cta{background:var(--gold);color:var(--black);padding:0.55rem 1.4rem;font-size:0.75rem;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;transition:all 0.3s;}
+.nav-cta:hover{background:var(--gold-light);}
+
+/* HERO */
+.hero{height:100vh;position:relative;display:flex;align-items:center;overflow:hidden;}
+.hero-painting{position:absolute;right:0;top:0;bottom:0;width:58%;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:brightness(0.75);transition:opacity 1s ease;}
+.hero-bg.fading{opacity:0;}
+.hero-fade{position:absolute;inset:0;background:linear-gradient(to right,#080808 30%,rgba(8,8,8,0.5) 60%,rgba(8,8,8,0.1) 100%);}
+.hero-content{position:relative;z-index:2;padding:0 3rem;max-width:600px;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:0.8rem;margin-bottom:2rem;}
+.hero-line{width:30px;height:1px;background:var(--gold);}
+.hero-eyebrow span{font-size:0.68rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(3.2rem,5.5vw,5.5rem);line-height:1.05;margin-bottom:1.5rem;font-weight:700;}
+.hero h1 em{color:var(--gold);font-style:italic;display:block;}
+.hero-sub{color:var(--gray2);font-size:0.97rem;line-height:1.9;margin-bottom:2.5rem;font-weight:300;max-width:420px;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-gold{background:var(--gold);color:var(--black);padding:0.85rem 2rem;font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;transition:all 0.3s;}
+.btn-gold:hover{background:var(--gold-light);transform:translateY(-2px);}
+.btn-ghost{background:transparent;color:var(--white);padding:0.85rem 2rem;font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;border:1px solid rgba(255,255,255,0.2);cursor:pointer;transition:all 0.3s;}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+.hero-caption{position:absolute;bottom:1.8rem;right:2rem;font-size:0.65rem;letter-spacing:3px;color:rgba(255,255,255,0.3);text-transform:uppercase;z-index:2;transition:opacity 0.4s;}
+.scroll-hint{position:absolute;bottom:2.5rem;left:3rem;display:flex;align-items:center;gap:1rem;color:var(--gray);font-size:0.68rem;letter-spacing:3px;text-transform:uppercase;}
+.scroll-line{width:40px;height:1px;background:var(--gold);animation:grow 2s ease-in-out infinite;}
+@keyframes grow{0%,100%{width:40px;opacity:0.4;}50%{width:65px;opacity:1;}}
+
+/* CINEMATIC VIEWER */
+.viewer{position:relative;height:85vh;background:#000;overflow:hidden;cursor:pointer;}
+.viewer-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.2s ease;transform:scale(1.04);transition:opacity 1.2s ease, transform 8s ease;}
+.viewer-slide.active{opacity:1;transform:scale(1);}
+.viewer-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.1) 50%,transparent 100%);z-index:1;}
+.viewer-info{position:absolute;bottom:3rem;left:3rem;z-index:2;}
+.viewer-info h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,3rem);margin-bottom:0.4rem;}
+.viewer-info p{color:var(--gray2);font-size:0.8rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:1.2rem;}
+.viewer-dots{display:flex;gap:0.6rem;}
+.viewer-dot{width:24px;height:2px;background:rgba(255,255,255,0.25);cursor:pointer;transition:all 0.3s;}
+.viewer-dot.active{background:var(--gold);width:40px;}
+.viewer-nav{position:absolute;right:3rem;bottom:3rem;z-index:2;display:flex;gap:1rem;}
+.viewer-btn{width:44px;height:44px;border:1px solid rgba(255,255,255,0.2);background:transparent;color:var(--white);font-size:1.1rem;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;justify-content:center;}
+.viewer-btn:hover{border-color:var(--gold);color:var(--gold);}
+.viewer-counter{position:absolute;top:2rem;right:3rem;z-index:2;font-size:0.7rem;letter-spacing:3px;color:rgba(255,255,255,0.35);text-transform:uppercase;}
+
+/* STRIP */
+.strip{display:grid;grid-template-columns:repeat(5,1fr);height:260px;gap:2px;}
+.strip-item{overflow:hidden;position:relative;cursor:pointer;background-size:cover;background-position:center;}
+.strip-item::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.35);transition:background 0.4s;}
+.strip-item:hover::after{background:rgba(0,0,0,0.1);}
+.strip-caption{position:absolute;bottom:0;left:0;right:0;padding:0.8rem;background:linear-gradient(to top,rgba(0,0,0,0.85),transparent);transform:translateY(100%);transition:transform 0.3s;z-index:1;}
+.strip-item:hover .strip-caption{transform:translateY(0);}
+.strip-caption span{font-size:0.65rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.85);}
+
+/* ABOUT */
+.about{display:grid;grid-template-columns:1fr 1fr;min-height:650px;}
+.about-img{position:relative;overflow:hidden;background-size:cover;background-position:center top;}
+.about-img-overlay{position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,#111 100%);}
+.about-badge{position:absolute;top:2rem;left:2rem;background:var(--gold);color:var(--black);font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;padding:0.4rem 1rem;font-weight:700;}
+.about-body{padding:5rem 4rem;display:flex;flex-direction:column;justify-content:center;background:#111;}
+.label{font-size:0.68rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;}
+.bar{width:50px;height:2px;background:var(--gold);margin-bottom:2rem;}
+.about-body h2{font-family:'Playfair Display',serif;font-size:2.4rem;line-height:1.2;margin-bottom:1.5rem;}
+.about-body p{color:var(--gray2);font-size:0.93rem;line-height:1.9;margin-bottom:1rem;font-weight:300;}
+.pull-quote{margin:1.8rem 0;padding:1.5rem;border-left:2px solid var(--gold);background:rgba(201,168,76,0.05);}
+.pull-quote p{font-family:'Playfair Display',serif;font-style:italic;color:var(--gold-light);font-size:1.05rem;line-height:1.7;}
+
+/* WORKS GRID */
+.works{padding:6rem 3rem;background:var(--black);}
+.works-hdr{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;}
+.works-hdr h2{font-family:'Playfair Display',serif;font-size:2.2rem;}
+.masonry{display:grid;grid-template-columns:1.5fr 1fr 1fr;grid-template-rows:320px 280px;gap:3px;}
+.art{position:relative;overflow:hidden;cursor:pointer;background-size:cover;background-position:center;}
+.art::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.2);transition:background 0.4s;}
+.art:hover::after{background:rgba(0,0,0,0);}
+.art-info{position:absolute;bottom:0;left:0;right:0;padding:1.2rem 1.5rem;background:linear-gradient(to top,rgba(0,0,0,0.92),transparent);transform:translateY(100%);transition:transform 0.35s;z-index:1;}
+.art:hover .art-info{transform:translateY(0);}
+.art-info h3{font-family:'Playfair Display',serif;font-size:0.95rem;margin-bottom:0.2rem;}
+.art-info p{font-size:0.7rem;letter-spacing:1px;text-transform:uppercase;color:var(--gray2);}
+.art-tag{position:absolute;top:1rem;left:1rem;background:rgba(8,8,8,0.7);font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;padding:0.3rem 0.7rem;color:var(--gold);border:1px solid rgba(201,168,76,0.3);z-index:1;}
+.span-row{grid-row:span 2;}
+
+/* CATEGORIES */
+.cats{padding:5rem 3rem;background:#111;}
+.cats-intro{text-align:center;margin-bottom:3rem;}
+.cats-intro h2{font-family:'Playfair Display',serif;font-size:2.2rem;margin-bottom:0.8rem;}
+.cats-intro p{color:var(--gray2);font-size:0.9rem;font-weight:300;}
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;}
+.cat{position:relative;aspect-ratio:2/3;overflow:hidden;cursor:pointer;background-size:cover;background-position:center;}
+.cat::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.55);transition:background 0.4s;}
+.cat:hover::after{background:rgba(0,0,0,0.35);}
+.cat-info{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1.8rem;background:linear-gradient(to top,rgba(0,0,0,0.9) 0%,transparent 60%);z-index:1;}
+.cat-info h3{font-family:'Playfair Display',serif;font-size:1.2rem;margin-bottom:0.3rem;}
+.cat-info span{font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);}
+
+/* MAGAZINE */
+.mag{padding:6rem 3rem;background:linear-gradient(135deg,#0d0800,#130900);display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+.mag-card{background:#111;border:1px solid rgba(201,168,76,0.15);padding:3rem;position:relative;}
+.mag-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--gold),var(--gold-light),var(--gold));}
+.mag-badge{display:inline-block;background:var(--gold);color:var(--black);font-size:0.62rem;letter-spacing:3px;padding:0.35rem 1rem;font-weight:700;text-transform:uppercase;margin-bottom:1.5rem;}
+.mag-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-style:italic;color:var(--gold-light);line-height:1.2;margin-bottom:0.4rem;}
+.mag-date{color:var(--gray);font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:1.5rem;}
+.mag-body{color:var(--gray2);font-size:0.88rem;line-height:1.85;margin-bottom:2rem;}
+.mag-link{color:var(--gold);font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;}
+.mag-link:hover{color:var(--gold-light);}
+
+/* COMMISSIONS */
+.comm{padding:6rem 3rem;background:var(--black);text-align:center;}
+.comm h2{font-family:'Playfair Display',serif;font-size:2.5rem;margin-bottom:1rem;}
+.comm-sub{color:var(--gray2);max-width:540px;margin:0 auto 3.5rem;font-size:0.93rem;line-height:1.85;font-weight:300;}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-bottom:3.5rem;background:rgba(255,255,255,0.04);}
+.step{padding:2.5rem 1.5rem;background:var(--black);text-align:left;transition:background 0.3s;}
+.step:hover{background:#0d0d0d;}
+.step-n{font-family:'Playfair Display',serif;font-size:3.5rem;color:rgba(201,168,76,0.1);line-height:1;margin-bottom:1rem;}
+.step h4{font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:0.6rem;}
+.step p{color:var(--gray);font-size:0.8rem;line-height:1.7;}
+
+/* STATS */
+.stats-band{padding:5rem 3rem;background:#111;display:flex;justify-content:space-between;align-items:center;gap:4rem;}
+.stats-text{max-width:480px;}
+.stats-text h2{font-family:'Playfair Display',serif;font-size:2.1rem;margin-bottom:1rem;}
+.stats-text p{color:var(--gray2);font-size:0.93rem;line-height:1.9;font-weight:300;margin-bottom:2rem;}
+.stats-nums{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem;flex-shrink:0;}
+.stat{text-align:center;}
+.stat-n{font-family:'Playfair Display',serif;font-size:3rem;color:var(--gold);line-height:1;}
+.stat-l{font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-top:0.5rem;}
+
+/* TESTIMONIALS */
+.testi{padding:5rem 3rem;background:var(--black);text-align:center;}
+.testi h2{font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:3rem;}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.testi-card{background:var(--card);border:1px solid rgba(255,255,255,0.05);padding:2.5rem;text-align:left;}
+.stars{color:var(--gold);font-size:0.85rem;letter-spacing:3px;margin-bottom:1rem;}
+.testi-q{font-family:'Playfair Display',serif;font-style:italic;font-size:0.98rem;line-height:1.75;color:var(--white);margin-bottom:1.5rem;}
+.testi-by{font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--gray);}
+
+/* SHOP */
+.shop{padding:6rem 3rem;background:#111;}
+.shop-top{margin-bottom:3.5rem;}
+.shop-top h2{font-family:'Playfair Display',serif;font-size:2.2rem;margin-bottom:1rem;}
+.shop-top p{color:var(--gray2);font-size:0.93rem;line-height:1.85;font-weight:300;max-width:500px;}
+.shop-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(255,255,255,0.04);}
+.shop-card{padding:2.2rem 2.5rem;background:#111;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:background 0.3s;}
+.shop-card:hover{background:#1a1a1a;}
+.shop-n{font-family:'Playfair Display',serif;font-size:1.15rem;margin-bottom:0.3rem;}
+.shop-d{color:var(--gray);font-size:0.8rem;}
+.shop-arr{color:var(--gold);font-size:1.3rem;transition:transform 0.3s;}
+.shop-card:hover .shop-arr{transform:translateX(6px);}
+
+/* CTA */
+.cta{padding:8rem 3rem;background:linear-gradient(135deg,#0d0800,#150900);text-align:center;}
+.cta h2{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,5vw,4rem);margin-bottom:1.5rem;line-height:1.15;}
+.cta h2 em{color:var(--gold);font-style:italic;}
+.cta p{color:var(--gray2);font-size:0.98rem;margin-bottom:3rem;font-weight:300;line-height:1.8;}
+
+/* FOOTER */
+footer{background:#040404;padding:4rem 3rem;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;border-top:1px solid rgba(255,255,255,0.05);}
+.f-logo{font-family:'Playfair Display',serif;font-size:1.2rem;margin-bottom:1rem;display:block;}
+.f-logo span{color:var(--gold);}
+.f-about{color:var(--gray);font-size:0.8rem;line-height:1.85;max-width:240px;margin-bottom:1.5rem;}
+.f-social{display:flex;gap:1.5rem;}
+.f-social a{color:var(--gray);text-decoration:none;font-size:0.72rem;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.3s;}
+.f-social a:hover{color:var(--gold);}
+.f-col h4{font-size:0.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;}
+.f-col ul{list-style:none;}
+.f-col li{margin-bottom:0.8rem;}
+.f-col a{color:var(--gray);text-decoration:none;font-size:0.8rem;transition:color 0.3s;}
+.f-col a:hover{color:var(--white);}
+.f-bottom{background:#020202;padding:1.4rem 3rem;display:flex;justify-content:space-between;color:var(--gray);font-size:0.72rem;border-top:1px solid rgba(255,255,255,0.03);}
+
+/* Loading skeleton */
+.skeleton{background:linear-gradient(90deg,#1a1a1a 25%,#222 50%,#1a1a1a 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;}
+@keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">Arts <span>by</span> Justin</span>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">The Story</a></li>
+    <li><a href="#">Portfolio</a></li>
+    <li><a href="#">Commissions</a></li>
+    <li><a href="#">Blog</a></li>
+  </ul>
+  <button class="nav-cta">Shop Now</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-painting" id="heroPainting">
+    <div class="hero-bg skeleton" id="heroBg"></div>
+  </div>
+  <div class="hero-fade"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="hero-line"></div>
+      <span>Raleigh, NC · Est. 2020</span>
+    </div>
+    <h1>Art With<br/>a <em>Purpose.</em></h1>
+    <p class="hero-sub">Bold. Expressive. Spirit-led. Original acrylic & mixed media works — created in Raleigh, collected around the world.</p>
+    <div class="hero-btns">
+      <button class="btn-gold">Explore the Work →</button>
+      <button class="btn-ghost">My Story</button>
+    </div>
+  </div>
+  <div class="hero-caption" id="heroCaption"></div>
+  <div class="scroll-hint"><div class="scroll-line"></div><span>Scroll</span></div>
+</section>
+
+<!-- GALLERY STRIP -->
+<div class="strip" id="galleryStrip">
+  <div class="strip-item skeleton"></div>
+  <div class="strip-item skeleton"></div>
+  <div class="strip-item skeleton"></div>
+  <div class="strip-item skeleton"></div>
+  <div class="strip-item skeleton"></div>
+</div>
+
+<!-- CINEMATIC VIEWER -->
+<section class="viewer" id="cinematicViewer">
+  <div class="viewer-counter" id="viewerCounter"></div>
+  <div class="viewer-overlay"></div>
+  <div class="viewer-info">
+    <h2 id="viewerTitle"></h2>
+    <p id="viewerMeta"></p>
+    <div class="viewer-dots" id="viewerDots"></div>
+  </div>
+  <div class="viewer-nav">
+    <button class="viewer-btn" id="viewerPrev">←</button>
+    <button class="viewer-btn" id="viewerNext">→</button>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about">
+  <div class="about-img skeleton" id="aboutImg" style="min-height:500px;">
+    <div class="about-img-overlay"></div>
+    <div class="about-badge">Artist · Raleigh, NC</div>
+  </div>
+  <div class="about-body">
+    <p class="label">The Story</p>
+    <div class="bar"></div>
+    <h2>From Poverty<br/>to Fine Art</h2>
+    <p>My journey didn't start in a studio. It started with a dream bigger than my circumstances — a belief that beauty could exist even in the hardest places.</p>
+    <p>Every canvas I touch carries that story. Of faith. Of resilience. Of the conviction that art can change how we see the world and ourselves.</p>
+    <div class="pull-quote">
+      <p>"I don't just create art. I create conversations, connections, and change."</p>
+    </div>
+    <br/>
+    <button class="btn-gold">Read My Full Story →</button>
+  </div>
+</section>
+
+<!-- FEATURED WORKS -->
+<section class="works">
+  <div class="works-hdr">
+    <div>
+      <p class="label">Portfolio</p>
+      <div class="bar"></div>
+      <h2>Featured Works</h2>
+    </div>
+    <button class="btn-ghost">View All Work →</button>
+  </div>
+  <div class="masonry" id="masonryGrid">
+    <div class="art span-row skeleton"></div>
+    <div class="art skeleton"></div>
+    <div class="art skeleton"></div>
+    <div class="art skeleton"></div>
+    <div class="art skeleton"></div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="cats">
+  <div class="cats-intro">
+    <p class="label" style="text-align:center;">Browse by Theme</p>
+    <div class="bar" style="margin:0.5rem auto 1rem;"></div>
+    <h2>Every Canvas Tells a Story</h2>
+    <p>From sports legends to spiritual journeys — explore Justin's world.</p>
+  </div>
+  <div class="cat-grid" id="catGrid">
+    <div class="cat skeleton" style="aspect-ratio:2/3;"></div>
+    <div class="cat skeleton" style="aspect-ratio:2/3;"></div>
+    <div class="cat skeleton" style="aspect-ratio:2/3;"></div>
+    <div class="cat skeleton" style="aspect-ratio:2/3;"></div>
+  </div>
+</section>
+
+<!-- MAGAZINE -->
+<section class="mag">
+  <div>
+    <p class="label">Press & Recognition</p>
+    <div class="bar"></div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:2.2rem;margin-bottom:1.5rem;">Recognized<br/>Beyond the Studio</h2>
+    <p style="color:var(--gray2);font-size:0.93rem;line-height:1.9;font-weight:300;margin-bottom:1rem;">Justin's work has earned its place not just on walls — but in publications, galleries, and art shows that celebrate artists who create with purpose and vision.</p>
+    <p style="color:var(--gray2);font-size:0.93rem;line-height:1.9;font-weight:300;margin-bottom:2rem;">From Raleigh to international stages, the story keeps growing.</p>
+    <button class="btn-gold">View Press & Awards →</button>
+  </div>
+  <div class="mag-card">
+    <span class="mag-badge">Featured Magazine</span>
+    <div class="mag-title">From Poverty<br/>to Fine Art</div>
+    <div class="mag-date">August 2023</div>
+    <p class="mag-body">A full feature on Justin Keishing's remarkable journey from humble beginnings to international recognition — a story of faith, resilience, and art made with purpose.</p>
+    <a href="#" class="mag-link">Read the Full Feature →</a>
+  </div>
+</section>
+
+<!-- COMMISSIONS -->
+<section class="comm">
+  <p class="label" style="text-align:center;">Work With Justin</p>
+  <div class="bar" style="margin:0.5rem auto 1.5rem;"></div>
+  <h2>Let's Create Something<br/>Just for You</h2>
+  <p class="comm-sub">Have a vision? A story you want told in paint? I take on a limited number of commissioned works each year. Every piece is personal, intentional, and made with purpose.</p>
+  <div class="steps">
+    <div class="step"><div class="step-n">01</div><h4>Connect</h4><p>Reach out and share your idea, vision, or the story you want told.</p></div>
+    <div class="step"><div class="step-n">02</div><h4>Consult</h4><p>We discuss concept, size, medium, timeline, and investment.</p></div>
+    <div class="step"><div class="step-n">03</div><h4>Create</h4><p>Justin brings your vision to life with care, intention, and purpose.</p></div>
+    <div class="step"><div class="step-n">04</div><h4>Deliver</h4><p>Your one-of-a-kind piece arrives, ready to hang and move people.</p></div>
+  </div>
+  <button class="btn-gold">Start a Commission →</button>
+</section>
+
+<!-- STATS -->
+<section class="stats-band">
+  <div class="stats-text">
+    <p class="label">Art Shows</p>
+    <div class="bar"></div>
+    <h2>Seen Around<br/>the World</h2>
+    <p>Because of you — my collectors and supporters — my work has found walls in galleries and art shows internationally. Every show is a reminder of why I create.</p>
+    <button class="btn-ghost">See Where I've Shown →</button>
+  </div>
+  <div class="stats-nums">
+    <div class="stat"><div class="stat-n">450+</div><div class="stat-l">Works Created</div></div>
+    <div class="stat"><div class="stat-n">26+</div><div class="stat-l">Art Shows</div></div>
+    <div class="stat"><div class="stat-n">8+</div><div class="stat-l">Countries</div></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi">
+  <p class="label" style="text-align:center;">Collector Stories</p>
+  <div class="bar" style="margin:0.5rem auto 1rem;"></div>
+  <h2>What Collectors Say</h2>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-q">"Justin's work stopped me in my tracks. I walked past it twice before I realized I couldn't leave without it. A year later I still discover something new every day."</p>
+      <div class="testi-by">— Collector, New York</div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-q">"I commissioned a piece for my office and Justin captured exactly what I described — but more powerfully than I ever imagined. People ask about it every single day."</p>
+      <div class="testi-by">— Commission Client, Dallas</div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-q">"There's a spirituality in his work that you feel before you understand. I knew I had to own this piece the moment I saw it."</p>
+      <div class="testi-by">— Collector, London</div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOP -->
+<section class="shop">
+  <div class="shop-top">
+    <p class="label">Collect the Work</p>
+    <div class="bar"></div>
+    <h2>Take a Piece Home</h2>
+    <p>Originals, museum-quality prints, and more — available across multiple platforms so collectors worldwide can find and own Justin's work.</p>
+  </div>
+  <div class="shop-grid">
+    <div class="shop-card"><div><div class="shop-n">Etsy</div><div class="shop-d">Original works & prints</div></div><span class="shop-arr">→</span></div>
+    <div class="shop-card"><div><div class="shop-n">Pixels</div><div class="shop-d">Museum-quality prints</div></div><span class="shop-arr">→</span></div>
+    <div class="shop-card"><div><div class="shop-n">Fine Art America</div><div class="shop-d">Shipped worldwide</div></div><span class="shop-arr">→</span></div>
+    <div class="shop-card"><div><div class="shop-n">ARTMO</div><div class="shop-d">Global art community</div></div><span class="shop-arr">→</span></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <h2>Inspired?<br/>Let's <em>Connect.</em></h2>
+  <p>Whether you're a collector, a gallery, or someone who just feels<br/>something looking at this work — I'd love to hear from you.</p>
+  <button class="btn-gold">Contact Justin →</button>
+</section>
+
+<footer>
+  <div>
+    <span class="f-logo">Arts <span>by</span> Justin</span>
+    <p class="f-about">Bold, expressive, spirit-led art created in Raleigh, NC — collected around the world. Art With a Purpose.</p>
+    <div class="f-social">
+      <a href="#">Instagram</a>
+      <a href="#">Facebook</a>
+      <a href="#">TikTok</a>
+    </div>
+  </div>
+  <div class="f-col">
+    <h4>Navigate</h4>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">The Story</a></li>
+      <li><a href="#">Portfolio</a></li>
+      <li><a href="#">Commissions</a></li>
+      <li><a href="#">Blog</a></li>
+    </ul>
+  </div>
+  <div class="f-col">
+    <h4>Shop</h4>
+    <ul>
+      <li><a href="#">Etsy</a></li>
+      <li><a href="#">Pixels</a></li>
+      <li><a href="#">Fine Art America</a></li>
+      <li><a href="#">ARTMO</a></li>
+    </ul>
+  </div>
+  <div class="f-col">
+    <h4>Contact</h4>
+    <ul>
+      <li><a href="#">Commission Inquiry</a></li>
+      <li><a href="#">Press & Media</a></li>
+      <li><a href="#">Studio Visits</a></li>
+      <li><a href="#">General Contact</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="f-bottom">
+  <span>© 2026 Arts by Justin · Justin Keishing. All rights reserved.</span>
+  <span>Raleigh, NC</span>
+</div>
+
+<script>
+// ================================================================
+// ⚙️  SANITY CONFIG — Nathan fills these in before deploying
+// ================================================================
+const SANITY_PROJECT_ID = 'YOUR_PROJECT_ID';   // e.g. 'abc123de'
+const SANITY_DATASET    = 'production';
+const SANITY_API_VER    = '2024-01-01';
+
+// ================================================================
+// 🖼️  SEED DATA — 5 known artworks used while the rest are
+//     being added in Sanity Studio. Each entry matches the
+//     Sanity "artwork" document schema below.
+//     Once Sanity returns real data these are ignored.
+// ================================================================
+const SEED_ARTWORKS = [
+  {
+    _id: 'seed-1',
+    title: 'MJ · North Carolina',
+    medium: 'Acrylic on Canvas',
+    year: '2023',
+    category: 'Sports & Motion',
+    featured: true,
+    heroFeature: true,
+    imageUrl: '',   // ← paste CDN URL here
+    fallback: 'linear-gradient(135deg,#000,#001133,#003399,#cc2200)',
+  },
+  {
+    _id: 'seed-2',
+    title: 'Empress',
+    medium: 'Acrylic on Canvas',
+    year: '2023',
+    category: 'Portraits & Identity',
+    featured: true,
+    heroFeature: false,
+    imageUrl: '',   // ← paste CDN URL here
+    fallback: 'linear-gradient(135deg,#111,#1a1400,#c9a84c,#444)',
+  },
+  {
+    _id: 'seed-3',
+    title: 'Angel Wings',
+    medium: 'Mixed Media',
+    year: '2024',
+    category: 'Faith & Spirit',
+    featured: true,
+    heroFeature: true,
+    imageUrl: '',   // ← paste CDN URL here
+    fallback: 'linear-gradient(135deg,#0a0010,#1a0030,#ff2200,#ffaa00,#7700cc)',
+  },
+  {
+    _id: 'seed-4',
+    title: 'Roots of the Heart',
+    medium: 'Mixed Media',
+    year: '2024',
+    category: 'Faith & Spirit',
+    featured: true,
+    heroFeature: true,
+    imageUrl: '',   // ← paste CDN URL here
+    fallback: 'linear-gradient(135deg,#101820,#0d1525,#cc3322,#4488cc)',
+  },
+  {
+    _id: 'seed-5',
+    title: "The Creator's Hand",
+    medium: 'Acrylic on Canvas',
+    year: '2024',
+    category: 'Abstract & Mixed Media',
+    featured: true,
+    heroFeature: true,
+    imageUrl: '',   // ← paste CDN URL here
+    fallback: 'linear-gradient(135deg,#000,#001122,#ff6600,#00aacc)',
+  },
+];
+
+// ================================================================
+// SANITY SCHEMA REFERENCE (for Nathan / Sanity Studio setup)
+// ----------------------------------------------------------------
+// Document type: "artwork"
+// Fields:
+//   title        string   required
+//   medium       string   e.g. "Acrylic on Canvas"
+//   year         string   e.g. "2024"
+//   category     string   one of: Sports & Motion | Portraits & Identity |
+//                                 Faith & Spirit | Abstract & Mixed Media
+//   image        image    with hotspot enabled
+//   featured     boolean  shows in homepage masonry grid
+//   heroFeature  boolean  shows in hero + cinematic viewer
+//   sortOrder    number   controls display order
+// ================================================================
+
+// ── Sanity image URL builder ──────────────────────────────────
+function sanityImgUrl(ref, w = 1200) {
+  if (!ref) return '';
+  // ref format: "image-<id>-<dimensions>-<format>"
+  const [,id,,fmt] = ref.split('-');
+  return `https://cdn.sanity.io/images/${SANITY_PROJECT_ID}/${SANITY_DATASET}/${id}.${fmt}?w=${w}&auto=format`;
+}
+
+// ── Fetch from Sanity CDN ─────────────────────────────────────
+async function fetchArtworks() {
+  if (SANITY_PROJECT_ID === 'YOUR_PROJECT_ID') return null; // not configured yet
+  const query = encodeURIComponent(
+    `*[_type == "artwork"] | order(sortOrder asc) {
+      _id, title, medium, year, category, featured, heroFeature,
+      "imageUrl": image.asset->url,
+      "imageRef": image.asset._ref
+    }`
+  );
+  try {
+    const res = await fetch(
+      `https://${SANITY_PROJECT_ID}.api.sanity.io/v${SANITY_API_VER}/data/query/${SANITY_DATASET}?query=${query}`
+    );
+    const data = await res.json();
+    return data.result && data.result.length > 0 ? data.result : null;
+  } catch (e) {
+    console.warn('Sanity fetch failed, using seed data.', e);
+    return null;
+  }
+}
+
+// ── Background helper ─────────────────────────────────────────
+function applyBg(el, artwork) {
+  const url = artwork.imageUrl || '';
+  if (url) {
+    el.style.backgroundImage = `url('${url}')`;
+    el.style.backgroundSize  = 'cover';
+    el.style.backgroundPosition = 'center';
+  } else {
+    el.style.background = artwork.fallback || '#1a1a1a';
+  }
+  el.classList.remove('skeleton');
+}
+
+// ── Build hero slideshow ──────────────────────────────────────
+function buildHero(artworks) {
+  const heroSet = artworks.filter(a => a.heroFeature !== false).slice(0, 8);
+  if (!heroSet.length) return;
+  const painting = document.getElementById('heroPainting');
+  painting.innerHTML = '';
+
+  heroSet.forEach((a, i) => {
+    const div = document.createElement('div');
+    div.className = 'hero-bg' + (i === 0 ? ' active' : '');
+    if (a.imageUrl) {
+      div.style.backgroundImage = `url('${a.imageUrl}')`;
+    } else {
+      div.style.background = a.fallback || '#111';
+    }
+    painting.appendChild(div);
+  });
+
+  const slides = painting.querySelectorAll('.hero-bg');
+  const caption = document.getElementById('heroCaption');
+  let idx = 0;
+
+  function showSlide(n) {
+    slides[idx].classList.remove('active');
+    idx = (n + slides.length) % slides.length;
+    slides[idx].classList.add('active');
+    caption.textContent = `${heroSet[idx].title} · ${heroSet[idx].medium}`;
+  }
+
+  showSlide(0);
+  setInterval(() => showSlide(idx + 1), 5000);
+}
+
+// ── Build cinematic viewer ─────────────────────────────────────
+function buildViewer(artworks) {
+  const viewerSet = artworks.filter(a => a.heroFeature !== false).slice(0, 8);
+  if (!viewerSet.length) return;
+
+  const viewer  = document.getElementById('cinematicViewer');
+  const dotsEl  = document.getElementById('viewerDots');
+  const titleEl = document.getElementById('viewerTitle');
+  const metaEl  = document.getElementById('viewerMeta');
+  const counter = document.getElementById('viewerCounter');
+  let cur = 0, timer;
+
+  // build slides
+  viewerSet.forEach((a, i) => {
+    const slide = document.createElement('div');
+    slide.className = 'viewer-slide' + (i === 0 ? ' active' : '');
+    if (a.imageUrl) {
+      slide.style.backgroundImage = `url('${a.imageUrl}')`;
+    } else {
+      slide.style.background = a.fallback || '#111';
+    }
+    viewer.insertBefore(slide, viewer.querySelector('.viewer-overlay'));
+
+    const dot = document.createElement('div');
+    dot.className = 'viewer-dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goTo(i);
+    dotsEl.appendChild(dot);
+  });
+
+  const slides = viewer.querySelectorAll('.viewer-slide');
+  const dots   = dotsEl.querySelectorAll('.viewer-dot');
+
+  function goTo(n) {
+    slides[cur].classList.remove('active');
+    dots[cur].classList.remove('active');
+    cur = (n + viewerSet.length) % viewerSet.length;
+    slides[cur].classList.add('active');
+    dots[cur].classList.add('active');
+    titleEl.textContent = viewerSet[cur].title;
+    metaEl.textContent  = `${viewerSet[cur].medium} · ${viewerSet[cur].year}`;
+    counter.textContent = `${String(cur + 1).padStart(2,'0')} / ${String(viewerSet.length).padStart(2,'0')}`;
+    clearInterval(timer);
+    timer = setInterval(() => goTo(cur + 1), 6000);
+  }
+
+  document.getElementById('viewerPrev').onclick = () => goTo(cur - 1);
+  document.getElementById('viewerNext').onclick = () => goTo(cur + 1);
+  goTo(0);
+}
+
+// ── Build strip ───────────────────────────────────────────────
+function buildStrip(artworks) {
+  const strip = document.getElementById('galleryStrip');
+  strip.innerHTML = '';
+  artworks.slice(0, 5).forEach(a => {
+    const el = document.createElement('div');
+    el.className = 'strip-item';
+    applyBg(el, a);
+    el.innerHTML = `<div class="strip-caption"><span>${a.title} · ${a.medium}</span></div>`;
+    strip.appendChild(el);
+  });
+}
+
+// ── Build about ───────────────────────────────────────────────
+function buildAbout(artworks) {
+  const aboutEl = document.getElementById('aboutImg');
+  // Use first "Portraits & Identity" piece, or fallback to second artwork
+  const portrait = artworks.find(a => a.category === 'Portraits & Identity') || artworks[1] || artworks[0];
+  if (portrait) applyBg(aboutEl, portrait);
+}
+
+// ── Build masonry ─────────────────────────────────────────────
+function buildMasonry(artworks) {
+  const grid = document.getElementById('masonryGrid');
+  grid.innerHTML = '';
+  const picks = artworks.filter(a => a.featured !== false).slice(0, 5);
+  // pad if fewer than 5
+  while (picks.length < 5) picks.push(picks[picks.length - 1] || artworks[0]);
+
+  picks.forEach((a, i) => {
+    const el = document.createElement('div');
+    el.className = 'art' + (i === 0 ? ' span-row' : '');
+    applyBg(el, a);
+    el.innerHTML = `
+      <div class="art-tag">${a.category || 'Original'}</div>
+      <div class="art-info">
+        <h3>${a.title}</h3>
+        <p>${a.medium} · ${a.year}</p>
+      </div>`;
+    grid.appendChild(el);
+  });
+}
+
+// ── Build categories ──────────────────────────────────────────
+function buildCategories(artworks) {
+  const cats = [
+    'Sports & Motion',
+    'Portraits & Identity',
+    'Faith & Spirit',
+    'Abstract & Mixed Media',
+  ];
+  const grid = document.getElementById('catGrid');
+  grid.innerHTML = '';
+  cats.forEach(name => {
+    const matches = artworks.filter(a => a.category === name);
+    const rep     = matches[0] || artworks[0];
+    const el      = document.createElement('div');
+    el.className  = 'cat';
+    applyBg(el, rep);
+    el.innerHTML  = `
+      <div class="cat-info">
+        <h3>${name}</h3>
+        <span>${matches.length || '—'} Work${matches.length !== 1 ? 's' : ''}</span>
+      </div>`;
+    grid.appendChild(el);
+  });
+}
+
+// ── INIT ──────────────────────────────────────────────────────
+(async () => {
+  const sanityData = await fetchArtworks();
+  const artworks   = sanityData || SEED_ARTWORKS;
+
+  buildHero(artworks);
+  buildViewer(artworks);
+  buildStrip(artworks);
+  buildAbout(artworks);
+  buildMasonry(artworks);
+  buildCategories(artworks);
+})();
+</script>
+</body>
+</html>

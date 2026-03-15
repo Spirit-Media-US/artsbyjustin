@@ -22,14 +22,19 @@ export default {
       type: 'string',
       options: {
         list: [
-          { title: 'Painting', value: 'painting' },
-          { title: 'Drawing', value: 'drawing' },
-          { title: 'Digital', value: 'digital' },
-          { title: 'Mixed Media', value: 'mixed-media' },
-          { title: 'Photography', value: 'photography' },
-          { title: 'Other', value: 'other' },
+          { title: 'Sports & Motion',        value: 'Sports & Motion' },
+          { title: 'Portraits & Identity',   value: 'Portraits & Identity' },
+          { title: 'Faith & Spirit',         value: 'Faith & Spirit' },
+          { title: 'Abstract & Mixed Media', value: 'Abstract & Mixed Media' },
         ],
       },
+    },
+    {
+      name: 'heroFeature',
+      title: 'Feature in Hero Slideshow',
+      type: 'boolean',
+      initialValue: false,
+      description: 'Show this artwork in the homepage hero rotation and cinematic viewer',
     },
     {
       name: 'description',

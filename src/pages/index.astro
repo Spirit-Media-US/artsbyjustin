@@ -1,386 +1,441 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import { getArtworks } from '../lib/sanity';
+import { urlFor } from '../lib/sanity';
+import { SEED_ARTWORKS } from '../data/artworks';
+
+let rawArtworks: any[] = [];
+try { rawArtworks = await getArtworks(); } catch (e) {}
+if (!rawArtworks || rawArtworks.length === 0) rawArtworks = SEED_ARTWORKS as any[];
+
+// Normalize to a consistent shape
+const artworks = rawArtworks.map((a: any) => ({
+  _id: a._id,
+  title: a.title || '',
+  medium: a.medium || '',
+  year: a.year ? String(a.year) : '',
+  category: a.category || '',
+  featured: !!a.featured,
+  heroFeature: a.heroFeature !== false,
+  colorGradient: a.colorGradient || a.fallback || '',
+  imageUrl: a.imageUrl || (a.image ? urlFor(a.image).width(1400).url() : ''),
+}));
+
+const heroArtworks = artworks.filter(a => a.heroFeature).slice(0, 8);
+const featuredArtworks = (() => {
+  const f = artworks.filter(a => a.featured);
+  return f.length >= 3 ? f.slice(0, 5) : artworks.slice(0, 5);
+})();
+const stripArtworks = artworks.slice(0, 5);
+
+const CATEGORY_DEFS = [
+  { name: 'Sports & Motion',        gradient: 'linear-gradient(135deg,#000,#001133,#003399,#cc2200)' },
+  { name: 'Portraits & Identity',   gradient: 'linear-gradient(135deg,#111,#1a1400,#c9a84c,#444)' },
+  { name: 'Faith & Spirit',         gradient: 'linear-gradient(135deg,#0a0010,#1a0030,#ff2200,#ffaa00,#7700cc)' },
+  { name: 'Abstract & Mixed Media', gradient: 'linear-gradient(135deg,#000,#001122,#ff6600,#00aacc)' },
+];
+const categories = CATEGORY_DEFS.map(cat => ({
+  ...cat,
+  count: artworks.filter(a => a.category === cat.name).length,
+  artwork: artworks.find(a => a.category === cat.name) || null,
+}));
+
+// Pass artworks as JSON for client-side hero rotation
+const artworksJson = JSON.stringify(heroArtworks);
 ---
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Arts by Justin — Art With a Purpose</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-:root{
-  --black:#080808;--dark:#111;--card:#161616;
-  --gold:#c9a84c;--gold-light:#e8c97a;
-  --white:#f0f0f0;--gray:#777;--gray2:#aaa;
-}
-html{scroll-behavior:smooth;}
-body{background:var(--black);color:var(--white);font-family:'Inter',sans-serif;overflow-x:hidden;}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.2rem 3rem;display:flex;justify-content:space-between;align-items:center;background:rgba(8,8,8,0.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.04);}
-.logo{font-family:'Playfair Display',serif;font-size:1.3rem;letter-spacing:2px;}
-.logo span{color:var(--gold);}
-.nav-links{display:flex;gap:2rem;list-style:none;}
-.nav-links a{color:var(--gray2);text-decoration:none;font-size:0.78rem;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.3s;}
-.nav-links a:hover{color:var(--gold);}
-.nav-cta{background:var(--gold);color:var(--black);padding:0.55rem 1.4rem;font-size:0.75rem;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;transition:all 0.3s;}
-.nav-cta:hover{background:var(--gold-light);}
-.hero{height:100vh;position:relative;display:flex;align-items:center;overflow:hidden;}
-.hero-painting{position:absolute;right:0;top:0;bottom:0;width:58%;overflow:hidden;}
-.hero-painting img{width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(0.75);}
-.hero-fade{position:absolute;inset:0;background:linear-gradient(to right,#080808 30%,rgba(8,8,8,0.5) 60%,rgba(8,8,8,0.1) 100%);}
-.hero-content{position:relative;z-index:2;padding:0 3rem;max-width:600px;}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:0.8rem;margin-bottom:2rem;}
-.hero-line{width:30px;height:1px;background:var(--gold);}
-.hero-eyebrow span{font-size:0.68rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(3.2rem,5.5vw,5.5rem);line-height:1.05;margin-bottom:1.5rem;font-weight:700;}
-.hero h1 em{color:var(--gold);font-style:italic;display:block;}
-.hero-sub{color:var(--gray2);font-size:0.97rem;line-height:1.9;margin-bottom:2.5rem;font-weight:300;max-width:420px;}
-.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
-.btn-gold{background:var(--gold);color:var(--black);padding:0.85rem 2rem;font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;transition:all 0.3s;}
-.btn-gold:hover{background:var(--gold-light);transform:translateY(-2px);}
-.btn-ghost{background:transparent;color:var(--white);padding:0.85rem 2rem;font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;border:1px solid rgba(255,255,255,0.2);cursor:pointer;transition:all 0.3s;}
-.btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
-.hero-caption{position:absolute;bottom:1.8rem;right:2rem;font-size:0.65rem;letter-spacing:3px;color:rgba(255,255,255,0.3);text-transform:uppercase;z-index:2;}
-.scroll-hint{position:absolute;bottom:2.5rem;left:3rem;display:flex;align-items:center;gap:1rem;color:var(--gray);font-size:0.68rem;letter-spacing:3px;text-transform:uppercase;}
-.scroll-line{width:40px;height:1px;background:var(--gold);animation:grow 2s ease-in-out infinite;}
-@keyframes grow{0%,100%{width:40px;opacity:0.4;}50%{width:65px;opacity:1;}}
-.img-placeholder{display:flex;align-items:flex-end;justify-content:flex-start;padding:1rem;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.25);width:100%;height:100%;}
-.strip{display:grid;grid-template-columns:repeat(5,1fr);height:260px;gap:2px;}
-.strip-item{overflow:hidden;position:relative;cursor:pointer;}
-.strip-item .bg{width:100%;height:100%;transition:transform 0.6s,filter 0.4s;filter:brightness(0.65) saturate(0.8);}
-.strip-item:hover .bg{transform:scale(1.08);filter:brightness(0.9) saturate(1.2);}
-.strip-caption{position:absolute;bottom:0;left:0;right:0;padding:0.8rem;background:linear-gradient(to top,rgba(0,0,0,0.85),transparent);transform:translateY(100%);transition:transform 0.3s;}
-.strip-item:hover .strip-caption{transform:translateY(0);}
-.strip-caption span{font-size:0.65rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.85);}
-.about{display:grid;grid-template-columns:1fr 1fr;min-height:650px;}
-.about-img{position:relative;overflow:hidden;}
-.about-img .bg{width:100%;height:100%;}
-.about-img-overlay{position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,#111 100%);}
-.about-badge{position:absolute;top:2rem;left:2rem;background:var(--gold);color:var(--black);font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;padding:0.4rem 1rem;font-weight:700;}
-.about-body{padding:5rem 4rem;display:flex;flex-direction:column;justify-content:center;background:#111;}
-.label{font-size:0.68rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;}
-.bar{width:50px;height:2px;background:var(--gold);margin-bottom:2rem;}
-.about-body h2{font-family:'Playfair Display',serif;font-size:2.4rem;line-height:1.2;margin-bottom:1.5rem;}
-.about-body p{color:var(--gray2);font-size:0.93rem;line-height:1.9;margin-bottom:1rem;font-weight:300;}
-.pull-quote{margin:1.8rem 0;padding:1.5rem 1.5rem;border-left:2px solid var(--gold);background:rgba(201,168,76,0.05);}
-.pull-quote p{font-family:'Playfair Display',serif;font-style:italic;color:var(--gold-light);font-size:1.05rem;line-height:1.7;}
-.works{padding:6rem 3rem;background:var(--black);}
-.works-hdr{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;}
-.works-hdr h2{font-family:'Playfair Display',serif;font-size:2.2rem;}
-.masonry{display:grid;grid-template-columns:1.5fr 1fr 1fr;grid-template-rows:320px 280px;gap:3px;}
-.art{position:relative;overflow:hidden;cursor:pointer;}
-.art .bg{width:100%;height:100%;transition:transform 0.6s,filter 0.4s;filter:brightness(0.8);}
-.art:hover .bg{transform:scale(1.06);filter:brightness(1);}
-.art-info{position:absolute;bottom:0;left:0;right:0;padding:1.2rem 1.5rem;background:linear-gradient(to top,rgba(0,0,0,0.92),transparent);transform:translateY(100%);transition:transform 0.35s;}
-.art:hover .art-info{transform:translateY(0);}
-.art-info h3{font-family:'Playfair Display',serif;font-size:0.95rem;margin-bottom:0.2rem;}
-.art-info p{font-size:0.7rem;letter-spacing:1px;text-transform:uppercase;color:var(--gray2);}
-.art-tag{position:absolute;top:1rem;left:1rem;background:rgba(8,8,8,0.7);font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;padding:0.3rem 0.7rem;color:var(--gold);border:1px solid rgba(201,168,76,0.3);}
-.span-row{grid-row:span 2;}
-.cats{padding:5rem 3rem;background:#111;}
-.cats-intro{text-align:center;margin-bottom:3rem;}
-.cats-intro h2{font-family:'Playfair Display',serif;font-size:2.2rem;margin-bottom:0.8rem;}
-.cats-intro p{color:var(--gray2);font-size:0.9rem;font-weight:300;}
-.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;}
-.cat{position:relative;aspect-ratio:2/3;overflow:hidden;cursor:pointer;}
-.cat .bg{width:100%;height:100%;transition:transform 0.6s,filter 0.4s;filter:brightness(0.45) saturate(0.7);}
-.cat:hover .bg{transform:scale(1.06);filter:brightness(0.65) saturate(1);}
-.cat-info{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1.8rem;background:linear-gradient(to top,rgba(0,0,0,0.9) 0%,transparent 60%);}
-.cat-info h3{font-family:'Playfair Display',serif;font-size:1.2rem;margin-bottom:0.3rem;}
-.cat-info span{font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);}
-.mag{padding:6rem 3rem;background:linear-gradient(135deg,#0d0800,#130900);display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
-.mag-card{background:#111;border:1px solid rgba(201,168,76,0.15);padding:3rem;position:relative;}
-.mag-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--gold),var(--gold-light),var(--gold));}
-.mag-badge{display:inline-block;background:var(--gold);color:var(--black);font-size:0.62rem;letter-spacing:3px;padding:0.35rem 1rem;font-weight:700;text-transform:uppercase;margin-bottom:1.5rem;}
-.mag-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-style:italic;color:var(--gold-light);line-height:1.2;margin-bottom:0.4rem;}
-.mag-date{color:var(--gray);font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:1.5rem;}
-.mag-body{color:var(--gray2);font-size:0.88rem;line-height:1.85;margin-bottom:2rem;}
-.mag-link{color:var(--gold);font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;}
-.mag-link:hover{color:var(--gold-light);}
-.comm{padding:6rem 3rem;background:var(--black);text-align:center;}
-.comm h2{font-family:'Playfair Display',serif;font-size:2.5rem;margin-bottom:1rem;}
-.comm-sub{color:var(--gray2);max-width:540px;margin:0 auto 3.5rem;font-size:0.93rem;line-height:1.85;font-weight:300;}
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-bottom:3.5rem;background:rgba(255,255,255,0.04);}
-.step{padding:2.5rem 1.5rem;background:var(--black);text-align:left;transition:background 0.3s;}
-.step:hover{background:#0d0d0d;}
-.step-n{font-family:'Playfair Display',serif;font-size:3.5rem;color:rgba(201,168,76,0.1);line-height:1;margin-bottom:1rem;}
-.step h4{font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:0.6rem;}
-.step p{color:var(--gray);font-size:0.8rem;line-height:1.7;}
-.stats-band{padding:5rem 3rem;background:#111;display:flex;justify-content:space-between;align-items:center;gap:4rem;}
-.stats-text{max-width:480px;}
-.stats-text h2{font-family:'Playfair Display',serif;font-size:2.1rem;margin-bottom:1rem;}
-.stats-text p{color:var(--gray2);font-size:0.93rem;line-height:1.9;font-weight:300;margin-bottom:2rem;}
-.stats-nums{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem;flex-shrink:0;}
-.stat{text-align:center;}
-.stat-n{font-family:'Playfair Display',serif;font-size:3rem;color:var(--gold);line-height:1;}
-.stat-l{font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-top:0.5rem;}
-.testi{padding:5rem 3rem;background:var(--black);text-align:center;}
-.testi h2{font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:3rem;}
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
-.testi-card{background:var(--card);border:1px solid rgba(255,255,255,0.05);padding:2.5rem;text-align:left;}
-.stars{color:var(--gold);font-size:0.85rem;letter-spacing:3px;margin-bottom:1rem;}
-.testi-q{font-family:'Playfair Display',serif;font-style:italic;font-size:0.98rem;line-height:1.75;color:var(--white);margin-bottom:1.5rem;}
-.testi-by{font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--gray);}
-.shop{padding:6rem 3rem;background:#111;}
-.shop-top{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-bottom:3.5rem;}
-.shop-top h2{font-family:'Playfair Display',serif;font-size:2.2rem;margin-bottom:1rem;}
-.shop-top p{color:var(--gray2);font-size:0.93rem;line-height:1.85;font-weight:300;}
-.shop-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(255,255,255,0.04);}
-.shop-card{padding:2.2rem 2.5rem;background:#111;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:background 0.3s;}
-.shop-card:hover{background:#1a1a1a;}
-.shop-n{font-family:'Playfair Display',serif;font-size:1.15rem;margin-bottom:0.3rem;}
-.shop-d{color:var(--gray);font-size:0.8rem;}
-.shop-arr{color:var(--gold);font-size:1.3rem;transition:transform 0.3s;}
-.shop-card:hover .shop-arr{transform:translateX(6px);}
-.cta{padding:8rem 3rem;background:linear-gradient(135deg,#0d0800,#150900);text-align:center;}
-.cta h2{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,5vw,4rem);margin-bottom:1.5rem;line-height:1.15;}
-.cta h2 em{color:var(--gold);font-style:italic;}
-.cta p{color:var(--gray2);font-size:0.98rem;margin-bottom:3rem;font-weight:300;line-height:1.8;}
-footer{background:#040404;padding:4rem 3rem;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;border-top:1px solid rgba(255,255,255,0.05);}
-.f-logo{font-family:'Playfair Display',serif;font-size:1.2rem;margin-bottom:1rem;display:block;}
-.f-logo span{color:var(--gold);}
-.f-about{color:var(--gray);font-size:0.8rem;line-height:1.85;max-width:240px;margin-bottom:1.5rem;}
-.f-social{display:flex;gap:1.5rem;}
-.f-social a{color:var(--gray);text-decoration:none;font-size:0.72rem;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.3s;}
-.f-social a:hover{color:var(--gold);}
-.f-col h4{font-size:0.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;}
-.f-col ul{list-style:none;}
-.f-col li{margin-bottom:0.8rem;}
-.f-col a{color:var(--gray);text-decoration:none;font-size:0.8rem;transition:color 0.3s;}
-.f-col a:hover{color:var(--white);}
-.f-bottom{background:#020202;padding:1.4rem 3rem;display:flex;justify-content:space-between;color:var(--gray);font-size:0.72rem;border-top:1px solid rgba(255,255,255,0.03);}
-</style>
-</head>
-<body>
+<Layout title="Art With a Purpose" description="Bold, expressive, spirit-led art created in Raleigh, NC — collected around the world. Original acrylic & mixed media works by Justin Keishing.">
 
-<nav>
-  <span class="logo">Arts <span>by</span> Justin</span>
-  <ul class="nav-links">
-    <li><a href="/">Home</a></li>
-    <li><a href="/about">The Story</a></li>
-    <li><a href="/portfolio">Portfolio</a></li>
-    <li><a href="/commissions">Commissions</a></li>
-    <li><a href="/press">Press</a></li>
-  </ul>
-  <button class="nav-cta">Shop Now</button>
-</nav>
-
-<section class="hero">
-  <div class="hero-painting" id="heroPainting"></div>
-  <div class="hero-fade"></div>
-  <div class="hero-content">
-    <div class="hero-eyebrow">
-      <div class="hero-line"></div>
-      <span>Raleigh, NC · Est. 2020</span>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-painting" id="heroPainting">
+      {heroArtworks[0] && (
+        heroArtworks[0].imageUrl
+          ? <div class="hero-bg" style={`background:url('${heroArtworks[0].imageUrl}') center/cover no-repeat`}></div>
+          : <div class="hero-bg" style={`background:${heroArtworks[0].colorGradient || '#111'}`}></div>
+      )}
     </div>
-    <h1>Art With<br/>a <em>Purpose.</em></h1>
-    <p class="hero-sub">Bold. Expressive. Spirit-led. Original acrylic &amp; mixed media works — created in Raleigh, collected around the world.</p>
-    <div class="hero-btns">
-      <button class="btn-gold">Explore the Work →</button>
-      <button class="btn-ghost">My Story</button>
+    <div class="hero-fade"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <div class="hero-line"></div>
+        <span>Raleigh, NC · Est. 2020</span>
+      </div>
+      <h1>Art With<br/>a <em>Purpose.</em></h1>
+      <p class="hero-sub">Bold. Expressive. Spirit-led. Original acrylic &amp; mixed media works — created in Raleigh, collected around the world.</p>
+      <div class="hero-btns">
+        <a href="/contact" class="btn-gold">Explore the Work →</a>
+        <a href="/about" class="btn-ghost">My Story</a>
+      </div>
     </div>
-  </div>
-  <div class="hero-caption" id="heroCaption"></div>
-  <div class="scroll-hint">
-    <div class="scroll-line"></div>
-    <span>Scroll</span>
-  </div>
-</section>
-
-<div class="strip" id="galleryStrip"></div>
-
-<section class="about">
-  <div class="about-img" id="aboutImgWrap"></div>
-  <div class="about-body">
-    <p class="label">The Story</p>
-    <div class="bar"></div>
-    <h2>From Poverty<br/>to Fine Art</h2>
-    <p>My journey didn't start in a studio. It started with a dream bigger than my circumstances — a belief that beauty could exist even in the hardest places.</p>
-    <p>Every canvas I touch carries that story. Of faith. Of resilience. Of the conviction that art can change how we see the world and ourselves.</p>
-    <div class="pull-quote">
-      <p>"I don't just create art. I create conversations, connections, and change."</p>
+    <div class="hero-caption" id="heroCaption">{heroArtworks[0] ? `${heroArtworks[0].title} · ${heroArtworks[0].medium}` : ''}</div>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
     </div>
-    <br/>
-    <button class="btn-gold">Read My Full Story →</button>
-  </div>
-</section>
+  </section>
 
-<section class="works">
-  <div class="works-hdr">
-    <div>
-      <p class="label">Portfolio</p>
+  <!-- GALLERY STRIP -->
+  <div class="strip">
+    {stripArtworks.map((a) => (
+      <div class="strip-item">
+        <div class="strip-bg" style={a.imageUrl ? `background:url('${a.imageUrl}') center/cover no-repeat` : `background:${a.colorGradient || '#222'}`}></div>
+        <div class="strip-caption"><span>{a.title} · {a.medium}</span></div>
+      </div>
+    ))}
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about">
+    <div class="about-img">
+      <div class="about-img-bg" style="background:linear-gradient(135deg,#111,#1a1400,#c9a84c,#444)"></div>
+      <div class="about-img-overlay"></div>
+      <div class="about-badge">Artist · Raleigh, NC</div>
+    </div>
+    <div class="about-body">
+      <p class="label">The Story</p>
       <div class="bar"></div>
-      <h2>Featured Works</h2>
+      <h2>From Poverty<br/>to Fine Art</h2>
+      <p>My journey didn't start in a studio. It started with a dream bigger than my circumstances — a belief that beauty could exist even in the hardest places.</p>
+      <p>Every canvas I touch carries that story. Of faith. Of resilience. Of the conviction that art can change how we see the world and ourselves.</p>
+      <div class="pull-quote">
+        <p>"I don't just create art. I create conversations, connections, and change."</p>
+      </div>
+      <br/>
+      <a href="/about" class="btn-gold">Read My Full Story →</a>
     </div>
-    <button class="btn-ghost">View All Work →</button>
-  </div>
-  <div class="masonry" id="masonryGrid"></div>
-</section>
+  </section>
 
-<section class="cats">
-  <div class="cats-intro">
-    <p class="label" style="text-align:center;">Browse by Theme</p>
+  <!-- FEATURED WORKS -->
+  <section class="works">
+    <div class="works-hdr">
+      <div>
+        <p class="label">Portfolio</p>
+        <div class="bar"></div>
+        <h2>Featured Works</h2>
+      </div>
+      <a href="/" class="btn-ghost">View All Work →</a>
+    </div>
+    <div class="masonry">
+      {featuredArtworks.map((a, i) => (
+        <div class={`art${i === 0 ? ' span-row' : ''}`}>
+          <div class="art-bg" style={a.imageUrl ? `background:url('${a.imageUrl}') center/cover no-repeat` : `background:${a.colorGradient || '#222'}`}></div>
+          <div class="art-tag">{a.category}</div>
+          <div class="art-info">
+            <h3>{a.title}</h3>
+            <p>{a.medium} · {a.year}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="cats">
+    <div class="cats-intro">
+      <p class="label" style="text-align:center;">Browse by Theme</p>
+      <div class="bar" style="margin:0.5rem auto 1rem;"></div>
+      <h2>Every Canvas Tells a Story</h2>
+      <p>From sports legends to spiritual journeys — explore Justin's world.</p>
+    </div>
+    <div class="cat-grid">
+      {categories.map((cat) => (
+        <div class="cat">
+          <div class="cat-bg" style={
+            cat.artwork?.imageUrl
+              ? `background:url('${cat.artwork.imageUrl}') center/cover no-repeat`
+              : `background:${cat.artwork?.colorGradient || cat.gradient}`
+          }></div>
+          <div class="cat-info">
+            <h3>{cat.name}</h3>
+            <span>{cat.count > 0 ? `${cat.count} Works` : 'Coming Soon'}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- PRESS & RECOGNITION -->
+  <section class="mag">
+    <div>
+      <p class="label">Press &amp; Recognition</p>
+      <div class="bar"></div>
+      <h2>Recognized<br/>Beyond the Studio</h2>
+      <p>Justin's work has earned its place not just on walls — but in publications, galleries, and art shows that celebrate artists who create with purpose and vision.</p>
+      <p>From Raleigh to international stages, the story keeps growing.</p>
+      <a href="/press" class="btn-gold">View Press &amp; Awards →</a>
+    </div>
+    <div class="mag-card">
+      <span class="mag-badge">Featured Magazine</span>
+      <div class="mag-title">From Poverty<br/>to Fine Art</div>
+      <div class="mag-date">August 2023</div>
+      <p class="mag-body">A full feature on Justin Keishing's remarkable journey from humble beginnings to international recognition — a story of faith, resilience, and art made with purpose.</p>
+      <a href="/press" class="mag-link">Read the Full Feature →</a>
+    </div>
+  </section>
+
+  <!-- COMMISSIONS -->
+  <section class="comm">
+    <p class="label" style="text-align:center;">Work With Justin</p>
+    <div class="bar" style="margin:0.5rem auto 1.5rem;"></div>
+    <h2>Let's Create Something<br/>Just for You</h2>
+    <p class="comm-sub">Have a vision? A story you want told in paint? I take on a limited number of commissioned works each year. Every piece is personal, intentional, and made with purpose.</p>
+    <div class="steps">
+      <div class="step"><div class="step-n">01</div><h4>Connect</h4><p>Reach out and share your idea, vision, or the story you want told.</p></div>
+      <div class="step"><div class="step-n">02</div><h4>Consult</h4><p>We discuss concept, size, medium, timeline, and investment.</p></div>
+      <div class="step"><div class="step-n">03</div><h4>Create</h4><p>Justin brings your vision to life with care, intention, and purpose.</p></div>
+      <div class="step"><div class="step-n">04</div><h4>Deliver</h4><p>Your one-of-a-kind piece arrives, ready to hang and move people.</p></div>
+    </div>
+    <a href="/commissions" class="btn-gold">Start a Commission →</a>
+  </section>
+
+  <!-- STATS BAND -->
+  <section class="stats-band">
+    <div class="stats-text">
+      <p class="label">Art Shows</p>
+      <div class="bar"></div>
+      <h2>Seen Around<br/>the World</h2>
+      <p>Because of you — my collectors and supporters — my work has found walls in galleries and art shows internationally. Every show is a reminder of why I create.</p>
+      <a href="/press" class="btn-ghost">See Where I've Shown →</a>
+    </div>
+    <div class="stats-nums">
+      <div class="stat"><div class="stat-n">450+</div><div class="stat-l">Works Created</div></div>
+      <div class="stat"><div class="stat-n">26+</div><div class="stat-l">Art Shows</div></div>
+      <div class="stat"><div class="stat-n">8+</div><div class="stat-l">Countries</div></div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testi">
+    <p class="label" style="text-align:center;">Collector Stories</p>
     <div class="bar" style="margin:0.5rem auto 1rem;"></div>
-    <h2>Every Canvas Tells a Story</h2>
-    <p>From sports legends to spiritual journeys — explore Justin's world.</p>
-  </div>
-  <div class="cat-grid" id="catGrid"></div>
-</section>
-
-<section class="mag">
-  <div>
-    <p class="label">Press &amp; Recognition</p>
-    <div class="bar"></div>
-    <h2 style="font-family:'Playfair Display',serif;font-size:2.2rem;margin-bottom:1.5rem;">Recognized<br/>Beyond the Studio</h2>
-    <p style="color:var(--gray2);font-size:0.93rem;line-height:1.9;font-weight:300;margin-bottom:1rem;">Justin's work has earned its place not just on walls — but in publications, galleries, and art shows that celebrate artists who create with purpose and vision.</p>
-    <p style="color:var(--gray2);font-size:0.93rem;line-height:1.9;font-weight:300;margin-bottom:2rem;">From Raleigh to international stages, the story keeps growing.</p>
-    <button class="btn-gold">View Press &amp; Awards →</button>
-  </div>
-  <div class="mag-card">
-    <span class="mag-badge">Featured Magazine</span>
-    <div class="mag-title">From Poverty<br/>to Fine Art</div>
-    <div class="mag-date">August 2023</div>
-    <p class="mag-body">A full feature on Justin Keishing's remarkable journey from humble beginnings to international recognition — a story of faith, resilience, and art made with purpose.</p>
-    <a href="#" class="mag-link">Read the Full Feature →</a>
-  </div>
-</section>
-
-<section class="comm">
-  <p class="label" style="text-align:center;">Work With Justin</p>
-  <div class="bar" style="margin:0.5rem auto 1.5rem;"></div>
-  <h2>Let's Create Something<br/>Just for You</h2>
-  <p class="comm-sub">Have a vision? A story you want told in paint? I take on a limited number of commissioned works each year. Every piece is personal, intentional, and made with purpose.</p>
-  <div class="steps">
-    <div class="step"><div class="step-n">01</div><h4>Connect</h4><p>Reach out and share your idea, vision, or the story you want told.</p></div>
-    <div class="step"><div class="step-n">02</div><h4>Consult</h4><p>We discuss concept, size, medium, timeline, and investment.</p></div>
-    <div class="step"><div class="step-n">03</div><h4>Create</h4><p>Justin brings your vision to life with care, intention, and purpose.</p></div>
-    <div class="step"><div class="step-n">04</div><h4>Deliver</h4><p>Your one-of-a-kind piece arrives, ready to hang and move people.</p></div>
-  </div>
-  <button class="btn-gold">Start a Commission →</button>
-</section>
-
-<section class="stats-band">
-  <div class="stats-text">
-    <p class="label">Art Shows</p>
-    <div class="bar"></div>
-    <h2>Seen Around<br/>the World</h2>
-    <p>Because of you — my collectors and supporters — my work has found walls in galleries and art shows internationally. Every show is a reminder of why I create.</p>
-    <button class="btn-ghost">See Where I've Shown →</button>
-  </div>
-  <div class="stats-nums">
-    <div class="stat"><div class="stat-n">450+</div><div class="stat-l">Works Created</div></div>
-    <div class="stat"><div class="stat-n">26+</div><div class="stat-l">Art Shows</div></div>
-    <div class="stat"><div class="stat-n">8+</div><div class="stat-l">Countries</div></div>
-  </div>
-</section>
-
-<section class="testi">
-  <p class="label" style="text-align:center;">Collector Stories</p>
-  <div class="bar" style="margin:0.5rem auto 1rem;"></div>
-  <h2>What Collectors Say</h2>
-  <div class="testi-grid">
-    <div class="testi-card">
-      <div class="stars">★★★★★</div>
-      <p class="testi-q">"Justin's work stopped me in my tracks. I walked past it twice before I realized I couldn't leave without it. A year later I still discover something new every day."</p>
-      <div class="testi-by">— Collector, New York</div>
+    <h2>What Collectors Say</h2>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p class="testi-q">"Justin's work stopped me in my tracks. I walked past it twice before I realized I couldn't leave without it. A year later I still discover something new every day."</p>
+        <div class="testi-by">— Collector, New York</div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p class="testi-q">"I commissioned a piece for my office and Justin captured exactly what I described — but more powerfully than I ever imagined. People ask about it every single day."</p>
+        <div class="testi-by">— Commission Client, Dallas</div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p class="testi-q">"There's a spirituality in his work that you feel before you understand. I knew I had to own this piece the moment I saw it."</p>
+        <div class="testi-by">— Collector, London</div>
+      </div>
     </div>
-    <div class="testi-card">
-      <div class="stars">★★★★★</div>
-      <p class="testi-q">"I commissioned a piece for my office and Justin captured exactly what I described — but more powerfully than I ever imagined. People ask about it every single day."</p>
-      <div class="testi-by">— Commission Client, Dallas</div>
-    </div>
-    <div class="testi-card">
-      <div class="stars">★★★★★</div>
-      <p class="testi-q">"There's a spirituality in his work that you feel before you understand. I knew I had to own this piece the moment I saw it."</p>
-      <div class="testi-by">— Collector, London</div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<section class="shop">
-  <div class="shop-top">
-    <div>
-      <p class="label">Collect the Work</p>
-      <div class="bar"></div>
-      <h2>Take a Piece Home</h2>
-      <p>Originals, museum-quality prints, and more — available across multiple platforms so collectors worldwide can find and own Justin's work.</p>
+  <!-- SHOP -->
+  <section class="shop">
+    <div class="shop-top">
+      <div>
+        <p class="label">Collect the Work</p>
+        <div class="bar"></div>
+        <h2>Take a Piece Home</h2>
+        <p>Originals, museum-quality prints, and more — available across multiple platforms so collectors worldwide can find and own Justin's work.</p>
+      </div>
     </div>
-  </div>
-  <div class="shop-grid">
-    <div class="shop-card"><div><div class="shop-n">Etsy</div><div class="shop-d">Original works &amp; prints</div></div><span class="shop-arr">→</span></div>
-    <div class="shop-card"><div><div class="shop-n">Pixels</div><div class="shop-d">Museum-quality prints</div></div><span class="shop-arr">→</span></div>
-    <div class="shop-card"><div><div class="shop-n">Fine Art America</div><div class="shop-d">Shipped worldwide</div></div><span class="shop-arr">→</span></div>
-    <div class="shop-card"><div><div class="shop-n">ARTMO</div><div class="shop-d">Global art community</div></div><span class="shop-arr">→</span></div>
-  </div>
-</section>
-
-<section class="cta">
-  <h2>Inspired?<br/>Let's <em>Connect.</em></h2>
-  <p>Whether you're a collector, a gallery, or someone who just feels<br/>something looking at this work — I'd love to hear from you.</p>
-  <button class="btn-gold">Contact Justin →</button>
-</section>
-
-<footer>
-  <div>
-    <span class="f-logo">Arts <span>by</span> Justin</span>
-    <p class="f-about">Bold, expressive, spirit-led art created in Raleigh, NC — collected around the world. Art With a Purpose.</p>
-    <div class="f-social">
-      <a href="#">Instagram</a>
-      <a href="#">Facebook</a>
-      <a href="#">TikTok</a>
+    <div class="shop-grid">
+      <a href="/shop" class="shop-card"><div><div class="shop-n">Etsy</div><div class="shop-d">Original works &amp; prints</div></div><span class="shop-arr">→</span></a>
+      <a href="/shop" class="shop-card"><div><div class="shop-n">Pixels</div><div class="shop-d">Museum-quality prints</div></div><span class="shop-arr">→</span></a>
+      <a href="/shop" class="shop-card"><div><div class="shop-n">Fine Art America</div><div class="shop-d">Shipped worldwide</div></div><span class="shop-arr">→</span></a>
+      <a href="/shop" class="shop-card"><div><div class="shop-n">ARTMO</div><div class="shop-d">Global art community</div></div><span class="shop-arr">→</span></a>
     </div>
-  </div>
-  <div class="f-col">
-    <h4>Navigate</h4>
-    <ul>
-      <li><a href="/">Home</a></li>
-      <li><a href="/about">The Story</a></li>
-      <li><a href="/portfolio">Portfolio</a></li>
-      <li><a href="/commissions">Commissions</a></li>
-      <li><a href="/press">Press</a></li>
-    </ul>
-  </div>
-  <div class="f-col">
-    <h4>Shop</h4>
-    <ul>
-      <li><a href="#">Etsy</a></li>
-      <li><a href="#">Pixels</a></li>
-      <li><a href="#">Fine Art America</a></li>
-      <li><a href="#">ARTMO</a></li>
-    </ul>
-  </div>
-  <div class="f-col">
-    <h4>Contact</h4>
-    <ul>
-      <li><a href="#">Commission Inquiry</a></li>
-      <li><a href="#">Press &amp; Media</a></li>
-      <li><a href="#">Studio Visits</a></li>
-      <li><a href="#">General Contact</a></li>
-    </ul>
-  </div>
-</footer>
-<div class="f-bottom">
-  <span>© 2026 Arts by Justin · Justin Keishing. All rights reserved.</span>
-  <span>Raleigh, NC</span>
-</div>
+  </section>
 
-<script is:inline>
-const paintings=[{id:1,title:'MJ · North Carolina',medium:'Acrylic on Canvas',year:'2023',category:'Sports & Motion',imageUrl:''},{id:2,title:'Empress',medium:'Acrylic on Canvas',year:'2023',category:'Portraits & Identity',imageUrl:''},{id:3,title:'Angel Wings',medium:'Mixed Media',year:'2024',category:'Faith & Spirit',imageUrl:''},{id:4,title:'Roots of the Heart',medium:'Mixed Media',year:'2024',category:'Faith & Spirit',imageUrl:''},{id:5,title:"The Creator's Hand",medium:'Acrylic on Canvas',year:'2024',category:'Abstract & Mixed Media',imageUrl:''},{id:6,title:'Snowboarder',medium:'Mixed Media',year:'2023',category:'Sports & Motion',imageUrl:''},{id:7,title:'Cup of Color',medium:'Acrylic on Canvas',year:'2023',category:'Abstract & Mixed Media',imageUrl:''},{id:8,title:'SOAR',medium:'Acrylic on Canvas',year:'2024',category:'Abstract & Mixed Media',imageUrl:''},{id:9,title:'Hurricanes',medium:'Acrylic on Canvas',year:'2023',category:'Sports & Motion',imageUrl:''},{id:10,title:'Golf',medium:'Acrylic on Canvas',year:'2023',category:'Sports & Motion',imageUrl:''},{id:11,title:'White Horse',medium:'Acrylic on Canvas',year:'2024',category:'Faith & Spirit',imageUrl:''},{id:12,title:'Misty Forest',medium:'Acrylic on Canvas',year:'2024',category:'Abstract & Mixed Media',imageUrl:''},{id:13,title:'Exploding Heart',medium:'Mixed Media',year:'2024',category:'Faith & Spirit',imageUrl:''},{id:14,title:'Fire Drums',medium:'Acrylic on Canvas',year:'2023',category:'Abstract & Mixed Media',imageUrl:''},{id:15,title:'Bourbon Man',medium:'Mixed Media',year:'2024',category:'Abstract & Mixed Media',imageUrl:''},{id:16,title:'His Hand',medium:'Acrylic on Canvas',year:'2023',category:'Faith & Spirit',imageUrl:''},{id:17,title:'Ghost Rider',medium:'Acrylic on Canvas',year:'2024',category:'Abstract & Mixed Media',imageUrl:''},{id:18,title:'LeBron · Lakers',medium:'Acrylic on Canvas',year:'2023',category:'Sports & Motion',imageUrl:''},{id:19,title:'Empress II',medium:'Acrylic on Canvas',year:'2024',category:'Portraits & Identity',imageUrl:''},{id:20,title:'Bound Heart',medium:'Acrylic on Canvas',year:'2024',category:'Faith & Spirit',imageUrl:''}];
-const ABOUT_IMAGE_URL='';
-const fallbackColors=['linear-gradient(135deg,#000,#001133,#003399,#cc2200)','linear-gradient(135deg,#111,#1a1400,#c9a84c,#444)','linear-gradient(135deg,#f0f0f0,#fff,#ff2200,#ffaa00,#7700cc)','linear-gradient(135deg,#101820,#0d1525,#cc3322,#4488cc)','linear-gradient(135deg,#000,#001122,#ff6600,#00aacc)','linear-gradient(135deg,#222,#333,#ffdd00,#00cccc)','linear-gradient(135deg,#000,#111,#ff2200,#ff8800,#0044ff)','linear-gradient(135deg,#000,#111,#ff6600,#ffcc00,#0044cc)','linear-gradient(135deg,#000,#111,#cc0000,#ffcc00)','linear-gradient(135deg,#222,#333,#ff2200,#ffcc00,#0088cc)','linear-gradient(135deg,#000,#111,#fff,#888)','linear-gradient(135deg,#eee,#ccc,#336644,#111)','linear-gradient(135deg,#000,#111,#ff0044,#ffff00,#00ff88)','linear-gradient(135deg,#111,#222,#ff6600,#ffcc00)','linear-gradient(135deg,#ccc,#aaa,#0033ff,#00cc44,#ff2200)','linear-gradient(135deg,#000,#111,#fff,#ddd)','linear-gradient(135deg,#111,#222,#ff4400,#ffaa00)','linear-gradient(135deg,#000,#111,#ffcc00,#552288)','linear-gradient(135deg,#ddd,#bbb,#c9a84c,#222)','linear-gradient(135deg,#000,#111,#888,#c9a84c22)'];
-function makeBg(imageUrl,fallbackColor,altText){var div=document.createElement('div');div.className='bg';div.style.cssText='width:100%;height:100%;';if(imageUrl){div.style.background="url('"+imageUrl+"') center/cover no-repeat";}else{div.style.background=fallbackColor;div.title='Placeholder - replace imageUrl for: '+altText;}return div;}
-var heroRotation=[3,4,7,12,15];var heroIdx=0;
-function setHero(){var p=paintings[heroRotation[heroIdx%heroRotation.length]];var wrap=document.getElementById('heroPainting');wrap.innerHTML='';var bg=makeBg(p.imageUrl,fallbackColors[heroRotation[heroIdx%heroRotation.length]],p.title);bg.style.cssText+='position:absolute;inset:0;filter:brightness(0.75);transition:opacity 0.8s;';wrap.appendChild(bg);document.getElementById('heroCaption').textContent=p.title+' · '+p.medium;heroIdx++;}
-setHero();setInterval(setHero,5000);
-var stripPicks=[4,7,12,0,8];var strip=document.getElementById('galleryStrip');
-stripPicks.forEach(function(i){var p=paintings[i];var el=document.createElement('div');el.className='strip-item';var bg=makeBg(p.imageUrl,fallbackColors[i],p.title);el.appendChild(bg);el.innerHTML+='<div class="strip-caption"><span>'+p.title+' · '+p.medium+'</span></div>';strip.appendChild(el);});
-var aboutWrap=document.getElementById('aboutImgWrap');var aboutBg=makeBg(ABOUT_IMAGE_URL,fallbackColors[1],'Justin Portrait / About Image');aboutBg.style.cssText+='position:absolute;inset:0;filter:brightness(0.8);';aboutWrap.appendChild(aboutBg);aboutWrap.innerHTML+='<div class="about-img-overlay"></div><div class="about-badge">Artist · Raleigh, NC</div>';
-var masonryPicks=[{idx:3,span:true,tag:'Faith & Spirit'},{idx:4,span:false,tag:'Mixed Media'},{idx:12,span:false,tag:'Mixed Media'},{idx:7,span:false,tag:'Acrylic'},{idx:0,span:false,tag:'Sports'}];
-var masonry=document.getElementById('masonryGrid');
-masonryPicks.forEach(function(m){var p=paintings[m.idx];var el=document.createElement('div');el.className='art'+(m.span?' span-row':'');var bg=makeBg(p.imageUrl,fallbackColors[m.idx],p.title);el.appendChild(bg);el.innerHTML+='<div class="art-tag">'+m.tag+'</div><div class="art-info"><h3>'+p.title+'</h3><p>'+p.medium+' · '+p.year+'</p></div>';masonry.appendChild(el);});
-var categories=[{name:'Sports & Motion',count:6,paintingIdx:0},{name:'Portraits & Identity',count:4,paintingIdx:1},{name:'Faith & Spirit',count:5,paintingIdx:3},{name:'Abstract & Mixed Media',count:7,paintingIdx:6}];
-var catGrid=document.getElementById('catGrid');
-categories.forEach(function(c){var p=paintings[c.paintingIdx];var el=document.createElement('div');el.className='cat';var bg=makeBg(p.imageUrl,fallbackColors[c.paintingIdx],p.title);el.appendChild(bg);el.innerHTML+='<div class="cat-info"><h3>'+c.name+'</h3><span>'+c.count+' Works</span></div>';catGrid.appendChild(el);});
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2>Inspired?<br/>Let's <em>Connect.</em></h2>
+    <p>Whether you're a collector, a gallery, or someone who just feels<br/>something looking at this work — I'd love to hear from you.</p>
+    <a href="/contact" class="btn-gold">Contact Justin →</a>
+  </section>
+
+</Layout>
+
+<script define:vars={{ artworksJson }}>
+  const heroArtworks = JSON.parse(artworksJson);
+  if (heroArtworks.length > 1) {
+    let idx = 1;
+    const wrap = document.getElementById('heroPainting');
+    const caption = document.getElementById('heroCaption');
+    setInterval(() => {
+      const a = heroArtworks[idx % heroArtworks.length];
+      if (wrap) {
+        const bg = wrap.querySelector('.hero-bg');
+        if (bg) {
+          if (a.imageUrl) {
+            bg.style.background = `url('${a.imageUrl}') center/cover no-repeat`;
+          } else {
+            bg.style.background = a.colorGradient || '#111';
+          }
+        }
+      }
+      if (caption) caption.textContent = `${a.title} · ${a.medium}`;
+      idx++;
+    }, 5000);
+  }
 </script>
-</body>
-</html>
+
+<style>
+  /* HERO */
+  .hero { height:100vh; position:relative; display:flex; align-items:center; overflow:hidden; }
+  .hero-painting { position:absolute; right:0; top:0; bottom:0; width:58%; overflow:hidden; }
+  .hero-bg { position:absolute; inset:0; filter:brightness(0.75); transition:background 0.8s; }
+  .hero-fade { position:absolute; inset:0; background:linear-gradient(to right,#080808 30%,rgba(8,8,8,0.5) 60%,rgba(8,8,8,0.1) 100%); }
+  .hero-content { position:relative; z-index:2; padding:0 3rem; max-width:600px; }
+  .hero-eyebrow { display:inline-flex; align-items:center; gap:0.8rem; margin-bottom:2rem; }
+  .hero-line { width:30px; height:1px; background:var(--gold); }
+  .hero-eyebrow span { font-size:0.68rem; letter-spacing:4px; text-transform:uppercase; color:var(--gold); }
+  .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(3.2rem,5.5vw,5.5rem); line-height:1.05; margin-bottom:1.5rem; font-weight:700; }
+  .hero h1 em { color:var(--gold); font-style:italic; display:block; }
+  .hero-sub { color:var(--gray2); font-size:0.97rem; line-height:1.9; margin-bottom:2.5rem; font-weight:300; max-width:420px; }
+  .hero-btns { display:flex; gap:1rem; flex-wrap:wrap; }
+  .hero-caption { position:absolute; bottom:1.8rem; right:2rem; font-size:0.65rem; letter-spacing:3px; color:rgba(255,255,255,0.3); text-transform:uppercase; z-index:2; }
+  .scroll-hint { position:absolute; bottom:2.5rem; left:3rem; display:flex; align-items:center; gap:1rem; color:var(--gray); font-size:0.68rem; letter-spacing:3px; text-transform:uppercase; }
+  .scroll-line { width:40px; height:1px; background:var(--gold); animation:grow 2s ease-in-out infinite; }
+  @keyframes grow { 0%,100%{width:40px;opacity:0.4;} 50%{width:65px;opacity:1;} }
+
+  /* STRIP */
+  .strip { display:grid; grid-template-columns:repeat(5,1fr); height:260px; gap:2px; }
+  .strip-item { overflow:hidden; position:relative; cursor:pointer; }
+  .strip-bg { width:100%; height:100%; transition:transform 0.6s,filter 0.4s; filter:brightness(0.65) saturate(0.8); }
+  .strip-item:hover .strip-bg { transform:scale(1.08); filter:brightness(0.9) saturate(1.2); }
+  .strip-caption { position:absolute; bottom:0; left:0; right:0; padding:0.8rem; background:linear-gradient(to top,rgba(0,0,0,0.85),transparent); transform:translateY(100%); transition:transform 0.3s; }
+  .strip-item:hover .strip-caption { transform:translateY(0); }
+  .strip-caption span { font-size:0.65rem; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,0.85); }
+
+  /* ABOUT */
+  .about { display:grid; grid-template-columns:1fr 1fr; min-height:650px; }
+  .about-img { position:relative; overflow:hidden; }
+  .about-img-bg { position:absolute; inset:0; filter:brightness(0.8); }
+  .about-img-overlay { position:absolute; inset:0; background:linear-gradient(to right,transparent 60%,#111 100%); }
+  .about-badge { position:absolute; top:2rem; left:2rem; background:var(--gold); color:var(--black); font-size:0.62rem; letter-spacing:3px; text-transform:uppercase; padding:0.4rem 1rem; font-weight:700; }
+  .about-body { padding:5rem 4rem; display:flex; flex-direction:column; justify-content:center; background:#111; }
+  .about-body h2 { font-family:'Playfair Display',serif; font-size:2.4rem; line-height:1.2; margin-bottom:1.5rem; }
+  .about-body p { color:var(--gray2); font-size:0.93rem; line-height:1.9; margin-bottom:1rem; font-weight:300; }
+
+  /* WORKS / MASONRY */
+  .works { padding:6rem 3rem; background:var(--black); }
+  .works-hdr { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:2.5rem; }
+  .works-hdr h2 { font-family:'Playfair Display',serif; font-size:2.2rem; }
+  .masonry { display:grid; grid-template-columns:1.5fr 1fr 1fr; grid-template-rows:320px 280px; gap:3px; }
+  .art { position:relative; overflow:hidden; cursor:pointer; }
+  .art-bg { width:100%; height:100%; transition:transform 0.6s,filter 0.4s; filter:brightness(0.8); }
+  .art:hover .art-bg { transform:scale(1.06); filter:brightness(1); }
+  .art-info { position:absolute; bottom:0; left:0; right:0; padding:1.2rem 1.5rem; background:linear-gradient(to top,rgba(0,0,0,0.92),transparent); transform:translateY(100%); transition:transform 0.35s; }
+  .art:hover .art-info { transform:translateY(0); }
+  .art-info h3 { font-family:'Playfair Display',serif; font-size:0.95rem; margin-bottom:0.2rem; }
+  .art-info p { font-size:0.7rem; letter-spacing:1px; text-transform:uppercase; color:var(--gray2); }
+  .art-tag { position:absolute; top:1rem; left:1rem; background:rgba(8,8,8,0.7); font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; padding:0.3rem 0.7rem; color:var(--gold); border:1px solid rgba(201,168,76,0.3); }
+  .span-row { grid-row:span 2; }
+
+  /* CATEGORIES */
+  .cats { padding:5rem 3rem; background:#111; }
+  .cats-intro { text-align:center; margin-bottom:3rem; }
+  .cats-intro h2 { font-family:'Playfair Display',serif; font-size:2.2rem; margin-bottom:0.8rem; }
+  .cats-intro p { color:var(--gray2); font-size:0.9rem; font-weight:300; }
+  .cat-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; }
+  .cat { position:relative; aspect-ratio:2/3; overflow:hidden; cursor:pointer; }
+  .cat-bg { position:absolute; inset:0; transition:transform 0.6s,filter 0.4s; filter:brightness(0.45) saturate(0.7); }
+  .cat:hover .cat-bg { transform:scale(1.06); filter:brightness(0.65) saturate(1); }
+  .cat-info { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-end; padding:1.8rem; background:linear-gradient(to top,rgba(0,0,0,0.9) 0%,transparent 60%); }
+  .cat-info h3 { font-family:'Playfair Display',serif; font-size:1.2rem; margin-bottom:0.3rem; }
+  .cat-info span { font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--gold); }
+
+  /* PRESS SPOTLIGHT */
+  .mag { padding:6rem 3rem; background:linear-gradient(135deg,#0d0800,#130900); display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
+  .mag h2 { font-family:'Playfair Display',serif; font-size:2.2rem; margin-bottom:1.5rem; }
+  .mag > div > p { color:var(--gray2); font-size:0.93rem; line-height:1.9; font-weight:300; margin-bottom:1rem; }
+  .mag-card { background:#111; border:1px solid rgba(201,168,76,0.15); padding:3rem; position:relative; }
+  .mag-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(to right,var(--gold),var(--gold-light),var(--gold)); }
+  .mag-badge { display:inline-block; background:var(--gold); color:var(--black); font-size:0.62rem; letter-spacing:3px; padding:0.35rem 1rem; font-weight:700; text-transform:uppercase; margin-bottom:1.5rem; }
+  .mag-title { font-family:'Playfair Display',serif; font-size:1.9rem; font-style:italic; color:var(--gold-light); line-height:1.2; margin-bottom:0.4rem; }
+  .mag-date { color:var(--gray); font-size:0.72rem; letter-spacing:2px; text-transform:uppercase; margin-bottom:1.5rem; }
+  .mag-body { color:var(--gray2); font-size:0.88rem; line-height:1.85; margin-bottom:2rem; }
+  .mag-link { color:var(--gold); font-size:0.75rem; letter-spacing:2px; text-transform:uppercase; text-decoration:none; }
+  .mag-link:hover { color:var(--gold-light); }
+
+  /* COMMISSIONS */
+  .comm { padding:6rem 3rem; background:var(--black); text-align:center; }
+  .comm h2 { font-family:'Playfair Display',serif; font-size:2.5rem; margin-bottom:1rem; }
+  .comm-sub { color:var(--gray2); max-width:540px; margin:0 auto 3.5rem; font-size:0.93rem; line-height:1.85; font-weight:300; }
+  .steps { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; margin-bottom:3.5rem; background:rgba(255,255,255,0.04); }
+  .step { padding:2.5rem 1.5rem; background:var(--black); text-align:left; transition:background 0.3s; }
+  .step:hover { background:#0d0d0d; }
+  .step-n { font-family:'Playfair Display',serif; font-size:3.5rem; color:rgba(201,168,76,0.1); line-height:1; margin-bottom:1rem; }
+  .step h4 { font-size:0.75rem; letter-spacing:2px; text-transform:uppercase; margin-bottom:0.6rem; color:var(--white); }
+  .step p { color:var(--gray); font-size:0.8rem; line-height:1.7; }
+
+  /* STATS */
+  .stats-band { padding:5rem 3rem; background:#111; display:flex; justify-content:space-between; align-items:center; gap:4rem; }
+  .stats-text { max-width:480px; }
+  .stats-text h2 { font-family:'Playfair Display',serif; font-size:2.1rem; margin-bottom:1rem; }
+  .stats-text p { color:var(--gray2); font-size:0.93rem; line-height:1.9; font-weight:300; margin-bottom:2rem; }
+  .stats-nums { display:grid; grid-template-columns:repeat(3,1fr); gap:2.5rem; flex-shrink:0; }
+  .stat { text-align:center; }
+  .stat-n { font-family:'Playfair Display',serif; font-size:3rem; color:var(--gold); line-height:1; }
+  .stat-l { font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--gray); margin-top:0.5rem; }
+
+  /* TESTIMONIALS */
+  .testi { padding:5rem 3rem; background:var(--black); text-align:center; }
+  .testi h2 { font-family:'Playfair Display',serif; font-size:2rem; margin-bottom:3rem; }
+  .testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+  .testi-card { background:var(--card); border:1px solid rgba(255,255,255,0.05); padding:2.5rem; text-align:left; }
+  .stars { color:var(--gold); font-size:0.85rem; letter-spacing:3px; margin-bottom:1rem; }
+  .testi-q { font-family:'Playfair Display',serif; font-style:italic; font-size:0.98rem; line-height:1.75; color:var(--white); margin-bottom:1.5rem; }
+  .testi-by { font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:var(--gray); }
+
+  /* SHOP */
+  .shop { padding:6rem 3rem; background:#111; }
+  .shop-top { margin-bottom:3.5rem; }
+  .shop-top h2 { font-family:'Playfair Display',serif; font-size:2.2rem; margin-bottom:1rem; }
+  .shop-top p { color:var(--gray2); font-size:0.93rem; line-height:1.85; font-weight:300; max-width:520px; }
+  .shop-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:rgba(255,255,255,0.04); }
+  .shop-card { padding:2.2rem 2.5rem; background:#111; display:flex; justify-content:space-between; align-items:center; cursor:pointer; transition:background 0.3s; text-decoration:none; color:inherit; }
+  .shop-card:hover { background:#1a1a1a; }
+  .shop-n { font-family:'Playfair Display',serif; font-size:1.15rem; margin-bottom:0.3rem; color:var(--white); }
+  .shop-d { color:var(--gray); font-size:0.8rem; }
+  .shop-arr { color:var(--gold); font-size:1.3rem; transition:transform 0.3s; }
+  .shop-card:hover .shop-arr { transform:translateX(6px); }
+
+  /* CTA */
+  .cta-section { padding:8rem 3rem; background:linear-gradient(135deg,#0d0800,#150900); text-align:center; }
+  .cta-section h2 { font-family:'Playfair Display',serif; font-size:clamp(2.5rem,5vw,4rem); margin-bottom:1.5rem; line-height:1.15; }
+  .cta-section h2 em { color:var(--gold); font-style:italic; }
+  .cta-section p { color:var(--gray2); font-size:0.98rem; margin-bottom:3rem; font-weight:300; line-height:1.8; }
+
+  /* RESPONSIVE */
+  @media (max-width:1024px) {
+    .masonry { grid-template-columns:1fr 1fr; grid-template-rows:auto; }
+    .span-row { grid-row:span 1; }
+    .stats-band { flex-direction:column; gap:3rem; }
+    .stats-nums { width:100%; max-width:400px; }
+    .mag { grid-template-columns:1fr; gap:3rem; }
+  }
+  @media (max-width:768px) {
+    .hero-painting { width:100%; opacity:0.3; }
+    .hero-content { max-width:100%; padding:0 2rem; }
+    .strip { grid-template-columns:repeat(3,1fr); height:180px; }
+    .strip-item:nth-child(4), .strip-item:nth-child(5) { display:none; }
+    .about { grid-template-columns:1fr; }
+    .about-img { min-height:300px; }
+    .about-body { padding:3rem 2rem; }
+    .masonry { grid-template-columns:1fr; grid-template-rows:280px; }
+    .cat-grid { grid-template-columns:repeat(2,1fr); }
+    .steps { grid-template-columns:1fr 1fr; }
+    .testi-grid { grid-template-columns:1fr; }
+    .shop-grid { grid-template-columns:1fr; }
+    .works, .cats, .mag, .comm, .stats-band, .testi, .shop, .cta-section { padding-inline:1.5rem; }
+  }
+  @media (max-width:480px) {
+    .strip { grid-template-columns:repeat(2,1fr); }
+    .strip-item:nth-child(3) { display:none; }
+    .cat-grid { grid-template-columns:1fr 1fr; }
+    .steps { grid-template-columns:1fr; }
+    .hero-btns { flex-direction:column; }
+    .btn-gold, .btn-ghost { width:100%; text-align:center; }
+  }
+</style>

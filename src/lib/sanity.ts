@@ -43,6 +43,7 @@ export async function getArtworks() {
     available,
     sold,
     featured,
+    heroFeature,
     order,
     colorGradient
   }`
@@ -71,6 +72,7 @@ export async function getFeaturedArtworks() {
     available,
     sold,
     featured,
+    heroFeature,
     order,
     colorGradient
   }`

@@ -2,59 +2,58 @@
 import Layout from '../layouts/Layout.astro';
 import { sanityClient } from '../lib/sanity.ts';
 
-const siteSettings = await sanityClient.fetch(`*[_type == "siteSettings"][0]`);
+const siteSettings = await sanityClient.fetch(`*[_type == "siteSettings"][0]`).catch(() => null);
 const settings = siteSettings || {};
-const { 
-  artistName = 'Justin', 
-  email = '', 
-  instagramUrl = '',
-  commissionInfo = '',
-  tagline = 'Mixed media artist. Original works, commissions, and prints.'
-} = settings;
+const { artistName = 'Justin', email = '', instagramUrl = '', commissionInfo = '' } = settings;
 ---
 <Layout title="Commissions" description={`Commission custom work from ${artistName}. Learn about the process and get in touch.`}>
-  
 
-  <section class="commissions-hero reveal">
+  <section class="comm-hero">
+    <div class="comm-hero-tag">
+      <div class="hero-line"></div>
+      <span>Work With Justin</span>
+    </div>
     <h1>Commissions</h1>
     <p>Custom paintings and mixed media work tailored to your vision and space.</p>
   </section>
 
-  <section class="commission-process">
+  <section class="process-section">
     <div class="process-inner">
-      <h2 class="reveal">How It Works</h2>
+      <p class="label" style="text-align:center;">How It Works</p>
+      <div class="bar" style="margin:0.5rem auto 1rem;"></div>
+      <h2>From Vision to Canvas</h2>
       <div class="process-steps">
-        <div class="step reveal">
-          <div class="step-number">01</div>
-          <div class="step-content">
+        <div class="step-block">
+          <div class="step-num">01</div>
+          <div class="step-body">
             <h3>Inquiry</h3>
             <p>Send a message with your idea, space, and vision. Include reference images, size preferences, and timeline if possible.</p>
           </div>
         </div>
-        <div class="step reveal">
-          <div class="step-number">02</div>
-          <div class="step-content">
+        <div class="step-block">
+          <div class="step-num">02</div>
+          <div class="step-body">
             <h3>Consultation</h3>
-            <p>We'll discuss your project in detail—materials, scale, budget, and artistic direction to ensure alignment.</p>
+            <p>We'll discuss your project in detail — materials, scale, budget, and artistic direction to ensure alignment.</p>
           </div>
         </div>
-        <div class="step reveal">
-          <div class="step-number">03</div>
-          <div class="step-content">
+        <div class="step-block">
+          <div class="step-num">03</div>
+          <div class="step-body">
             <h3>Proposal & Sketches</h3>
             <p>You'll receive a detailed proposal with initial sketches, materials breakdown, timeline, and pricing.</p>
           </div>
         </div>
-        <div class="step reveal">
-          <div class="step-number">04</div>
-          <div class="step-content">
+        <div class="step-block">
+          <div class="step-num">04</div>
+          <div class="step-body">
             <h3>Production</h3>
             <p>Upon deposit, production begins with regular progress updates and photos shared throughout the process.</p>
           </div>
         </div>
-        <div class="step reveal">
-          <div class="step-number">05</div>
-          <div class="step-content">
+        <div class="step-block">
+          <div class="step-num">05</div>
+          <div class="step-body">
             <h3>Delivery</h3>
             <p>Final payment upon completion. Professional shipping and installation support available for larger works.</p>
           </div>
@@ -63,30 +62,30 @@ const {
     </div>
   </section>
 
-  <section class="commission-details">
+  <section class="details-section">
     <div class="details-grid">
-      <div class="detail-block reveal">
+      <div class="detail-block">
         <h3>Typical Timeline</h3>
-        <p>Most commissions take <strong>8-12 weeks</strong> from project approval to delivery, depending on scale and complexity.</p>
+        <p>Most commissions take <strong>8–12 weeks</strong> from project approval to delivery, depending on scale and complexity.</p>
       </div>
-      <div class="detail-block reveal">
-        <h3>Budget Range</h3>
-        <p>Custom works typically range from <strong>$2,000 to $20,000+</strong> depending on size, materials, and complexity. We work within your budget.</p>
+      <div class="detail-block">
+        <h3>Investment Range</h3>
+        <p>Custom works typically range from <strong>$2,000 to $20,000+</strong> depending on size, materials, and complexity.</p>
       </div>
-      <div class="detail-block reveal">
+      <div class="detail-block">
         <h3>Scale & Materials</h3>
-        <p>We work with paintings on canvas and panel, mixed media, installations, and site-specific works. No size is too large or too small.</p>
+        <p>Paintings on canvas and panel, mixed media, installations, and site-specific works. No size is too large or too small.</p>
       </div>
-      <div class="detail-block reveal">
+      <div class="detail-block">
         <h3>Limited Availability</h3>
-        <p>Justin accepts <strong>2-3 commissions per season</strong> to ensure quality and personal attention to each project.</p>
+        <p>Justin accepts <strong>2–3 commissions per season</strong> to ensure quality and personal attention to each project.</p>
       </div>
     </div>
   </section>
 
   {commissionInfo && (
-    <section class="commission-info-section">
-      <div class="info-inner reveal">
+    <section class="comm-info-section">
+      <div class="comm-info-inner">
         <h2>Additional Information</h2>
         <div class="info-text">
           {commissionInfo.split('\n\n').map((paragraph: string) => (
@@ -97,68 +96,78 @@ const {
     </section>
   )}
 
-  <section class="commission-contact">
-    <div class="contact-inner reveal">
+  <section class="comm-cta">
+    <div class="cta-inner">
       <h2>Ready to Get Started?</h2>
       <p>Send a brief inquiry with your ideas, and we'll discuss bringing your vision to life.</p>
-      <div class="contact-buttons">
-        {email && (
-          <a href={`mailto:${email}`} class="btn-primary">Send Email</a>
-        )}
+      <div class="cta-btns">
+        {email && <a href={`mailto:${email}`} class="btn-gold">Send Email →</a>}
         {instagramUrl && (
-          <a href={instagramUrl} target="_blank" rel="noopener noreferrer" class="btn-secondary">Message on Instagram</a>
+          <a href={instagramUrl} target="_blank" rel="noopener noreferrer" class="btn-ghost">Message on Instagram</a>
         )}
-        <a href="/contact" class="btn-secondary">Use Contact Form</a>
+        <a href="/contact" class="btn-ghost">Use Contact Form</a>
       </div>
     </div>
   </section>
 
-  <div id="ghl-widget-container" style="display:none;"></div>
-
-  
 </Layout>
 
 <style>
-  .commissions-hero { background:#1A1A18; color:#EDE8DF; padding:10rem 2.5rem 5rem; text-align:center; }
-  .commissions-hero h1 { font-family:'Playfair Display',serif; font-size:clamp(3rem,6vw,5rem); font-weight:700; letter-spacing:-0.02em; margin-bottom:1.5rem; }
-  .commissions-hero p { color:#8B7355; max-width:600px; margin:0 auto; font-size:1.0625rem; line-height:1.75; }
-  .commission-process { background:#F7F4EE; padding:6rem 2.5rem; }
+  .hero-line { width:30px; height:1px; background:var(--gold); }
+
+  /* HERO */
+  .comm-hero { background:linear-gradient(135deg,#080808,#0f0800,#080808); color:var(--white); padding:10rem 3rem 6rem; text-align:center; position:relative; overflow:hidden; }
+  .comm-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,0.06),transparent 65%); }
+  .comm-hero-tag { display:inline-flex; align-items:center; gap:0.8rem; margin-bottom:1.5rem; }
+  .comm-hero-tag span { font-size:0.68rem; letter-spacing:4px; text-transform:uppercase; color:var(--gold); }
+  .comm-hero h1 { font-family:'Playfair Display',serif; font-size:clamp(3rem,6vw,5rem); font-weight:700; letter-spacing:-0.02em; margin-bottom:1.5rem; }
+  .comm-hero p { color:var(--gray2); max-width:600px; margin:0 auto; font-size:1.0625rem; line-height:1.75; }
+
+  /* PROCESS */
+  .process-section { background:var(--dark); padding:6rem 3rem; }
   .process-inner { max-width:1000px; margin:0 auto; }
-  .commission-process h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3rem); font-weight:600; letter-spacing:-0.02em; text-align:center; margin-bottom:4rem; }
+  .process-section h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3rem); font-weight:600; letter-spacing:-0.02em; text-align:center; margin-bottom:4rem; }
   .process-steps { display:grid; grid-template-columns:1fr; gap:2rem; }
-  .step { display:grid; grid-template-columns:120px 1fr; gap:2rem; padding:2rem; background:white; border:1px solid rgba(139,115,85,0.15); }
-  .step-number { font-family:'Playfair Display',serif; font-size:2.5rem; font-weight:700; color:#C4622D; }
-  .step-content h3 { font-family:'Playfair Display',serif; font-size:1.25rem; font-weight:600; margin-bottom:0.75rem; color:#1A1A18; }
-  .step-content p { color:#3D3D3A; font-size:0.95rem; line-height:1.7; }
-  .commission-details { max-width:1280px; margin:0 auto; padding:6rem 2.5rem; }
+  .step-block { display:grid; grid-template-columns:120px 1fr; gap:2rem; padding:2rem; background:var(--card); border:1px solid rgba(201,168,76,0.1); }
+  .step-num { font-family:'Playfair Display',serif; font-size:2.5rem; font-weight:700; color:var(--gold); }
+  .step-body h3 { font-family:'Playfair Display',serif; font-size:1.25rem; font-weight:600; margin-bottom:0.75rem; color:var(--white); }
+  .step-body p { color:var(--gray2); font-size:0.95rem; line-height:1.7; }
+
+  /* DETAILS */
+  .details-section { max-width:1280px; margin:0 auto; padding:6rem 3rem; }
   .details-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:2.5rem; }
-  .detail-block h3 { font-family:'Playfair Display',serif; font-size:1.125rem; font-weight:600; margin-bottom:0.75rem; color:#1A1A18; }
-  .detail-block p { color:#3D3D3A; font-size:0.95rem; line-height:1.75; }
-  .detail-block strong { color:#C4622D; }
-  .commission-info-section { max-width:1000px; margin:0 auto; padding:0 2.5rem 6rem; background:#F7F4EE; padding-left: 2.5rem; padding-right: 2.5rem; }
-  .info-inner { }
-  .commission-info-section h2 { font-family:'Playfair Display',serif; font-size:1.75rem; font-weight:600; letter-spacing:-0.02em; margin-bottom:1.5rem; }
-  .info-text { color:#3D3D3A; font-size:1.0625rem; line-height:1.8; }
+  .detail-block h3 { font-family:'Playfair Display',serif; font-size:1.125rem; font-weight:600; margin-bottom:0.75rem; color:var(--white); }
+  .detail-block p { color:var(--gray2); font-size:0.95rem; line-height:1.75; }
+  .detail-block strong { color:var(--gold); }
+
+  /* ADDITIONAL INFO */
+  .comm-info-section { max-width:1000px; margin:0 auto; padding:0 3rem 6rem; }
+  .comm-info-inner h2 { font-family:'Playfair Display',serif; font-size:1.75rem; font-weight:600; letter-spacing:-0.02em; margin-bottom:1.5rem; }
+  .info-text { color:var(--gray2); font-size:1.0625rem; line-height:1.8; }
   .info-text p { margin-bottom:1.5rem; }
-  .commission-contact { background:#1A1A18; color:#EDE8DF; padding:6rem 2.5rem; text-align:center; }
-  .contact-inner { max-width:700px; margin:0 auto; }
-  .contact-inner h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3rem); font-weight:600; letter-spacing:-0.02em; margin-bottom:1.5rem; }
-  .contact-inner p { color:#8B7355; font-size:1.0625rem; line-height:1.75; margin-bottom:2.5rem; }
-  .contact-buttons { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; }
-  .btn-primary { display:inline-block; background:#C4622D; color:#F7F4EE; padding:0.875rem 2rem; font-size:0.875rem; letter-spacing:0.06em; text-transform:uppercase; font-family:'DM Sans',sans-serif; transition:background 0.25s; text-decoration:none; }
-  .btn-primary:hover { background:#A8501F; }
-  .btn-secondary { display:inline-block; border:1px solid #8B7355; color:#EDE8DF; padding:0.875rem 2rem; font-size:0.875rem; letter-spacing:0.06em; text-transform:uppercase; font-family:'DM Sans',sans-serif; transition:all 0.25s; text-decoration:none; }
-  .btn-secondary:hover { background:#8B7355; border-color:#8B7355; }
-  @media (max-width:1024px) { 
+
+  /* CTA */
+  .comm-cta { background:linear-gradient(135deg,#0d0800,#150900); color:var(--white); padding:6rem 3rem; text-align:center; }
+  .cta-inner { max-width:700px; margin:0 auto; }
+  .cta-inner h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3rem); font-weight:600; letter-spacing:-0.02em; margin-bottom:1.5rem; }
+  .cta-inner p { color:var(--gray2); font-size:1.0625rem; line-height:1.75; margin-bottom:2.5rem; }
+  .cta-btns { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; }
+  .btn-gold { display:inline-block; background:var(--gold); color:var(--black); padding:0.875rem 2rem; font-size:0.875rem; letter-spacing:0.06em; text-transform:uppercase; font-family:'Inter',sans-serif; font-weight:700; transition:background 0.25s; text-decoration:none; }
+  .btn-gold:hover { background:var(--gold-light); }
+  .btn-ghost { display:inline-block; border:1px solid rgba(255,255,255,0.2); color:var(--white); padding:0.875rem 2rem; font-size:0.875rem; letter-spacing:0.06em; text-transform:uppercase; font-family:'Inter',sans-serif; transition:all 0.25s; text-decoration:none; }
+  .btn-ghost:hover { border-color:var(--gold); color:var(--gold); }
+
+  /* RESPONSIVE */
+  @media (max-width:1024px) {
     .details-grid { grid-template-columns:1fr; }
-    .step { grid-template-columns:80px 1fr; }
-    .step-number { font-size:2rem; }
+    .step-block { grid-template-columns:80px 1fr; }
+    .step-num { font-size:2rem; }
   }
-  @media (max-width:640px) { 
-    .commissions-hero,.commission-process,.commission-details,.commission-info-section,.commission-contact { padding-inline:1.5rem; } 
-    .step { grid-template-columns:1fr; gap:1rem; }
-    .step-number { font-size:1.75rem; }
-    .contact-buttons { flex-direction:column; }
-    .btn-primary,.btn-secondary { width:100%; text-align:center; }
+  @media (max-width:768px) {
+    .comm-hero, .process-section, .details-section, .comm-info-section, .comm-cta { padding-inline:1.5rem; }
+    .step-block { grid-template-columns:1fr; gap:1rem; }
+    .step-num { font-size:1.75rem; }
+    .cta-btns { flex-direction:column; }
+    .btn-gold, .btn-ghost { width:100%; text-align:center; }
   }
 </style>

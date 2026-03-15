@@ -20,6 +20,16 @@ export default {
       type: 'text',
     },
     {
+      name: 'location',
+      title: 'Location (City, State/Country)',
+      type: 'string',
+    },
+    {
+      name: 'foundingYear',
+      title: 'Founding Year',
+      type: 'number',
+    },
+    {
       name: 'profilePhoto',
       title: 'Profile Photo',
       type: 'image',
@@ -46,6 +56,11 @@ export default {
       type: 'url',
     },
     {
+      name: 'tiktokUrl',
+      title: 'TikTok URL',
+      type: 'url',
+    },
+    {
       name: 'heroImage',
       title: 'Hero Image (Homepage)',
       type: 'image',
@@ -67,6 +82,12 @@ export default {
           options: { hotspot: true },
         },
       ],
+    },
+    {
+      name: 'aboutPortraitImage',
+      title: 'About Page Portrait Image',
+      type: 'image',
+      options: { hotspot: true },
     },
     {
       name: 'commissionInfo',

@@ -2,28 +2,30 @@
 import Layout from '../layouts/Layout.astro';
 import { sanityClient } from '../lib/sanity.ts';
 
-const siteSettings = await sanityClient.fetch(`*[_type == "siteSettings"][0]`);
+const siteSettings = await sanityClient.fetch(`*[_type == "siteSettings"][0]`).catch(() => null);
 const settings = siteSettings || {};
-const { 
-  artistName = 'Justin', 
-  email = '', 
-  phone = '', 
-  instagramUrl = '', 
+const {
+  artistName = 'Justin',
+  email = '',
+  phone = '',
+  instagramUrl = '',
   facebookUrl = '',
-  tagline = 'Mixed media artist. Original works, commissions, and prints.'
 } = settings;
 ---
 <Layout title="Contact" description={`Get in touch with ${artistName} about commissions, inquiries, and collaborations.`}>
-  
 
-  <section class="contact-hero reveal">
+  <section class="contact-hero">
+    <div class="hero-tag">
+      <div class="hero-line"></div>
+      <span>Reach Out</span>
+    </div>
     <h1>Get In Touch</h1>
     <p>Have a question or interested in working together? We'd love to hear from you.</p>
   </section>
 
   <section class="contact-section">
     <div class="contact-grid">
-      <div class="contact-form reveal">
+      <div class="contact-form">
         <h2>Send a Message</h2>
         <form id="contact-form" method="POST">
           <div class="form-group">
@@ -47,16 +49,14 @@ const {
         </form>
       </div>
 
-      <div class="contact-info reveal">
+      <div class="contact-info">
         <h2>Connect</h2>
-        <div class="info-block">
-          <h3>Email</h3>
-          {email ? (
+        {email && (
+          <div class="info-block">
+            <h3>Email</h3>
             <a href={`mailto:${email}`}>{email}</a>
-          ) : (
-            <p style="color:#8B7355;">Email address from Sanity</p>
-          )}
-        </div>
+          </div>
+        )}
         {phone && (
           <div class="info-block">
             <h3>Phone</h3>
@@ -82,43 +82,36 @@ const {
     </div>
   </section>
 
-  <div id="ghl-widget-container" style="display:none;"></div>
-
-  
 </Layout>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('contact-form');
+    const form = document.getElementById('contact-form') as HTMLFormElement;
     const statusDiv = document.getElementById('form-status');
 
-    if (form) {
+    if (form && statusDiv) {
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
         const formData = new FormData(form);
         const data = Object.fromEntries(formData);
-        
         statusDiv.textContent = 'Sending...';
-        statusDiv.style.color = '#C4622D';
-        
+        statusDiv.style.color = 'var(--gold)';
         try {
           const response = await fetch('/api/contact', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
           });
-
           if (response.ok) {
             statusDiv.textContent = '✓ Message sent! We\'ll get back to you soon.';
-            statusDiv.style.color = '#C4622D';
+            statusDiv.style.color = 'var(--gold)';
             form.reset();
           } else {
             throw new Error('Failed to send');
           }
         } catch (err) {
           statusDiv.textContent = '✗ Error sending message. Please try again or email directly.';
-          statusDiv.style.color = '#8B7355';
+          statusDiv.style.color = 'var(--gray)';
         }
       });
     }
@@ -126,31 +119,44 @@ const {
 </script>
 
 <style>
-  .contact-hero { background:#1A1A18; color:#EDE8DF; padding:10rem 2.5rem 5rem; text-align:center; }
+  .hero-line { width:30px; height:1px; background:var(--gold); }
+
+  /* HERO */
+  .contact-hero { background:linear-gradient(135deg,#080808,#0f0800,#080808); color:var(--white); padding:10rem 3rem 5rem; text-align:center; position:relative; overflow:hidden; }
+  .contact-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,0.06),transparent 65%); }
+  .hero-tag { display:inline-flex; align-items:center; gap:0.8rem; margin-bottom:1.5rem; }
+  .hero-tag span { font-size:0.68rem; letter-spacing:4px; text-transform:uppercase; color:var(--gold); }
   .contact-hero h1 { font-family:'Playfair Display',serif; font-size:clamp(3rem,6vw,5rem); font-weight:700; letter-spacing:-0.02em; margin-bottom:1.5rem; }
-  .contact-hero p { color:#8B7355; max-width:600px; margin:0 auto; font-size:1.0625rem; line-height:1.75; }
-  .contact-section { max-width:1000px; margin:0 auto; padding:6rem 2.5rem; }
+  .contact-hero p { color:var(--gray2); max-width:600px; margin:0 auto; font-size:1.0625rem; line-height:1.75; }
+
+  /* CONTACT GRID */
+  .contact-section { max-width:1000px; margin:0 auto; padding:6rem 3rem; }
   .contact-grid { display:grid; grid-template-columns:1.5fr 1fr; gap:4rem; }
-  .contact-form h2,.contact-info h2 { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:600; margin-bottom:2rem; color:#1A1A18; }
+  .contact-form h2, .contact-info h2 { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:600; margin-bottom:2rem; color:var(--white); }
+
+  /* FORM */
   .form-group { margin-bottom:1.5rem; }
-  .form-group label { display:block; margin-bottom:0.5rem; color:#1A1A18; font-size:0.9rem; letter-spacing:0.06em; text-transform:uppercase; font-family:'DM Sans',sans-serif; }
-  .form-group input,.form-group textarea { width:100%; padding:0.75rem; border:1px solid rgba(26,26,24,0.15); background:#FAFAF8; font-family:'DM Sans',sans-serif; font-size:0.95rem; transition:border 0.2s; }
-  .form-group input:focus,.form-group textarea:focus { outline:none; border-color:#C4622D; }
+  .form-group label { display:block; margin-bottom:0.5rem; color:var(--gray2); font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase; }
+  .form-group input, .form-group textarea { width:100%; padding:0.75rem 1rem; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.04); color:var(--white); font-family:'Inter',sans-serif; font-size:0.95rem; transition:border 0.2s; outline:none; }
+  .form-group input:focus, .form-group textarea:focus { border-color:var(--gold); }
   .form-group textarea { resize:vertical; }
-  .btn-submit { width:100%; background:#C4622D; color:#F7F4EE; padding:0.875rem; font-size:0.875rem; letter-spacing:0.06em; text-transform:uppercase; font-family:'DM Sans',sans-serif; border:none; cursor:pointer; transition:background 0.25s; }
-  .btn-submit:hover { background:#A8501F; }
-  .contact-info { }
+  .btn-submit { width:100%; background:var(--gold); color:var(--black); padding:0.875rem; font-size:0.875rem; letter-spacing:0.06em; text-transform:uppercase; font-family:'Inter',sans-serif; font-weight:700; border:none; cursor:pointer; transition:background 0.25s; }
+  .btn-submit:hover { background:var(--gold-light); }
+
+  /* INFO */
   .info-block { margin-bottom:2.5rem; }
-  .info-block h3 { font-family:'Playfair Display',serif; font-size:1rem; font-weight:600; margin-bottom:0.75rem; color:#1A1A18; }
-  .info-block p { color:#3D3D3A; font-size:0.95rem; line-height:1.7; }
-  .info-block a { color:#C4622D; text-decoration:none; transition:color 0.2s; }
-  .info-block a:hover { color:#A8501F; }
+  .info-block h3 { font-family:'Playfair Display',serif; font-size:1rem; font-weight:600; margin-bottom:0.75rem; color:var(--white); }
+  .info-block p { color:var(--gray2); font-size:0.95rem; line-height:1.7; }
+  .info-block a { color:var(--gold); text-decoration:none; transition:color 0.2s; }
+  .info-block a:hover { color:var(--gold-light); }
   .social-links { display:flex; flex-direction:column; gap:0.5rem; }
   .social-link { font-size:0.9rem; }
-  @media (max-width:1024px) { 
+
+  /* RESPONSIVE */
+  @media (max-width:1024px) {
     .contact-grid { grid-template-columns:1fr; gap:3rem; }
   }
-  @media (max-width:640px) { 
-    .contact-hero,.contact-section { padding-inline:1.5rem; }
+  @media (max-width:768px) {
+    .contact-hero, .contact-section { padding-inline:1.5rem; }
   }
 </style>
