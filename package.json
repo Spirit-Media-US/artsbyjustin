@@ -1,24 +1,31 @@
 {
-  "name": "artsbyjustin",
-  "type": "module",
-  "version": "0.0.1",
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview"
-  },
-  "dependencies": {
-    "@astrojs/tailwind": "^5.0.0",
-    "@sanity/astro": "^3.2.11",
-    "@sanity/client": "^7.16.0",
-    "@sanity/image-url": "^2.0.3",
-    "@sanity/vision": "^5.13.0",
-    "astro": "^4.0.0",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "sanity": "^5.13.0",
-    "sanity-plugin-media": "^4.1.1",
-    "styled-components": "^6.3.11",
-    "tailwindcss": "^3.4.0"
-  }
+	"name": "artsbyjustin",
+	"type": "module",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "astro dev",
+		"build": "astro check && astro build",
+		"preview": "astro preview",
+		"check": "biome check --write",
+		"prepare": "lefthook install"
+	},
+	"dependencies": {
+		"@sanity/astro": "^3.2.11",
+		"@sanity/client": "^7.16.0",
+		"@sanity/image-url": "^2.0.3",
+		"@sanity/vision": "^5.13.0",
+		"astro": "^5.3.0",
+		"react": "^19.2.4",
+		"react-dom": "^19.2.4",
+		"sanity": "^5.13.0",
+		"sanity-plugin-media": "^4.1.1",
+		"styled-components": "^6.3.11"
+	},
+	"devDependencies": {
+		"@astrojs/check": "^0.9.6",
+		"@biomejs/biome": "^2.4.4",
+		"@tailwindcss/vite": "^4.2.1",
+		"lefthook": "^2.1.1",
+		"tailwindcss": "^4.2.1"
+	}
 }

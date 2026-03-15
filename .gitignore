@@ -1,8 +1,33 @@
-node_modules/
+# build output
 dist/
-.DS_Store
-.env
+.output/
 
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# environment variables
+.env
+.env.*
+!.env.example
+
+# macOS-specific files
+.DS_Store
+
+# Windows-specific files
+Thumbs.db
+
+# editor
+.vscode/
+.idea/
 
 # Media files — use Cloudflare R2 instead
 *.jpg
@@ -19,4 +44,5 @@ dist/
 *.mov
 *.mp3
 
-CLAUDE.md
+# Sanity studio build artifacts
+.sanity/runtime/
