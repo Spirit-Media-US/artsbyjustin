@@ -1,5 +1,31 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { sanityClient, urlFor } from '../lib/sanity';
+
+let sanityArtworks: object[] = [];
+try {
+  const raw = await sanityClient.fetch(`
+    *[_type == "artwork" && defined(image)] | order(order asc, _createdAt desc) {
+      _id, title, image, category, medium, dimensions, year, price, sold, featured, description
+    }
+  `);
+  sanityArtworks = raw.map((a: any) => ({
+    id: a._id,
+    imgUrl: urlFor(a.image).width(1400).url(),
+    thumbUrl: urlFor(a.image).width(400).url(),
+    title: a.title || 'Untitled',
+    category: a.category || '',
+    medium: a.medium || '',
+    size: a.dimensions || '',
+    year: a.year || '',
+    sold: a.sold || false,
+    price: a.sold ? 'SOLD' : (a.price ? `$${Number(a.price).toLocaleString()}` : 'Inquire'),
+    desc: a.description || '',
+    featured: a.featured || false,
+  }));
+} catch(e) {
+  console.error('Portfolio Sanity fetch error:', e);
+}
 ---
 <Layout title="Portfolio" description="The full collection — bold acrylic paintings, mixed media works, resin art, murals, and 3D pieces by Justin Keishing. Each one a story made with purpose.">
 
@@ -13,10 +39,10 @@ import Layout from '../layouts/Layout.astro';
 <!-- FILTER -->
 <div class="filter-bar">
   <button class="filter-btn active" data-cat="all">All Works</button>
-  <button class="filter-btn" data-cat="chase">Chase Your Dreams</button>
-  <button class="filter-btn" data-cat="resin">Resin Art</button>
-  <button class="filter-btn" data-cat="mural">Murals</button>
-  <button class="filter-btn" data-cat="mixed">Mixed Media</button>
+  <button class="filter-btn" data-cat="Sports & Motion">Sports & Motion</button>
+  <button class="filter-btn" data-cat="Portraits & Identity">Portraits & Identity</button>
+  <button class="filter-btn" data-cat="Faith & Spirit">Faith & Spirit</button>
+  <button class="filter-btn" data-cat="Abstract & Mixed Media">Abstract & Mixed Media</button>
 </div>
 
 <!-- CINEMATIC VIEWER -->
@@ -55,7 +81,7 @@ import Layout from '../layouts/Layout.astro';
 </section>
 
 <!-- CHASE YOUR DREAMS SERIES -->
-<section class="series" id="chaseSeries">
+<section class="series" id="chaseSeries" style="display:none">
   <div class="series-intro reveal">
     <div>
       <p class="label">Featured Series</p><div class="bar"></div>
@@ -178,53 +204,10 @@ import Layout from '../layouts/Layout.astro';
 
 </Layout>
 
-<script is:inline>
-// ── ARTWORK DATABASE ──────────────────────────────────────────
-const artworks = [
-  {id:1,  imgKey:'img1',  title:'Hurricanes',           series:'chase', medium:'Acrylic on Canvas', year:'2023', size:'24×36"', sold:true,  price:'SOLD',   desc:'A Carolina Hurricanes #24 player in full explosive motion — a blazing swirl of color erupting from his stick.'},
-  {id:2,  imgKey:'img2',  title:'Overflow',             series:'mixed', medium:'Acrylic on Canvas', year:'2023', size:'18×24"', sold:false, price:'$1,400', desc:'A white teacup labeled "Overflow" falling — pouring an eruption of electric blue, teal, magenta and gold.'},
-  {id:3,  imgKey:'img3',  title:'Walk in Purpose',      series:'mixed', medium:'Acrylic on Canvas', year:'2024', size:'24×36"', sold:false, price:'$1,800', desc:'A solitary figure walks forward, dissolving into sweeping gold and black brushstrokes — a meditation on destiny.'},
-  {id:4,  imgKey:'img4',  title:'Skater',               series:'chase', medium:'Acrylic on Canvas', year:'2024', size:'24×30"', sold:false, price:'$1,600', desc:'A grayscale skateboarder launches from a dark ramp — a sweeping arc of color bursting behind them.'},
-  {id:5,  imgKey:'img5',  title:'Roots of the Heart',   series:'mixed', medium:'Mixed Media',       year:'2024', size:'30×40"', sold:false, price:'$2,200', desc:'A faceless figure laced with bare white tree branches — a glowing anatomical heart at the center.'},
-  {id:6,  imgKey:'img6',  title:'The Rapper',           series:'chase', medium:'Acrylic on Canvas', year:'2024', size:'24×36"', sold:false, price:'$1,700', desc:'A grayscale rapper grips the mic — teal, gold and black paint erupting wildly upward. The raw power of voice.'},
-  {id:7,  imgKey:'img7',  title:'Ghost Rider',          series:'chase', medium:'Acrylic on Canvas', year:'2024', size:'30×20"', sold:false, price:'$1,600', desc:'A skeleton rider on a flaming motorcycle — orange and gold fire trailing dramatically behind.'},
-  {id:8,  imgKey:'img8',  title:"The Creator's Hand",   series:'chase', medium:'Acrylic on Canvas', year:'2024', size:'24×30"', sold:false, price:'$1,900', desc:'A single hand exploding with teal and orange brushstrokes — a meditation on creativity and purpose.'},
-  {id:9,  imgKey:'img9',  title:'Bound Heart',          series:'mixed', medium:'Acrylic on Canvas', year:'2024', size:'24×30"', sold:false, price:'$1,550', desc:'A monochrome anatomical heart wrapped in rope — cracking apart, breaking free.'},
-  {id:10, imgKey:'img10', title:'White Horse',          series:'mixed', medium:'Acrylic on Canvas', year:'2024', size:'30×40"', sold:false, price:'$2,000', desc:'A powerful white horse charging through dark storm clouds and moonlight.'},
-  {id:11, imgKey:'img11', title:'Yankee',               series:'chase', medium:'Acrylic on Canvas', year:'2023', size:'24×36"', sold:false, price:'$1,800', desc:'A New York Yankees batter mid-swing — multicolor paint erupting from the bat in a dramatic swirl.'},
-  {id:12, imgKey:'img12', title:'MJ · North Carolina',  series:'chase', medium:'Acrylic on Canvas', year:'2023', size:'24×36"', sold:false, price:'$1,800', desc:'Michael Jordan dunking in his UNC #23 jersey — blue and red paint exploding from the hoop.'},
-  {id:13, imgKey:'img13', title:'Peak',                 series:'mixed', medium:'Acrylic on Canvas', year:'2024', size:'24×36"', sold:false, price:'$1,650', desc:'A lone figure plants an American flag at a mountain summit under a starry sky.'},
-  {id:14, imgKey:'img14', title:'The Crowned Lion',     series:'chase', medium:'Acrylic on Canvas', year:'2024', size:'30×40"', sold:false, price:'$2,400', desc:'A majestic white lion wearing a gold crown roars — flames erupting upward against a deep blue cosmos.'},
-  {id:15, imgKey:'img15', title:'LeBron · Lakers',      series:'chase', medium:'Acrylic on Canvas', year:'2023', size:'24×36"', sold:true,  price:'SOLD',   desc:'LeBron James #23 in Lakers yellow driving to the basket — paint exploding in every direction.'},
-  {id:16, imgKey:'img16', title:'SOAR',                 series:'chase', medium:'Acrylic on Canvas', year:'2024', size:'24×36"', sold:false, price:'$1,900', desc:'A breakdancer on one hand — SOAR on his shirt — as a rainbow arc of paint sweeps around him.'},
-  {id:17, imgKey:'img17', title:'Rise',                 series:'chase', medium:'Acrylic on Canvas', year:'2024', size:'24×36"', sold:false, price:'$1,750', desc:'A grayscale basketball player soars toward the hoop — a swirling vortex of color spiraling below.'},
-  {id:18, imgKey:'img18', title:'Astronaut',            series:'mixed', medium:'Mixed Media',       year:'2024', size:'24×36"', sold:false, price:'$2,100', desc:'A detailed grayscale astronaut holds a glowing orb of fire — a universe cradled in his hands.'},
-  {id:19, imgKey:'img19', title:'First Dance',          series:'mixed', medium:'Acrylic on Canvas', year:'2024', size:'24×30"', sold:false, price:'$1,850', desc:'A couple embracing — their faces replaced by an explosion of red, pink and black paint against teal.'},
-  {id:20, imgKey:'img20', title:'Moon Landing',         series:'mixed', medium:'Acrylic on Canvas', year:'2023', size:'24×30"', sold:false, price:'$1,700', desc:'An astronaut plants a textured impasto American flag on the moon. A celebration of human achievement.'},
-];
+<script is:inline define:vars={{ sanityArtworks }}>
+// ── ARTWORK DATA (from Sanity) ─────────────────────────────────
+const artworks = sanityArtworks;
 
-const imageMap = {
-  img1:'https://res.cloudinary.com/dztkjeayt/image/upload/f_jpg/v1772764084/IMG_1151_zpo5cj.heic',
-  img2:'https://res.cloudinary.com/dztkjeayt/image/upload/f_jpg/v1772764067/IMG_5765_dywy1d.heic',
-  img3:'https://res.cloudinary.com/dztkjeayt/image/upload/f_jpg/v1772764067/IMG_4447_f16zok.heic',
-  img4:'https://res.cloudinary.com/dztkjeayt/image/upload/f_jpg/v1772764067/IMG_4729_dqr0sx.heic',
-  img5:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764084/4F48EBCB-D245-4FF2-BCE8-654625DAC55E_kein7h.jpg',
-  img6:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764084/53EAD40C-BFE9-483F-A227-FBA4611768FA_uhpmgx.jpg',
-  img7:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764084/104544B2-B9C3-4C26-BE98-A7DFEB514A3C_efz3ud.jpg',
-  img8:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764084/E94CB8D4-B895-4956-B7F5-CBB3CA46560F_ngybmr.jpg',
-  img9:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764083/1C0344BD-8CE7-4B7E-BFB2-46B1CDC5E527_ixcekj.jpg',
-  img10:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764074/793DC1FE-8207-45AE-9B15-6514FB8D26B1_ci5jcp.jpg',
-  img11:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764082/596E57A2-F4C0-476C-9956-6E9761371639_cbgrsu.jpg',
-  img12:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764074/720AB739-426E-4A61-8F87-C9A02418F073_dshgtt.jpg',
-  img13:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764074/74CF4A7D-6780-4F4E-A749-B94C8A16ED20_mpqvvo.jpg',
-  img14:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764074/CF7EC701-3AE5-4016-B257-AFC316897BFA_tmk55p.jpg',
-  img15:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764074/69C88F04-62F3-44FF-A719-75ADA0F583AF_tjcdmy.jpg',
-  img16:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764073/7F349BFB-3ACD-47D6-9AC5-56FFEB7345B9_jlvpk9.jpg',
-  img17:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764073/475D4621-5FAA-4B29-8A24-9C4F9C6239DD_dje8ts.jpg',
-  img18:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764073/4FFBD5A9-EC9A-470A-99FB-77AE2BD6C74A_glzajt.jpg',
-  img19:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764073/A34786D0-51D9-4524-B2A2-C2723CECE012_ugjrze.jpg',
-  img20:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764072/A7EB68DE-3479-448C-B318-1B1E07A86E04_a8pobm.jpg',
-};
 
 const customerPhotos = [
   'https://cdn.sanity.io/images/oqoqh3p3/production/3836fdc614b3b3e280b83cf3c339074093fb655e-4284x5712.jpg',
@@ -269,9 +252,10 @@ const projects = [
 ];
 
 // ── HELPERS ───────────────────────────────────────────────────
-function getBg(k){const u=imageMap[k];return u?`url('${u}') center top/cover no-repeat`:'#1a1a1a';}
-function getCategoryName(s){return{chase:'Chase Your Dreams Series',resin:'Resin Art',mural:'Murals & Community',mixed:'Mixed Media & 3D Art'}[s]||'Collection';}
-function getCategoryShort(s){return{chase:'Chase Dreams',resin:'Resin',mural:'Mural',mixed:'Mixed Media'}[s]||'';}
+function getBg(a){return a.imgUrl?`url('${a.imgUrl}') center top/cover no-repeat`:'#1a1a1a';}
+function getThumb(a){return a.thumbUrl?`url('${a.thumbUrl}') center top/cover no-repeat`:'#1a1a1a';}
+function getCategoryName(c){return{'Sports & Motion':'Sports & Motion','Portraits & Identity':'Portraits & Identity','Faith & Spirit':'Faith & Spirit','Abstract & Mixed Media':'Abstract & Mixed Media'}[c]||'Collection';}
+function getCategoryShort(c){return{'Sports & Motion':'Sports','Portraits & Identity':'Portraits','Faith & Spirit':'Faith','Abstract & Mixed Media':'Mixed Media'}[c]||c||'';}
 
 // ── STATE ─────────────────────────────────────────────────────
 let currentSlide=0, filteredArtworks=[...artworks], currentLbIndex=0, lbWorks=[...artworks];
@@ -285,16 +269,16 @@ function buildCinema(works){
   works.forEach((a,i)=>{
     const s=document.createElement('div');
     s.className='cinema-slide'+(i===0?' active':'');
-    s.innerHTML=`<div class="cinema-bg" style="background:${getBg(a.imgKey)};"></div>
+    s.innerHTML=`<div class="cinema-bg" style="background:${getBg(a)};"></div>
     <div class="cinema-overlay"></div>
     <div class="cinema-content">
-      <div class="cinema-category">${getCategoryName(a.series)}</div>
+      <div class="cinema-category">${getCategoryName(a.category)}</div>
       <div class="cinema-title">${a.title}</div>
-      <div class="cinema-meta">${a.medium} · ${a.size} · ${a.year}</div>
+      <div class="cinema-meta">${[a.medium,a.size,a.year].filter(Boolean).join(' · ')}</div>
       <div class="cinema-desc">${a.desc}</div>
       <div class="cinema-actions">${a.sold
-        ?`<span class="sold-badge">● Sold</span><button class="btn-ghost" onclick="openInquiry(${a.id},'similar')">Inquire About Similar →</button>`
-        :`<button class="btn-gold" onclick="openInquiry(${a.id},'purchase')">Inquire to Purchase →</button><button class="btn-ghost" onclick="openInquiry(null,'commission')">Commission Similar →</button>`
+        ?`<span class="sold-badge">● Sold</span><button class="btn-ghost" onclick="openInquiry('${a.id}','similar')">Inquire About Similar →</button>`
+        :`<button class="btn-gold" onclick="openInquiry('${a.id}','purchase')">Inquire to Purchase →</button><button class="btn-ghost" onclick="openInquiry(null,'commission')">Commission Similar →</button>`
       }</div>
     </div>`;
     v.insertBefore(s, v.querySelector('.cinema-nav'));
@@ -310,7 +294,7 @@ function buildThumbs(works){
     const t=document.createElement('div');
     t.className='thumb'+(i===0?' active':'');
     t.onclick=()=>goToSlide(i);
-    t.innerHTML=`<div class="thumb-bg" style="background:${getBg(a.imgKey)};"></div>${a.sold?'<div class="thumb-sold">Sold</div>':''}`;
+    t.innerHTML=`<div class="thumb-bg" style="background:${getThumb(a)};"></div>${a.sold?'<div class="thumb-sold">Sold</div>':''}`;
     strip.appendChild(t);
   });
 }
@@ -322,29 +306,30 @@ function buildGrid(works){
     const el=document.createElement('div');
     el.className='grid-item';
     el.onclick=()=>openLightbox(a.id,works);
-    el.innerHTML=`<div class="grid-item-bg" style="background:${getBg(a.imgKey)};"></div>
-    <div class="grid-cat">${getCategoryShort(a.series)}</div>
+    el.innerHTML=`<div class="grid-item-bg" style="background:${getBg(a)};"></div>
+    <div class="grid-cat">${getCategoryShort(a.category)}</div>
     ${a.sold?'<div class="grid-sold">Sold</div>':''}
     <div class="grid-zoom"><div class="grid-zoom-icon">⤢</div></div>
-    <div class="grid-item-info"><h3>${a.title}</h3><p>${a.medium} · ${a.year}</p></div>`;
+    <div class="grid-item-info"><h3>${a.title}</h3><p>${[a.medium,a.year].filter(Boolean).join(' · ')}</p></div>`;
     g.appendChild(el);
   });
 }
 
 function buildChaseGrid(){
-  const chase=artworks.filter(a=>a.series==='chase');
+  const featured=artworks.filter(a=>a.featured);
   const g=document.getElementById('chaseGrid');
+  if(!g)return;
   g.innerHTML='';
-  chase.slice(0,6).forEach(a=>{
+  featured.slice(0,6).forEach(a=>{
     const el=document.createElement('div');
     el.className='series-item';
-    el.onclick=()=>openLightbox(a.id,chase);
-    el.innerHTML=`<div class="series-item-bg" style="background:${getBg(a.imgKey)};"></div>
-    <div class="series-item-overlay"><div><h3>${a.title}</h3><p>${a.medium} · ${a.year}${a.sold?' · SOLD':''}</p></div></div>`;
+    el.onclick=()=>openLightbox(a.id,featured);
+    el.innerHTML=`<div class="series-item-bg" style="background:${getBg(a)};"></div>
+    <div class="series-item-overlay"><div><h3>${a.title}</h3><p>${[a.medium,a.year].filter(Boolean).join(' · ')}${a.sold?' · SOLD':''}</p></div></div>`;
     g.appendChild(el);
   });
-  const soar=artworks.find(a=>a.title==='SOAR');
-  if(soar) document.getElementById('seriesHeroImg').style.background=getBg(soar.imgKey);
+  const first=featured[0];
+  if(first) document.getElementById('seriesHeroImg').style.background=getBg(first);
 }
 
 function buildTicker(){
@@ -405,7 +390,7 @@ function startAutoPlay(){clearInterval(autoPlay);autoPlay=setInterval(()=>change
 function filterGallery(cat,btn){
   document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  filteredArtworks=cat==='all'?[...artworks]:artworks.filter(a=>a.series===cat);
+  filteredArtworks=cat==='all'?[...artworks]:artworks.filter(a=>a.category===cat);
   currentSlide=0; buildCinema(filteredArtworks); buildThumbs(filteredArtworks); buildGrid(filteredArtworks); startAutoPlay();
 }
 
@@ -422,18 +407,18 @@ function closeLightbox(e){
 function lbNav(dir){currentLbIndex=(currentLbIndex+dir+lbWorks.length)%lbWorks.length;renderLightbox(currentLbIndex);}
 function renderLightbox(i){
   const a=lbWorks[i];
-  document.getElementById('lbArt').style.background=getBg(a.imgKey);
-  document.getElementById('lbCat').textContent=getCategoryName(a.series);
+  document.getElementById('lbArt').style.background=getBg(a);
+  document.getElementById('lbCat').textContent=getCategoryName(a.category);
   document.getElementById('lbTitle').textContent=a.title;
-  document.getElementById('lbMeta').textContent=`${a.medium} · ${a.size} · ${a.year}`;
+  document.getElementById('lbMeta').textContent=[a.medium,a.size,a.year].filter(Boolean).join(' · ');
   document.getElementById('lbDesc').textContent=a.desc;
   document.getElementById('lbPrice').textContent=a.price;
   document.getElementById('lbPriceNote').textContent=a.sold?'':'Shipping included';
   document.getElementById('lbArt').querySelector('.lb-art-sold')?.remove();
   if(a.sold){const b=document.createElement('div');b.className='lb-art-sold';b.textContent='Sold';document.getElementById('lbArt').appendChild(b);}
   document.getElementById('lbActions').innerHTML=a.sold
-    ?`<button class="btn-ghost" onclick="openInquiry(${a.id},'similar')">Inquire About Similar →</button>`
-    :`<button class="btn-gold" onclick="openInquiry(${a.id},'purchase')">Inquire to Purchase →</button>
+    ?`<button class="btn-ghost" onclick="openInquiry('${a.id}','similar')">Inquire About Similar →</button>`
+    :`<button class="btn-gold" onclick="openInquiry('${a.id}','purchase')">Inquire to Purchase →</button>
       <button class="btn-ghost" onclick="openInquiry(null,'commission')">Commission Similar →</button>`;
 }
 
@@ -443,7 +428,7 @@ function openInquiry(id,type){
   document.getElementById('inqSuccess').style.display='none';
   document.getElementById('inqType').value=(type==='purchase'||type==='similar')?'purchase':type==='commission'?'commission':type==='mural'?'mural':'general';
   const f=document.getElementById('inqFor');
-  if(id){const a=artworks.find(x=>x.id===id);f.style.display='';f.innerHTML=`Regarding: <strong>${a.title}</strong> · ${a.medium}, ${a.size}${a.sold?' <span style="color:#e55;">· Sold</span>':''}`;}
+  if(id){const a=artworks.find(x=>x.id===id);if(a){f.style.display='';f.innerHTML=`Regarding: <strong>${a.title}</strong> · ${a.medium}${a.size?' · '+a.size:''}${a.sold?' <span style="color:#e55;">· Sold</span>':''}`;}else f.style.display='none';}
   else f.style.display='none';
   document.getElementById('inquiryModal').classList.add('open'); document.body.style.overflow='hidden';
   document.getElementById('lightbox').classList.remove('open');
@@ -472,11 +457,6 @@ document.getElementById('inqSubmitBtn').onclick=()=>{
 };
 document.getElementById('submitPhotoBtn').onclick=()=>openInquiry(null,'general');
 document.getElementById('muralInquiryBtn').onclick=()=>openInquiry(null,'mural');
-document.getElementById('shopChaseBtn').onclick=()=>{
-  const btn=document.querySelector('.filter-btn[data-cat="chase"]');
-  filterGallery('chase',btn);
-  document.getElementById('cinematicViewer').scrollIntoView({behavior:'smooth'});
-};
 document.querySelectorAll('.filter-btn').forEach(btn=>{
   btn.onclick=()=>filterGallery(btn.dataset.cat,btn);
 });

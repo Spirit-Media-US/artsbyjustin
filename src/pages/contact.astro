@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { sanityClient } from '../lib/sanity.ts';
+import { sanityClient } from '../lib/sanity';
 
 const siteSettings = await sanityClient.fetch(`*[_type == "siteSettings"][0]`).catch(() => null);
 const settings = siteSettings || {};
