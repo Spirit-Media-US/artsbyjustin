@@ -2,6 +2,7 @@
 const currentPath = Astro.url.pathname;
 const isHome = currentPath === '/';
 const isAbout = currentPath === '/about';
+const isPortfolio = currentPath === '/portfolio';
 const isCommissions = currentPath === '/commissions';
 const isPress = currentPath === '/press';
 ---
@@ -14,7 +15,7 @@ const isPress = currentPath === '/press';
     <ul class="nav-links" id="navLinks">
       <li><a href="/" class:list={['nav-link', { active: isHome }]}>Home</a></li>
       <li><a href="/about" class:list={['nav-link', { active: isAbout }]}>The Story</a></li>
-      <li><a href="/" class:list={['nav-link', { active: isHome }]}>Portfolio</a></li>
+      <li><a href="/portfolio" class:list={['nav-link', { active: isPortfolio }]}>Portfolio</a></li>
       <li><a href="/commissions" class:list={['nav-link', { active: isCommissions }]}>Commissions</a></li>
       <li><a href="/press" class:list={['nav-link', { active: isPress }]}>Press</a></li>
       <li><a href="/shop" class="nav-cta">Shop Now</a></li>
