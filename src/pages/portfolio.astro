@@ -374,7 +374,9 @@ function goToSlide(n){
   currentSlide=(n+slides.length)%slides.length;
   slides[currentSlide]?.classList.add('active');
   thumbs[currentSlide]?.classList.add('active');
-  thumbs[currentSlide]?.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+  const strip=document.getElementById('thumbStrip');
+  const activeThumb=thumbs[currentSlide];
+  if(strip&&activeThumb){strip.scrollLeft=activeThumb.offsetLeft-(strip.offsetWidth-activeThumb.offsetWidth)/2;}
   updateCounter(currentSlide);
   resetProgress();
 }
