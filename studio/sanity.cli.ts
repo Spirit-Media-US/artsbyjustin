@@ -6,4 +6,7 @@ export default defineCliConfig({
 		dataset: 'production',
 	},
 	studioHost: 'artsbyjustin',
+	deployment: {
+		appId: 'swn9dd5ab6gtv2fyr9cs82w1',
+	},
 });
