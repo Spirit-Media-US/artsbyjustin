@@ -1,16 +1,27 @@
 ---
+import { sanityClient } from '../lib/sanity';
+
 const year = new Date().getFullYear();
+let siteSettings: any = {};
+try {
+  siteSettings = await sanityClient.fetch(`*[_type == "siteSettings"][0]`) || {};
+} catch (e) {
+  console.error('Error fetching siteSettings:', e);
+}
+
+const artistName = siteSettings?.artistName || 'Arts by Justin';
+const location = siteSettings?.location || 'Raleigh, NC';
 ---
 <footer>
   <div class="f-inner">
-    <span class="f-logo">Arts <span>by</span> Justin</span>
+    <span class="f-logo">{artistName.split(' ')[0]} <span>by</span> {artistName.split(' ').slice(1).join(' ')}</span>
     <nav class="f-links">
       <a href="/">Home</a>
       <a href="/about">The Story</a>
       <a href="/press">Press</a>
       <a href="/contact">Contact</a>
     </nav>
-    <span class="f-copy">© {year} Arts by Justin · Justin Keishing · Raleigh, NC</span>
+    <span class="f-copy">© {year} {artistName} · {location}</span>
   </div>
 </footer>
 <style>
