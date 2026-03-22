@@ -17,7 +17,24 @@ export function urlFor(source: any) {
 
 // Fetch siteSettings
 export async function getSiteSettings() {
-  const query = `*[_type == "siteSettings"][0]`
+  const query = `*[_type == "siteSettings"][0]{
+    artistName,
+    tagline,
+    bio,
+    location,
+    foundingYear,
+    profilePhoto,
+    email,
+    phone,
+    instagramUrl,
+    facebookUrl,
+    tiktokUrl,
+    heroImage,
+    logo,
+    galleryImages,
+    aboutPortraitImage,
+    commissionInfo
+  }`
   try {
     const settings = await sanityClient.fetch(query)
     return settings || {}
