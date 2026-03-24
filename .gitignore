@@ -46,3 +46,8 @@ Thumbs.db
 
 # Sanity studio build artifacts
 .sanity/runtime/
+*.bak
+
+# Sanity Studio build artifacts
+studio/dist/
+studio/node_modules/
