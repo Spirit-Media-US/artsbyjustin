@@ -51,3 +51,4 @@ Thumbs.db
 # Sanity Studio build artifacts
 studio/dist/
 studio/node_modules/
+.mcp.json
