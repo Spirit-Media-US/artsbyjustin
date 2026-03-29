@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getArtworks } from '../lib/sanity';
+import { getArtworks, getSiteSettings } from '../lib/sanity';
 import { urlFor } from '../lib/sanity';
 import { SEED_ARTWORKS } from '../data/artworks';
 
@@ -42,6 +42,10 @@ const categories = CATEGORY_DEFS.map(cat => ({
 
 // Pass artworks as JSON for client-side hero rotation
 const artworksJson = JSON.stringify(heroArtworks);
+
+let siteSettings: any = {};
+try { siteSettings = await getSiteSettings(); } catch (e) {}
+
 ---
 <Layout title="Art With a Purpose" description="Bold, expressive, spirit-led art created in Raleigh, NC — collected around the world. Original acrylic & mixed media works by Justin Keishing.">
 
