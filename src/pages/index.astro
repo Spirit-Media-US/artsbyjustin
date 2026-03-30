@@ -1,47 +1,59 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { getArtworks } from '../lib/sanity';
-import { urlFor } from '../lib/sanity';
 import { SEED_ARTWORKS } from '../data/artworks';
+import Layout from '../layouts/Layout.astro';
+import { getArtworks, getSiteSettings, urlFor } from '../lib/sanity';
 
 let rawArtworks: any[] = [];
-try { rawArtworks = await getArtworks(); } catch (e) {}
+try {
+	rawArtworks = await getArtworks();
+} catch (e) {}
 if (!rawArtworks || rawArtworks.length === 0) rawArtworks = SEED_ARTWORKS as any[];
 
 // Normalize to a consistent shape
 const artworks = rawArtworks.map((a: any) => ({
-  _id: a._id,
-  title: a.title || '',
-  medium: a.medium || '',
-  year: a.year ? String(a.year) : '',
-  category: a.category || '',
-  featured: !!a.featured,
-  heroFeature: a.heroFeature !== false,
-  colorGradient: a.colorGradient || a.fallback || '',
-  imageUrl: a.imageUrl || (a.image ? urlFor(a.image).width(1400).url() : ''),
+	_id: a._id,
+	title: a.title || '',
+	medium: a.medium || '',
+	year: a.year ? String(a.year) : '',
+	category: a.category || '',
+	featured: !!a.featured,
+	heroFeature: a.heroFeature !== false,
+	colorGradient: a.colorGradient || a.fallback || '',
+	imageUrl: a.imageUrl || (a.image ? urlFor(a.image).width(1400).url() : ''),
 }));
 
-const heroArtworks = artworks.filter(a => a.heroFeature).slice(0, 8);
+const heroArtworks = artworks.filter((a) => a.heroFeature).slice(0, 8);
 const featuredArtworks = (() => {
-  const f = artworks.filter(a => a.featured);
-  return f.length >= 3 ? f.slice(0, 5) : artworks.slice(0, 5);
+	const f = artworks.filter((a) => a.featured);
+	return f.length >= 3 ? f.slice(0, 5) : artworks.slice(0, 5);
 })();
 const stripArtworks = artworks.slice(0, 5);
 
 const CATEGORY_DEFS = [
-  { name: 'Sports & Motion',        gradient: 'linear-gradient(135deg,#000,#001133,#003399,#cc2200)' },
-  { name: 'Portraits & Identity',   gradient: 'linear-gradient(135deg,#111,#1a1400,#c9a84c,#444)' },
-  { name: 'Faith & Spirit',         gradient: 'linear-gradient(135deg,#0a0010,#1a0030,#ff2200,#ffaa00,#7700cc)' },
-  { name: 'Abstract & Mixed Media', gradient: 'linear-gradient(135deg,#000,#001122,#ff6600,#00aacc)' },
+	{ name: 'Sports & Motion', gradient: 'linear-gradient(135deg,#000,#001133,#003399,#cc2200)' },
+	{ name: 'Portraits & Identity', gradient: 'linear-gradient(135deg,#111,#1a1400,#c9a84c,#444)' },
+	{
+		name: 'Faith & Spirit',
+		gradient: 'linear-gradient(135deg,#0a0010,#1a0030,#ff2200,#ffaa00,#7700cc)',
+	},
+	{
+		name: 'Abstract & Mixed Media',
+		gradient: 'linear-gradient(135deg,#000,#001122,#ff6600,#00aacc)',
+	},
 ];
-const categories = CATEGORY_DEFS.map(cat => ({
-  ...cat,
-  count: artworks.filter(a => a.category === cat.name).length,
-  artwork: artworks.find(a => a.category === cat.name) || null,
+const categories = CATEGORY_DEFS.map((cat) => ({
+	...cat,
+	count: artworks.filter((a) => a.category === cat.name).length,
+	artwork: artworks.find((a) => a.category === cat.name) || null,
 }));
 
 // Pass artworks as JSON for client-side hero rotation
 const artworksJson = JSON.stringify(heroArtworks);
+
+let siteSettings: any = {};
+try {
+	siteSettings = await getSiteSettings();
+} catch (e) {}
 ---
 <Layout title="Art With a Purpose" description="Bold, expressive, spirit-led art created in Raleigh, NC — collected around the world. Original acrylic & mixed media works by Justin Keishing.">
 
@@ -113,7 +125,7 @@ const artworksJson = JSON.stringify(heroArtworks);
         <div class="bar"></div>
         <h2>Featured Works</h2>
       </div>
-      <a href="/" class="btn-ghost">View All Work →</a>
+      <a href="/portfolio" class="btn-ghost">View All Work →</a>
     </div>
     <div class="masonry">
       {featuredArtworks.map((a, i) => (

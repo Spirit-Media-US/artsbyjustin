@@ -2,20 +2,26 @@
 import '../styles/global.css';
 
 export interface Props {
-  title: string;
-  description?: string;
+	title: string;
+	description?: string;
 }
 
-import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import Nav from '../components/Nav.astro';
 import { sanityClient } from '../lib/sanity';
 
 let siteSettings: any = {};
-try { siteSettings = await sanityClient.fetch(`*[_type == "siteSettings"][0]`) || {}; } catch (e) {}
+try {
+	siteSettings = (await sanityClient.fetch(`*[_type == "siteSettings"][0]`)) || {};
+} catch (e) {}
 
-const defaultDescription = siteSettings?.tagline || 'Bold acrylic paintings, mixed media works, resin art, murals, and 3D pieces — each one a story, each one made with purpose.';
+const defaultDescription =
+	siteSettings?.tagline ||
+	'Bold acrylic paintings, mixed media works, resin art, murals, and 3D pieces — each one a story, each one made with purpose.';
 const { title, description = defaultDescription } = Astro.props;
 const fullTitle = title === 'Home' ? 'Arts by Justin' : `${title} — Arts by Justin`;
+const canonicalUrl = new URL(Astro.url.pathname, 'https://artsbyjustin.com').href;
+const ogImage = 'https://cdn.sanity.io/images/oqoqh3p3/production/og-default.jpg';
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -24,6 +30,16 @@ const fullTitle = title === 'Home' ? 'Arts by Justin' : `${title} — Arts by Ju
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content={description} />
   <title>{fullTitle}</title>
+  <link rel="canonical" href={canonicalUrl} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
