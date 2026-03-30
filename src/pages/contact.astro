@@ -5,11 +5,11 @@ import { sanityClient } from '../lib/sanity';
 const siteSettings = await sanityClient.fetch(`*[_type == "siteSettings"][0]`).catch(() => null);
 const settings = siteSettings || {};
 const {
-  artistName = 'Justin',
-  email = '',
-  phone = '',
-  instagramUrl = '',
-  facebookUrl = '',
+	artistName = 'Justin',
+	email = '',
+	phone = '',
+	instagramUrl = '',
+	facebookUrl = '',
 } = settings;
 ---
 <Layout title="Contact" description={`Get in touch with ${artistName} about commissions, inquiries, and collaborations.`}>
@@ -27,7 +27,8 @@ const {
     <div class="contact-grid">
       <div class="contact-form">
         <h2>Send a Message</h2>
-        <form id="contact-form" method="POST">
+        <form id="contact-form" name="contact" method="POST" data-netlify="true">
+          <input type="hidden" name="form-name" value="contact" />
           <div class="form-group">
             <label for="name">Name</label>
             <input type="text" id="name" name="name" required />
@@ -93,14 +94,13 @@ const {
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const formData = new FormData(form);
-        const data = Object.fromEntries(formData);
         statusDiv.textContent = 'Sending...';
         statusDiv.style.color = 'var(--gold)';
         try {
-          const response = await fetch('/api/contact', {
+          const response = await fetch('/', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(formData as any).toString()
           });
           if (response.ok) {
             statusDiv.textContent = '✓ Message sent! We\'ll get back to you soon.';
