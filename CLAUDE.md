@@ -9,6 +9,15 @@ This site: Arts by Justin | Repo: github.com/Spirit-Media-US/artsbyjustin | Doma
 - `npm run dev` — local preview at localhost:4322 (artsbyjustin port)
 - `npm run build` — production build to dist/
 
+## Mandatory — Before Starting Work
+Always start Claude sessions from inside this directory:
+```
+cd ~/Sites/artsbyjustin && claude
+```
+Running Claude from ~/ or ~/Sites/ bypasses this project's CLAUDE.md. A pre-edit hook enforces this, but following the workflow prevents warnings and ensures all project rules are loaded.
+
+Then run: `git checkout dev && git pull origin dev`
+
 ## Stack
 
 - Astro 5 + Tailwind CSS v4
