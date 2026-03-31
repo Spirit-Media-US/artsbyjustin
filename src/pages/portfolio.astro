@@ -1,18 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { sanityClient, urlFor } from '../lib/sanity';
+import { getArtworks, urlFor } from '../lib/sanity';
 
 let sanityArtworks: object[] = [];
 try {
-  const raw = await sanityClient.fetch(`
-    *[_type == "artwork" && defined(image)] | order(order asc, _createdAt desc) {
-      _id, title, image, category, medium, dimensions, year, price, sold, featured, description
-    }
-  `);
+  const raw = await getArtworks();
   sanityArtworks = raw.map((a: any) => ({
     id: a._id,
-    imgUrl: urlFor(a.image).width(1400).url(),
-    thumbUrl: urlFor(a.image).width(400).url(),
+    imgUrl: a.image ? urlFor(a.image).width(1400).url() : '',
+    thumbUrl: a.image ? urlFor(a.image).width(400).url() : '',
     title: a.title || 'Untitled',
     category: a.category || '',
     medium: a.medium || '',

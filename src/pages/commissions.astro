@@ -1,10 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { sanityClient } from '../lib/sanity';
+import { getSiteSettings } from '../lib/sanity';
 
-const siteSettings = await sanityClient.fetch(`*[_type == "siteSettings"][0]`).catch(() => null);
-const settings = siteSettings || {};
-const { artistName = 'Justin', email = '', instagramUrl = '', commissionInfo = '' } = settings;
+const siteSettings = await getSiteSettings();
+const { artistName = 'Justin', email = '', instagramUrl = '', commissionInfo = '' } = siteSettings;
 ---
 <Layout title="Commissions" description={`Commission custom work from ${artistName}. Learn about the process and get in touch.`}>
 

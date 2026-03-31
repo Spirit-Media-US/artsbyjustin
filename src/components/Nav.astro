@@ -1,5 +1,5 @@
 ---
-import { sanityClient } from '../lib/sanity';
+import { getSiteSettings } from '../lib/sanity';
 
 const currentPath = Astro.url.pathname;
 const isHome = currentPath === '/';
@@ -8,13 +8,7 @@ const isPortfolio = currentPath === '/portfolio';
 const isCommissions = currentPath === '/commissions';
 const isPress = currentPath === '/press';
 
-let siteSettings: any = {};
-try {
-  siteSettings = await sanityClient.fetch(`*[_type == "siteSettings"][0]`) || {};
-} catch (e) {
-  console.error('Error fetching siteSettings:', e);
-}
-
+const siteSettings = await getSiteSettings();
 const artistName = siteSettings?.artistName || 'Arts by Justin';
 ---
 <header id="site-header">

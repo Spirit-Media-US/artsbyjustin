@@ -53,9 +53,11 @@ const artworksJson = JSON.stringify(heroArtworks);
 let siteSettings: any = {};
 try {
 	siteSettings = await getSiteSettings();
-} catch (e) {}
+} catch (e) {
+	console.error('Error fetching siteSettings:', e);
+}
 
-// Extract location and founding year with defaults
+// Extract values from siteSettings with sensible defaults
 const location = siteSettings?.location || 'Raleigh, NC';
 const foundingYear = siteSettings?.foundingYear || 2020;
 ---
