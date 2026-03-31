@@ -54,6 +54,10 @@ let siteSettings: any = {};
 try {
 	siteSettings = await getSiteSettings();
 } catch (e) {}
+
+// Extract location and founding year with defaults
+const location = siteSettings?.location || 'Raleigh, NC';
+const foundingYear = siteSettings?.foundingYear || 2020;
 ---
 <Layout title="Art With a Purpose" description="Bold, expressive, spirit-led art created in Raleigh, NC — collected around the world. Original acrylic & mixed media works by Justin Keishing.">
 
@@ -70,7 +74,7 @@ try {
     <div class="hero-content">
       <div class="hero-eyebrow">
         <div class="hero-line"></div>
-        <span>Raleigh, NC · Est. 2020</span>
+        <span>{location} · Est. {foundingYear}</span>
       </div>
       <h1>Art With<br/>a <em>Purpose.</em></h1>
       <p class="hero-sub">Bold. Expressive. Spirit-led. Original acrylic &amp; mixed media works — created in Raleigh, collected around the world.</p>
