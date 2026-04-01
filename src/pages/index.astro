@@ -61,7 +61,7 @@ try {
 const location = siteSettings?.location || 'Raleigh, NC';
 const foundingYear = siteSettings?.foundingYear || 2020;
 ---
-<Layout title="Art With a Purpose" description="Bold, expressive, spirit-led art created in Raleigh, NC — collected around the world. Original acrylic & mixed media works by Justin Keishing.">
+<Layout title="Art With a Purpose" description={`Bold, expressive, spirit-led art created in ${location} — collected around the world. Original acrylic & mixed media works by Justin Keishing.`}>
 
   <!-- HERO -->
   <section class="hero">
@@ -107,7 +107,7 @@ const foundingYear = siteSettings?.foundingYear || 2020;
     <div class="about-img">
       <div class="about-img-bg" style="background:linear-gradient(135deg,#111,#1a1400,#c9a84c,#444)"></div>
       <div class="about-img-overlay"></div>
-      <div class="about-badge">Artist · Raleigh, NC</div>
+      <div class="about-badge">Artist · {location}</div>
     </div>
     <div class="about-body">
       <p class="label">The Story</p>
