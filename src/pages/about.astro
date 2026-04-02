@@ -1,9 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { sanityClient, urlFor } from '../lib/sanity';
+import { getSiteSettings, urlFor } from '../lib/sanity';
 
-let siteSettings: any = {};
-try { siteSettings = await sanityClient.fetch(`*[_type == "siteSettings"][0]`) || {}; } catch (e) {}
+const siteSettings = await getSiteSettings();
 
 const portraitUrl = siteSettings?.profilePhoto
   ? urlFor(siteSettings.profilePhoto).width(800).url()
@@ -11,6 +10,7 @@ const portraitUrl = siteSettings?.profilePhoto
 const instagramUrl = siteSettings?.instagramUrl;
 const facebookUrl  = siteSettings?.facebookUrl;
 const tiktokUrl    = siteSettings?.tiktokUrl;
+const location = siteSettings?.location || 'Raleigh, North Carolina';
 ---
 <Layout title="The Story" description="From a village in Ukhrul, Manipur, India to international recognition — the story of Justin Keishing, Arts by Justin.">
 
@@ -23,12 +23,12 @@ const tiktokUrl    = siteSettings?.tiktokUrl;
     </div>
     <h1>From a Village<br/>in India<br/><em>to the World.</em></h1>
     <p class="hero-opening">
-      A boy born in Ukhrul, Manipur — with no money, no formal art training, and a dream that everyone told him was impossible. Today he is an internationally recognized fine artist, based in Raleigh, NC, with collectors across the globe.
+      A boy born in Ukhrul, Manipur — with no money, no formal art training, and a dream that everyone told him was impossible. Today he is an internationally recognized fine artist, based in {location}, with collectors across the globe.
     </p>
     <div class="hero-origin">
       <span class="origin-flag">🇮🇳 → 🇺🇸</span>
       <div class="origin-text">
-        <strong>Ukhrul, Manipur, India → Raleigh, North Carolina</strong>
+        <strong>Ukhrul, Manipur, India → {location}</strong>
         Living proof that dreams really do come true.
       </div>
     </div>

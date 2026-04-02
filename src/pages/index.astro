@@ -60,6 +60,7 @@ try {
 // Extract values from siteSettings with sensible defaults
 const location = siteSettings?.location || 'Raleigh, NC';
 const foundingYear = siteSettings?.foundingYear || 2020;
+const tagline = siteSettings?.tagline || 'Bold, expressive, spirit-led art';
 ---
 <Layout title="Art With a Purpose" description={`Bold, expressive, spirit-led art created in ${location} — collected around the world. Original acrylic & mixed media works by Justin Keishing.`}>
 
@@ -79,7 +80,7 @@ const foundingYear = siteSettings?.foundingYear || 2020;
         <span>{location} · Est. {foundingYear}</span>
       </div>
       <h1>Art With<br/>a <em>Purpose.</em></h1>
-      <p class="hero-sub">Bold. Expressive. Spirit-led. Original acrylic &amp; mixed media works — created in Raleigh, collected around the world.</p>
+      <p class="hero-sub">Bold. Expressive. Spirit-led. Original acrylic &amp; mixed media works — created in {location}, collected around the world.</p>
       <div class="hero-btns">
         <a href="/contact" class="btn-gold">Explore the Work →</a>
         <a href="/about" class="btn-ghost">My Story</a>
