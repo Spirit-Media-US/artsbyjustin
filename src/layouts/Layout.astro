@@ -8,11 +8,11 @@ export interface Props {
 
 import Footer from '../components/Footer.astro';
 import Nav from '../components/Nav.astro';
-import { sanityClient } from '../lib/sanity';
+import { getSiteSettings, urlFor } from '../lib/sanity';
 
 let siteSettings: any = {};
 try {
-	siteSettings = (await sanityClient.fetch(`*[_type == "siteSettings"][0]`)) || {};
+	siteSettings = await getSiteSettings();
 } catch (e) {}
 
 const defaultDescription =
@@ -21,7 +21,9 @@ const defaultDescription =
 const { title, description = defaultDescription } = Astro.props;
 const fullTitle = title === 'Home' ? 'Arts by Justin' : `${title} — Arts by Justin`;
 const canonicalUrl = new URL(Astro.url.pathname, 'https://artsbyjustin.com').href;
-const ogImage = 'https://cdn.sanity.io/images/oqoqh3p3/production/og-default.jpg';
+const ogImage = siteSettings?.ogImage
+	? urlFor(siteSettings.ogImage).width(1200).height(630).url()
+	: 'https://cdn.sanity.io/images/oqoqh3p3/production/og-default.jpg';
 ---
 <!DOCTYPE html>
 <html lang="en">

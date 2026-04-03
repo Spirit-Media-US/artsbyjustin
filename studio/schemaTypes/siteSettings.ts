@@ -94,5 +94,12 @@ export default {
       title: 'Commission Information',
       type: 'text',
     },
+    {
+      name: 'ogImage',
+      title: 'OG Image (for social sharing)',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Image used for social media previews (OpenGraph)',
+    },
   ],
 }
