@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getArtworks, urlFor } from '../lib/sanity';
+import { getArtworks, getSiteSettings, urlFor } from '../lib/sanity';
 
 let sanityArtworks: object[] = [];
 try {
@@ -22,6 +22,26 @@ try {
 } catch(e) {
   console.error('Portfolio Sanity fetch error:', e);
 }
+
+const siteSettings = await getSiteSettings();
+
+// Default portfolio stats
+const defaultPortfolioStats = {
+  originalWorks: '460+',
+  seriesCollections: '5',
+  countriesExhibited: '3',
+  storiesTold: '∞',
+};
+const portfolioStats = siteSettings?.portfolioPageStats ? { ...defaultPortfolioStats, ...siteSettings.portfolioPageStats } : defaultPortfolioStats;
+
+// Default categories
+const defaultCategories = [
+  { name: 'Sports & Motion', gradient: 'linear-gradient(135deg,#000,#001133,#003399,#cc2200)' },
+  { name: 'Portraits & Identity', gradient: 'linear-gradient(135deg,#111,#1a1400,#c9a84c,#444)' },
+  { name: 'Faith & Spirit', gradient: 'linear-gradient(135deg,#0a0010,#1a0030,#ff2200,#ffaa00,#7700cc)' },
+  { name: 'Abstract & Mixed Media', gradient: 'linear-gradient(135deg,#000,#001122,#ff6600,#00aacc)' },
+];
+const portfolioCategories = siteSettings?.artCategories?.length > 0 ? siteSettings.artCategories : defaultCategories;
 ---
 <Layout title="Portfolio" description="The full collection — bold acrylic paintings, mixed media works, resin art, murals, and 3D pieces by Justin Keishing. Each one a story made with purpose.">
 
@@ -35,10 +55,9 @@ try {
 <!-- FILTER -->
 <div class="filter-bar">
   <button class="filter-btn active" data-cat="all">All Works</button>
-  <button class="filter-btn" data-cat="Sports & Motion">Sports & Motion</button>
-  <button class="filter-btn" data-cat="Portraits & Identity">Portraits & Identity</button>
-  <button class="filter-btn" data-cat="Faith & Spirit">Faith & Spirit</button>
-  <button class="filter-btn" data-cat="Abstract & Mixed Media">Abstract & Mixed Media</button>
+  {portfolioCategories.map((cat: any) => (
+    <button class="filter-btn" data-cat={cat.name}>{cat.name}</button>
+  ))}
 </div>
 
 <!-- CINEMATIC VIEWER -->
@@ -58,10 +77,10 @@ try {
 
 <!-- STATS BAR -->
 <div class="stats-bar">
-  <div><div class="stat-num">460+</div><div class="stat-label">Original Works</div></div>
-  <div><div class="stat-num">5</div><div class="stat-label">Series & Collections</div></div>
-  <div><div class="stat-num">3</div><div class="stat-label">Countries Exhibited</div></div>
-  <div><div class="stat-num">∞</div><div class="stat-label">Stories Told</div></div>
+  <div><div class="stat-num">{portfolioStats.originalWorks}</div><div class="stat-label">Original Works</div></div>
+  <div><div class="stat-num">{portfolioStats.seriesCollections}</div><div class="stat-label">Series & Collections</div></div>
+  <div><div class="stat-num">{portfolioStats.countriesExhibited}</div><div class="stat-label">Countries Exhibited</div></div>
+  <div><div class="stat-num">{portfolioStats.storiesTold}</div><div class="stat-label">Stories Told</div></div>
 </div>
 
 <!-- PORTFOLIO GRID -->

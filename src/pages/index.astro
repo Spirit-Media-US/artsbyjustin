@@ -29,7 +29,16 @@ const featuredArtworks = (() => {
 })();
 const stripArtworks = artworks.slice(0, 5);
 
-const CATEGORY_DEFS = [
+// Fetch siteSettings first
+let siteSettings: any = {};
+try {
+	siteSettings = await getSiteSettings();
+} catch (e) {
+	console.error('Error fetching siteSettings:', e);
+}
+
+// Use Sanity categories or fall back to defaults
+const defaultCategories = [
 	{ name: 'Sports & Motion', gradient: 'linear-gradient(135deg,#000,#001133,#003399,#cc2200)' },
 	{ name: 'Portraits & Identity', gradient: 'linear-gradient(135deg,#111,#1a1400,#c9a84c,#444)' },
 	{
@@ -41,6 +50,7 @@ const CATEGORY_DEFS = [
 		gradient: 'linear-gradient(135deg,#000,#001122,#ff6600,#00aacc)',
 	},
 ];
+const CATEGORY_DEFS = siteSettings?.artCategories?.length > 0 ? siteSettings.artCategories : defaultCategories;
 const categories = CATEGORY_DEFS.map((cat) => ({
 	...cat,
 	count: artworks.filter((a) => a.category === cat.name).length,
@@ -50,17 +60,42 @@ const categories = CATEGORY_DEFS.map((cat) => ({
 // Pass artworks as JSON for client-side hero rotation
 const artworksJson = JSON.stringify(heroArtworks);
 
-let siteSettings: any = {};
-try {
-	siteSettings = await getSiteSettings();
-} catch (e) {
-	console.error('Error fetching siteSettings:', e);
-}
-
 // Extract values from siteSettings with sensible defaults
 const location = siteSettings?.location || 'Raleigh, NC';
 const foundingYear = siteSettings?.foundingYear || 2020;
-const tagline = siteSettings?.tagline || 'Bold, expressive, spirit-led art';
+
+// Testimonials with Sanity fallback
+const defaultTestimonials = [
+	{
+		quote: "Justin's work stopped me in my tracks. I walked past it twice before I realized I couldn't leave without it. A year later I still discover something new every day.",
+		attribution: 'Collector, New York',
+		rating: '★★★★★',
+	},
+	{
+		quote: "I commissioned a piece for my office and Justin captured exactly what I described — but more powerfully than I ever imagined. People ask about it every single day.",
+		attribution: 'Commission Client, Dallas',
+		rating: '★★★★★',
+	},
+	{
+		quote: "There's a spirituality in his work that you feel before you understand. I knew I had to own this piece the moment I saw it.",
+		attribution: 'Collector, London',
+		rating: '★★★★★',
+	},
+];
+const testimonials = siteSettings?.testimonials?.length > 0 ? siteSettings.testimonials : defaultTestimonials;
+
+// Shop links with Sanity fallback
+const defaultShopLinks = [
+	{ name: 'Etsy', description: 'Original works & prints', url: 'https://artsbyjustin.etsy.com' },
+	{ name: 'Pixels', description: 'Museum-quality prints', url: 'https://fineartamerica.com/profiles/justin-keishing/shop' },
+	{ name: 'Fine Art America', description: 'Shipped worldwide', url: 'https://fineartamerica.com/profiles/justin-keishing/shop' },
+	{ name: 'ARTMO', description: 'Global art community', url: 'https://artmo.com/user/Artsbyjustin' },
+];
+const shopLinks = siteSettings?.shopLinks?.length > 0 ? siteSettings.shopLinks : defaultShopLinks;
+
+// Home page stats with Sanity fallback
+const defaultHomeStats = { worksCreated: '450+', artShows: '26+', countriesExhibited: '8+' };
+const homeStats = siteSettings?.homePageStats ? { ...defaultHomeStats, ...siteSettings.homePageStats } : defaultHomeStats;
 ---
 <Layout title="Art With a Purpose" description={`Bold, expressive, spirit-led art created in ${location} — collected around the world. Original acrylic & mixed media works by Justin Keishing.`}>
 
@@ -217,9 +252,9 @@ const tagline = siteSettings?.tagline || 'Bold, expressive, spirit-led art';
       <a href="/press" class="btn-ghost">See Where I've Shown →</a>
     </div>
     <div class="stats-nums">
-      <div class="stat"><div class="stat-n">450+</div><div class="stat-l">Works Created</div></div>
-      <div class="stat"><div class="stat-n">26+</div><div class="stat-l">Art Shows</div></div>
-      <div class="stat"><div class="stat-n">8+</div><div class="stat-l">Countries</div></div>
+      <div class="stat"><div class="stat-n">{homeStats.worksCreated}</div><div class="stat-l">Works Created</div></div>
+      <div class="stat"><div class="stat-n">{homeStats.artShows}</div><div class="stat-l">Art Shows</div></div>
+      <div class="stat"><div class="stat-n">{homeStats.countriesExhibited}</div><div class="stat-l">Countries</div></div>
     </div>
   </section>
 
@@ -229,21 +264,13 @@ const tagline = siteSettings?.tagline || 'Bold, expressive, spirit-led art';
     <div class="bar" style="margin:0.5rem auto 1rem;"></div>
     <h2>What Collectors Say</h2>
     <div class="testi-grid">
-      <div class="testi-card">
-        <div class="stars">★★★★★</div>
-        <p class="testi-q">"Justin's work stopped me in my tracks. I walked past it twice before I realized I couldn't leave without it. A year later I still discover something new every day."</p>
-        <div class="testi-by">— Collector, New York</div>
-      </div>
-      <div class="testi-card">
-        <div class="stars">★★★★★</div>
-        <p class="testi-q">"I commissioned a piece for my office and Justin captured exactly what I described — but more powerfully than I ever imagined. People ask about it every single day."</p>
-        <div class="testi-by">— Commission Client, Dallas</div>
-      </div>
-      <div class="testi-card">
-        <div class="stars">★★★★★</div>
-        <p class="testi-q">"There's a spirituality in his work that you feel before you understand. I knew I had to own this piece the moment I saw it."</p>
-        <div class="testi-by">— Collector, London</div>
-      </div>
+      {testimonials.map((t: any) => (
+        <div class="testi-card">
+          <div class="stars">{t.rating || '★★★★★'}</div>
+          <p class="testi-q">"{t.quote}"</p>
+          <div class="testi-by">— {t.attribution}</div>
+        </div>
+      ))}
     </div>
   </section>
 
@@ -258,10 +285,9 @@ const tagline = siteSettings?.tagline || 'Bold, expressive, spirit-led art';
       </div>
     </div>
     <div class="shop-grid">
-      <a href="https://artsbyjustin.etsy.com" target="_blank" rel="noopener noreferrer" class="shop-card"><div><div class="shop-n">Etsy</div><div class="shop-d">Original works &amp; prints</div></div><span class="shop-arr">→</span></a>
-      <a href="https://fineartamerica.com/profiles/justin-keishing/shop" target="_blank" rel="noopener noreferrer" class="shop-card"><div><div class="shop-n">Pixels</div><div class="shop-d">Museum-quality prints</div></div><span class="shop-arr">→</span></a>
-      <a href="https://fineartamerica.com/profiles/justin-keishing/shop" target="_blank" rel="noopener noreferrer" class="shop-card"><div><div class="shop-n">Fine Art America</div><div class="shop-d">Shipped worldwide</div></div><span class="shop-arr">→</span></a>
-      <a href="https://artmo.com/user/Artsbyjustin" target="_blank" rel="noopener noreferrer" class="shop-card"><div><div class="shop-n">ARTMO</div><div class="shop-d">Global art community</div></div><span class="shop-arr">→</span></a>
+      {shopLinks.map((link: any) => (
+        <a href={link.url} target="_blank" rel="noopener noreferrer" class="shop-card"><div><div class="shop-n">{link.name}</div><div class="shop-d">{link.description}</div></div><span class="shop-arr">→</span></a>
+      ))}
     </div>
   </section>
 

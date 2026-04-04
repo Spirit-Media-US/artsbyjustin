@@ -34,7 +34,12 @@ export async function getSiteSettings() {
     galleryImages,
     aboutPortraitImage,
     commissionInfo,
-    ogImage
+    ogImage,
+    testimonials,
+    shopLinks,
+    artCategories,
+    homePageStats,
+    portfolioPageStats
   }`
   try {
     const settings = await sanityClient.fetch(query)
