@@ -6,151 +6,11 @@ const sanityAwards = await getAwards();
 const sanityPress = await getPressFeatures();
 const siteSettings = await getSiteSettings();
 
-// Fallback awards data
-const fallbackAwards = [
-	{
-		_id: 'a1',
-		title: 'International Prize — Artist of the Year',
-		organization: 'Effetto Arte Fondazione · Florence, Italy',
-		year: 2025,
-		type: 'international',
-		icon: '🏆',
-		description:
-			'Awarded at the historic Palazzo Pitti for artistic value and global impact. Featured in the official "Master Artists to Collect" publication.',
-	},
-	{
-		_id: 'a2',
-		title: 'Cary Magazine Movers & Shakers 2022',
-		organization: 'Cary Magazine · North Carolina',
-		year: 2022,
-		type: 'community',
-		icon: '🥇',
-		description:
-			"Named one of Western Wake's most impactful young professionals — individuals making a difference through business, creativity, and community impact.",
-	},
-	{
-		_id: 'a3',
-		title: 'Letter from U.S. House of Representatives',
-		organization: 'Congresswoman Deborah K. Ross · NC 2nd District',
-		year: 2022,
-		type: 'congressional',
-		icon: '🇺🇸',
-		description:
-			"Personal letter of congratulations from U.S. Congresswoman Deborah K. Ross recognizing Justin's lasting impact in Wake County through art and nonprofit work.",
-	},
-	{
-		_id: 'a4',
-		title: 'Raleigh Magazine — Kingpin 30s List',
-		organization: 'Raleigh Magazine · 2025',
-		year: 2025,
-		type: 'nomination',
-		icon: '⭐',
-		description:
-			"Nominated by Raleigh Magazine's Editor-in-Chief as a millennial maverick shaping today's world — recognized among the elite cast of 30s finalists.",
-	},
-	{
-		_id: 'a5',
-		title: 'Best Artist Nominee',
-		organization: 'International Category',
-		year: 2022,
-		type: 'nomination',
-		icon: '🎨',
-		description:
-			"Nominated in the Best Artist category alongside international artists — recognition of Justin's growing global presence and artistic reputation.",
-	},
-	{
-		_id: 'a6',
-		title: 'Etsy Star Seller',
-		organization: 'Etsy.com · United States',
-		year: 2021,
-		type: 'platform',
-		icon: '🛒',
-		description:
-			'Achieved Star Seller status on Etsy — a recognition of exceptional customer service, consistent sales, and outstanding reviews from collectors across America.',
-	},
-];
+// Minimal fallback awards data — primary data should come from Sanity CMS
+const fallbackAwards = [];
 
-// Fallback press data
-const fallbackPress = [
-	{
-		_id: 'p1',
-		publication: 'Cary Magazine',
-		type: 'print',
-		title: 'Meet the 2022 Movers & Shakers — Justin Keishing',
-		excerpt:
-			'A full feature spread in Cary Magazine\'s celebrated Movers & Shakers issue — telling Justin\'s origin story, his journey from India to North Carolina, and his "Chase Your Dreams" series.',
-		date: 'May 2022',
-		image: null,
-		imageUrl:
-			'https://cdn.sanity.io/images/oqoqh3p3/production/28cf7961bfa771031152630fc04c56dffe1b2bd2-1320x1604.jpg',
-		externalUrl: null,
-	},
-	{
-		_id: 'p2',
-		publication: 'Ukhrul Times',
-		type: 'newspaper',
-		title: '"Every Canvas is a Journey All Its Own"',
-		excerpt:
-			'A deep-dive feature on Justin\'s remarkable journey — from a poor orphan boy in Northeast India to becoming a star seller artist in America. Subtitled: "Painting your way out of pain."',
-		date: 'May 9, 2022 · By Soror Shaiza',
-		image: null,
-		imageUrl:
-			'https://cdn.sanity.io/images/oqoqh3p3/production/c3244071dda31dde815285cd3bdf6e86f5574593-2894x2611.jpg',
-		externalUrl: null,
-	},
-	{
-		_id: 'p3',
-		publication: 'VoyageRaleigh',
-		type: 'digital',
-		title: '"Check Out Justin Keishing\'s Story"',
-		excerpt:
-			"Featured in VoyageRaleigh's \"Raleigh's Most Inspiring Stories\" series — covering Justin's challenges, his faith journey, and how he found his artistic voice during the COVID pandemic.",
-		date: 'January 15, 2026',
-		image: null,
-		imageUrl:
-			'https://cdn.sanity.io/images/oqoqh3p3/production/6fd936b45bf939ab7dddafce90e275fd097f5fea-1284x2573.jpg',
-		externalUrl: null,
-	},
-	{
-		_id: 'p4',
-		publication: 'Raleigh Magazine',
-		type: 'nomination',
-		title: 'Kingpin 30s — Millennial Mavericks Shaping the World',
-		excerpt:
-			"Nominated by Raleigh Magazine's Editor-in-Chief Melissa Howsam as one of Raleigh's elite millennial leaders — \"totally crushing it and promising to be names we'll hear for decades to come.\"",
-		date: 'February 2025',
-		image: null,
-		imageUrl:
-			'https://cdn.sanity.io/images/oqoqh3p3/production/0426b2863395965050a9dd19899502f2b283116f-3464x3464.jpg',
-		externalUrl: null,
-	},
-	{
-		_id: 'p5',
-		publication: 'Artist of the Year 2025',
-		type: 'print',
-		title: '"Master Artists to Collect" — International Publication',
-		excerpt:
-			'Justin\'s "Empress" painting was featured across two full pages in the official Artist of the Year 2025 international publication — distributed globally alongside the Florence award ceremony.',
-		date: 'Florence, Italy · January 2025',
-		image: null,
-		imageUrl:
-			'https://cdn.sanity.io/images/oqoqh3p3/production/1b8670b5fb4ba996c8664c9c83e8bf7123709dcb-3024x4032.jpg',
-		externalUrl: null,
-	},
-	{
-		_id: 'p6',
-		publication: 'Spirit Media',
-		type: 'digital',
-		title: 'Congratulations — Cary Movers & Shakers & Etsy Star Seller',
-		excerpt:
-			"Spirit Media featured and announced Justin's Movers & Shakers recognition and his achievement as an Etsy Star Seller — amplifying his story to the North Carolina community.",
-		date: '2022',
-		image: null,
-		imageUrl:
-			'https://cdn.sanity.io/images/oqoqh3p3/production/2380ba91fad41d9f9512e13985704b544f6c4961-3024x4032.jpg',
-		externalUrl: null,
-	},
-];
+// Minimal fallback press data — primary data should come from Sanity CMS
+const fallbackPress = [];
 
 const awards = sanityAwards.length > 0 ? sanityAwards : fallbackAwards;
 const pressFeatures =
@@ -160,6 +20,15 @@ const pressFeatures =
 				imageUrl: p.image ? urlFor(p.image).width(800).url() : null,
 			}))
 		: fallbackPress;
+
+// Extract press page stats from siteSettings
+const defaultPressStats = {
+	internationalAwards: '1',
+	majorAwards: '3+',
+	pressFeatures: '4+',
+	congressionalRecognition: '1'
+};
+const pressStats = siteSettings?.pressPageStats ? { ...defaultPressStats, ...siteSettings.pressPageStats } : defaultPressStats;
 
 // Get hero image URL from siteSettings
 const heroImageUrl = siteSettings?.profilePhoto
@@ -187,10 +56,10 @@ const heroImageUrl = siteSettings?.profilePhoto
 
 <!-- HIGHLIGHT STATS -->
 <div class="highlights">
-  <div class="highlight"><div class="highlight-num">1</div><div class="highlight-label">International Artist of the Year</div></div>
-  <div class="highlight"><div class="highlight-num">3+</div><div class="highlight-label">Major Awards & Honors</div></div>
-  <div class="highlight"><div class="highlight-num">4+</div><div class="highlight-label">Press Features</div></div>
-  <div class="highlight"><div class="highlight-num">1</div><div class="highlight-label">Letter from U.S. Congress</div></div>
+  <div class="highlight"><div class="highlight-num">{pressStats.internationalAwards}</div><div class="highlight-label">International Artist of the Year</div></div>
+  <div class="highlight"><div class="highlight-num">{pressStats.majorAwards}</div><div class="highlight-label">Major Awards & Honors</div></div>
+  <div class="highlight"><div class="highlight-num">{pressStats.pressFeatures}</div><div class="highlight-label">Press Features</div></div>
+  <div class="highlight"><div class="highlight-num">{pressStats.congressionalRecognition}</div><div class="highlight-label">Letter from U.S. Congress</div></div>
 </div>
 
 <!-- FEATURED AWARD -->

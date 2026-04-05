@@ -4,6 +4,7 @@ import { getSiteSettings, urlFor } from '../lib/sanity';
 
 const siteSettings = await getSiteSettings();
 const galleryImages = siteSettings?.galleryImages || [];
+const etsyShopUrl = siteSettings?.etsyShopUrl || '{etsyShopUrl}';
 
 // Generate URLs for gallery images
 const galleryImageUrls = galleryImages.map((img: any) => urlFor(img).width(800).url()).slice(0, 2);
@@ -63,7 +64,7 @@ const printImage2 =
               <div class="print-price">Contact for pricing</div>
               <div class="print-note">Free shipping<br/>within the US</div>
             </div>
-            <a class="btn-gold" href="https://artsbyjustin.etsy.com" target="_blank" rel="noopener">View on Etsy →</a>
+            <a class="btn-gold" href="{etsyShopUrl}" target="_blank" rel="noopener">View on Etsy →</a>
           </div>
         </div>
       </div>
@@ -85,7 +86,7 @@ const printImage2 =
               <div class="print-price">Contact for pricing</div>
               <div class="print-note">Free shipping<br/>within the US</div>
             </div>
-            <a class="btn-gold" href="https://artsbyjustin.etsy.com" target="_blank" rel="noopener">View on Etsy →</a>
+            <a class="btn-gold" href="{etsyShopUrl}" target="_blank" rel="noopener">View on Etsy →</a>
           </div>
         </div>
       </div>
@@ -95,7 +96,7 @@ const printImage2 =
         <h3>Need a Different Size?</h3>
         <p>Want something bigger for a feature wall, or smaller for a tight space? Justin can accommodate custom print sizes on request — just reach out via the shop.</p>
       </div>
-      <a class="btn-ghost" href="https://artsbyjustin.etsy.com" target="_blank" rel="noopener">Visit the Etsy Shop →</a>
+      <a class="btn-ghost" href="{etsyShopUrl}" target="_blank" rel="noopener">Visit the Etsy Shop →</a>
     </div>
   </section>
 
@@ -133,8 +134,8 @@ const printImage2 =
 
 </Layout>
 
-<script is:inline>
-const ETSY = 'https://artsbyjustin.etsy.com';
+<script define:vars={{ etsyShopUrl }}>
+const ETSY = etsyShopUrl;
 
 const shopItems = [
   {id:1,  type:'original', title:'Music of Life',                    series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/3669243308f8d95c334488fe66124be3aedbc883-2999x3999.jpg'},
