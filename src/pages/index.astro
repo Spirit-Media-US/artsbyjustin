@@ -63,6 +63,14 @@ const artworksJson = JSON.stringify(heroArtworks);
 // Extract values from siteSettings with sensible defaults
 const location = siteSettings?.location || 'Raleigh, NC';
 const foundingYear = siteSettings?.foundingYear || 2020;
+const artistName = siteSettings?.artistName || 'Justin';
+const tagline = siteSettings?.tagline || 'Art With a Purpose';
+const bio = siteSettings?.bio || '';
+
+// About section image from Sanity (with gradient fallback)
+const aboutImageUrl = siteSettings?.aboutPortraitImage
+  ? urlFor(siteSettings.aboutPortraitImage).width(800).url()
+  : null;
 
 // Testimonials with Sanity fallback
 const defaultTestimonials = [
@@ -97,7 +105,7 @@ const shopLinks = siteSettings?.shopLinks?.length > 0 ? siteSettings.shopLinks :
 const defaultHomeStats = { worksCreated: '450+', artShows: '26+', countriesExhibited: '8+' };
 const homeStats = siteSettings?.homePageStats ? { ...defaultHomeStats, ...siteSettings.homePageStats } : defaultHomeStats;
 ---
-<Layout title="Art With a Purpose" description={`Bold, expressive, spirit-led art created in ${location} — collected around the world. Original acrylic & mixed media works by Justin Keishing.`}>
+<Layout title={tagline} description={bio || `Bold, expressive, spirit-led art created in ${location} — collected around the world. Original acrylic & mixed media works by ${artistName}.`}>
 
   <!-- HERO -->
   <section class="hero">
@@ -141,7 +149,11 @@ const homeStats = siteSettings?.homePageStats ? { ...defaultHomeStats, ...siteSe
   <!-- ABOUT -->
   <section class="about">
     <div class="about-img">
-      <div class="about-img-bg" style="background:linear-gradient(135deg,#111,#1a1400,#c9a84c,#444)"></div>
+      <div class="about-img-bg" style={
+        aboutImageUrl
+          ? `background:url('${aboutImageUrl}') center/cover no-repeat`
+          : 'background:linear-gradient(135deg,#111,#1a1400,#c9a84c,#444)'
+      }></div>
       <div class="about-img-overlay"></div>
       <div class="about-badge">Artist · {location}</div>
     </div>

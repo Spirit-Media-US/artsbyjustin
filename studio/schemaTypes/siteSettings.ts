@@ -95,6 +95,18 @@ export default {
       type: 'text',
     },
     {
+      name: 'commissionTimeline',
+      title: 'Commission Timeline',
+      type: 'string',
+      description: 'e.g., "8–12 weeks"',
+    },
+    {
+      name: 'commissionsPerSeason',
+      title: 'Commissions Per Season',
+      type: 'string',
+      description: 'e.g., "2–3"',
+    },
+    {
       name: 'ogImage',
       title: 'OG Image (for social sharing)',
       type: 'image',
@@ -227,6 +239,50 @@ export default {
           type: 'string',
         },
       ],
+    },
+    {
+      name: 'pressPageStats',
+      title: 'Press Page Statistics',
+      type: 'object',
+      fields: [
+        {
+          name: 'internationalAwards',
+          title: 'International Awards (e.g., "1")',
+          type: 'string',
+        },
+        {
+          name: 'majorAwards',
+          title: 'Major Awards & Honors (e.g., "3+")',
+          type: 'string',
+        },
+        {
+          name: 'pressFeatures',
+          title: 'Press Features (e.g., "4+")',
+          type: 'string',
+        },
+        {
+          name: 'congressionalRecognition',
+          title: 'Congressional Recognition (e.g., "1")',
+          type: 'string',
+        },
+      ],
+    },
+    {
+      name: 'etsyShopUrl',
+      title: 'Etsy Shop URL',
+      type: 'url',
+    },
+    {
+      name: 'freeShippingRegion',
+      title: 'Free Shipping Region',
+      type: 'string',
+      description: 'e.g., "the US"',
+    },
+    {
+      name: 'printSpecifications',
+      title: 'Print Specifications',
+      type: 'text',
+      description: 'Details about print quality, materials, etc.',
     },
   ],
 }

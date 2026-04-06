@@ -4,7 +4,10 @@ import { getSiteSettings, urlFor } from '../lib/sanity';
 
 const siteSettings = await getSiteSettings();
 
-const portraitUrl = siteSettings?.profilePhoto
+// Use dedicated aboutPortraitImage, fall back to profilePhoto
+const portraitUrl = siteSettings?.aboutPortraitImage
+  ? urlFor(siteSettings.aboutPortraitImage).width(800).url()
+  : siteSettings?.profilePhoto
   ? urlFor(siteSettings.profilePhoto).width(800).url()
   : null;
 const instagramUrl = siteSettings?.instagramUrl;

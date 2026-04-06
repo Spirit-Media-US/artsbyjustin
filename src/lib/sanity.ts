@@ -34,17 +34,17 @@ export async function getSiteSettings() {
     galleryImages,
     aboutPortraitImage,
     commissionInfo,
+    commissionTimeline,
+    commissionsPerSeason,
     ogImage,
     testimonials,
     shopLinks,
     artCategories,
     homePageStats,
     portfolioPageStats,
-    commissionTimeline,
-    commissionsPerSeason,
+    pressPageStats,
     etsyShopUrl,
     freeShippingRegion,
-    pressPageStats,
     printSpecifications
   }`
   try {
