@@ -4,7 +4,7 @@ import { getSiteSettings, urlFor } from '../lib/sanity';
 
 const siteSettings = await getSiteSettings();
 const galleryImages = siteSettings?.galleryImages || [];
-const etsyShopUrl = siteSettings?.etsyShopUrl || '{etsyShopUrl}';
+const etsyShopUrl = siteSettings?.etsyShopUrl || '';
 
 // Generate URLs for gallery images
 const galleryImageUrls = galleryImages.map((img: any) => urlFor(img).width(800).url()).slice(0, 2);
@@ -64,7 +64,7 @@ const printImage2 =
               <div class="print-price">Contact for pricing</div>
               <div class="print-note">Free shipping<br/>within the US</div>
             </div>
-            <a class="btn-gold" href="{etsyShopUrl}" target="_blank" rel="noopener">View on Etsy →</a>
+            <a class="btn-gold" href={etsyShopUrl} target="_blank" rel="noopener">View on Etsy →</a>
           </div>
         </div>
       </div>
@@ -86,7 +86,7 @@ const printImage2 =
               <div class="print-price">Contact for pricing</div>
               <div class="print-note">Free shipping<br/>within the US</div>
             </div>
-            <a class="btn-gold" href="{etsyShopUrl}" target="_blank" rel="noopener">View on Etsy →</a>
+            <a class="btn-gold" href={etsyShopUrl} target="_blank" rel="noopener">View on Etsy →</a>
           </div>
         </div>
       </div>
@@ -96,7 +96,7 @@ const printImage2 =
         <h3>Need a Different Size?</h3>
         <p>Want something bigger for a feature wall, or smaller for a tight space? Justin can accommodate custom print sizes on request — just reach out via the shop.</p>
       </div>
-      <a class="btn-ghost" href="{etsyShopUrl}" target="_blank" rel="noopener">Visit the Etsy Shop →</a>
+      <a class="btn-ghost" href={etsyShopUrl} target="_blank" rel="noopener">Visit the Etsy Shop →</a>
     </div>
   </section>
 

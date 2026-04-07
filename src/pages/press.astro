@@ -34,6 +34,22 @@ const pressStats = siteSettings?.pressPageStats ? { ...defaultPressStats, ...sit
 const heroImageUrl = siteSettings?.profilePhoto
 	? urlFor(siteSettings.profilePhoto).width(1000).url()
 	: 'https://cdn.sanity.io/images/oqoqh3p3/production/0ca95129d6d4f6d7906d7c5fca04770c987737f6-2730x4096.jpg';
+
+// Get gallery images from siteSettings for the gallery strip
+const galleryImages = (siteSettings?.galleryImages || [])
+	.map((img: any) => urlFor(img).width(1200).url())
+	.slice(0, 4); // Use up to 4 gallery images
+
+// Fallback gallery images in case siteSettings doesn't have gallery images
+const fallbackGalleryImages = [
+	'https://cdn.sanity.io/images/oqoqh3p3/production/206f139dbbdef97c494412f828b09b5e90c02426-3000x4000.jpg',
+	'https://cdn.sanity.io/images/oqoqh3p3/production/b43f0ad0aaa2fc715b9fc21c167ce61b2655b78e-3068x4096.jpg',
+	'https://cdn.sanity.io/images/oqoqh3p3/production/f3a9d25d94594823daa99b03f822163d2bb87403-2730x4096.jpg',
+	'https://cdn.sanity.io/images/oqoqh3p3/production/bd955a438c41cc596b4438c8eff37378f6c6f2ce-4096x2785.jpg'
+];
+
+// Use gallery images from Sanity if available, otherwise fall back
+const displayGalleryImages = galleryImages.length > 0 ? galleryImages : fallbackGalleryImages;
 ---
 <Layout title="Press & Recognition" description="Justin Keishing's awards, press features, and recognition — from Raleigh, NC to Florence, Italy.">
 
@@ -85,10 +101,9 @@ const heroImageUrl = siteSettings?.profilePhoto
 
 <!-- GALLERY STRIP -->
 <div class="gallery-strip">
-  <div class="gallery-strip-item"><img src="https://cdn.sanity.io/images/oqoqh3p3/production/206f139dbbdef97c494412f828b09b5e90c02426-3000x4000.jpg" alt="Artwork by Justin Keishing" loading="lazy"/></div>
-  <div class="gallery-strip-item"><img src="https://cdn.sanity.io/images/oqoqh3p3/production/b43f0ad0aaa2fc715b9fc21c167ce61b2655b78e-3068x4096.jpg" alt="Artwork by Justin Keishing" loading="lazy"/></div>
-  <div class="gallery-strip-item"><img src="https://cdn.sanity.io/images/oqoqh3p3/production/f3a9d25d94594823daa99b03f822163d2bb87403-2730x4096.jpg" alt="Artwork by Justin Keishing" loading="lazy"/></div>
-  <div class="gallery-strip-item"><img src="https://cdn.sanity.io/images/oqoqh3p3/production/bd955a438c41cc596b4438c8eff37378f6c6f2ce-4096x2785.jpg" alt="Artwork by Justin Keishing" loading="lazy"/></div>
+  {displayGalleryImages.map((imgUrl: string, i: number) => (
+    <div class="gallery-strip-item"><img src={imgUrl} alt="Artwork by Justin Keishing" loading="lazy"/></div>
+  ))}
 </div>
 
 <!-- AWARDS GRID -->
