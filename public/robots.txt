@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://artsbyjustin.com/sitemap-index.xml
