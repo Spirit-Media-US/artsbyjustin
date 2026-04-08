@@ -6,7 +6,6 @@ export const sanityClient = createClient({
   dataset: 'production',
   useCdn: true,
   apiVersion: '2024-01-01',
-  token: import.meta.env.SANITY_TOKEN,
 })
 
 // Image URL helper
