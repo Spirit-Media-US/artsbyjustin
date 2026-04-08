@@ -50,7 +50,8 @@ const defaultCategories = [
 		gradient: 'linear-gradient(135deg,#000,#001122,#ff6600,#00aacc)',
 	},
 ];
-const CATEGORY_DEFS = siteSettings?.artCategories?.length > 0 ? siteSettings.artCategories : defaultCategories;
+const CATEGORY_DEFS =
+	siteSettings?.artCategories?.length > 0 ? siteSettings.artCategories : defaultCategories;
 const categories = CATEGORY_DEFS.map((cat) => ({
 	...cat,
 	count: artworks.filter((a) => a.category === cat.name).length,
@@ -69,43 +70,74 @@ const bio = siteSettings?.bio || '';
 
 // About section image from Sanity (with gradient fallback)
 const aboutImageUrl = siteSettings?.aboutPortraitImage
-  ? urlFor(siteSettings.aboutPortraitImage).width(800).url()
-  : null;
+	? urlFor(siteSettings.aboutPortraitImage).width(800).url()
+	: null;
 
 // Testimonials with Sanity fallback
 const defaultTestimonials = [
 	{
-		quote: "Justin's work stopped me in my tracks. I walked past it twice before I realized I couldn't leave without it. A year later I still discover something new every day.",
+		quote:
+			"Justin's work stopped me in my tracks. I walked past it twice before I realized I couldn't leave without it. A year later I still discover something new every day.",
 		attribution: 'Collector, New York',
 		rating: '★★★★★',
 	},
 	{
-		quote: "I commissioned a piece for my office and Justin captured exactly what I described — but more powerfully than I ever imagined. People ask about it every single day.",
+		quote:
+			'I commissioned a piece for my office and Justin captured exactly what I described — but more powerfully than I ever imagined. People ask about it every single day.',
 		attribution: 'Commission Client, Dallas',
 		rating: '★★★★★',
 	},
 	{
-		quote: "There's a spirituality in his work that you feel before you understand. I knew I had to own this piece the moment I saw it.",
+		quote:
+			"There's a spirituality in his work that you feel before you understand. I knew I had to own this piece the moment I saw it.",
 		attribution: 'Collector, London',
 		rating: '★★★★★',
 	},
 ];
-const testimonials = siteSettings?.testimonials?.length > 0 ? siteSettings.testimonials : defaultTestimonials;
+const testimonials =
+	siteSettings?.testimonials?.length > 0 ? siteSettings.testimonials : defaultTestimonials;
 
 // Shop links with Sanity fallback
 const defaultShopLinks = [
 	{ name: 'Etsy', description: 'Original works & prints', url: 'https://artsbyjustin.etsy.com' },
-	{ name: 'Pixels', description: 'Museum-quality prints', url: 'https://fineartamerica.com/profiles/justin-keishing/shop' },
-	{ name: 'Fine Art America', description: 'Shipped worldwide', url: 'https://fineartamerica.com/profiles/justin-keishing/shop' },
-	{ name: 'ARTMO', description: 'Global art community', url: 'https://artmo.com/user/Artsbyjustin' },
+	{
+		name: 'Pixels',
+		description: 'Museum-quality prints',
+		url: 'https://fineartamerica.com/profiles/justin-keishing/shop',
+	},
+	{
+		name: 'Fine Art America',
+		description: 'Shipped worldwide',
+		url: 'https://fineartamerica.com/profiles/justin-keishing/shop',
+	},
+	{
+		name: 'ARTMO',
+		description: 'Global art community',
+		url: 'https://artmo.com/user/Artsbyjustin',
+	},
 ];
 const shopLinks = siteSettings?.shopLinks?.length > 0 ? siteSettings.shopLinks : defaultShopLinks;
 
 // Home page stats with Sanity fallback
 const defaultHomeStats = { worksCreated: '450+', artShows: '26+', countriesExhibited: '8+' };
-const homeStats = siteSettings?.homePageStats ? { ...defaultHomeStats, ...siteSettings.homePageStats } : defaultHomeStats;
+const homeStats = siteSettings?.homePageStats
+	? { ...defaultHomeStats, ...siteSettings.homePageStats }
+	: defaultHomeStats;
 ---
 <Layout title={tagline} description={bio || `Bold, expressive, spirit-led art created in ${location} — collected around the world. Original acrylic & mixed media works by ${artistName}.`}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Arts by Justin",
+      "url": "https://artsbyjustin.com",
+      "description": bio || `Bold, expressive, spirit-led art created in ${location} — collected around the world. Original acrylic & mixed media works by ${artistName}.`,
+      "founder": { "@type": "Person", "name": "Justin Keishing" },
+      "foundingDate": String(foundingYear),
+      "areaServed": "Worldwide",
+      "serviceType": ["Original Artwork", "Commissioned Art", "Mixed Media Art", "Acrylic Paintings"]
+    })}></script>
+  </Fragment>
 
   <!-- HERO -->
   <section class="hero">

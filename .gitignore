@@ -53,3 +53,4 @@ studio/dist/
 studio/node_modules/
 .mcp.json
 .netlify/
+public/studio/

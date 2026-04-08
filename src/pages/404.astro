@@ -1,0 +1,25 @@
+---
+import Footer from '../components/Footer.astro';
+import Nav from '../components/Nav.astro';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="404 — Page Not Found">
+	<Fragment slot="head">
+		<meta name="robots" content="noindex, nofollow" />
+	</Fragment>
+	<Nav />
+	<main class="min-h-screen flex items-center justify-center bg-ink pt-20">
+		<div class="text-center px-6">
+			<h1 class="text-5xl md:text-7xl lg:text-9xl font-display font-light text-cream/40 mb-4">404</h1>
+			<p class="text-xl font-body text-cream/70 mb-8">This page doesn't exist.</p>
+			<a
+				href="/"
+				class="inline-block px-8 py-3.5 text-sm font-semibold tracking-[0.1em] uppercase font-body bg-rust text-cream rounded hover:bg-rust/90 transition-colors no-underline"
+			>
+				Go Home
+			</a>
+		</div>
+	</main>
+	<Footer />
+</Layout>
