@@ -33,7 +33,19 @@ export async function getSiteSettings() {
     logo,
     galleryImages,
     aboutPortraitImage,
-    commissionInfo
+    commissionInfo,
+    commissionTimeline,
+    commissionsPerSeason,
+    ogImage,
+    testimonials,
+    shopLinks,
+    artCategories,
+    homePageStats,
+    portfolioPageStats,
+    pressPageStats,
+    etsyShopUrl,
+    freeShippingRegion,
+    printSpecifications
   }`
   try {
     const settings = await sanityClient.fetch(query)

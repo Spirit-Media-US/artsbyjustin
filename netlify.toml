@@ -40,6 +40,11 @@
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
     Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.sanity.io https://res.cloudinary.com; connect-src 'self' https://oqoqh3p3.api.sanity.io https://oqoqh3p3.apicdn.sanity.io; frame-src 'none'; object-src 'none'; base-uri 'self'"
 
+[[redirects]]
+  from = "/static/*"
+  to = "/studio/static/:splat"
+  status = 200
+
 # Redirect www to non-www
 [[redirects]]
   from = "https://www.artsbyjustin.com/*"

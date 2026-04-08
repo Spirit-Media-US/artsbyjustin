@@ -1,16 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { sanityClient } from '../lib/sanity';
+import { getSiteSettings } from '../lib/sanity';
 
-const siteSettings = await sanityClient.fetch(`*[_type == "siteSettings"][0]`).catch(() => null);
-const settings = siteSettings || {};
+const siteSettings = await getSiteSettings();
 const {
 	artistName = 'Justin',
 	email = '',
 	phone = '',
 	instagramUrl = '',
 	facebookUrl = '',
-} = settings;
+} = siteSettings;
 ---
 <Layout title="Contact" description={`Get in touch with ${artistName} about commissions, inquiries, and collaborations.`}>
 

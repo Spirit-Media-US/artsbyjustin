@@ -1,13 +1,8 @@
 ---
-import { sanityClient } from '../lib/sanity';
+import { getSiteSettings } from '../lib/sanity';
 
 const year = new Date().getFullYear();
-let siteSettings: any = {};
-try {
-  siteSettings = await sanityClient.fetch(`*[_type == "siteSettings"][0]`) || {};
-} catch (e) {
-  console.error('Error fetching siteSettings:', e);
-}
+const siteSettings = await getSiteSettings();
 
 const artistName = siteSettings?.artistName || 'Arts by Justin';
 const location = siteSettings?.location || 'Raleigh, NC';

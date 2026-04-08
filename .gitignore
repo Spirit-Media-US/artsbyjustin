@@ -45,10 +45,11 @@ Thumbs.db
 *.mp3
 
 # Sanity studio build artifacts
-.sanity/runtime/
+.sanity/
 *.bak
 
 # Sanity Studio build artifacts
 studio/dist/
 studio/node_modules/
 .mcp.json
+.netlify/

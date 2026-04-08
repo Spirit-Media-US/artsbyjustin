@@ -1,10 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { sanityClient } from '../lib/sanity';
+import { getSiteSettings } from '../lib/sanity';
 
-const siteSettings = await sanityClient.fetch(`*[_type == "siteSettings"][0]`).catch(() => null);
-const settings = siteSettings || {};
-const { artistName = 'Justin', email = '', instagramUrl = '', commissionInfo = '' } = settings;
+const siteSettings = await getSiteSettings();
+const {
+  artistName = 'Justin',
+  email = '',
+  instagramUrl = '',
+  commissionInfo = '',
+  commissionTimeline = '8–12 weeks',
+  commissionsPerSeason = '2–3'
+} = siteSettings;
 ---
 <Layout title="Commissions" description={`Commission custom work from ${artistName}. Learn about the process and get in touch.`}>
 
@@ -66,7 +72,7 @@ const { artistName = 'Justin', email = '', instagramUrl = '', commissionInfo = '
     <div class="details-grid">
       <div class="detail-block">
         <h3>Typical Timeline</h3>
-        <p>Most commissions take <strong>8–12 weeks</strong> from project approval to delivery, depending on scale and complexity.</p>
+        <p>Most commissions take <strong>{commissionTimeline}</strong> from project approval to delivery, depending on scale and complexity.</p>
       </div>
       <div class="detail-block">
         <h3>Investment Range</h3>
@@ -78,7 +84,7 @@ const { artistName = 'Justin', email = '', instagramUrl = '', commissionInfo = '
       </div>
       <div class="detail-block">
         <h3>Limited Availability</h3>
-        <p>Justin accepts <strong>2–3 commissions per season</strong> to ensure quality and personal attention to each project.</p>
+        <p>Justin accepts <strong>{commissionsPerSeason} commissions per season</strong> to ensure quality and personal attention to each project.</p>
       </div>
     </div>
   </section>
