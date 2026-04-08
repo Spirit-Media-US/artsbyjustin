@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import MailtoLink from '../components/MailtoLink.astro';
 import { getSiteSettings } from '../lib/sanity';
 
 const siteSettings = await getSiteSettings();
@@ -107,7 +108,7 @@ const {
       <h2>Ready to Get Started?</h2>
       <p>Send a brief inquiry with your ideas, and we'll discuss bringing your vision to life.</p>
       <div class="cta-btns">
-        {email && <a href={`mailto:${email}`} class="btn-gold">Send Email →</a>}
+        {email && <MailtoLink email={email} class="btn-gold">Send Email →</MailtoLink>}
         {instagramUrl && (
           <a href={instagramUrl} target="_blank" rel="noopener noreferrer" class="btn-ghost">Message on Instagram</a>
         )}
