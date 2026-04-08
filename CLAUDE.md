@@ -25,7 +25,11 @@ Then run: `git checkout dev && git pull origin dev`
 - Dark theme: `#080808` background, `#c9a84c` gold accents
 - Fonts: Playfair Display (headings) + Inter (body)
 
-## Status — as of 2026-03-16
+**Migration protocol:** /home/deploy/bin/tools-api/pipelines/migration/CLAUDE.md
+**Sanity Studio:** Embedded at artsbyjustin.com/studio/ (static build)
+**Infrastructure:** Deploy webhook wired, CORS origins configured, studio deployed
+
+## Status — as of 2026-04-08
 
 ### Completed & Merged to Main
 - **Full site redesign** — dark/gold theme replacing cream/rust
@@ -39,6 +43,8 @@ Then run: `git checkout dev && git pull origin dev`
 - **Portfolio page** — cinematic viewer, collectors wall, lightbox, series filtering
 - **Sanity schemas** — pressFeature, award, expanded artwork (heroFeature, series, sold, colorGradient fields)
 - **Sanity Studio v5** — scaffolded in `studio/` with sanity.config.ts, sanity.cli.ts, package.json, tsconfig.json; deployed to artsbyjustin.sanity.studio
+- **Sanity Studio embedded at /studio** with deploy webhook and CORS configured
+- **GA4 analytics, robots.txt, sitemap, 404 page, JSON-LD** all added
 - **Tailwind v4 conflict resolved** — deleted tailwind.config.mjs, fixed .ts import extensions
 
 ### Still Pending
