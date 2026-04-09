@@ -1,0 +1,1750 @@
+[
+  {
+    "_id": "jggsGE5qPspL3NVstYpsDc",
+    "title": "Brushstroke Flight",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/e59e5ec103e9182dfac1e0334fc8d5c966fb4954-1440x1800.jpg",
+    "analysis": {
+      "idx": 1,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Sports & Motion",
+      "subjectTags": [
+        "dynamic motion",
+        "brushwork",
+        "contemporary expression"
+      ],
+      "description": "A striking contemporary art print capturing the essence of movement through bold brushstrokes and silhouette. The energetic composition depicts a figure in dynamic flight, with sweeping gestures that evoke both athleticism and artistic expression.",
+      "suggestedPrice": 0,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "jggsGE5qPspL3NVstYptRO",
+    "title": "Art Gallery Display",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/55deef5d51ebd955005898b5c6378844972aa33e-3000x4000.jpg",
+    "analysis": {
+      "idx": 2,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Abstract & Expressive",
+      "subjectTags": [
+        "abstract warmth",
+        "fire and light",
+        "contemporary design"
+      ],
+      "description": "This contemporary art collection showcases bold abstract prints with luminous color gradients and dynamic compositions. The left piece features fiery abstraction with crystalline forms, while the right presents an uplifting inverted chalice design in warm and cool tones.",
+      "suggestedPrice": 0,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "jggsGE5qPspL3NVstYpxRl",
+    "title": "Art Gallery Exhibition",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/55deef5d51ebd955005898b5c6378844972aa33e-3000x4000.jpg",
+    "analysis": {
+      "idx": 3,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Abstract & Expressive",
+      "subjectTags": [
+        "abstract warmth",
+        "fire and light",
+        "contemporary design"
+      ],
+      "description": "This contemporary art collection showcases bold abstract prints with luminous color gradients and dynamic compositions. The left piece features fiery abstraction with crystalline forms, while the right presents an uplifting inverted chalice design in warm and cool tones.",
+      "suggestedPrice": 0,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "IsTKS0QoP3P9qlOHfiV8mh",
+    "title": "Inferno Drums",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/d80ad590cd554242147d90b0638ac66cb88370ee-2448x3264.jpg",
+    "analysis": {
+      "idx": 4,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Sports & Motion",
+      "subjectTags": [
+        "drums",
+        "musical energy",
+        "inferno",
+        "contemporary expression"
+      ],
+      "description": "A contemporary art print celebrating musical passion and explosive energy. The composition portrays a drum kit blazing with fiery light and motion, capturing the intensity and rhythm of live percussion performance through dramatic light and shadow.",
+      "suggestedPrice": 0,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "jggsGE5qPspL3NVstYq1iy",
+    "title": "Drums On Fire",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/d80ad590cd554242147d90b0638ac66cb88370ee-2448x3264.jpg",
+    "analysis": {
+      "idx": 5,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Sports & Motion",
+      "subjectTags": [
+        "drums",
+        "musical energy",
+        "inferno",
+        "contemporary expression"
+      ],
+      "description": "A contemporary art print celebrating musical passion and explosive energy. The composition portrays a drum kit blazing with fiery light and motion, capturing the intensity and rhythm of live percussion performance through dramatic light and shadow.",
+      "suggestedPrice": 0,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "IsTKS0QoP3P9qlOHfiVA4X",
+    "title": "Rising Phoenix Ascending",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/1c7fbe04b61f7f937bc5085c28e5c0fad717f697-3000x4000.jpg",
+    "analysis": {
+      "idx": 1,
+      "title": "Rising Phoenix Ascending",
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Faith & Inspiration",
+      "subjectTags": [
+        "phoenix",
+        "ascension",
+        "spiritual symbolism",
+        "watercolor"
+      ],
+      "description": "A phoenix rendered in vibrant watercolor gradients rises majestically through the composition, symbolizing renewal and spiritual transformation. This contemporary piece captures the essence of ascension through flowing brushwork and dynamic color movement across warm and cool tones.",
+      "suggestedPrice": 50,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "d6rU2Axxl9yWgrNkb3POy5",
+    "title": "Holiday Portal Wonder",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/875c92c98e8463678303c8e6a7a016848d69d2ca-2448x3060.jpg",
+    "analysis": {
+      "idx": 2,
+      "title": "Holiday Portal Wonder",
+      "imageType": "installation",
+      "medium": "Mixed Media",
+      "category": "Abstract & Expressive",
+      "subjectTags": [
+        "installation",
+        "conceptual",
+        "portal",
+        "immersive experience"
+      ],
+      "description": "A towering installation transforms the concept of holiday tradition into contemporary abstraction, creating an immersive 'portal' of wonder through layered ornaments and curated design. This large-scale public piece invites viewers into a space where seasonal reflection meets imaginative possibility.",
+      "suggestedPrice": 3000,
+      "qualityScore": 8,
+      "heroCandidate": true
+    },
+    "applied": false
+  },
+  {
+    "_id": "jggsGE5qPspL3NVstYq7pq",
+    "title": "Airborne Slam Dunk",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/f156b5cf9029c09c742907ca607ab593d84e8ffa-3000x4000.jpg",
+    "analysis": {
+      "idx": 3,
+      "title": "Airborne Slam Dunk",
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Sports & Motion",
+      "subjectTags": [
+        "basketball",
+        "athlete",
+        "action",
+        "sports"
+      ],
+      "description": "A basketball player captured mid-slam dunk radiates explosive energy and raw athleticism across the canvas. This contemporary sports-inspired artwork celebrates the power and grace of the game through dynamic figure work and dramatic composition.",
+      "suggestedPrice": 50,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "d6rU2Axxl9yWgrNkb3PPv7",
+    "title": "Feathered Fire Dance",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/9a9886b407e5fb853770a10d902c06138ea96d82-3000x4000.jpg",
+    "analysis": {
+      "idx": 4,
+      "title": "Feathered Fire Dance",
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Animals & Wildlife",
+      "subjectTags": [
+        "bird",
+        "feathered",
+        "motion",
+        "expressive brushwork"
+      ],
+      "description": "A bird sweeps across the canvas in luminous blue and orange hues, rendered with expressive, feathered brushstrokes that suggest movement and grace. This contemporary piece celebrates avian elegance through vibrant color and fluid form.",
+      "suggestedPrice": 50,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "IsTKS0QoP3P9qlOHfiVCzV",
+    "title": "Neon Strike Dance",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/fc4ca47f89cdc97c865d69329f38d26c68573d2c-3277x4096.jpg",
+    "analysis": {
+      "idx": 5,
+      "title": "Neon Strike Dance",
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Sports & Motion",
+      "subjectTags": [
+        "guitar",
+        "musical performance",
+        "neon",
+        "kinetic energy"
+      ],
+      "description": "A guitar rendered in electric neon colors—vibrant yellows, teals, and oranges—strikes dynamically against a dark background with kinetic intensity. This contemporary piece celebrates the visual rhythm and raw energy of musical performance through bold, luminous color palettes.",
+      "suggestedPrice": 50,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "d6rU2Axxl9yWgrNkb3PRaQ",
+    "title": "Midnight Rider",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/9e3535e99de3ff7b84788e988c6b1099f4680fee-3210x3737.jpg",
+    "analysis": {
+      "idx": 1,
+      "imageType": "social_proof",
+      "medium": "Canvas & Paint",
+      "category": "Sports & Motion",
+      "subjectTags": [
+        "motorcycle",
+        "rider",
+        "kinetic energy",
+        "street art"
+      ],
+      "description": "A bold contemporary art piece capturing the raw energy of motorcycle culture with vibrant yellow and blue tones, evoking speed and mechanical power through expressive brushwork.",
+      "suggestedPrice": 0,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "d6rU2Axxl9yWgrNkb3PSdM",
+    "title": "Neon Midnight Rider",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/9e3535e99de3ff7b84788e988c6b1099f4680fee-3210x3737.jpg",
+    "analysis": {
+      "idx": 2,
+      "imageType": "social_proof",
+      "medium": "Canvas & Paint",
+      "category": "Sports & Motion",
+      "subjectTags": [
+        "motorcycle",
+        "neon",
+        "rider",
+        "kinetic"
+      ],
+      "description": "Contemporary motorcycle art rendered in striking neon yellows and blues, blending street culture with expressive color work that pulses with dynamic, kinetic energy.",
+      "suggestedPrice": 0,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "jggsGE5qPspL3NVstYqQVV",
+    "title": "Silhouette's Crimson Bloom",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/171a4d77337f2f6a1717df0d6f8eebc30c720efc-2921x3993.jpg",
+    "analysis": {
+      "idx": 3,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Portraits & Figurative",
+      "subjectTags": [
+        "silhouette",
+        "figure",
+        "floral",
+        "emotion"
+      ],
+      "description": "This contemporary art print merges the silhouette of a human figure with an elegant crimson flower bloom, creating a poignant study of vulnerability, transformation, and natural beauty.",
+      "suggestedPrice": 0,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "jggsGE5qPspL3NVstYqRrh",
+    "title": "Ethereal Horse Sanctuary",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/bacc7811a4b93ee424988797ebb0e237d4a691a3-4096x2725.jpg",
+    "analysis": {
+      "idx": 4,
+      "imageType": "social_proof",
+      "medium": "Canvas & Paint",
+      "category": "Animals & Wildlife",
+      "subjectTags": [
+        "horse",
+        "landscape",
+        "forest",
+        "ethereal",
+        "serene"
+      ],
+      "description": "A contemplative contemporary landscape painting portraying a solitary horse in a misty forest sanctuary, rendered with soft atmospheric tones and spiritual grace that evoke dreamlike tranquility.",
+      "suggestedPrice": 0,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "d6rU2Axxl9yWgrNkb3PTUU",
+    "title": "Santa's Fiery Flight",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/46b60fae96e400a3f6d04301733e4d04f95e2006-3000x4000.jpg",
+    "analysis": {
+      "idx": 5,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Faith & Inspiration",
+      "subjectTags": [
+        "Santa",
+        "holiday",
+        "fire",
+        "celebration",
+        "spiritual"
+      ],
+      "description": "A festive contemporary art piece reimagining Santa's timeless legend through a burst of dynamic golden fire and light, merging holiday tradition with bold, expressive contemporary technique.",
+      "suggestedPrice": 0,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "IsTKS0QoP3P9qlOHfiVJe0",
+    "title": "Santa's Fiery Flight",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/46b60fae96e400a3f6d04301733e4d04f95e2006-3000x4000.jpg",
+    "analysis": {
+      "idx": 1,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Faith & Inspiration",
+      "subjectTags": [
+        "phoenix",
+        "Santa",
+        "fire",
+        "spiritual"
+      ],
+      "description": "A striking contemporary art piece featuring Santa with a fiery phoenix element in gold and red tones against a dark background. The artwork combines holiday symbolism with dynamic motion, creating a meaningful fusion of spiritual and seasonal themes.",
+      "suggestedPrice": 0,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "IsTKS0QoP3P9qlOHfiVNFY",
+    "title": "Neon Flight",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/dd9627d6199b3deb65de5ee2dc0dca683745b285-3000x4000.jpg",
+    "analysis": {
+      "idx": 2,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Abstract & Expressive",
+      "subjectTags": [
+        "flight",
+        "neon",
+        "abstract",
+        "motion"
+      ],
+      "description": "A vibrant contemporary artwork capturing dynamic flight through luminous neon yellows and golds against deep black. The abstract bird-like form conveys energy and movement, with clean lines and striking color contrast typical of modern digital art.",
+      "suggestedPrice": 0,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "d6rU2Axxl9yWgrNkb3PVDj",
+    "title": "Luminous Flight",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/dd9627d6199b3deb65de5ee2dc0dca683745b285-3000x4000.jpg",
+    "analysis": {
+      "idx": 3,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Abstract & Expressive",
+      "subjectTags": [
+        "flight",
+        "neon",
+        "abstract",
+        "luminous"
+      ],
+      "description": "A luminous contemporary piece featuring glowing yellow and gold tones in an abstract flight composition against dark background. The neon palette creates an ethereal, energetic effect that captures motion and light in modern artistic style.",
+      "suggestedPrice": 0,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "d6rU2Axxl9yWgrNkb3PVKc",
+    "title": "Holding Hands Together",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/7ff231afdc7e39cb43dcbc23dce613db386ea4c0-3072x4096.jpg",
+    "analysis": {
+      "idx": 4,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Portraits & Figurative",
+      "subjectTags": [
+        "hands",
+        "connection",
+        "floral",
+        "human form"
+      ],
+      "description": "A contemporary artwork depicting two hands connected with delicate floral elements in pink and line-work detail. The piece explores human connection and togetherness through elegant figurative forms and botanical accents on a light background.",
+      "suggestedPrice": 0,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "IsTKS0QoP3P9qlOHfiVOsg",
+    "title": "Rainbow Gesture",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/ad0cbc53b4cb19a8deb261395dbe211fde06b54e-3000x4000.jpg",
+    "analysis": {
+      "idx": 5,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Abstract & Expressive",
+      "subjectTags": [
+        "rainbow",
+        "gesture",
+        "hand",
+        "color"
+      ],
+      "description": "A contemporary art piece featuring a dynamic hand gesture flowing into vibrant rainbow colors and abstract forms. The work celebrates expression and diversity through bold color gradients and flowing figurative elements in modern artistic style.",
+      "suggestedPrice": 0,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "d6rU2Axxl9yWgrNkb3PVw0",
+    "title": "Rainbow Ascension",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/ad0cbc53b4cb19a8deb261395dbe211fde06b54e-3000x4000.jpg",
+    "analysis": {
+      "idx": 1,
+      "imageType": "social_proof",
+      "medium": "Functional Art",
+      "category": "Abstract & Expressive",
+      "subjectTags": [
+        "rainbow",
+        "abstract",
+        "contemporary design"
+      ],
+      "description": "A vibrant rainbow-gradient design celebrating contemporary art in a wearable format. This colorful abstract composition brings dynamic energy to everyday wear, showcasing the artist's playful approach to expressive design.",
+      "suggestedPrice": 0,
+      "qualityScore": 6,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "IsTKS0QoP3P9qlOHfiVPzs",
+    "title": "Ignition Launch",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/603d261dd5011d75ab36ffaf44120af8b09b51ab-3000x4000.jpg",
+    "analysis": {
+      "idx": 2,
+      "imageType": "social_proof",
+      "medium": "Canvas & Paint",
+      "category": "Sports & Motion",
+      "subjectTags": [
+        "rocket",
+        "launch",
+        "space",
+        "propulsion",
+        "dramatic"
+      ],
+      "description": "A dramatic acrylic painting of a rocket ignition at liftoff, rendered with stunning contrast as a white rocket erupts in orange and yellow flames against a deep black background. The contemporary composition captures the raw power and momentum of spaceflight with exceptional lighting and detail.",
+      "suggestedPrice": 0,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "jggsGE5qPspL3NVstYqcFm",
+    "title": "Rocket Ignition",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/603d261dd5011d75ab36ffaf44120af8b09b51ab-3000x4000.jpg",
+    "analysis": {
+      "idx": 3,
+      "imageType": "social_proof",
+      "medium": "Canvas & Paint",
+      "category": "Sports & Motion",
+      "subjectTags": [
+        "rocket",
+        "launch",
+        "space",
+        "propulsion",
+        "dramatic"
+      ],
+      "description": "A dramatic acrylic painting of a rocket ignition at liftoff, rendered with stunning contrast as a white rocket erupts in orange and yellow flames against a deep black background. The contemporary composition captures the raw power and momentum of spaceflight with exceptional lighting and detail.",
+      "suggestedPrice": 0,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "d6rU2Axxl9yWgrNkb3PWTS",
+    "title": "Golden Portrait Frame",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/d5d12a17a6939de60329984e7127d8cc181c724c-2448x1834.jpg",
+    "analysis": {
+      "idx": 4,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Portraits & Figurative",
+      "subjectTags": [
+        "portrait",
+        "profile",
+        "identity",
+        "contemporary portraiture",
+        "ornamental"
+      ],
+      "description": "A striking contemporary portrait in charcoal and gold leaf, capturing a figure in profile with a distinctive afro and ornamental crown element. Rendered in dramatic black and white against a refined gold-leaf frame, this piece explores themes of identity, dignity, and cultural pride.",
+      "suggestedPrice": 0,
+      "qualityScore": 9,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "d6rU2Axxl9yWgrNkb3PWfG",
+    "title": "Crowned In Starlight",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/806e828e60cfefe3fa28ef6a949c5f4ab97f91fa-3994x4096.jpg",
+    "analysis": {
+      "idx": 5,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Portraits & Figurative",
+      "subjectTags": [
+        "portrait",
+        "profile",
+        "identity",
+        "contemporary portraiture",
+        "celestial",
+        "crown"
+      ],
+      "description": "A striking contemporary portrait in charcoal and gold leaf, capturing a figure in profile with a distinctive afro and ornamental crown element. Rendered in dramatic black and white against a refined gold-leaf frame, this piece explores themes of identity, dignity, and cultural pride.",
+      "suggestedPrice": 0,
+      "qualityScore": 9,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "IsTKS0QoP3P9qlOHfiVSkC",
+    "title": "Concrete Angel Prayer",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/ff0cc102f6defeeabf4bfcd1df7db474dca407a7-3000x3999.jpg",
+    "analysis": {
+      "idx": 1,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Faith & Inspiration",
+      "subjectTags": [
+        "angel",
+        "spiritual",
+        "figurative"
+      ],
+      "description": "A contemplative angel in graceful repose, rendered as a contemporary fine art print. The minimalist palette and ethereal figure capture a moment of peaceful inspiration.",
+      "suggestedPrice": 0,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "IsTKS0QoP3P9qlOHfiVTe5",
+    "title": "Young Athlete Rising",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/28a4ad1b77268b5139a4566d6cc7893c33a19f6d-3000x4000.jpg",
+    "analysis": {
+      "idx": 2,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Sports & Motion",
+      "subjectTags": [
+        "athlete",
+        "movement",
+        "youth"
+      ],
+      "description": "A dynamic young athlete captured in contemporary art, celebrating motion and youthful energy through bold strokes and expressive form.",
+      "suggestedPrice": 0,
+      "qualityScore": 6,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "jggsGE5qPspL3NVstYqhoy",
+    "title": "Inferno Athlete Rising",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/89b0a6db34113592dbc5e42644517132b31447e4-3000x4000.jpg",
+    "analysis": {
+      "idx": 3,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Sports & Motion",
+      "subjectTags": [
+        "athlete",
+        "fire",
+        "intensity",
+        "passion"
+      ],
+      "description": "An explosive contemporary portrait of an athlete in full stride, engulfed in flames of intensity and raw power. Inferno Athlete Rising captures the heat of competition and human determination.",
+      "suggestedPrice": 0,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "jggsGE5qPspL3NVstYqi5o",
+    "title": "Splattered Tree Dreams",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/b983c5e15b90fc497c22fe862bd4e4e5c0fd98aa-1440x1800.jpg",
+    "analysis": {
+      "idx": 4,
+      "imageType": "social_proof",
+      "medium": "Mixed Media",
+      "category": "Abstract & Expressive",
+      "subjectTags": [
+        "nature",
+        "splatter",
+        "tree",
+        "dreamlike"
+      ],
+      "description": "A contemporary mixed-media composition where vibrant paint splatters merge with organic tree forms, creating a dynamic interplay between abstraction and nature. Splattered Tree Dreams celebrates both structure and spontaneity.",
+      "suggestedPrice": 0,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "IsTKS0QoP3P9qlOHfiVUvv",
+    "title": "Graceful Ascension",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/b7dfc4ea25ca8b9bb948d9a2d217cd4fecdf5d28-3000x4000.jpg",
+    "analysis": {
+      "idx": 5,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Sports & Motion",
+      "subjectTags": [
+        "dancer",
+        "grace",
+        "movement",
+        "expressive"
+      ],
+      "description": "A figure suspended in elegant motion, rendered with contemporary expressive technique using bold color splashes and dynamic line work. Graceful Ascension captures the poetry of human movement and artistic flow.",
+      "suggestedPrice": 0,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "jggsGE5qPspL3NVstYqkbZ",
+    "title": "Painted Dancer Ascending",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/b7dfc4ea25ca8b9bb948d9a2d217cd4fecdf5d28-3000x4000.jpg",
+    "analysis": {
+      "idx": 1,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Portraits & Figurative",
+      "subjectTags": [
+        "Faith & Inspiration",
+        "Abstract & Expressive",
+        "Dancing Figure"
+      ],
+      "description": "An energetic abstract figure ascends in a dynamic composition of vibrant orange, blue, and green splashes. This contemporary art piece captures movement and spiritual elevation through expressive, gestural brushwork.",
+      "suggestedPrice": 65,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "d6rU2Axxl9yWgrNkb3PYww",
+    "title": "Ethereal Wings Ascending",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/c31ccdb0684894433365679cd4b62ad645b56ed2-3000x4000.jpg",
+    "analysis": {
+      "idx": 2,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Faith & Inspiration",
+      "subjectTags": [
+        "Ethereal",
+        "Winged Figure",
+        "Spiritual"
+      ],
+      "description": "An ethereal figure with graceful wings rendered in soft whites and subtle details. This contemporary artwork conveys spiritual ascension and hope through minimalist, elegant composition.",
+      "suggestedPrice": 175,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "IsTKS0QoP3P9qlOHfiVWmM",
+    "title": "Hope Takes Flight",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/32c5f0bc825e6ea2b0a46892e24845db5466bfa6-3000x4000.jpg",
+    "analysis": {
+      "idx": 3,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Faith & Inspiration",
+      "subjectTags": [
+        "Ascending Figure",
+        "Colorful Energy",
+        "Hope"
+      ],
+      "description": "A vibrant ascending figure explodes with colorful paint splashes—bright orange, blue, and green—against a flowing composition. This contemporary art piece captures hope and spiritual elevation through dynamic, expressive energy.",
+      "suggestedPrice": 65,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "jggsGE5qPspL3NVstYqnf0",
+    "title": "Painted Dreams Rising",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/32c5f0bc825e6ea2b0a46892e24845db5466bfa6-3000x4000.jpg",
+    "analysis": {
+      "idx": 4,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Faith & Inspiration",
+      "subjectTags": [
+        "Ascending Figure",
+        "Colorful Energy",
+        "Dreams"
+      ],
+      "description": "A vibrant ascending figure explodes with colorful paint splashes—bright orange, blue, and green—against a flowing composition. This contemporary art piece captures dreams and spiritual elevation through dynamic, expressive energy.",
+      "suggestedPrice": 65,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "IsTKS0QoP3P9qlOHfiVZBO",
+    "title": "Aerial Ballet Leap",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/07c7a9b890ed41a4ee668ae07d49a40c68e50327-3000x4000.jpg",
+    "analysis": {
+      "idx": 5,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Sports & Motion",
+      "subjectTags": [
+        "Dancing Figure",
+        "Motion",
+        "Aerial"
+      ],
+      "description": "A silhouetted figure in dynamic aerial motion bursts with warm orange-red accents against darker tones. This contemporary artwork captures the grace and athleticism of dance through bold, expressive contrast.",
+      "suggestedPrice": 65,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "jggsGE5qPspL3NVstYqp9c",
+    "title": "Aerial Dunk Moment",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/07c7a9b890ed41a4ee668ae07d49a40c68e50327-3000x4000.jpg",
+    "analysis": {
+      "idx": 1,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Sports & Motion",
+      "subjectTags": [
+        "athlete",
+        "portrait",
+        "dynamic motion"
+      ],
+      "description": "A striking contemporary portrait capturing the intensity and grace of athletic motion. This piece combines figurative art with dynamic composition, celebrating the power of human movement and performance.",
+      "suggestedPrice": 0,
+      "qualityScore": 6,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "jggsGE5qPspL3NVstYqq2L",
+    "title": "Artisan's Golden Bread",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/c877440eacbf82aaf815c0a8a966a6d373592567-768x1024.jpg",
+    "analysis": {
+      "idx": 2,
+      "imageType": "social_proof",
+      "medium": "Functional Art",
+      "category": "Nature & Ocean",
+      "subjectTags": [
+        "artisan craft",
+        "culinary art",
+        "natural materials"
+      ],
+      "description": "A beautiful functional art piece that transforms everyday serving into a contemporary craft experience. This artisan-inspired work elevates food presentation through thoughtful design and natural materials.",
+      "suggestedPrice": 0,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "IsTKS0QoP3P9qlOHfiVb79",
+    "title": "Midnight Basketball",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/af272788a059a245d74149d8709c4a6f1019bf6b-3024x4032.jpg",
+    "analysis": {
+      "idx": 3,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Sports & Motion",
+      "subjectTags": [
+        "basketball",
+        "sports art",
+        "youth culture"
+      ],
+      "description": "A contemporary sports art collection celebrating athletic passion and youth engagement. The dynamic basketball imagery anchors a curated series of modern figurative and motion-focused pieces.",
+      "suggestedPrice": 0,
+      "qualityScore": 6,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "IsTKS0QoP3P9qlOHfiVbvi",
+    "title": "Cosmic Ascension",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/fc5d17e591ec9e591aed2e5179c8b3291dd15d45-2448x3264.jpg",
+    "analysis": {
+      "idx": 4,
+      "imageType": "social_proof",
+      "medium": "Canvas & Paint",
+      "category": "Faith & Inspiration",
+      "subjectTags": [
+        "cosmic",
+        "ascension",
+        "spiritual",
+        "energy",
+        "figure"
+      ],
+      "description": "A dynamic contemporary mixed-media canvas exploration of cosmic transcendence and spiritual elevation. Bold colors and expressive brushwork create an energetic meditation on human flight and celestial transformation.",
+      "suggestedPrice": 0,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "jggsGE5qPspL3NVstYqsHG",
+    "title": "Cosmic Flight Ascension",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/fc5d17e591ec9e591aed2e5179c8b3291dd15d45-2448x3264.jpg",
+    "analysis": {
+      "idx": 5,
+      "imageType": "social_proof",
+      "medium": "Canvas & Paint",
+      "category": "Faith & Inspiration",
+      "subjectTags": [
+        "cosmic",
+        "ascension",
+        "spiritual",
+        "energy",
+        "figure"
+      ],
+      "description": "A dynamic contemporary mixed-media canvas exploration of cosmic transcendence and spiritual elevation. Bold colors and expressive brushwork create an energetic meditation on human flight and celestial transformation.",
+      "suggestedPrice": 0,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "d6rU2Axxl9yWgrNkb3Pasy",
+    "title": "Solitary Astronaut",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/e6cb2cb32de36900233f8c33145032024411da70-4050x4096.jpg",
+    "analysis": {
+      "idx": 1,
+      "imageType": "social_proof",
+      "medium": "Canvas & Paint",
+      "category": "Faith & Inspiration",
+      "subjectTags": [
+        "astronaut",
+        "space",
+        "figurative"
+      ],
+      "description": "A solitary astronaut floats in contemplative stillness against a cosmic backdrop, blending contemporary figuration with inspirational symbolism. Justin's acrylic rendering captures the quiet wonder of human exploration and introspection.",
+      "suggestedPrice": 175,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "d6rU2Axxl9yWgrNkb3PbKW",
+    "title": "Midnight Elegance",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/e6cb2cb32de36900233f8c33145032024411da70-4050x4096.jpg",
+    "analysis": {
+      "idx": 2,
+      "imageType": "social_proof",
+      "medium": "Canvas & Paint",
+      "category": "Portraits & Figurative",
+      "subjectTags": [
+        "abstract",
+        "elegant",
+        "figurative"
+      ],
+      "description": "Midnight Elegance explores the interplay of light and shadow in contemporary figurative form, rendered with bold brushwork and dynamic energy. This acrylic painting exemplifies Justin's mastery of expressive portraiture and emotional depth.",
+      "suggestedPrice": 175,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "d6rU2Axxl9yWgrNkb3PbXJ",
+    "title": "Storm's Grace",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/49a680a96d42ccb679aa01f0d9abd3e7bb3602ef-3000x3979.jpg",
+    "analysis": {
+      "idx": 3,
+      "imageType": "social_proof",
+      "medium": "Canvas & Paint",
+      "category": "Animals & Wildlife",
+      "subjectTags": [
+        "horse",
+        "storm",
+        "dramatic",
+        "motion"
+      ],
+      "description": "A powerful horse rears against a turbulent sky, mane flowing with wild grace. This large-scale acrylic canvas captures raw motion and untamed spirit, showcasing Justin's ability to convey emotion through animal subjects in contemporary equine portraiture.",
+      "suggestedPrice": 250,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "jggsGE5qPspL3NVstYqxdp",
+    "title": "Coastal Waves Rising",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/97caa8f2b030ec9fecb3ff943beaf53ae0dbdb87-2452x3789.jpg",
+    "analysis": {
+      "idx": 4,
+      "imageType": "social_proof",
+      "medium": "Resin Art",
+      "category": "Nature & Ocean",
+      "subjectTags": [
+        "waves",
+        "ocean",
+        "coastal",
+        "abstract"
+      ],
+      "description": "Coastal Waves Rising captures the dynamic energy of breaking waves in lustrous resin, with gradient blues meeting sandy peachy tones. This contemporary resin piece merges organic fluidity with sculptural form, perfect for ocean-inspired collectors.",
+      "suggestedPrice": 95,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "IsTKS0QoP3P9qlOHfiVm17",
+    "title": "Catch Of The Day",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/9dd36ae0d05612fb2974f468ae50b6718680e5cf-4096x4096.jpg",
+    "analysis": {
+      "idx": 5,
+      "imageType": "social_proof",
+      "medium": "Resin Art",
+      "category": "Nature & Ocean",
+      "subjectTags": [
+        "waves",
+        "fish",
+        "ocean",
+        "functional"
+      ],
+      "description": "A playful contemporary take on maritime themes, these resin pieces blend functional artistry with ocean-inspired aesthetics. The layered wave patterns and dynamic compositions make each piece a conversation starter for homes celebrating coastal contemporary design.",
+      "suggestedPrice": 75,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "jggsGE5qPspL3NVstYr1Zz",
+    "title": "Golden Gesture Flow",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/0ff9b57a6cecc65486f8256ee9c8014e03584fb4-3000x3999.jpg",
+    "analysis": {
+      "idx": 1,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Abstract & Expressive",
+      "subjectTags": [
+        "minimalist",
+        "gesture",
+        "line-drawing"
+      ],
+      "description": "A minimalist contemporary art piece capturing spontaneous movement through bold black strokes on a clean background, showcasing the artist's ability to convey emotion with economy of line.",
+      "suggestedPrice": 0,
+      "qualityScore": 6,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "IsTKS0QoP3P9qlOHfiVoCq",
+    "title": "Chromatic Ascension",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/30a7d5771c4d2fe0272a4c69d5e464448700f2b3-1440x1800.jpg",
+    "analysis": {
+      "idx": 2,
+      "imageType": "social_proof",
+      "medium": "Canvas & Paint",
+      "category": "Abstract & Expressive",
+      "subjectTags": [
+        "dynamic-color",
+        "flowing-forms",
+        "expressionist"
+      ],
+      "description": "A vibrant abstract composition blending orange, blue, and green hues with flowing brushwork that suggests metamorphosis and energetic movement across the canvas.",
+      "suggestedPrice": 0,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "IsTKS0QoP3P9qlOHfiVoql",
+    "title": "Flaming Hockey Fire",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/8bc301c58455d2c7f37828d265e94cabd393d0ad-3000x3904.jpg",
+    "analysis": {
+      "idx": 3,
+      "imageType": "social_proof",
+      "medium": "Canvas & Paint",
+      "category": "Sports & Motion",
+      "subjectTags": [
+        "hockey",
+        "action",
+        "fire-energy"
+      ],
+      "description": "A high-impact sports artwork depicting a hockey player in explosive motion, surrounded by dynamic fiery brushstrokes in bold oranges and yellows that capture raw athletic intensity.",
+      "suggestedPrice": 0,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "IsTKS0QoP3P9qlOHfiVqDv",
+    "title": "Flamingo Guardian",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/a9c60123ac66716ace42ae5ced0bb91ec29741b2-3000x4000.jpg",
+    "analysis": {
+      "idx": 4,
+      "imageType": "social_proof",
+      "medium": "Canvas & Paint",
+      "category": "Faith & Inspiration",
+      "subjectTags": [
+        "flamingo",
+        "celestial",
+        "protection"
+      ],
+      "description": "A contemporary animal portrait blending wildlife with spiritual symbolism, featuring a vibrant flamingo beneath celestial wings rendered in rich color against a striking dark background.",
+      "suggestedPrice": 0,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "d6rU2Axxl9yWgrNkb3Pdj5",
+    "title": "Presentation Moment",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/1c7172dc8231185bbf36858aa264c17b7bd8c883-3676x2446.jpg",
+    "analysis": {
+      "idx": 5,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Animals & Wildlife",
+      "subjectTags": [
+        "equine",
+        "monochromatic",
+        "movement"
+      ],
+      "description": "A striking black and white fine art photograph capturing the elegant power and dynamic form of a horse, showcasing the artist's skill in portraiture and animal study.",
+      "suggestedPrice": 0,
+      "qualityScore": 6,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "jggsGE5qPspL3NVstYr7pH",
+    "title": "Young Skateboarders' Summer",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/f1ab77dffccb5c71b9d06c37b6ff2b43bc5b7322-3000x3000.jpg",
+    "analysis": {
+      "idx": 1,
+      "imageType": "social_proof",
+      "medium": "Resin Art",
+      "category": "Sports & Motion",
+      "subjectTags": [
+        "skateboarding",
+        "ocean waves",
+        "functional art"
+      ],
+      "description": "Contemporary resin art piece featuring vibrant ocean wave design on a wooden skateboard base. This energetic composition captures the essence of summer motion through layered blue and cream resin with dynamic wave patterns, perfect for the young skater who appreciates both style and artistic expression.",
+      "suggestedPrice": 50,
+      "qualityScore": 6,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "jggsGE5qPspL3NVstYr8yq",
+    "title": "Crimson Heart Ablaze",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/2073c9c1802479a0ac2d50ec9f20c687501ca86a-3000x4000.jpg",
+    "analysis": {
+      "idx": 2,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Faith & Inspiration",
+      "subjectTags": [
+        "heart",
+        "dramatic lighting",
+        "spiritual energy"
+      ],
+      "description": "A striking contemporary fine art print depicting a luminous crimson heart rendered with expressive detail and dramatic dark background. This powerful piece combines emotional depth with artistic craftsmanship, exploring themes of passion and spiritual awakening through bold color and form.",
+      "suggestedPrice": 50,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "jggsGE5qPspL3NVstYrCEu",
+    "title": "Black Gold Expanse",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/df7cddb13f14d853111c8d548915751a298cc9d1-1440x1800.jpg",
+    "analysis": {
+      "idx": 3,
+      "imageType": "social_proof",
+      "medium": "Resin Art",
+      "category": "Abstract & Expressive",
+      "subjectTags": [
+        "black and gold",
+        "marble veining",
+        "abstract patterns"
+      ],
+      "description": "An elegant contemporary resin artwork featuring dramatic black veining against a crisp white expanse accented with warm gold streaks. This abstract composition showcases the fluid, organic beauty of poured resin technique, creating an intriguing interplay of contrast and movement that commands attention.",
+      "suggestedPrice": 75,
+      "qualityScore": 6,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "jggsGE5qPspL3NVstYrFQl",
+    "title": "Neon Koi Dance",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/4374dfc356f8d0b3791025be10cf2062c7bd742b-3000x4000.jpg",
+    "analysis": {
+      "idx": 4,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Animals & Wildlife",
+      "subjectTags": [
+        "koi fish",
+        "neon colors",
+        "vibrant blues and oranges"
+      ],
+      "description": "A contemporary fine art series featuring luminous koi fish rendered in striking neon blue and orange hues against dark backgrounds. These pieces celebrate the graceful movement and vibrant personality of koi through bold color choices and dynamic composition, transforming a classic subject into modern artistic expression.",
+      "suggestedPrice": 100,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "d6rU2Axxl9yWgrNkb3Pek3",
+    "title": "Neon Koi Dance",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/4374dfc356f8d0b3791025be10cf2062c7bd742b-3000x4000.jpg",
+    "analysis": {
+      "idx": 5,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Animals & Wildlife",
+      "subjectTags": [
+        "koi fish",
+        "neon colors",
+        "vibrant blues and oranges"
+      ],
+      "description": "A contemporary fine art series featuring luminous koi fish rendered in striking neon blue and orange hues against dark backgrounds. These pieces celebrate the graceful movement and vibrant personality of koi through bold color choices and dynamic composition, transforming a classic subject into modern artistic expression.",
+      "suggestedPrice": 100,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "d6rU2Axxl9yWgrNkb3Pff7",
+    "title": "Flaming Dunker",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/85561851882355be715440e07e947eec29323b45-3000x4000.jpg",
+    "analysis": {
+      "idx": 1,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Sports & Motion",
+      "subjectTags": [
+        "basketball",
+        "athlete",
+        "energy",
+        "fire"
+      ],
+      "description": "A dynamic contemporary artwork capturing a basketball player mid-dunk, engulfed in explosive flames of vibrant yellow and orange. The figure radiates raw energy and motion against a dark background, celebrating athletic prowess through fiery, abstract energy.",
+      "suggestedPrice": 0,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "d6rU2Axxl9yWgrNkb3Pfpw",
+    "title": "Flaming Slam Dunk",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/85561851882355be715440e07e947eec29323b45-3000x4000.jpg",
+    "analysis": {
+      "idx": 2,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Sports & Motion",
+      "subjectTags": [
+        "basketball",
+        "athlete",
+        "energy",
+        "fire"
+      ],
+      "description": "A dynamic contemporary artwork capturing a basketball player mid-dunk, engulfed in explosive flames of vibrant yellow and orange. The figure radiates raw energy and motion against a dark background, celebrating athletic prowess through fiery, abstract energy.",
+      "suggestedPrice": 0,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "d6rU2Axxl9yWgrNkb3Pg8d",
+    "title": "Cosmic Astronaut Dreaming",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/2d4651868c82bdc5a4fbc3d88a0c8a44f08b5eba-2941x3734.jpg",
+    "analysis": {
+      "idx": 3,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Portraits & Figurative",
+      "subjectTags": [
+        "astronaut",
+        "space",
+        "cosmic",
+        "dream"
+      ],
+      "description": "A surreal contemporary piece featuring an astronaut figure immersed in cosmic dreamscapes, rendered in bold blues, reds, and yellows that swirl together to create a sense of wonder and exploration. The composition merges portraiture with abstract celestial imagery.",
+      "suggestedPrice": 0,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "jggsGE5qPspL3NVstYrLL0",
+    "title": "Inferno Heart Ablaze",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/a79ce3da761cad866e48b67bbde8d10bb08f9f93-2574x3710.jpg",
+    "analysis": {
+      "idx": 4,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Sports & Motion",
+      "subjectTags": [
+        "dancer",
+        "fire",
+        "motion",
+        "energy"
+      ],
+      "description": "An explosive contemporary artwork depicting a figure in dynamic motion, surrounded by intense flames rendered in fiery oranges and reds. The composition captures raw athletic energy and movement with striking color intensity against a dark contemporary aesthetic.",
+      "suggestedPrice": 0,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "d6rU2Axxl9yWgrNkb3PhIS",
+    "title": "Elemental Flow",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/a94f40dfa0adfe78ecc05dc6f7ae7c1655b55e34-3000x4000.jpg",
+    "analysis": {
+      "idx": 5,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Abstract & Expressive",
+      "subjectTags": [
+        "elemental",
+        "flow",
+        "martial arts",
+        "energy"
+      ],
+      "description": "Contemporary art depicting a figure channeling elemental forces, with vibrant blue, yellow, and orange swirls suggesting water and wind in motion. The dramatic contrast against a stark black background creates a powerful visual statement of mastery and natural energy.",
+      "suggestedPrice": 0,
+      "qualityScore": 9,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "IsTKS0QoP3P9qlOHfiW1lo",
+    "title": "Ethereal Wings",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/c86232a34b98632964dc22116ed22e45746f280a-1834x2448.jpg",
+    "analysis": {
+      "idx": 1,
+      "imageType": "social_proof",
+      "medium": "Canvas & Paint",
+      "category": "Faith & Inspiration",
+      "subjectTags": [
+        "angels",
+        "spiritual",
+        "wings",
+        "figurative"
+      ],
+      "description": "A striking mixed-media composition featuring golden wings rendered in dimensional texture on white canvas. This contemporary art piece blends spiritual symbolism with abstract expressionism, creating an ethereal and uplifting presence.",
+      "suggestedPrice": 0,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "jggsGE5qPspL3NVstYrPxG",
+    "title": "Artistic Expression Unveiled",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/a103776c6c90131194e32e4b654f66f02c6dbdc7-3000x4000.jpg",
+    "analysis": {
+      "idx": 2,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Abstract & Expressive",
+      "subjectTags": [
+        "abstract",
+        "expressive",
+        "motion",
+        "colorful"
+      ],
+      "description": "A dynamic pair of contemporary fine art prints showcasing bold gestural marks and vibrant color splashes. The work captures the essence of spontaneous artistic expression with striking contrasts between minimal and saturated compositions.",
+      "suggestedPrice": 0,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "IsTKS0QoP3P9qlOHfiW4TT",
+    "title": "Artist With Abstracts",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/a103776c6c90131194e32e4b654f66f02c6dbdc7-3000x4000.jpg",
+    "analysis": {
+      "idx": 3,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Abstract & Expressive",
+      "subjectTags": [
+        "abstract",
+        "expressive",
+        "motion",
+        "colorful"
+      ],
+      "description": "A dynamic pair of contemporary fine art prints showcasing bold gestural marks and vibrant color splashes. The work captures the essence of spontaneous artistic expression with striking contrasts between minimal and saturated compositions.",
+      "suggestedPrice": 0,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "d6rU2Axxl9yWgrNkb3Pj0i",
+    "title": "Crimson Dancer",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/30859ca033e8164810604bb307c7b8341c65c056-3000x4000.jpg",
+    "analysis": {
+      "idx": 4,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Portraits & Figurative",
+      "subjectTags": [
+        "dancer",
+        "motion",
+        "figure",
+        "crimson"
+      ],
+      "description": "A contemporary art piece titled 'Crimson Dancer' that captures dynamic human movement with dramatic color intensity. The expressive figurative work conveys emotion and kinetic energy through bold brushwork and a striking crimson palette.",
+      "suggestedPrice": 0,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "jggsGE5qPspL3NVstYrUym",
+    "title": "Celestial Dancer's Dream",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/30859ca033e8164810604bb307c7b8341c65c056-3000x4000.jpg",
+    "analysis": {
+      "idx": 5,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Portraits & Figurative",
+      "subjectTags": [
+        "dancer",
+        "motion",
+        "figure",
+        "celestial"
+      ],
+      "description": "A contemporary art piece titled 'Celestial Dancer's Dream' that captures dynamic human movement with dramatic color intensity. The expressive figurative work conveys emotion and kinetic energy through bold brushwork and a striking palette.",
+      "suggestedPrice": 0,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "d6rU2Axxl9yWgrNkb3Pjwl",
+    "title": "Thoughts In Bloom",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/e59806fbd3f88e486b6767690e82a6e28ce31f9e-3000x4000.jpg",
+    "analysis": {
+      "idx": 1,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Abstract & Expressive",
+      "subjectTags": [
+        "silhouette",
+        "thoughts",
+        "creativity",
+        "paint splatters",
+        "mind expansion"
+      ],
+      "description": "A contemporary art piece featuring a silhouetted human profile with vibrant, colorful paint splatters bursting upward like a tree of consciousness and imagination. The striking contrast between the dark profile and the explosion of color creates an evocative meditation on creativity and inner thought.",
+      "suggestedPrice": 50,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "d6rU2Axxl9yWgrNkb3PkAX",
+    "title": "Dreaming In Color",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/e59806fbd3f88e486b6767690e82a6e28ce31f9e-3000x4000.jpg",
+    "analysis": {
+      "idx": 2,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Abstract & Expressive",
+      "subjectTags": [
+        "silhouette",
+        "thoughts",
+        "creativity",
+        "paint splatters",
+        "mind expansion"
+      ],
+      "description": "A contemporary art piece featuring a silhouetted human profile with vibrant, colorful paint splatters bursting upward like a tree of consciousness and imagination. The striking contrast between the dark profile and the explosion of color creates an evocative meditation on creativity and inner thought.",
+      "suggestedPrice": 50,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "IsTKS0QoP3P9qlOHfiW6cX",
+    "title": "Sunset's Silent Edge",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/d9844525a3c7649ce9f87c30b3fdcf7e088da166-3000x4000.jpg",
+    "analysis": {
+      "idx": 3,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Nature & Ocean",
+      "subjectTags": [
+        "sunset",
+        "landscape",
+        "gradient",
+        "sky",
+        "peaceful"
+      ],
+      "description": "A contemporary fine art print capturing the serene beauty of a sunset transitioning through warm oranges and pinks into cool blues and deep blacks. The minimalist composition emphasizes the quiet drama of nature's daily transformation at the horizon.",
+      "suggestedPrice": 50,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "jggsGE5qPspL3NVstYrXhA",
+    "title": "Sunset Mountain Silhouette",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/d9844525a3c7649ce9f87c30b3fdcf7e088da166-3000x4000.jpg",
+    "analysis": {
+      "idx": 4,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Nature & Ocean",
+      "subjectTags": [
+        "sunset",
+        "landscape",
+        "gradient",
+        "sky",
+        "peaceful"
+      ],
+      "description": "A contemporary fine art print capturing the serene beauty of a sunset transitioning through warm oranges and pinks into cool blues and deep blacks. The minimalist composition emphasizes the quiet drama of nature's daily transformation at the horizon.",
+      "suggestedPrice": 50,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "d6rU2Axxl9yWgrNkb3Pkso",
+    "title": "Family Art Fair Moment",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/d03996ee9dbccca864a80584a18a857dd3cc1fe0-2448x3264.jpg",
+    "analysis": {
+      "idx": 5,
+      "imageType": "social_proof",
+      "medium": "Mixed Media",
+      "category": "Abstract & Expressive",
+      "subjectTags": [
+        "community",
+        "art fair",
+        "celebration",
+        "family",
+        "connection"
+      ],
+      "description": "A joyful moment capturing contemporary art within a vibrant community celebration at an art fair. The scene reflects the human connection and shared appreciation that art creates when brought into family gatherings and public spaces.",
+      "suggestedPrice": 0,
+      "qualityScore": 6,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "IsTKS0QoP3P9qlOHfiW9XV",
+    "title": "Family Art Moment",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/d03996ee9dbccca864a80584a18a857dd3cc1fe0-2448x3264.jpg",
+    "analysis": {
+      "idx": 1,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Abstract & Expressive",
+      "subjectTags": [
+        "abstract",
+        "expressive",
+        "vibrant"
+      ],
+      "description": "A contemporary fine art print featuring bold abstract expressionism with warm orange and golden tones bursting against a dark background. The dynamic composition captures the energy of creative exploration and artistic passion.",
+      "suggestedPrice": 0,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "jggsGE5qPspL3NVstYrcNd",
+    "title": "Family Art Display",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/795cc6b065f7aa4d1bc6ef9aed42acde948196ff-3000x4000.jpg",
+    "analysis": {
+      "idx": 2,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Abstract & Expressive",
+      "subjectTags": [
+        "abstract",
+        "explosive",
+        "colorful"
+      ],
+      "description": "A series of contemporary abstract prints showcasing vibrant splashing patterns and explosive color compositions on light backgrounds. These pieces demonstrate the artist's signature energetic style with bold, gestural marks and dynamic color interplay.",
+      "suggestedPrice": 0,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "IsTKS0QoP3P9qlOHfiWAZN",
+    "title": "Neon Heart Bloom",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/d08d879667c305a4dc3b8a93ec47e203a122fd75-3277x4096.jpg",
+    "analysis": {
+      "idx": 3,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Abstract & Expressive",
+      "subjectTags": [
+        "neon",
+        "abstract",
+        "vibrant"
+      ],
+      "description": "Contemporary fine art prints featuring neon-bright abstract designs on dark backgrounds, with electric greens, pinks, and yellows creating striking visual impact. The pieces showcase the artist's command of color and expressive, fluid forms.",
+      "suggestedPrice": 0,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "IsTKS0QoP3P9qlOHfiWD3j",
+    "title": "Framed Moment Together",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/a4ce441e1a9e778cbe15f3ec7263baca69c6a8d6-3000x4000.jpg",
+    "analysis": {
+      "idx": 4,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Portraits & Figurative",
+      "subjectTags": [
+        "figurative",
+        "portrait",
+        "expressive"
+      ],
+      "description": "A framed contemporary portrait featuring subtle figurative work with warm, naturalistic tones and expressive detail. The piece captures intimate human presence through the artist's nuanced handling of form and color.",
+      "suggestedPrice": 0,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "jggsGE5qPspL3NVstYri12",
+    "title": "Tender Moment Together",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/a4ce441e1a9e778cbe15f3ec7263baca69c6a8d6-3000x4000.jpg",
+    "analysis": {
+      "idx": 5,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Portraits & Figurative",
+      "subjectTags": [
+        "figurative",
+        "portrait",
+        "expressive"
+      ],
+      "description": "A framed contemporary portrait featuring subtle figurative work with warm, naturalistic tones and expressive detail. The piece captures intimate human presence through the artist's nuanced handling of form and color.",
+      "suggestedPrice": 0,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "IsTKS0QoP3P9qlOHfiWJss",
+    "title": "Golden Leopard Storm",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/e987cd919f97e68f4fe3efc4a3d0887535ec3ee1-3464x3464.jpg",
+    "analysis": {
+      "idx": 1,
+      "imageType": "social_proof",
+      "medium": "Fine Art Print",
+      "category": "Animals & Wildlife",
+      "subjectTags": [
+        "leopard",
+        "wildlife",
+        "storm",
+        "predator"
+      ],
+      "description": "A striking portrait of a golden leopard amid turbulent atmospheric elements, this fine art print captures the raw power and intensity of one of nature's most elusive predators. Contemporary art that brings untamed wildlife beauty into refined interior spaces.",
+      "suggestedPrice": 50,
+      "qualityScore": 7,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "d6rU2Axxl9yWgrNkb3Ps0Z",
+    "title": "Chromatic Rebellion",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/c6c3d860d51ee8219979752adcbfa56dcd75102d-3000x4000.jpg",
+    "analysis": {
+      "idx": 2,
+      "imageType": "social_proof",
+      "medium": "Canvas & Paint",
+      "category": "Abstract & Expressive",
+      "subjectTags": [
+        "abstract",
+        "expressive",
+        "splatter",
+        "contemporary"
+      ],
+      "description": "A dynamic abstract composition that merges expressive gesture with street art sensibility, this contemporary work explodes with chromatic energy. Bold bursts of red, blue, and green collide against neutral tones in a fearless composition that challenges visual convention.",
+      "suggestedPrice": 300,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "d6rU2Axxl9yWgrNkb3PsFK",
+    "title": "Cosmic Hand Rise",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/c6c3d860d51ee8219979752adcbfa56dcd75102d-3000x4000.jpg",
+    "analysis": {
+      "idx": 3,
+      "imageType": "social_proof",
+      "medium": "Canvas & Paint",
+      "category": "Portraits & Figurative",
+      "subjectTags": [
+        "hand",
+        "figure",
+        "cosmic",
+        "rising"
+      ],
+      "description": "A contemplative contemporary piece featuring an elegant white hand rising against a dark, cosmic void, this work explores themes of aspiration and spiritual ascendance. The stark contrast between figure and ground creates powerful visual resonance.",
+      "suggestedPrice": 250,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "d6rU2Axxl9yWgrNkb3PsPA",
+    "title": "Neon Jump Shot",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/80279dc4971eb2d458ea934ed16e58ca01a642de-3000x4000.jpg",
+    "analysis": {
+      "idx": 4,
+      "imageType": "social_proof",
+      "medium": "Canvas & Paint",
+      "category": "Sports & Motion",
+      "subjectTags": [
+        "basketball",
+        "athlete",
+        "neon",
+        "kinetic energy"
+      ],
+      "description": "A dynamic portrayal of athletic excellence in explosive motion, this contemporary piece captures a basketball player soaring against a dark ground with neon-bright brushwork. The vibrant color palette celebrates human potential and the poetry of sport.",
+      "suggestedPrice": 200,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  },
+  {
+    "_id": "IsTKS0QoP3P9qlOHfiWOov",
+    "title": "Neon Court Soar",
+    "imageUrl": "https://cdn.sanity.io/images/oqoqh3p3/production/80279dc4971eb2d458ea934ed16e58ca01a642de-3000x4000.jpg",
+    "analysis": {
+      "idx": 5,
+      "imageType": "social_proof",
+      "medium": "Canvas & Paint",
+      "category": "Sports & Motion",
+      "subjectTags": [
+        "basketball",
+        "athlete",
+        "neon",
+        "flight"
+      ],
+      "description": "Another striking contemporary work celebrating athletic grace and movement, this piece depicts a basketball player in flight with vibrant neon accents against a dark canvas. The interplay of electric color and shadow captures the transcendent power of the game.",
+      "suggestedPrice": 200,
+      "qualityScore": 8,
+      "heroCandidate": false
+    },
+    "applied": false
+  }
+]

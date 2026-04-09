@@ -17,16 +17,61 @@ export default {
       validation: (Rule: any) => Rule.required(),
     },
     {
-      name: 'category',
-      title: 'Category',
+      name: 'imageType',
+      title: 'Image Type',
+      type: 'string',
+      description: 'What kind of image is this? Determines how it appears on the site.',
+      options: {
+        list: [
+          { title: 'Product Shot (art only)',          value: 'product' },
+          { title: 'Social Proof (customer with art)', value: 'social_proof' },
+          { title: 'Installation (art in space)',      value: 'installation' },
+          { title: 'Press / Media',                    value: 'press' },
+          { title: 'Artist Portrait',                  value: 'portrait' },
+          { title: 'Other',                            value: 'other' },
+        ],
+      },
+    },
+    {
+      name: 'medium',
+      title: 'Medium',
       type: 'string',
       options: {
         list: [
-          { title: 'Sports & Motion',        value: 'Sports & Motion' },
-          { title: 'Portraits & Identity',   value: 'Portraits & Identity' },
-          { title: 'Faith & Spirit',         value: 'Faith & Spirit' },
-          { title: 'Abstract & Mixed Media', value: 'Abstract & Mixed Media' },
+          { title: 'Resin Art',              value: 'Resin Art' },
+          { title: 'Canvas & Paint',         value: 'Canvas & Paint' },
+          { title: 'Fine Art Print',         value: 'Fine Art Print' },
+          { title: 'String Art',             value: 'String Art' },
+          { title: 'Mural & Installation',   value: 'Mural & Installation' },
+          { title: 'Functional Art',         value: 'Functional Art' },
+          { title: 'Mixed Media',            value: 'Mixed Media' },
         ],
+      },
+    },
+    {
+      name: 'category',
+      title: 'Primary Subject',
+      type: 'string',
+      description: 'The main subject/theme of this piece',
+      options: {
+        list: [
+          { title: 'Sports & Motion',        value: 'Sports & Motion' },
+          { title: 'Nature & Ocean',         value: 'Nature & Ocean' },
+          { title: 'Abstract & Expressive',  value: 'Abstract & Expressive' },
+          { title: 'Portraits & Figurative', value: 'Portraits & Figurative' },
+          { title: 'Faith & Inspiration',    value: 'Faith & Inspiration' },
+          { title: 'Animals & Wildlife',     value: 'Animals & Wildlife' },
+        ],
+      },
+    },
+    {
+      name: 'subjectTags',
+      title: 'Subject Tags',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'Additional tags for cross-filtering (e.g. "basketball", "ocean waves", "gold leaf")',
+      options: {
+        layout: 'tags',
       },
     },
     {
@@ -42,11 +87,6 @@ export default {
       type: 'text',
     },
     {
-      name: 'medium',
-      title: 'Medium',
-      type: 'string',
-    },
-    {
       name: 'dimensions',
       title: 'Dimensions',
       type: 'string',
@@ -58,15 +98,22 @@ export default {
     },
     {
       name: 'price',
-      title: 'Price (in USD)',
+      title: 'Price (USD)',
       type: 'number',
-      description: 'Leave empty if not for sale',
+      description: 'Commission price at standard speed (2–4 weeks)',
+    },
+    {
+      name: 'designTime',
+      title: 'Design Time',
+      type: 'string',
+      description: 'Standard production timeline',
+      initialValue: '2–4 weeks',
     },
     {
       name: 'available',
-      title: 'Available for Sale',
+      title: 'Available for Commission',
       type: 'boolean',
-      initialValue: false,
+      initialValue: true,
     },
     {
       name: 'featured',
@@ -108,6 +155,14 @@ export default {
     },
   ],
   preview: {
-    select: { title: 'title', media: 'image' },
+    select: { title: 'title', media: 'image', medium: 'medium', category: 'category' },
+    prepare(selection: any) {
+      const { title, media, medium, category } = selection
+      return {
+        title,
+        subtitle: [medium, category].filter(Boolean).join(' · '),
+        media,
+      }
+    },
   },
 }
