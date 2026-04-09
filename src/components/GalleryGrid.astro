@@ -1,0 +1,33 @@
+---
+import ArtworkCard from './ArtworkCard.astro'
+
+interface ArtworkItem {
+  title: string
+  slug: string
+  image: any
+  medium: string
+  price: number | null
+  sold: boolean
+}
+
+interface Props {
+  artworks: ArtworkItem[]
+}
+
+const { artworks } = Astro.props
+---
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-24">
+  {artworks.map((artwork, i) => (
+    <div class:list={[{ 'lg:mt-24': i % 3 === 1 }]}>
+      <ArtworkCard
+        title={artwork.title}
+        slug={artwork.slug}
+        image={artwork.image}
+        medium={artwork.medium || ''}
+        price={artwork.price}
+        sold={!!artwork.sold}
+      />
+    </div>
+  ))}
+</div>

@@ -55,7 +55,7 @@ const ogImage = siteSettings?.ogImage
       --card: #161616;
       --gold: #c9a84c;
       --gold-light: #e8c97a;
-      --white: #f0f0f0;
+      --white: #e5e2e1;
       --gray: #777;
       --gray2: #aaa;
     }
@@ -87,8 +87,8 @@ const ogImage = siteSettings?.ogImage
       margin-bottom: 1.5rem;
     }
     .btn-gold {
-      background: var(--gold);
-      color: var(--black);
+      background: linear-gradient(135deg, #e6c364, #c9a84c);
+      color: #3d2e00;
       padding: 0.75rem 1.8rem;
       font-size: 0.75rem;
       letter-spacing: 2px;
@@ -96,11 +96,11 @@ const ogImage = siteSettings?.ogImage
       font-weight: 700;
       border: none;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: opacity 0.3s;
       display: inline-block;
       font-family: 'Inter', sans-serif;
     }
-    .btn-gold:hover { background: var(--gold-light); }
+    .btn-gold:hover { opacity: 0.9; }
     .btn-ghost {
       background: transparent;
       color: var(--white);

@@ -1,0 +1,228 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import { getArtworkBySlug, getAllArtworkSlugs, getRelatedArtworks, urlFor } from '../../lib/sanity'
+
+export async function getStaticPaths() {
+  const slugs = await getAllArtworkSlugs()
+  return slugs.map((s: any) => ({ params: { slug: s.slug } }))
+}
+
+const { slug } = Astro.params
+const artwork = await getArtworkBySlug(slug!)
+if (!artwork) return Astro.redirect('/gallery')
+
+const related = artwork.category
+  ? await getRelatedArtworks(artwork.category, artwork._id)
+  : []
+
+const imageUrl = artwork.image ? urlFor(artwork.image).width(1400).format('webp').url() : ''
+const thumbUrl = artwork.image ? urlFor(artwork.image).width(400).format('webp').url() : ''
+const isSold = !!artwork.sold
+const isAvailable = !!artwork.available && !isSold
+const priceDisplay = isSold
+  ? 'Sold'
+  : artwork.price
+    ? `$${Number(artwork.price).toLocaleString()}.00`
+    : 'Inquire'
+
+const ctaText = isSold
+  ? 'Commission Similar'
+  : artwork.price
+    ? 'Order This Piece'
+    : 'Inquire About This Piece'
+const ctaHref = isSold || !artwork.price ? '/commissions' : '/commissions'
+
+const description = artwork.description || `${artwork.title} — original ${artwork.medium || 'artwork'} by Justin Keishing`
+---
+
+<Layout title={artwork.title} description={description}>
+  <Fragment slot="head">
+    <meta property="og:type" content="product" />
+    {imageUrl && <meta property="og:image" content={imageUrl} />}
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": artwork.title,
+      "description": description,
+      "image": imageUrl,
+      "brand": { "@type": "Brand", "name": "Arts by Justin" },
+      "offers": artwork.price ? {
+        "@type": "Offer",
+        "price": artwork.price,
+        "priceCurrency": "USD",
+        "availability": isSold
+          ? "https://schema.org/SoldOut"
+          : "https://schema.org/InStock",
+        "url": `https://artsbyjustin.com/artwork/${slug}`,
+      } : undefined,
+      "artist": { "@type": "Person", "name": "Justin Keishing" },
+    })}></script>
+  </Fragment>
+
+  <section class="pt-24 pb-20 max-w-7xl mx-auto px-6">
+    <!-- Artwork Detail Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+
+      <!-- Hero Image -->
+      <div class="lg:col-span-7">
+        <div class="relative group overflow-hidden bg-surface-low aspect-[4/5] md:aspect-square flex items-center justify-center">
+          {imageUrl ? (
+            <img
+              src={imageUrl}
+              alt={artwork.title}
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          ) : (
+            <div class="w-full h-full bg-surface-container"></div>
+          )}
+          <div class="absolute inset-0 bg-black/5 pointer-events-none"></div>
+        </div>
+      </div>
+
+      <!-- Info Panel -->
+      <div class="lg:col-span-5 flex flex-col justify-center">
+        {artwork.medium && (
+          <div class="mb-2">
+            <span class="text-xs uppercase tracking-[0.2em] text-outline font-medium">{artwork.medium}</span>
+          </div>
+        )}
+
+        <h1 class="text-4xl md:text-5xl lg:text-6xl text-gold-bright font-display font-light mb-2 leading-tight">
+          {artwork.title}
+        </h1>
+
+        <p class="text-xl font-display italic text-ink-muted mb-6">by Justin</p>
+
+        <!-- Metadata pills -->
+        <div class="flex flex-wrap gap-2 mb-8">
+          {artwork.medium && (
+            <span class="px-3 py-1 text-xs border border-outline-ghost text-ink-muted uppercase tracking-wider">
+              {artwork.medium}
+            </span>
+          )}
+          {artwork.dimensions && (
+            <span class="px-3 py-1 text-xs border border-outline-ghost text-ink-muted uppercase tracking-wider">
+              {artwork.dimensions}
+            </span>
+          )}
+          {artwork.year && (
+            <span class="px-3 py-1 text-xs border border-outline-ghost text-ink-muted uppercase tracking-wider">
+              {artwork.year}
+            </span>
+          )}
+          {artwork.category && (
+            <span class="px-3 py-1 text-xs border border-outline-ghost text-ink-muted uppercase tracking-wider">
+              {artwork.category}
+            </span>
+          )}
+        </div>
+
+        <!-- Description -->
+        {artwork.description && (
+          <div class="space-y-6 mb-10">
+            <p class="text-ink-muted leading-relaxed text-lg font-light italic opacity-90">
+              {artwork.description}
+            </p>
+            <div class="h-px w-20 bg-gold"></div>
+          </div>
+        )}
+
+        <!-- Price + CTA -->
+        <div class="mb-10">
+          <div class:list={[
+            'text-4xl font-display mb-6',
+            isSold ? 'text-outline line-through' : 'text-ink'
+          ]}>
+            {priceDisplay}
+          </div>
+
+          {isSold && (
+            <div class="mb-4 inline-block px-4 py-1.5 bg-surface-high text-ink-muted text-sm uppercase tracking-wider">
+              This piece has been sold
+            </div>
+          )}
+
+          <a
+            href={ctaHref}
+            class="w-full bg-gradient-to-br from-gold-bright to-gold text-surface-deep hover:opacity-90 transition-all py-4 px-8 font-medium tracking-wide flex items-center justify-center gap-2 group/btn"
+          >
+            {ctaText}
+            <svg class="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </a>
+        </div>
+
+        <!-- Shipping & Info -->
+        <div class="bg-surface-low p-6 space-y-4 border border-outline-ghost/30">
+          <div class="flex items-start gap-4">
+            <svg class="w-6 h-6 text-gold shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0H21M3.375 14.25h.008M21 12.75V6.375a1.125 1.125 0 00-1.125-1.125H3.375A1.125 1.125 0 002.25 6.375v11.25" />
+            </svg>
+            <div>
+              <p class="text-sm font-semibold text-ink">Shipping & Production</p>
+              <p class="text-sm text-ink-muted leading-relaxed">
+                {artwork.designTime || '2–4 weeks'} standard production. Expedited 1-week option available. Professionally packed for safe delivery.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <svg class="w-6 h-6 text-gold shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+            </svg>
+            <div>
+              <p class="text-sm font-semibold text-ink">Commission-Based</p>
+              <p class="text-sm text-ink-muted leading-relaxed">
+                Every piece is made to order. Justin creates a custom version inspired by this work, tailored to your space and preferences.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Works -->
+    {related.length > 0 && (
+      <section class="mt-32">
+        <div class="flex justify-between items-end mb-12">
+          <div>
+            <h2 class="text-3xl font-display text-ink mb-2">Related Works</h2>
+            <p class="text-ink-muted font-light italic">More from {artwork.category}</p>
+          </div>
+          <a href="/gallery" class="text-gold-bright hover:text-ink uppercase text-xs tracking-widest font-bold flex items-center gap-1 transition-colors">
+            View All
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+          </a>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {related.map((rel: any) => {
+            const relImg = rel.image ? urlFor(rel.image).width(600).format('webp').url() : ''
+            const relSlug = rel.slug?.current || ''
+            const relPrice = rel.sold ? 'Sold' : rel.price ? `$${Number(rel.price).toLocaleString()}` : ''
+            return (
+              <article class="group cursor-pointer">
+                <a href={`/artwork/${relSlug}`}>
+                  <div class="aspect-[3/4] overflow-hidden bg-surface-container mb-4 relative">
+                    {relImg ? (
+                      <img src={relImg} alt={rel.title} loading="lazy"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    ) : (
+                      <div class="w-full h-full bg-surface-low"></div>
+                    )}
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <span class="text-white uppercase tracking-widest text-xs border border-white/50 px-4 py-2 backdrop-blur-sm">View Detail</span>
+                    </div>
+                  </div>
+                  <h3 class="text-lg text-ink mb-1">{rel.title}</h3>
+                  {relPrice && <p class="text-sm text-ink-muted">{relPrice}</p>}
+                </a>
+              </article>
+            )
+          })}
+        </div>
+      </section>
+    )}
+  </section>
+</Layout>
