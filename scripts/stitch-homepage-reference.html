@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@300;400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#d8c598",
+                    "on-tertiary-fixed-variant": "#35437e",
+                    "surface-container-low": "#1c1b1b",
+                    "surface-variant": "#353534",
+                    "surface-dim": "#131313",
+                    "outline": "#99907e",
+                    "on-primary-container": "#503d00",
+                    "on-surface": "#e5e2e1",
+                    "inverse-primary": "#755b00",
+                    "on-primary": "#3d2e00",
+                    "surface-container": "#201f1f",
+                    "background": "#131313",
+                    "surface-bright": "#3a3939",
+                    "inverse-on-surface": "#313030",
+                    "on-secondary-fixed-variant": "#524523",
+                    "tertiary-fixed-dim": "#b9c3ff",
+                    "on-secondary-fixed": "#241a00",
+                    "surface": "#131313",
+                    "on-tertiary-container": "#2e3b77",
+                    "on-tertiary": "#1e2b66",
+                    "secondary-fixed-dim": "#d8c598",
+                    "on-secondary": "#3b2f0e",
+                    "on-error-container": "#ffdad6",
+                    "on-background": "#e5e2e1",
+                    "secondary-fixed": "#f5e1b2",
+                    "surface-tint": "#e6c364",
+                    "on-error": "#690005",
+                    "tertiary-container": "#9ba8eb",
+                    "on-tertiary-fixed": "#041451",
+                    "on-surface-variant": "#d0c5b2",
+                    "inverse-surface": "#e5e2e1",
+                    "tertiary-fixed": "#dde1ff",
+                    "secondary-container": "#554825",
+                    "on-primary-fixed-variant": "#584400",
+                    "primary-fixed": "#ffe08f",
+                    "error-container": "#93000a",
+                    "error": "#ffb4ab",
+                    "surface-container-lowest": "#0e0e0e",
+                    "surface-container-highest": "#353534",
+                    "on-secondary-container": "#c9b78b",
+                    "on-primary-fixed": "#241a00",
+                    "outline-variant": "#4d4637",
+                    "surface-container-high": "#2a2a2a",
+                    "primary": "#e6c364",
+                    "primary-container": "#c9a84c",
+                    "primary-fixed-dim": "#e6c364",
+                    "tertiary": "#b9c4ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Noto Serif"],
+                    "body": ["Manrope"],
+                    "label": ["Manrope"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      body { background-color: #080808; font-family: 'Manrope', sans-serif; color: #e5e2e1; }
+      .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+      .glass-nav { background: rgba(19, 19, 19, 0.8); backdrop-filter: blur(16px); }
+      .gold-gradient { background: linear-gradient(135deg, #e6c364 0%, #c9a84c 100%); }
+      .text-gold { color: #c9a84c; }
+    </style>
+</head>
+<body class="selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 glass-nav">
+<div class="flex justify-between items-center px-12 py-6 max-w-screen-2xl mx-auto">
+<div class="text-2xl font-bold text-[#e5e2e1] tracking-tighter font-['Noto_Serif']">
+                Arts by Justin
+            </div>
+<div class="hidden md:flex gap-12 items-center">
+<a class="font-['Noto_Serif'] tracking-tight text-[#e6c364] border-b-2 border-[#e6c364] pb-1 transition-all duration-400 ease-in-out hover:opacity-80" href="#">Gallery</a>
+<a class="font-['Noto_Serif'] tracking-tight text-[#d0c5b2] hover:text-[#e5e2e1] transition-all duration-400 ease-in-out hover:opacity-80" href="#">About</a>
+<a class="font-['Noto_Serif'] tracking-tight text-[#d0c5b2] hover:text-[#e5e2e1] transition-all duration-400 ease-in-out hover:opacity-80" href="#">Contact</a>
+<button class="text-[#e6c364] transition-all duration-400 ease-in-out hover:opacity-80 scale-95 duration-400">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</button>
+</div>
+<!-- Mobile Menu Icon (Hidden on desktop) -->
+<div class="md:hidden">
+<span class="material-symbols-outlined text-[#e6c364]" data-icon="menu">menu</span>
+</div>
+</div>
+</nav>
+<main>
+<!-- Hero Section -->
+<section class="min-h-screen flex items-center pt-24 px-12 max-w-screen-2xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-16 items-center w-full">
+<!-- Content Left -->
+<div class="md:col-span-5 z-10">
+<h1 class="font-headline text-6xl md:text-8xl text-gold font-bold leading-tight mb-8">
+                        Arts by Justin
+                    </h1>
+<p class="font-body text-xl md:text-2xl text-on-surface-variant max-w-lg mb-12 font-light tracking-wide italic">
+                        Transcending boundaries through abstract depth and cinematic color theory. Where emotion meets the canvas.
+                    </p>
+<button class="gold-gradient text-on-primary px-12 py-5 font-label text-sm uppercase tracking-[0.2em] font-extrabold hover:opacity-90 transition-all duration-400 flex items-center gap-4">
+                        Explore Collection
+                        <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<!-- Image Right -->
+<div class="md:col-span-7 relative h-[716px] md:h-[870px]">
+<div class="absolute inset-0 bg-surface-container-lowest overflow-hidden">
+<img alt="Large abstract contemporary art" class="w-full h-full object-cover grayscale-[20%] contrast-[1.1]" data-alt="Stunning large scale abstract painting with deep textures, dark navy and gold accents, illuminated by cinematic gallery lighting in a moody space" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQ1IfkujGJg9dhqcCdn-384sZGZN3KycZ3zJD23WoQO7LOHXW0Be6kDMq90Gbiasi_H_inHELeDxJBzebsZ-Lo2dfxr5djHMLDvQlQqO5j9IqakMxOR6VQybT3nI3ffR94ps_1sBRi8JwKZOlUniKG9BL_0jo83Qvb777e2pSkKkX4rc1t0Mo9U-u4JacemcHvWHpAPbvej41OBfmmEzEfJfrtVhxjz7wMa4z02Gae7uwDaVBxIP0u0jfy81R8grP3DzIBYkG0SmY"/>
+</div>
+<!-- Decorative Element -->
+<div class="absolute -bottom-8 -left-8 w-48 h-48 border-l border-b border-primary/20 hidden md:block"></div>
+</div>
+</div>
+</section>
+<!-- Category Section -->
+<section class="py-32 px-12 bg-surface-container-lowest">
+<div class="max-w-screen-2xl mx-auto">
+<div class="flex justify-between items-end mb-16">
+<h2 class="font-headline text-4xl text-on-surface tracking-tighter">Explore Mediums</h2>
+<span class="font-label text-[12px] tracking-[0.3em] uppercase text-primary/60">01 / The Catalog</span>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-6 gap-0">
+<!-- Resin Art -->
+<div class="group relative aspect-[3/4] overflow-hidden cursor-pointer">
+<img alt="Resin Art" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-40 group-hover:opacity-60" data-alt="Close-up of fluid resin art with glossy finish and shimmering metallic gold veins flowing through deep emerald colors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7p7C10R0GOJ27-iyRiNYT31XUaqrxHLBVHx8ty4uwDwkVo2LTrAZYLMGUibD_2PRSzQu24wUKfLI0Jg9tjimEsWgv2_QN8Oa5lrvXUM_LMOncMlw8eAVaSSQrL2eDneg0imV3fAmAMBFo0H2ITz5brtHDTvQ0s8GuQqP4IXnLi3tygspZYHGd-6aXgmi58Y8PKfouRvT5dpbqW39nMs0Car9OZ9Ejjh_uClCrS4Od_wR1l4xcYC1Hi1IDB9iyz1k9uNUb3bLed_A"/>
+<div class="absolute inset-0 flex items-end p-8 bg-gradient-to-t from-black/80 to-transparent">
+<span class="font-label text-xs uppercase tracking-[0.2em] text-gold font-bold">Resin Art</span>
+</div>
+</div>
+<!-- Canvas -->
+<div class="group relative aspect-[3/4] overflow-hidden cursor-pointer border-l border-white/5">
+<img alt="Canvas" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-40 group-hover:opacity-60" data-alt="Macro shot of thick oil paint textures on a canvas with visible brushstrokes and high relief lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3BQwYEgSVYXFpRNkqiG2UeeTOfEN1ocf3WLYKumruQ9yMn-oR5n7pkglhMPaAxHWH9BTwwj_dvJcmeno0KnZp_3RFYJLqq8EGcsFr8DxwLKK62rHppfDTah5ATIDRYREBmmW_2nMgCcbbhxgmqxRuvaDHoz9OSf6C5ehv0Y-ZRNEPTogb9CiWcSnUg_Vof_TMKCfgoSgNudBjynd_FPRjOgQB7YthcjIkaqRMR5LuPR-CExZBTmlj_b_dukpisJ13Z5wK9nvimBA"/>
+<div class="absolute inset-0 flex items-end p-8 bg-gradient-to-t from-black/80 to-transparent">
+<span class="font-label text-xs uppercase tracking-[0.2em] text-gold font-bold">Canvas</span>
+</div>
+</div>
+<!-- Fine Art Prints -->
+<div class="group relative aspect-[3/4] overflow-hidden cursor-pointer border-l border-white/5">
+<img alt="Fine Art Prints" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-40 group-hover:opacity-60" data-alt="Sophisticated black and white fine art print in a minimal black frame against a textured concrete wall" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAukN_0zpRf7bzTr6tnVoZxojZZrWj84LNYu74c4nigPeuB_wgLUgCePKbHg22Wq88GZDr_2J08EvgUmuRsTFK5d1wrun7LnseW0qGPPIYmOCxBw4v3GOk4BH67B12jgizOczPiOfokMrhHwbxjnL3WfK5_bSJ9kWTq69J6nY4fhFFshy_PE1_3IqvWGH8tcj05H9AQJou_0JVQsGcFWYthKArpajHGNqImEb9y4zo0093fgm4Vo2QhSENM_mjxKKdN8t30-VvoPpE"/>
+<div class="absolute inset-0 flex items-end p-8 bg-gradient-to-t from-black/80 to-transparent">
+<span class="font-label text-xs uppercase tracking-[0.2em] text-gold font-bold">Fine Art Prints</span>
+</div>
+</div>
+<!-- Murals -->
+<div class="group relative aspect-[3/4] overflow-hidden cursor-pointer border-l border-white/5">
+<img alt="Murals" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-40 group-hover:opacity-60" data-alt="Large scale architectural mural on an urban brick wall featuring geometric gold shapes and dark shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgjR1h-ladGmJivULmaiERB9Yiw0pal51JgpWPQnxXbTYn6pUDyx4tfsBHSBZvf5_5ncvZPjZaIjebGpe98k3g9lhiVbPNk9o-Epz3YYkfF7DwRKqSDPWqcMvYxG_W12qzS_axWry3PYVVNqhXvW5FovdkGd0Q3urE0N9-ntRt_6KfL9TnicQq_tlqPHLMZ47STe6sfRkivVDLeLKGM_7HDzYz1iOSxlRl0eXPCnQWCVGl2XlhTaNpVlqUafLo89KP2blyuirCUhA"/>
+<div class="absolute inset-0 flex items-end p-8 bg-gradient-to-t from-black/80 to-transparent">
+<span class="font-label text-xs uppercase tracking-[0.2em] text-gold font-bold">Murals</span>
+</div>
+</div>
+<!-- Mixed Media -->
+<div class="group relative aspect-[3/4] overflow-hidden cursor-pointer border-l border-white/5">
+<img alt="Mixed Media" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-40 group-hover:opacity-60" data-alt="Eclectic mixed media artwork combining paper collage, ink splashes, and gold leaf elements in a layered composition" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAY11xKwGpCTuhVeSAYN-MPBeFNmmglsjsV33m2FrVL9sSuqnitcK5P3dEOYfiNNdsMnVxTwyhQjebp_lNm2YBxJt6WUmuBVJRKE7670NT7fYA7ijSJPm94QpstGMVJfBQEa-RASQk5y2BRBJW2JwNZi_hmICMQ44SEKPEBxa_GKSNYUrKkVw2DvritHXGzt-TbgzQddjoCFnkKRSnfgPdbLOPzfC9E-LPZ2tH4OMNtKM5h-mUYAlBsVoiPIRd6iCL_ixtN8GzMY4U"/>
+<div class="absolute inset-0 flex items-end p-8 bg-gradient-to-t from-black/80 to-transparent">
+<span class="font-label text-xs uppercase tracking-[0.2em] text-gold font-bold">Mixed Media</span>
+</div>
+</div>
+<!-- Functional Art -->
+<div class="group relative aspect-[3/4] overflow-hidden cursor-pointer border-l border-white/5">
+<img alt="Functional Art" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-40 group-hover:opacity-60" data-alt="Luxury handcrafted side table with a decorative hand-painted top featuring intricate gold detailing and high gloss finish" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIgOzKpbkXkvbYqR_JJtBr7DzMK7sOhTHPo_qdAXrTX61MTvNGpJfz_AJTdhOyF6OjFZA6VSO8aq53LCziJHBBbUQuPBSEnb8t9IBeYMfRWTWhRN9KweQorYsfZpzMJ17yWQC89rYrsOUZfgmvUMhv9mcw4EzC2agYurhMVabUnZJiEUQ6GPo4PKuDacy18Wv1nAtQxWbUvSz_3ea2K6fV9m5wE2WIXahecvqsWnGYi4ajlY9fLcDj75derNYKcgBr_dv15NqqBhc"/>
+<div class="absolute inset-0 flex items-end p-8 bg-gradient-to-t from-black/80 to-transparent">
+<span class="font-label text-xs uppercase tracking-[0.2em] text-gold font-bold">Functional Art</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Stats Band -->
+<section class="py-24 px-12 bg-surface">
+<div class="max-w-screen-2xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-0 divide-y md:divide-y-0 md:divide-x divide-outline-variant/20">
+<div class="flex flex-col items-center md:items-start md:px-12 py-8 md:py-0">
+<span class="font-headline text-5xl text-gold mb-4 tracking-tighter">300+</span>
+<span class="font-label text-[10px] tracking-[0.4em] uppercase text-on-surface-variant">Original Works</span>
+</div>
+<div class="flex flex-col items-center md:items-start md:px-12 py-8 md:py-0">
+<span class="font-headline text-5xl text-gold mb-4 tracking-tighter">6</span>
+<span class="font-label text-[10px] tracking-[0.4em] uppercase text-on-surface-variant">Mediums</span>
+</div>
+<div class="flex flex-col items-center md:items-start md:px-12 py-8 md:py-0">
+<span class="font-headline text-5xl text-gold mb-4 tracking-tighter">Global</span>
+<span class="font-label text-[10px] tracking-[0.4em] uppercase text-on-surface-variant">Shipping</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#0e0e0e] w-full py-12 px-12 tonal-shift-from-surface">
+<div class="max-w-screen-2xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="font-['Manrope'] text-[12px] tracking-[0.2em] uppercase text-[#d0c5b2]/50">
+                © 2024 Arts by Justin. All rights reserved.
+            </div>
+<div class="flex gap-8">
+<a class="font-['Manrope'] text-[12px] tracking-[0.2em] uppercase text-[#d0c5b2]/50 hover:text-[#e6c364] transition-colors ease-in-out duration-300" href="#">Privacy Policy</a>
+<a class="font-['Manrope'] text-[12px] tracking-[0.2em] uppercase text-[#d0c5b2]/50 hover:text-[#e6c364] transition-colors ease-in-out duration-300" href="#">Terms of Service</a>
+</div>
+</div>
+</footer>
+</body></html>

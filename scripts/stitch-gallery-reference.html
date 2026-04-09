@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Obsidian Gallery | The Nocturne Collection</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@300;400;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-fixed": "#241a00",
+                      "surface-container": "#201f1f",
+                      "background": "#131313",
+                      "surface-tint": "#e6c364",
+                      "secondary-fixed": "#f5e1b2",
+                      "on-surface": "#e5e2e1",
+                      "tertiary-fixed": "#dde1ff",
+                      "on-primary-fixed-variant": "#584400",
+                      "primary-fixed": "#ffe08f",
+                      "tertiary": "#b9c4ff",
+                      "on-secondary-container": "#c9b78b",
+                      "on-error-container": "#ffdad6",
+                      "inverse-surface": "#e5e2e1",
+                      "on-secondary": "#3b2f0e",
+                      "surface-container-highest": "#353534",
+                      "secondary-container": "#554825",
+                      "surface-container-lowest": "#0e0e0e",
+                      "primary": "#e6c364",
+                      "surface-container-high": "#2a2a2a",
+                      "error-container": "#93000a",
+                      "tertiary-container": "#9ba8eb",
+                      "on-tertiary": "#1e2b66",
+                      "on-error": "#690005",
+                      "on-background": "#e5e2e1",
+                      "on-primary-container": "#503d00",
+                      "tertiary-fixed-dim": "#b9c3ff",
+                      "on-surface-variant": "#d0c5b2",
+                      "surface-variant": "#353534",
+                      "primary-fixed-dim": "#e6c364",
+                      "on-tertiary-fixed": "#041451",
+                      "on-secondary-fixed": "#241a00",
+                      "surface-container-low": "#1c1b1b",
+                      "on-primary": "#3d2e00",
+                      "inverse-on-surface": "#313030",
+                      "secondary": "#d8c598",
+                      "surface": "#131313",
+                      "outline-variant": "#4d4637",
+                      "error": "#ffb4ab",
+                      "secondary-fixed-dim": "#d8c598",
+                      "surface-bright": "#3a3939",
+                      "inverse-primary": "#755b00",
+                      "on-tertiary-fixed-variant": "#35437e",
+                      "surface-dim": "#131313",
+                      "outline": "#99907e",
+                      "on-tertiary-container": "#2e3b77",
+                      "primary-container": "#c9a84c",
+                      "on-secondary-fixed-variant": "#524523"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0px",
+                      "lg": "0px",
+                      "xl": "0px",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Noto Serif"],
+                      "body": ["Manrope"],
+                      "label": ["Manrope"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #080808;
+        }
+    </style>
+</head>
+<body class="font-body text-on-surface selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#131313]/60 backdrop-blur-xl flex justify-between items-center px-12 py-6 w-full no-border tonal-shift flat no shadows">
+<div class="text-2xl font-bold tracking-tighter text-[#e5e2e1] font-headline">The Obsidian Gallery</div>
+<div class="hidden md:flex items-center gap-12 font-['Noto_Serif'] tracking-wider">
+<a class="text-[#c9a84c] border-b border-[#c9a84c] pb-1" href="#">Exhibitions</a>
+<a class="text-[#e5e2e1] hover:text-[#c9a84c] transition-colors" href="#">Artists</a>
+<a class="text-[#e5e2e1] hover:text-[#c9a84c] transition-colors" href="#">Archive</a>
+<a class="text-[#e5e2e1] hover:text-[#c9a84c] transition-colors" href="#">Curations</a>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-[#e5e2e1] hover:bg-[#353534]/30 transition-all duration-300 p-2 active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</button>
+<button class="md:hidden text-[#e5e2e1]">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</div>
+</nav>
+<main class="pt-32 pb-24 px-12 max-w-[1600px] mx-auto">
+<!-- Section Header -->
+<header class="mb-24 flex flex-col md:flex-row items-end justify-between gap-12 border-l border-outline-variant/15 pl-12">
+<div class="max-w-2xl">
+<span class="font-label text-xs uppercase tracking-[0.3em] text-primary mb-4 block">Current Exhibition</span>
+<h1 class="text-6xl md:text-8xl font-headline leading-tight tracking-tight text-on-surface mb-8">
+                    The Nocturne <br/> <span class="italic font-normal">Collection</span>
+</h1>
+<p class="text-on-surface-variant font-light leading-relaxed max-w-lg">
+                    A study in the weight of shadows and the resonance of silence. This curation explores monochromatic depth through the lens of modern abstraction, where the absence of color invites a deeper dialogue with form and texture.
+                </p>
+</div>
+<div class="text-right hidden md:block">
+<div class="font-label text-xs uppercase tracking-[0.2em] text-outline mb-2">Curated By</div>
+<div class="font-headline italic text-xl">Elena Vane</div>
+</div>
+</header>
+<!-- Art Gallery Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-24">
+<!-- Card 1 -->
+<article class="group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-container overflow-hidden mb-6 relative">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="monochromatic abstract painting with heavy impasto textures and dark moody shadows in a minimalist gallery setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoBaUT6dbWW3ySlLKcF06e-hnmV1Q6nBjDJGK2Txknghczx-ujRTH0C3f4Ky90f01TK6P3Z7lbe2c2QU2QvIegysWfNHNP38f2tTFI6VYmqWaeVIM-RX-pbjb_KOf_UxKvuMtWGOfCqf_SRAIWxSE_XihuhxXItUWjlckWDn3A51Cp8xx71WiPgOW0o0Z2m2jmL9G7cb9IH0eK45tYclfZ-YYagsfh--bajbNl1uuNnJbFAQSpQe3oOnLSJRl6zlLrV9iZkD1egic"/>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline text-2xl mb-1 text-on-surface">Vesperal Flow I</h3>
+<p class="font-label text-xs uppercase tracking-widest text-on-surface-variant">Adrian Thorne</p>
+</div>
+<div class="text-primary font-headline text-lg">$14,500</div>
+</div>
+</article>
+<!-- Card 2 -->
+<article class="group cursor-pointer lg:mt-24">
+<div class="aspect-[3/4] bg-surface-container overflow-hidden mb-6 relative">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="dramatic minimalist photography of a geometric marble sculpture with stark directional lighting and deep black background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOGhWerwmZBn6PZuODSh9DC494oVDu_yjK_sP9aJiPaHPn2irusHAkShrhkqrz2cfltO4yHy-lgZf-SxR1AtOtFNTL_-n7ilWakWmE0qoObKoL7z8iRwuBLJU8B72dmll6_98xzI5aywkULmCYLv-1hnlv1sZNjtMxN8uHKAtJt82PO9EPtR9ocmc2kTRJzpraBZmDtwdYeQTIbLlaczStXyb83ynZQWOk8Xd1zMxb9vm3pMzT7UoeEqERKuXshNkPXvXMa-ksJzc"/>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline text-2xl mb-1 text-on-surface">Silent Monolith</h3>
+<p class="font-label text-xs uppercase tracking-widest text-on-surface-variant">Soren Kjaer</p>
+</div>
+<div class="text-primary font-headline text-lg">$22,000</div>
+</div>
+</article>
+<!-- Card 3 -->
+<article class="group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-container overflow-hidden mb-6 relative">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="abstract charcoal sketch on heavy grain paper featuring expressive circular motions and deep obsidian ink splatters" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCe1MtHXrBIc-I18Hc72sEpiAIRunyOWA2CDBCQriFVhWzLv2P47zfNArg46lzVaO7LzgX6K9tpyITSZU8-Cvn85zdZosScSB0__GHlQKl0bZJrVxXrgQQYOVfDSSsLEuRb_Q9A4G9gkElmNX_XkQMBoCHjkSmQ35rGD6t5mHLjMOOtkEtZ54CLN-wjlgqHjq2pfMDFrqUsfDh8hmURHcImePlHDs2QzY6ddzo7vIDgjjDh6L7QD70hCTG7nxrqZKq-BZAV5DOGhrM"/>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline text-2xl mb-1 text-on-surface">Event Horizon</h3>
+<p class="font-label text-xs uppercase tracking-widest text-on-surface-variant">Yuki Matsumoto</p>
+</div>
+<div class="text-primary font-headline text-lg">$9,800</div>
+</div>
+</article>
+<!-- Card 4 -->
+<article class="group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-container overflow-hidden mb-6 relative">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="fine art long exposure photography of dark ocean waves at night with shimmering silver highlights and misty atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCd4Amb5eF8XeDNM9Urnvcp4hcr8RpCJ23KIW90B1VxibUs8dLwrwa6Q1U9Nr0vQxA7FJz8euFzJB4-rmCy5Hbj5rvTNPUAMdt0PyMDMfbxQCJuNLZHPwrAncUp6iN2TxNTdrv18oQDD0Cgluid9Szej6etvwkexO30v5YAqApt9gopK6Pa20j5IkW_J8ZuBAHkfyYt2PkRrrIsQfnjsp7VLsMhjiaFyqLne1Veo_btxrBvVUlemj_nc_te0eYSCgqfjwwg-eVcwPk"/>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline text-2xl mb-1 text-on-surface">The Weight of Water</h3>
+<p class="font-label text-xs uppercase tracking-widest text-on-surface-variant">Celine Morel</p>
+</div>
+<div class="text-primary font-headline text-lg">$12,400</div>
+</div>
+</article>
+<!-- Card 5 -->
+<article class="group cursor-pointer lg:mt-24">
+<div class="aspect-[3/4] bg-surface-container overflow-hidden mb-6 relative">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="macro photograph of cracked volcanic rock with golden resin poured into the crevices creating a kintsugi effect" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5vqyvsGfrqYhYcDVCV6ysMEdVga0hQFgr2vDh3innrUilYTaC1h20V0BJ1an0Esrx5kB-moDXQgDsDfLh9xFCp0FO4UWL-l8WU8Pz7kdVvHd0whxLNURXxo7KZPOwALyQlQqWbF1ZH-dKahImrULlkYguTviuWl-HMTLh6SO3POcWuHwQbWUf8qpOaCVFH3SifyBbNU8WjwXA0Sr3MhX3DT4wvgeLpSvwPeboaatCiF292A9u4dwGHekOewG-c8w1wpgIb4gtzb4"/>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline text-2xl mb-1 text-on-surface">Fractured Gold</h3>
+<p class="font-label text-xs uppercase tracking-widest text-on-surface-variant">Isabella Rossi</p>
+</div>
+<div class="text-primary font-headline text-lg">$31,000</div>
+</div>
+</article>
+<!-- Card 6 -->
+<article class="group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-container overflow-hidden mb-6 relative">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="minimalist architectural photograph of a brutalist concrete staircase in shadows with sharp geometric lines" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYBQG4t9cHY3AqaKiSLP019XRlJYdJnSfvKwco1TMi4_QM0VY8OIcxfh2QmnlDB0uM-UHFO2OumjiKbsKHWjIUypvXhj7mYWjLMizHP9TLmYjag7J3jMxzdlnuquqptaGiO-ESnAP_uyjHydg6WGbB8aJcaAerxV5tnqC0GtmOHJ-eyLO-iyEGzlpp1iZ5PcpgMiEjORXYQ-XOhe5ZQG9R2mzdMkvoWYZ-zjRq3fTFS6xlsG3tY2Jy9yXcvjrZPz6YQ-tHfPGAyjw"/>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline text-2xl mb-1 text-on-surface">Ascension II</h3>
+<p class="font-label text-xs uppercase tracking-widest text-on-surface-variant">Marcus Thorne</p>
+</div>
+<div class="text-primary font-headline text-lg">$18,200</div>
+</div>
+</article>
+</div>
+<!-- CTA Section -->
+<section class="mt-48 py-32 border-t border-outline-variant/10 text-center">
+<h2 class="font-headline text-4xl md:text-5xl mb-8">Experience the Unseen.</h2>
+<p class="font-body text-on-surface-variant max-w-xl mx-auto mb-12">Join our private circle for early access to the Archive and exclusive invitations to gala openings.</p>
+<button class="bg-gradient-to-r from-primary to-primary-container text-on-primary-fixed px-12 py-5 font-headline font-bold text-lg hover:brightness-110 transition-all active:scale-95">
+                Request Private Viewing
+            </button>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#0e0e0e] flex flex-col md:flex-row justify-between items-center px-12 py-16 w-full border-t border-[#4d4637]/15 tonal-shift via surface-container-lowest flat no shadows">
+<div class="mb-8 md:mb-0">
+<div class="text-lg font-bold text-[#e5e2e1] font-headline mb-2">The Obsidian Gallery</div>
+<p class="font-['Manrope'] text-xs uppercase tracking-[0.2em] text-[#e5e2e1]/60">© 2024 The Obsidian Gallery. All rights reserved.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-8 font-['Manrope'] text-xs uppercase tracking-[0.2em]">
+<a class="text-[#e5e2e1]/60 hover:text-[#c9a84c] transition-colors opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+<a class="text-[#e5e2e1]/60 hover:text-[#c9a84c] transition-colors opacity-80 hover:opacity-100" href="#">Terms of Service</a>
+<a class="text-[#e5e2e1]/60 hover:text-[#c9a84c] transition-colors opacity-80 hover:opacity-100" href="#">Press Kit</a>
+<a class="text-[#e5e2e1]/60 hover:text-[#c9a84c] transition-colors opacity-80 hover:opacity-100" href="#">Contact</a>
+</div>
+<div class="mt-8 md:mt-0 flex gap-6">
+<span class="material-symbols-outlined text-[#c9a84c] cursor-pointer" data-icon="public">public</span>
+<span class="material-symbols-outlined text-[#c9a84c] cursor-pointer" data-icon="share">share</span>
+</div>
+</footer>
+</body></html>
