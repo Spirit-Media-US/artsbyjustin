@@ -5,19 +5,35 @@ import { getArtworks, urlFor, MEDIUM_SLUGS, SUBJECT_SLUGS } from '../../lib/sani
 
 const allArtworks = await getArtworks()
 
-// Only show product / installation / social_proof images (skip press, portrait, other)
-const displayTypes = new Set(['product', 'installation', 'social_proof', undefined, null, ''])
-const artworks = allArtworks
-  .filter((a: any) => displayTypes.has(a.imageType))
-  .map((a: any) => ({
-    title: a.title || '',
-    slug: a.slug?.current || '',
-    image: a.image,
-    medium: a.medium || '',
-    price: a.price || null,
-    sold: !!a.sold,
-  }))
-  .filter((a: any) => a.slug)
+const toCard = (a: any) => ({
+  title: a.title || '',
+  slug: a.slug?.current || '',
+  image: a.image,
+  medium: a.medium || '',
+  price: a.price || null,
+  sold: !!a.sold,
+})
+
+// For Sale — product shots (the main grid, commissionable pieces)
+const forSale = allArtworks
+  .filter((a: any) => a.imageType === 'product' && a.slug?.current)
+  .map(toCard)
+
+// Murals & Installations — large-scale work, separate showcase
+const installations = allArtworks
+  .filter((a: any) => a.imageType === 'installation' && a.slug?.current)
+  .map(toCard)
+
+// Fan Photos — social proof (customers with their art)
+const fanPhotos = allArtworks
+  .filter((a: any) => a.imageType === 'social_proof' && a.slug?.current)
+  .map(toCard)
+
+// Artworks without imageType default to for-sale
+const untyped = allArtworks
+  .filter((a: any) => !a.imageType && a.slug?.current)
+  .map(toCard)
+const artworks = [...forSale, ...untyped]
 
 const mediums = Object.entries(MEDIUM_SLUGS)
 const subjects = Object.entries(SUBJECT_SLUGS)
@@ -119,16 +135,49 @@ for (const a of allArtworks) {
     </div>
   </section>
 
-  <!-- All Works Grid -->
+  <!-- For Sale — Commissionable Pieces -->
   <section class="bg-surface-deep py-24 px-6 lg:px-12">
     <div class="max-w-[1600px] mx-auto">
       <div class="flex justify-between items-end mb-16">
-        <h2 class="text-3xl font-display text-ink tracking-tight">All Works</h2>
-        <span class="text-xs uppercase tracking-[0.3em] text-gold/60 font-body">03 / Complete Collection</span>
+        <h2 class="text-3xl font-display text-ink tracking-tight">Available Works</h2>
+        <span class="text-xs uppercase tracking-[0.3em] text-gold/60 font-body">03 / Order as Commission</span>
       </div>
+      <p class="text-ink-muted font-light mb-16 max-w-lg">Every piece below is available as a custom commission. See something you love? Justin will create a version tailored to your space.</p>
       <GalleryGrid artworks={artworks} />
     </div>
   </section>
+
+  <!-- Murals & Installations -->
+  {installations.length > 0 && (
+    <section class="bg-surface py-24 px-6 lg:px-12">
+      <div class="max-w-[1600px] mx-auto">
+        <div class="flex justify-between items-end mb-16">
+          <div>
+            <h2 class="text-3xl font-display text-ink tracking-tight">Murals & Installations</h2>
+            <p class="text-ink-muted font-light mt-4 max-w-lg">Large-scale works, site-specific pieces, and public art — Justin's bold vision at full scale.</p>
+          </div>
+          <span class="text-xs uppercase tracking-[0.3em] text-gold/60 font-body">04 / Large Scale</span>
+        </div>
+        <GalleryGrid artworks={installations} />
+      </div>
+    </section>
+  )}
+
+  <!-- Fan Photos — Collectors & Customers -->
+  {fanPhotos.length > 0 && (
+    <section class="bg-surface-deep py-24 px-6 lg:px-12">
+      <div class="max-w-[1600px] mx-auto">
+        <div class="flex justify-between items-end mb-16">
+          <div>
+            <h2 class="text-3xl font-display text-ink tracking-tight">In the Wild</h2>
+            <p class="text-ink-muted font-light mt-4 max-w-lg">Collectors and customers sharing Justin's art in their spaces. Real homes, real stories.</p>
+          </div>
+          <span class="text-xs uppercase tracking-[0.3em] text-gold/60 font-body">05 / Collectors</span>
+        </div>
+        <GalleryGrid artworks={fanPhotos} />
+      </div>
+    </section>
+  )}
 
   <!-- Commission CTA -->
   <section class="py-32 border-t border-outline-ghost/10 text-center px-6">
