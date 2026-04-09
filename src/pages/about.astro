@@ -6,16 +6,31 @@ const siteSettings = await getSiteSettings();
 
 // Use dedicated aboutPortraitImage, fall back to profilePhoto
 const portraitUrl = siteSettings?.aboutPortraitImage
-  ? urlFor(siteSettings.aboutPortraitImage).width(800).url()
-  : siteSettings?.profilePhoto
-  ? urlFor(siteSettings.profilePhoto).width(800).url()
-  : null;
+	? urlFor(siteSettings.aboutPortraitImage).width(800).url()
+	: siteSettings?.profilePhoto
+		? urlFor(siteSettings.profilePhoto).width(800).url()
+		: null;
 const instagramUrl = siteSettings?.instagramUrl;
-const facebookUrl  = siteSettings?.facebookUrl;
-const tiktokUrl    = siteSettings?.tiktokUrl;
+const facebookUrl = siteSettings?.facebookUrl;
+const tiktokUrl = siteSettings?.tiktokUrl;
 const location = siteSettings?.location || 'Raleigh, North Carolina';
 ---
 <Layout title="The Story" description="From a village in Ukhrul, Manipur, India to international recognition — the story of Justin Keishing, Arts by Justin.">
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      "name": "About Arts by Justin",
+      "description": "From a village in Ukhrul, Manipur, India to international recognition — the story of Justin Keishing.",
+      "url": "https://artsbyjustin.com/about",
+      "mainEntity": {
+        "@type": "Person",
+        "name": "Justin Keishing",
+        "jobTitle": "Contemporary Artist",
+        "url": "https://artsbyjustin.com"
+      }
+    })}></script>
+  </Fragment>
 
 <!-- HERO -->
 <section class="hero">

@@ -16,6 +16,16 @@ const printImage2 =
 	'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764073/A34786D0-51D9-4524-B2A2-C2723CECE012_ugjrze.jpg';
 ---
 <Layout title="Shop" description="Own original paintings, fine art prints, and resin art by Justin Keishing — collected around the world.">
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Store",
+      "name": "Arts by Justin — Shop",
+      "description": "Own original paintings, fine art prints, and resin art by Justin Keishing.",
+      "url": "https://artsbyjustin.com/shop",
+      "brand": { "@type": "Brand", "name": "Arts by Justin" }
+    })}></script>
+  </Fragment>
 
   <!-- HERO -->
   <section class="shop-hero">
