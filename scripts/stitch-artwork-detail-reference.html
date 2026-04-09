@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#bbaa7b",
+                    "surface-container-highest": "#353534",
+                    "surface-bright": "#3a3939",
+                    "tertiary-fixed": "#f5e1ae",
+                    "on-tertiary": "#3a2f0b",
+                    "on-tertiary-fixed": "#231b00",
+                    "on-surface-variant": "#d0c5b2",
+                    "surface-variant": "#353534",
+                    "secondary": "#e9c349",
+                    "outline-variant": "#4d4637",
+                    "surface-container-high": "#2a2a2a",
+                    "surface-container": "#201f1f",
+                    "secondary-fixed": "#ffe088",
+                    "tertiary-fixed-dim": "#d8c594",
+                    "inverse-surface": "#e5e2e1",
+                    "primary-container": "#c9a84c",
+                    "surface-container-low": "#1c1b1b",
+                    "surface": "#131313",
+                    "on-primary-fixed-variant": "#584400",
+                    "on-secondary-fixed-variant": "#574500",
+                    "on-secondary-container": "#342800",
+                    "on-error": "#690005",
+                    "on-tertiary-container": "#4a3f19",
+                    "on-primary-fixed": "#241a00",
+                    "on-primary-container": "#503d00",
+                    "on-background": "#e5e2e1",
+                    "error-container": "#93000a",
+                    "on-secondary": "#3c2f00",
+                    "on-tertiary-fixed-variant": "#524620",
+                    "on-primary": "#3d2e00",
+                    "outline": "#99907e",
+                    "inverse-on-surface": "#313030",
+                    "secondary-fixed-dim": "#e9c349",
+                    "on-secondary-fixed": "#241a00",
+                    "surface-tint": "#e6c364",
+                    "secondary-container": "#af8d11",
+                    "inverse-primary": "#755b00",
+                    "error": "#ffb4ab",
+                    "primary-fixed-dim": "#e6c364",
+                    "surface-container-lowest": "#0e0e0e",
+                    "on-error-container": "#ffdad6",
+                    "on-surface": "#e5e2e1",
+                    "surface-dim": "#131313",
+                    "primary": "#e6c364",
+                    "tertiary": "#d8c594",
+                    "primary-fixed": "#ffe08f",
+                    "background": "#131313"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Newsreader"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .serif { font-family: 'Newsreader', serif; }
+    </style>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800 shadow-2xl flex justify-between items-center px-6 py-4 max-w-full mx-auto">
+<div class="text-2xl font-serif italic text-yellow-600 dark:text-yellow-500">Arts by Justin</div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-yellow-500 border-b border-yellow-500 pb-1 font-serif tracking-tight transition-colors duration-300" href="#">Gallery</a>
+<a class="text-zinc-400 font-medium font-serif tracking-tight hover:text-yellow-500 transition-colors duration-300" href="#">Collections</a>
+<a class="text-zinc-400 font-medium font-serif tracking-tight hover:text-yellow-500 transition-colors duration-300" href="#">Commissions</a>
+<a class="text-zinc-400 font-medium font-serif tracking-tight hover:text-yellow-500 transition-colors duration-300" href="#">About</a>
+</div>
+<div class="flex items-center space-x-5 text-yellow-600 dark:text-yellow-500">
+<button class="hover:text-yellow-500 transition-opacity active:opacity-80">
+<span class="material-symbols-outlined">shopping_bag</span>
+</button>
+<button class="hover:text-yellow-500 transition-opacity active:opacity-80">
+<span class="material-symbols-outlined">person</span>
+</button>
+</div>
+</nav>
+<main class="pt-24 pb-20 max-w-7xl mx-auto px-6">
+<!-- Artwork Detail Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+<!-- Hero Image Section -->
+<div class="lg:col-span-7">
+<div class="relative group overflow-hidden bg-surface-container-low aspect-[4/5] md:aspect-square flex items-center justify-center">
+<img alt="Golden Horizons" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Stunning contemporary abstract painting with thick impasto textures and brilliant gold leaf highlights against deep charcoal and bronze tones, dramatic studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDt1OMIDaZZZXH2tgPAdTKLH4jW0jrIaIt5V6LrWGvsf_FK2Q5cr7i0xvInNFX30cFHUK2GPo7N0oKBVHNDrFmSgChV3VKevbFnhO0pOmeTRyZAvQdEGx8vC_4dUOeufCYsUYkbQXIkUjuVOkIuQx1TAbkFYJDXewPZGj2YIFllsQxJEw5JTb5E11Ylh5fOKovHi5YbDVMw5drVMj5mUoBjrHVOrtAfmS7C4BnVyfzuyekrVd5JDn4-inNCNAREyBsIETIB8Z00zOnW"/>
+<div class="absolute inset-0 bg-black/5 pointer-events-none"></div>
+</div>
+</div>
+<!-- Info Section -->
+<div class="lg:col-span-5 flex flex-col justify-center">
+<div class="mb-2">
+<span class="text-xs uppercase tracking-[0.2em] text-outline font-medium">Limited Edition Piece</span>
+</div>
+<h1 class="text-5xl md:text-6xl text-primary font-light mb-2 leading-tight">Golden Horizons</h1>
+<p class="text-xl font-serif italic text-on-surface-variant mb-6">by Justin</p>
+<div class="flex flex-wrap gap-2 mb-8">
+<span class="px-3 py-1 text-xs border border-outline-variant text-on-surface-variant uppercase tracking-wider">Acrylic &amp; Gold Leaf on Canvas</span>
+<span class="px-3 py-1 text-xs border border-outline-variant text-on-surface-variant uppercase tracking-wider">24" x 36"</span>
+</div>
+<div class="space-y-6 mb-10">
+<p class="text-on-surface-variant leading-relaxed text-lg font-light italic opacity-90">
+                        "A poetic exploration of light's transition. This piece captures the ephemeral moment when day meets night, rendered with genuine gold leaf that dances as the room's lighting changes throughout the hours."
+                    </p>
+<div class="h-px w-20 bg-primary-container"></div>
+</div>
+<div class="mb-10">
+<div class="text-4xl font-headline text-on-surface mb-6">$400.00</div>
+<button class="w-full bg-primary-container text-on-primary-container hover:bg-primary transition-all py-4 px-8 font-medium tracking-wide flex items-center justify-center gap-2 group">
+                        Order This Piece
+                        <span class="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+<div class="bg-surface-container-low p-6 space-y-4 border border-outline-variant/30">
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary">local_shipping</span>
+<div>
+<p class="text-sm font-semibold text-on-surface">Logistics &amp; Shipping</p>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+                                2-4 weeks standard / 1 week expedited shipping available at checkout. Professionally crated for global delivery.
+                            </p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary">verified</span>
+<div>
+<p class="text-sm font-semibold text-on-surface">Certificate of Authenticity</p>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+                                Hand-signed by the artist and accompanied by a digital NFT provenance record.
+                            </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Related Works -->
+<section class="mt-32">
+<div class="flex justify-between items-end mb-12">
+<div>
+<h2 class="text-3xl font-headline text-on-surface mb-2">Related Works</h2>
+<p class="text-on-surface-variant font-light italic">More from the Abstract Collection</p>
+</div>
+<a class="text-primary hover:text-white transition-colors flex items-center gap-1 uppercase text-xs tracking-widest font-bold" href="#">
+                    View Collection <span class="material-symbols-outlined text-sm">chevron_right</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Related Item 1 -->
+<div class="group cursor-pointer">
+<div class="aspect-[3/4] overflow-hidden bg-surface-container mb-4 relative">
+<img alt="Ethereal Dusk" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Abstract oil painting with swirling textures of deep navy and gold leaf accents, moody atmospheric vibe" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATkXbVdjhnroxpFXf5vVWY-zGwpXNITuXJ-gqIGlwo20djg_WBRRh0B329Pd8bqtLS4DrNkWrK0sQqK3AWXLLjavvbEsRP2JKTE0G8rBZXGk3w6BSW1CHI2WBNv2BCieMlnIuLuLqar0skVMRr3mvka7joRibSF4_sgSdHsb5t7cYQ5Cg1iPbo5CJFyFQ0Ioov-ryurgMR7HnVrwjIl-OTYW2AWgA_LX-xrJUbLcQcsOZZbGy9TLnMkYGue75JgxJVvC2gsKVv2dh3"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="text-white uppercase tracking-widest text-xs border border-white/50 px-4 py-2 backdrop-blur-sm">View Detail</span>
+</div>
+</div>
+<h3 class="text-lg text-on-surface mb-1">Ethereal Dusk</h3>
+<p class="text-sm text-on-surface-variant">$350.00</p>
+</div>
+<!-- Related Item 2 -->
+<div class="group cursor-pointer">
+<div class="aspect-[3/4] overflow-hidden bg-surface-container mb-4 relative">
+<img alt="Midnight Gilded" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Minimalist abstract art with a single thick stroke of gold metallic paint across a pitch black textured canvas" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCS70njEhv-bVy1aWAN3lM-hXyaxko2ZPrQoCyerMy8T9wzrXgNlBh6AMnJ-qUnI-02wYGQPXJIFQ5KyaTKHuQ6nlaJjR0zcCxoFUhX4fN19WXGQN9oNjn7QoNW0_lMJL4v1rW5T12Zwiu1B3xDmlRqUDzqewXaTX35_XVTkITVvpSx6Sm9gWD16MavtRyD_A0sG_JmB2IyY45rQ8-JOcE5cPhNukLS3MpLjik-ESnD7KSvEZK4DkRWzh2c6IYxgx2k7L8I2Nx_iZxD"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="text-white uppercase tracking-widest text-xs border border-white/50 px-4 py-2 backdrop-blur-sm">View Detail</span>
+</div>
+</div>
+<h3 class="text-lg text-on-surface mb-1">Midnight Gilded</h3>
+<p class="text-sm text-on-surface-variant">$420.00</p>
+</div>
+<!-- Related Item 3 -->
+<div class="group cursor-pointer">
+<div class="aspect-[3/4] overflow-hidden bg-surface-container mb-4 relative">
+<img alt="Desert Aura" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Contemporary painting with warm sandy tones, white marble textures, and splattered gold leaf details" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXUr9xXcaYwq1XMoo_QVoTZgiySUUgU8V1lPmBNxLQDwFYedN2fgxsbdm7xBHrb4zwxLpkRVHEf3PPlUEMFO3H8lBBwgNhEJ9jlx-QXT-i_REaq4hBi4qR9AlYmkCSpvAYxdtHC1oAeAYJEVQtik9b3uFrihFrv04W9XXKdP3Pg41-808jPcNdZnL_zoSNHZ49yi9z_wJDGWkzT2QVkgI1BTbxGGq8MxX07AfUsTUZfxcAgCE-rysXYdvM03JdW0MVu_0zBUrS7pLE"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="text-white uppercase tracking-widest text-xs border border-white/50 px-4 py-2 backdrop-blur-sm">View Detail</span>
+</div>
+</div>
+<h3 class="text-lg text-on-surface mb-1">Desert Aura</h3>
+<p class="text-sm text-on-surface-variant">$380.00</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-zinc-950 border-t border-zinc-900 w-full mt-auto">
+<div class="flex flex-col md:flex-row justify-between items-center px-8 py-12 w-full max-w-7xl mx-auto">
+<div class="mb-8 md:mb-0">
+<div class="text-xl font-serif text-yellow-600 mb-2">Arts by Justin</div>
+<p class="text-zinc-500 text-sm font-serif">© 2024 Arts by Justin. All rights reserved.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-x-8 gap-y-4">
+<a class="text-zinc-500 text-sm font-serif hover:text-yellow-500 underline underline-offset-4 transition-colors" href="#">Shipping &amp; Returns</a>
+<a class="text-zinc-500 text-sm font-serif hover:text-yellow-500 underline underline-offset-4 transition-colors" href="#">Privacy Policy</a>
+<a class="text-zinc-500 text-sm font-serif hover:text-yellow-500 underline underline-offset-4 transition-colors" href="#">Terms of Service</a>
+<a class="text-zinc-500 text-sm font-serif hover:text-yellow-500 underline underline-offset-4 transition-colors" href="#">Contact</a>
+</div>
+</div>
+</footer>
+</body></html>
