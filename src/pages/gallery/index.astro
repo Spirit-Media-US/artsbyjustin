@@ -1,49 +1,47 @@
 ---
-import Layout from '../../layouts/Layout.astro'
-import GalleryGrid from '../../components/GalleryGrid.astro'
-import { getArtworks, urlFor, MEDIUM_SLUGS, SUBJECT_SLUGS } from '../../lib/sanity'
+import GalleryGrid from '../../components/GalleryGrid.astro';
+import Layout from '../../layouts/Layout.astro';
+import { getArtworks, MEDIUM_SLUGS, SUBJECT_SLUGS, urlFor } from '../../lib/sanity';
 
-const allArtworks = await getArtworks()
+const allArtworks = await getArtworks();
 
 const toCard = (a: any) => ({
-  title: a.title || '',
-  slug: a.slug?.current || '',
-  image: a.image,
-  medium: a.medium || '',
-  price: a.price || null,
-  sold: !!a.sold,
-})
+	title: a.title || '',
+	slug: a.slug?.current || '',
+	image: a.image,
+	medium: a.medium || '',
+	price: a.price || null,
+	sold: !!a.sold,
+});
 
 // For Sale — product shots (the main grid, commissionable pieces)
 const forSale = allArtworks
-  .filter((a: any) => a.imageType === 'product' && a.slug?.current)
-  .map(toCard)
+	.filter((a: any) => a.imageType === 'product' && a.slug?.current)
+	.map(toCard);
 
 // Murals & Installations — large-scale work, separate showcase
 const installations = allArtworks
-  .filter((a: any) => a.imageType === 'installation' && a.slug?.current)
-  .map(toCard)
+	.filter((a: any) => a.imageType === 'installation' && a.slug?.current)
+	.map(toCard);
 
 // Fan Photos — social proof (customers with their art)
 const fanPhotos = allArtworks
-  .filter((a: any) => a.imageType === 'social_proof' && a.slug?.current)
-  .map(toCard)
+	.filter((a: any) => a.imageType === 'social_proof' && a.slug?.current)
+	.map(toCard);
 
 // Artworks without imageType default to for-sale
-const untyped = allArtworks
-  .filter((a: any) => !a.imageType && a.slug?.current)
-  .map(toCard)
-const artworks = [...forSale, ...untyped]
+const untyped = allArtworks.filter((a: any) => !a.imageType && a.slug?.current).map(toCard);
+const artworks = [...forSale, ...untyped];
 
-const mediums = Object.entries(MEDIUM_SLUGS)
-const subjects = Object.entries(SUBJECT_SLUGS)
+const mediums = Object.entries(MEDIUM_SLUGS);
+const subjects = Object.entries(SUBJECT_SLUGS);
 
 // Count artworks per medium and subject
-const mediumCounts: Record<string, number> = {}
-const subjectCounts: Record<string, number> = {}
+const mediumCounts: Record<string, number> = {};
+const subjectCounts: Record<string, number> = {};
 for (const a of allArtworks) {
-  if (a.medium) mediumCounts[a.medium] = (mediumCounts[a.medium] || 0) + 1
-  if (a.category) subjectCounts[a.category] = (subjectCounts[a.category] || 0) + 1
+	if (a.medium) mediumCounts[a.medium] = (mediumCounts[a.medium] || 0) + 1;
+	if (a.category) subjectCounts[a.category] = (subjectCounts[a.category] || 0) + 1;
 }
 ---
 
@@ -147,34 +145,75 @@ for (const a of allArtworks) {
     </div>
   </section>
 
-  <!-- Murals & Installations -->
+  <!-- Gold divider -->
+  <div class="h-px mx-auto max-w-[200px] bg-gradient-to-r from-transparent via-gold to-transparent"></div>
+
+  <!-- Murals & Installations — wide landscape cards -->
   {installations.length > 0 && (
-    <section class="bg-surface py-24 px-6 lg:px-12">
+    <section class="bg-surface-low py-24 px-6 lg:px-12">
       <div class="max-w-[1600px] mx-auto">
         <div class="flex justify-between items-end mb-16">
           <div>
             <h2 class="text-3xl font-display text-ink tracking-tight">Murals & Installations</h2>
-            <p class="text-ink-muted font-light mt-4 max-w-lg">Large-scale works, site-specific pieces, and public art — Justin's bold vision at full scale.</p>
+            <p class="text-ink-muted font-light mt-4 max-w-lg">Large-scale works and public art — Justin's bold vision at full scale. These aren't for sale, but they show what's possible when you commission big.</p>
           </div>
           <span class="text-xs uppercase tracking-[0.3em] text-gold/60 font-body">04 / Large Scale</span>
         </div>
-        <GalleryGrid artworks={installations} />
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {installations.map((art) => {
+            const imgUrl = art.image ? urlFor(art.image).width(900).height(500).format('webp').url() : ''
+            return (
+              <a href={`/artwork/${art.slug}`} class="group block overflow-hidden bg-surface-container">
+                {imgUrl && (
+                  <div class="aspect-[16/9] overflow-hidden">
+                    <img src={imgUrl} alt={art.title} loading="lazy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                  </div>
+                )}
+                <div class="p-5 flex justify-between items-center">
+                  <div>
+                    <h3 class="font-display text-lg text-ink">{art.title}</h3>
+                    <p class="text-xs uppercase tracking-widest text-ink-muted mt-1">{art.medium}</p>
+                  </div>
+                  <span class="text-xs uppercase tracking-wider text-gold-bright opacity-0 group-hover:opacity-100 transition-opacity">View</span>
+                </div>
+              </a>
+            )
+          })}
+        </div>
       </div>
     </section>
   )}
 
-  <!-- Fan Photos — Collectors & Customers -->
+  <!-- Gold divider -->
+  <div class="h-px mx-auto max-w-[200px] bg-gradient-to-r from-transparent via-gold to-transparent"></div>
+
+  <!-- In the Wild — small square mosaic, visually distinct from for-sale grid -->
   {fanPhotos.length > 0 && (
-    <section class="bg-surface-deep py-24 px-6 lg:px-12">
+    <section class="bg-surface-container py-24 px-6 lg:px-12">
       <div class="max-w-[1600px] mx-auto">
-        <div class="flex justify-between items-end mb-16">
-          <div>
-            <h2 class="text-3xl font-display text-ink tracking-tight">In the Wild</h2>
-            <p class="text-ink-muted font-light mt-4 max-w-lg">Collectors and customers sharing Justin's art in their spaces. Real homes, real stories.</p>
-          </div>
-          <span class="text-xs uppercase tracking-[0.3em] text-gold/60 font-body">05 / Collectors</span>
+        <div class="text-center mb-16">
+          <span class="text-xs uppercase tracking-[0.3em] text-gold-bright mb-4 block font-body">05 / Collectors</span>
+          <h2 class="text-3xl font-display text-ink tracking-tight mb-4">In the Wild</h2>
+          <p class="text-ink-muted font-light max-w-lg mx-auto">Real collectors, real spaces. Customers sharing Justin's art in their homes and offices.</p>
         </div>
-        <GalleryGrid artworks={fanPhotos} />
+        <div class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
+          {fanPhotos.slice(0, 36).map((art) => {
+            const imgUrl = art.image ? urlFor(art.image).width(300).height(300).format('webp').url() : ''
+            return (
+              <a href={`/artwork/${art.slug}`} class="group block aspect-square overflow-hidden bg-surface-deep relative">
+                {imgUrl && (
+                  <img src={imgUrl} alt={art.title} loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                )}
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-end p-2">
+                  <span class="text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity truncate">{art.title}</span>
+                </div>
+              </a>
+            )
+          })}
+        </div>
+        {fanPhotos.length > 36 && (
+          <p class="text-center text-ink-muted text-sm mt-8">Showing 36 of {fanPhotos.length} — browse artwork pages to see more</p>
+        )}
       </div>
     </section>
   )}
