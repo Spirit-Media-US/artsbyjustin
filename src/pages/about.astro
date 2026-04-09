@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getSiteSettings, urlFor } from '../lib/sanity';
+import { getSiteSettings, sanityClient, urlFor } from '../lib/sanity';
 
 const siteSettings = await getSiteSettings();
 
@@ -14,6 +14,30 @@ const instagramUrl = siteSettings?.instagramUrl;
 const facebookUrl = siteSettings?.facebookUrl;
 const tiktokUrl = siteSettings?.tiktokUrl;
 const location = siteSettings?.location || 'Raleigh, North Carolina';
+
+// Fetch suggested artworks for chapter images (based on suggest-images tool results)
+const chapterImages = await sanityClient.fetch(`{
+	"hero": *[_type == "artwork" && imageType == "portrait"][0]{ image, title },
+	"ch1": *[_type == "artwork" && category == "Faith & Inspiration" && defined(image.asset)] | order(order asc) [0]{ image, title },
+	"ch2": *[_type == "artwork" && imageType == "social_proof" && category == "Portraits & Figurative" && defined(image.asset)] | order(order asc) [0]{ image, title },
+	"ch3": *[_type == "artwork" && medium == "Mixed Media" && defined(image.asset)] | order(order asc) [0]{ image, title },
+	"ch4": *[_type == "artwork" && imageType == "press" && defined(image.asset)] | order(order asc) [0]{ image, title }
+}`);
+const ch1Img = chapterImages?.ch1?.image
+	? urlFor(chapterImages.ch1.image).width(800).format('webp').url()
+	: '';
+const ch2Img = chapterImages?.ch2?.image
+	? urlFor(chapterImages.ch2.image).width(800).format('webp').url()
+	: '';
+const ch3Img = chapterImages?.ch3?.image
+	? urlFor(chapterImages.ch3.image).width(800).format('webp').url()
+	: '';
+const ch4Img = chapterImages?.ch4?.image
+	? urlFor(chapterImages.ch4.image).width(800).format('webp').url()
+	: '';
+const heroImg = chapterImages?.hero?.image
+	? urlFor(chapterImages.hero.image).width(800).format('webp').url()
+	: '';
 ---
 <Layout title="The Story" description="From a village in Ukhrul, Manipur, India to international recognition — the story of Justin Keishing, Arts by Justin.">
   <Fragment slot="head">
@@ -58,12 +82,14 @@ const location = siteSettings?.location || 'Raleigh, North Carolina';
   <div class="hero-right">
     {portraitUrl
       ? <img src={portraitUrl} alt="Justin Keishing" class="portrait-img" loading="eager"/>
-      : <div class="portrait-placeholder">
-          <div class="portrait-placeholder-inner">
-            <div style="font-size:4rem; opacity:0.2;">📷</div>
-            <div style="font-size:0.65rem; letter-spacing:3px; text-transform:uppercase; margin-top:1rem; opacity:0.2;">Portrait Photo</div>
+      : heroImg
+        ? <img src={heroImg} alt="Justin Keishing — Artist Portrait" class="portrait-img" loading="eager"/>
+        : <div class="portrait-placeholder">
+            <div class="portrait-placeholder-inner">
+              <div style="font-size:4rem; opacity:0.2;">📷</div>
+              <div style="font-size:0.65rem; letter-spacing:3px; text-transform:uppercase; margin-top:1rem; opacity:0.2;">Portrait Photo</div>
+            </div>
           </div>
-        </div>
     }
   </div>
 </section>
@@ -73,10 +99,13 @@ const location = siteSettings?.location || 'Raleigh, North Carolina';
   <div class="chapter-visual" style="background:linear-gradient(135deg,#0a1008,#050805);">
     <div class="chapter-num">01</div>
     <div class="chapter-visual-inner">
-      <div class="chapter-img-box chapter-img-box--placeholder">
-        <div style="font-size:3rem; opacity:0.15;">🏔️</div>
-        <div style="font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; margin-top:1rem; color:var(--gold); opacity:0.5;">Ukhrul, Manipur · India</div>
-      </div>
+      {ch1Img
+        ? <div class="chapter-img-box"><img src={ch1Img} alt={chapterImages?.ch1?.title || 'Faith & Inspiration'} style="width:100%;height:100%;object-fit:cover;" /></div>
+        : <div class="chapter-img-box chapter-img-box--placeholder">
+            <div style="font-size:3rem; opacity:0.15;">🏔️</div>
+            <div style="font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; margin-top:1rem; color:var(--gold); opacity:0.5;">Ukhrul, Manipur · India</div>
+          </div>
+      }
     </div>
   </div>
   <div class="chapter-body" style="background:#111;">
@@ -97,10 +126,13 @@ const location = siteSettings?.location || 'Raleigh, North Carolina';
   <div class="chapter-visual" style="background:linear-gradient(135deg,#0a0808,#080505);">
     <div class="chapter-num" style="right:2rem; left:auto;">02</div>
     <div class="chapter-visual-inner">
-      <div class="chapter-img-box chapter-img-box--placeholder" style="background:linear-gradient(135deg,#1a0a00,#110800); border-color:rgba(201,168,76,0.08);">
-        <div style="font-size:3rem; opacity:0.15;">✈️</div>
-        <div style="font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; margin-top:1rem; color:var(--gold); opacity:0.5;">The Journey to America</div>
-      </div>
+      {ch2Img
+        ? <div class="chapter-img-box"><img src={ch2Img} alt={chapterImages?.ch2?.title || 'The Journey to America'} style="width:100%;height:100%;object-fit:cover;" /></div>
+        : <div class="chapter-img-box chapter-img-box--placeholder" style="background:linear-gradient(135deg,#1a0a00,#110800); border-color:rgba(201,168,76,0.08);">
+            <div style="font-size:3rem; opacity:0.15;">✈️</div>
+            <div style="font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; margin-top:1rem; color:var(--gold); opacity:0.5;">The Journey to America</div>
+          </div>
+      }
     </div>
   </div>
   <div class="chapter-body" style="background:#0d0d0d;">
@@ -130,9 +162,12 @@ const location = siteSettings?.location || 'Raleigh, North Carolina';
   <div class="chapter-visual" style="background:linear-gradient(135deg,#080808,#0a0a14);">
     <div class="chapter-num">03</div>
     <div class="chapter-visual-inner">
-      <div class="chapter-img-box" style="background:linear-gradient(135deg,#000,#111,#ff6600,#00aacc); display:flex; align-items:center; justify-content:center;">
-        <div style="font-size:0.65rem; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,0.4); text-align:center; padding:1rem;">The Creator's Hand · Mixed Media</div>
-      </div>
+      {ch3Img
+        ? <div class="chapter-img-box"><img src={ch3Img} alt={chapterImages?.ch3?.title || 'Mixed Media Art'} style="width:100%;height:100%;object-fit:cover;" /></div>
+        : <div class="chapter-img-box" style="background:linear-gradient(135deg,#000,#111,#ff6600,#00aacc); display:flex; align-items:center; justify-content:center;">
+            <div style="font-size:0.65rem; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,0.4); text-align:center; padding:1rem;">The Creator's Hand · Mixed Media</div>
+          </div>
+      }
     </div>
   </div>
   <div class="chapter-body" style="background:#111;">
@@ -154,14 +189,17 @@ const location = siteSettings?.location || 'Raleigh, North Carolina';
   <div class="chapter-visual" style="background:linear-gradient(135deg,#0d0800,#130900);">
     <div class="chapter-num" style="right:2rem; left:auto; color:rgba(201,168,76,0.06);">04</div>
     <div class="chapter-visual-inner">
-      <div class="chapter-img-box" style="background:linear-gradient(135deg,#1a1000,#0d0800); border:1px solid rgba(201,168,76,0.2); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1rem; padding:2rem;">
-        <div style="font-size:3rem;">🏆</div>
-        <div style="text-align:center;">
-          <div style="font-family:'Playfair Display',serif; font-size:0.9rem; color:var(--gold-light); font-style:italic;">International Prize</div>
-          <div style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--white);">Artist of the Year 2025</div>
-          <div style="font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--gray); margin-top:0.5rem;">Palazzo Pitti · Florence, Italy</div>
-        </div>
-      </div>
+      {ch4Img
+        ? <div class="chapter-img-box"><img src={ch4Img} alt={chapterImages?.ch4?.title || 'Artist of the Year'} style="width:100%;height:100%;object-fit:cover;" /></div>
+        : <div class="chapter-img-box" style="background:linear-gradient(135deg,#1a1000,#0d0800); border:1px solid rgba(201,168,76,0.2); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1rem; padding:2rem;">
+            <div style="font-size:3rem;">🏆</div>
+            <div style="text-align:center;">
+              <div style="font-family:'Playfair Display',serif; font-size:0.9rem; color:var(--gold-light); font-style:italic;">International Prize</div>
+              <div style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--white);">Artist of the Year 2025</div>
+              <div style="font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--gray); margin-top:0.5rem;">Palazzo Pitti · Florence, Italy</div>
+            </div>
+          </div>
+      }
     </div>
   </div>
   <div class="chapter-body" style="background:linear-gradient(135deg,#0d0800,#130900);">
