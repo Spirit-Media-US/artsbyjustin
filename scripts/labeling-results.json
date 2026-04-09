@@ -18,7 +18,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYptRO",
@@ -39,7 +39,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYpxRl",
@@ -60,7 +60,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiV8mh",
@@ -82,7 +82,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYq1iy",
@@ -104,7 +104,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiVA4X",
@@ -127,7 +127,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3POy5",
@@ -150,7 +150,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYq7pq",
@@ -173,7 +173,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3PPv7",
@@ -196,7 +196,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiVCzV",
@@ -219,7 +219,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3PRaQ",
@@ -241,7 +241,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3PSdM",
@@ -263,7 +263,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYqQVV",
@@ -285,7 +285,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYqRrh",
@@ -308,7 +308,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3PTUU",
@@ -331,7 +331,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiVJe0",
@@ -353,7 +353,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiVNFY",
@@ -375,7 +375,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3PVDj",
@@ -397,7 +397,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3PVKc",
@@ -419,7 +419,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiVOsg",
@@ -441,7 +441,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3PVw0",
@@ -462,7 +462,7 @@
       "qualityScore": 6,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiVPzs",
@@ -485,7 +485,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYqcFm",
@@ -508,7 +508,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3PWTS",
@@ -531,7 +531,7 @@
       "qualityScore": 9,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3PWfG",
@@ -555,7 +555,7 @@
       "qualityScore": 9,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiVSkC",
@@ -576,7 +576,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiVTe5",
@@ -597,7 +597,7 @@
       "qualityScore": 6,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYqhoy",
@@ -619,7 +619,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYqi5o",
@@ -641,7 +641,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiVUvv",
@@ -663,7 +663,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYqkbZ",
@@ -684,7 +684,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3PYww",
@@ -705,7 +705,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiVWmM",
@@ -726,7 +726,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYqnf0",
@@ -747,7 +747,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiVZBO",
@@ -768,7 +768,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYqp9c",
@@ -789,7 +789,7 @@
       "qualityScore": 6,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYqq2L",
@@ -810,7 +810,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiVb79",
@@ -831,7 +831,7 @@
       "qualityScore": 6,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiVbvi",
@@ -854,7 +854,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYqsHG",
@@ -877,7 +877,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Pasy",
@@ -898,7 +898,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3PbKW",
@@ -919,7 +919,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3PbXJ",
@@ -941,7 +941,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYqxdp",
@@ -963,7 +963,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiVm17",
@@ -985,7 +985,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYr1Zz",
@@ -1006,7 +1006,7 @@
       "qualityScore": 6,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiVoCq",
@@ -1027,7 +1027,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiVoql",
@@ -1048,7 +1048,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiVqDv",
@@ -1069,7 +1069,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Pdj5",
@@ -1090,7 +1090,7 @@
       "qualityScore": 6,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYr7pH",
@@ -1111,7 +1111,7 @@
       "qualityScore": 6,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYr8yq",
@@ -1132,7 +1132,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYrCEu",
@@ -1153,7 +1153,7 @@
       "qualityScore": 6,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYrFQl",
@@ -1174,7 +1174,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Pek3",
@@ -1195,7 +1195,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Pff7",
@@ -1217,7 +1217,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Pfpw",
@@ -1239,7 +1239,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Pg8d",
@@ -1261,7 +1261,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYrLL0",
@@ -1283,7 +1283,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3PhIS",
@@ -1305,7 +1305,7 @@
       "qualityScore": 9,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiW1lo",
@@ -1327,7 +1327,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYrPxG",
@@ -1349,7 +1349,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiW4TT",
@@ -1371,7 +1371,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Pj0i",
@@ -1393,7 +1393,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYrUym",
@@ -1415,7 +1415,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Pjwl",
@@ -1438,7 +1438,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3PkAX",
@@ -1461,7 +1461,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiW6cX",
@@ -1484,7 +1484,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYrXhA",
@@ -1507,7 +1507,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Pkso",
@@ -1530,7 +1530,7 @@
       "qualityScore": 6,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiW9XV",
@@ -1551,7 +1551,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYrcNd",
@@ -1572,7 +1572,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiWAZN",
@@ -1593,7 +1593,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiWD3j",
@@ -1614,7 +1614,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYri12",
@@ -1635,7 +1635,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiWJss",
@@ -1657,7 +1657,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Ps0Z",
@@ -1679,7 +1679,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3PsFK",
@@ -1701,7 +1701,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3PsPA",
@@ -1723,7 +1723,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiWOov",
@@ -1745,7 +1745,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiWPQB",
@@ -1766,7 +1766,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYs0YH",
@@ -1787,7 +1787,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiWQnL",
@@ -1808,7 +1808,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiWRTv",
@@ -1829,7 +1829,7 @@
       "qualityScore": 9,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYs6jM",
@@ -1850,7 +1850,7 @@
       "qualityScore": 9,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYs7gI",
@@ -1871,7 +1871,7 @@
       "qualityScore": 6,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiWVjO",
@@ -1893,7 +1893,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Pvkl",
@@ -1915,7 +1915,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiWYeM",
@@ -1937,7 +1937,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Pw8N",
@@ -1959,7 +1959,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYsKVv",
@@ -1980,7 +1980,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiWdN6",
@@ -2001,7 +2001,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiWfe9",
@@ -2022,7 +2022,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3PwO7",
@@ -2043,7 +2043,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiWjwH",
@@ -2064,7 +2064,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiWkMt",
@@ -2085,7 +2085,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiWkqA",
@@ -2106,7 +2106,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYsY5r",
@@ -2127,7 +2127,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYsYuN",
@@ -2148,7 +2148,7 @@
       "qualityScore": 9,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiWoRi",
@@ -2169,7 +2169,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiWosK",
@@ -2189,7 +2189,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiWpOG",
@@ -2209,7 +2209,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Q1AG",
@@ -2229,7 +2229,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYt4cI",
@@ -2249,7 +2249,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Q1Ry",
@@ -2269,7 +2269,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Q1bo",
@@ -2291,7 +2291,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYt5IO",
@@ -2313,7 +2313,7 @@
       "qualityScore": 6,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiWrHM",
@@ -2335,7 +2335,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYt6ea",
@@ -2357,7 +2357,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYt7GT",
@@ -2379,7 +2379,7 @@
       "qualityScore": 9,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Q2K5",
@@ -2400,7 +2400,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Q2Pz",
@@ -2422,7 +2422,7 @@
       "qualityScore": 6,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiWuCK",
@@ -2443,7 +2443,7 @@
       "qualityScore": 6,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Q2cm",
@@ -2465,7 +2465,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Q2vT",
@@ -2487,7 +2487,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYtGIM",
@@ -2508,7 +2508,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Q3M2",
@@ -2530,7 +2530,7 @@
       "qualityScore": 9,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiWvWp",
@@ -2552,7 +2552,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiWvmn",
@@ -2574,7 +2574,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYtRha",
@@ -2596,7 +2596,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiWwW2",
@@ -2617,7 +2617,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Q44J",
@@ -2638,7 +2638,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiWyn5",
@@ -2660,7 +2660,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYtWvj",
@@ -2682,7 +2682,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYtXoS",
@@ -2704,7 +2704,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYtZ6R",
@@ -2725,7 +2725,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3QIkO",
@@ -2746,7 +2746,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYtchY",
@@ -2767,7 +2767,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3QP7u",
@@ -2788,7 +2788,7 @@
       "qualityScore": 6,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3QPUX",
@@ -2809,7 +2809,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiXSxy",
@@ -2830,7 +2830,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3QQr9",
@@ -2851,7 +2851,7 @@
       "qualityScore": 9,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3QRHi",
@@ -2872,7 +2872,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiXZf8",
@@ -2894,7 +2894,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYvNg5",
@@ -2915,7 +2915,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3QSy0",
@@ -2937,7 +2937,7 @@
       "qualityScore": 9,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYvR0M",
@@ -2960,7 +2960,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYvUbT",
@@ -2983,7 +2983,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiXfXj",
@@ -3006,7 +3006,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3QUxy",
@@ -3029,7 +3029,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYvZYm",
@@ -3050,7 +3050,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYvae8",
@@ -3071,7 +3071,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiXjHG",
@@ -3092,7 +3092,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3QVcJ",
@@ -3113,7 +3113,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYvdIJ",
@@ -3134,7 +3134,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYve2c",
@@ -3155,7 +3155,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYvhym",
@@ -3176,7 +3176,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiXkmP",
@@ -3197,7 +3197,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3QYLX",
@@ -3218,7 +3218,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiXo2f",
@@ -3239,7 +3239,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Qe5h",
@@ -3261,7 +3261,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYwIuq",
@@ -3283,7 +3283,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Qfk1",
@@ -3305,7 +3305,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYwPVB",
@@ -3327,7 +3327,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiYBOP",
@@ -3349,7 +3349,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiYDvQ",
@@ -3372,7 +3372,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Qhnv",
@@ -3395,7 +3395,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYwTiB",
@@ -3418,7 +3418,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYwUOH",
@@ -3441,7 +3441,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiYFlr",
@@ -3464,7 +3464,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiYGF8",
@@ -3486,7 +3486,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYwYfU",
@@ -3508,7 +3508,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Qkix",
@@ -3530,7 +3530,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYwaqC",
@@ -3552,7 +3552,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYwbWI",
@@ -3574,7 +3574,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Qlrn",
@@ -3596,7 +3596,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYwgTb",
@@ -3618,7 +3618,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Qmop",
@@ -3640,7 +3640,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Qmsl",
@@ -3662,7 +3662,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiYOOm",
@@ -3685,7 +3685,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiYQKX",
@@ -3706,7 +3706,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiYRMP",
@@ -3727,7 +3727,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Qpht",
@@ -3748,7 +3748,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiYVuV",
@@ -3769,7 +3769,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiYY3Z",
@@ -3790,7 +3790,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYx4Ez",
@@ -3812,7 +3812,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYx5Wy",
@@ -3834,7 +3834,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYx6gX",
@@ -3856,7 +3856,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Qt7Q",
@@ -3878,7 +3878,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3QtNA",
@@ -3900,7 +3900,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiYkNM",
@@ -3923,7 +3923,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiYmWQ",
@@ -3946,7 +3946,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Quer",
@@ -3969,7 +3969,7 @@
       "qualityScore": 9,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYxGnm",
@@ -3992,7 +3992,7 @@
       "qualityScore": 9,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiYtOE",
@@ -4015,7 +4015,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYxNak",
@@ -4037,7 +4037,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYxQEv",
@@ -4059,7 +4059,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYxWHa",
@@ -4081,7 +4081,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiZ0Yf",
@@ -4103,7 +4103,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiZ2MR",
@@ -4125,7 +4125,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3R0bo",
@@ -4147,7 +4147,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiZ63J",
@@ -4169,7 +4169,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiZ8fe",
@@ -4191,7 +4191,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYxmVh",
@@ -4213,7 +4213,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3R5bj",
@@ -4234,7 +4234,7 @@
       "qualityScore": 0,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3R62I",
@@ -4255,7 +4255,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3R6Yl",
@@ -4276,7 +4276,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3R7Ou",
@@ -4297,7 +4297,7 @@
       "qualityScore": 9,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiZP4G",
@@ -4318,7 +4318,7 @@
       "qualityScore": 9,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiZQGm",
@@ -4340,7 +4340,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3R8qR",
@@ -4360,7 +4360,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiZSaU",
@@ -4381,7 +4381,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYyGnD",
@@ -4402,7 +4402,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYyIYf",
@@ -4423,7 +4423,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3RASn",
@@ -4444,7 +4444,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3RAxI",
@@ -4464,7 +4464,7 @@
       "qualityScore": 2,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3RBiW",
@@ -4484,7 +4484,7 @@
       "qualityScore": 3,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYyPxW",
@@ -4506,7 +4506,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiZbO3",
@@ -4529,7 +4529,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYySfu",
@@ -4552,7 +4552,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiZctC",
@@ -4574,7 +4574,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYyUVZ",
@@ -4596,7 +4596,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3RDgW",
@@ -4618,7 +4618,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYyWkU",
@@ -4640,7 +4640,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3REKr",
@@ -4662,7 +4662,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3REZc",
@@ -4683,7 +4683,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYycej",
@@ -4705,7 +4705,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYygK3",
@@ -4727,7 +4727,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3RFbZ",
@@ -4749,7 +4749,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiZjve",
@@ -4771,7 +4771,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYymdY",
@@ -4792,7 +4792,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYyqN5",
@@ -4813,7 +4813,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYyuVs",
@@ -4835,7 +4835,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3RIiP",
@@ -4857,7 +4857,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYz9S0",
@@ -4878,7 +4878,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiZsFw",
@@ -4899,7 +4899,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3RJmK",
@@ -4920,7 +4920,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiZtvj",
@@ -4941,7 +4941,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYzEXj",
@@ -4962,7 +4962,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3RKx8",
@@ -4983,7 +4983,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiZwtM",
@@ -5004,7 +5004,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiZxxt",
@@ -5025,7 +5025,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3RN4y",
@@ -5046,7 +5046,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYzP4E",
@@ -5067,7 +5067,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfia1k5",
@@ -5088,7 +5088,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYzV2g",
@@ -5110,7 +5110,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3RRXR",
@@ -5132,7 +5132,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3RRoA",
@@ -5154,7 +5154,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3RSkD",
@@ -5176,7 +5176,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3RTgG",
@@ -5198,7 +5198,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYzknK",
@@ -5220,7 +5220,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiaFwy",
@@ -5241,7 +5241,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstYzt0h",
@@ -5263,7 +5263,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3RVXN",
@@ -5285,7 +5285,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiaKnh",
@@ -5307,7 +5307,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3RWGd",
@@ -5329,7 +5329,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiaOHG",
@@ -5351,7 +5351,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3RWp4",
@@ -5373,7 +5373,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstZ0AWn",
@@ -5395,7 +5395,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiagJ0",
@@ -5417,7 +5417,7 @@
       "qualityScore": 6,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiaguG",
@@ -5438,7 +5438,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiahCt",
@@ -5459,7 +5459,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Rgg3",
@@ -5480,7 +5480,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfioSXL",
@@ -5501,7 +5501,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfioVKK",
@@ -5522,7 +5522,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3U0jd",
@@ -5542,7 +5542,7 @@
       "qualityScore": 6,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3U1G6",
@@ -5562,7 +5562,7 @@
       "qualityScore": 5,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiocEn",
@@ -5582,7 +5582,7 @@
       "qualityScore": 6,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3U1rU",
@@ -5602,7 +5602,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiofd2",
@@ -5622,7 +5622,7 @@
       "qualityScore": 6,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3U2qU",
@@ -5643,7 +5643,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstZDsoa",
@@ -5664,7 +5664,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3U47C",
@@ -5685,7 +5685,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfior2w",
@@ -5706,7 +5706,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiot41",
@@ -5727,7 +5727,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstZE8Mb",
@@ -5749,7 +5749,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3U689",
@@ -5771,7 +5771,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstZE9aN",
@@ -5793,7 +5793,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstZEA3q",
@@ -5815,7 +5815,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3U6ga",
@@ -5837,7 +5837,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3U9A4",
@@ -5858,7 +5858,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiowss",
@@ -5879,7 +5879,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfioxZS",
@@ -5900,7 +5900,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfioydz",
@@ -5921,7 +5921,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3UCKq",
@@ -5942,7 +5942,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiozXs",
@@ -5963,7 +5963,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstZEPsh",
@@ -5984,7 +5984,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3UIUa",
@@ -6005,7 +6005,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3UIeQ",
@@ -6026,7 +6026,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3UIv9",
@@ -6048,7 +6048,7 @@
       "qualityScore": 9,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3UJEp",
@@ -6070,7 +6070,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstZEVW6",
@@ -6092,7 +6092,7 @@
       "qualityScore": 9,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfipJ26",
@@ -6114,7 +6114,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfipKxr",
@@ -6136,7 +6136,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfipLLo",
@@ -6158,7 +6158,7 @@
       "qualityScore": 6,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfipLjl",
@@ -6177,7 +6177,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3UKGm",
@@ -6196,7 +6196,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3UKdP",
@@ -6215,7 +6215,7 @@
       "qualityScore": 6,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstZEabp",
@@ -6234,7 +6234,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3UL8t",
@@ -6254,7 +6254,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3ULOd",
@@ -6277,7 +6277,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3ULgL",
@@ -6300,7 +6300,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstZEdw6",
@@ -6323,7 +6323,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfipSLb",
@@ -6346,7 +6346,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3UMBp",
@@ -6369,7 +6369,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3UMKg",
@@ -6389,7 +6389,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstZEhGN",
@@ -6409,7 +6409,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3UMeM",
@@ -6429,7 +6429,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstZEixc",
@@ -6449,7 +6449,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3UNFk",
@@ -6469,7 +6469,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3UNmD",
@@ -6491,7 +6491,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfipdFZ",
@@ -6513,7 +6513,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfipdtU",
@@ -6536,7 +6536,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiph9k",
@@ -6559,7 +6559,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiphyJ",
@@ -6582,7 +6582,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3UQxy",
@@ -6605,7 +6605,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstZEyut",
@@ -6628,7 +6628,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3UT1s",
@@ -6650,7 +6650,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfipl9F",
@@ -6672,7 +6672,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstZF5EO",
@@ -6694,7 +6694,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfipoKB",
@@ -6715,7 +6715,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3UV5m",
@@ -6737,7 +6737,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3UVo3",
@@ -6759,7 +6759,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfipuqh",
@@ -6781,7 +6781,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfipwp7",
@@ -6803,7 +6803,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstZFVAU",
@@ -6824,7 +6824,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3UbCZ",
@@ -6845,7 +6845,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiq7T7",
@@ -6866,7 +6866,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiqDeL",
@@ -6887,7 +6887,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiqH5F",
@@ -6908,7 +6908,7 @@
       "qualityScore": 8,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiqJZb",
@@ -6931,7 +6931,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "IsTKS0QoP3P9qlOHfiqM3x",
@@ -6954,7 +6954,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3UjPE",
@@ -6977,7 +6977,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Uk2a",
@@ -7000,7 +7000,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstZGLRw",
@@ -7023,7 +7023,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "jggsGE5qPspL3NVstZGO67",
@@ -7046,7 +7046,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3UmX3",
@@ -7069,7 +7069,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "d6rU2Axxl9yWgrNkb3Un3W",
@@ -7092,7 +7092,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "6d42b4ce-1cb2-4003-95e1-b48ad7ba56aa",
@@ -7115,7 +7115,7 @@
       "qualityScore": 7,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "a79dfb52-6916-498d-a46f-666b188d9053",
@@ -7138,7 +7138,7 @@
       "qualityScore": 6,
       "heroCandidate": false
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "67faabdd-bb17-49b3-8d7b-610c8cfdf576",
@@ -7159,7 +7159,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "604928de-a0a5-4a63-bb13-f46a48f8cbf1",
@@ -7180,7 +7180,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "c7bd3249-ca1b-4dac-99db-0e9a5647eeb9",
@@ -7201,7 +7201,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "54201449-19ae-4d61-8c6f-ae279126b02c",
@@ -7223,7 +7223,7 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "058b0e79-3103-4d0e-a258-bacf2e2f3ae2",
@@ -7244,7 +7244,7 @@
       "qualityScore": 8,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   },
   {
     "_id": "20c2fa51-a97a-4cb5-97b2-263910e97589",
@@ -7266,6 +7266,6 @@
       "qualityScore": 9,
       "heroCandidate": true
     },
-    "applied": false
+    "applied": true
   }
 ]

@@ -25,7 +25,7 @@ const BATCH_SIZE = 5 // images per Claude CLI call
 
 function getSanityToken() {
   try {
-    return execSync('bash -c "source /home/deploy/.secrets && echo $SANITY_API_TOKEN"', {
+    return execSync('bash -c "source /home/deploy/.secrets && echo $SANITY_TOKEN"', {
       encoding: 'utf-8',
     }).trim()
   } catch {
