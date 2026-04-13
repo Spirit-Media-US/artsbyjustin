@@ -50,8 +50,7 @@ Then run: `git checkout dev && git pull origin dev`
 ### Still Pending
 - **Portfolio page: Sanity images not rendering** — `urlFor()` never called; 336 artworks have images but aren't wired to the grid. Fix needed: Option B — fetch all artworks from Sanity, pass to client script, use `urlFor()` for images, category filtering (skip series filtering for now)
 - **Justin's Sanity Studio tasks** — fill medium fields on artworks, update categories to: Sports & Motion, Portraits & Identity, Faith & Spirit, Abstract & Mixed Media; set `heroFeature: true` on hero slideshow artworks; upload profilePhoto in siteSettings
-- **Custom domain** — artsbyjustin.com not connected in Netlify yet (waiting on Justin's review before launch)
-- **Cloudflare proxy** — pending domain connection
+- **Custom domain** — artsbyjustin.com not connected in Cloudflare Pages yet (waiting on Justin's review before launch)
 
 ## Artwork Rename Script
 
