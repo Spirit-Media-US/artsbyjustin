@@ -1,10 +1,19 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getAwards, getPressFeatures, getSiteSettings, urlFor } from '../lib/sanity';
+import { getAwards, getArtworks, getPressFeatures, getSiteSettings, urlFor } from '../lib/sanity';
 
 const sanityAwards = await getAwards();
 const sanityPress = await getPressFeatures();
 const siteSettings = await getSiteSettings();
+const allArtworks = await getArtworks();
+
+// Press/media photos from artwork collection
+const mediaPhotos = allArtworks
+  .filter((a: any) => a.imageType === 'press' && a.image)
+  .map((a: any) => ({
+    title: a.title || '',
+    imageUrl: urlFor(a.image).width(600).format('webp').url(),
+  }));
 
 // Minimal fallback awards data — primary data should come from Sanity CMS
 const fallbackAwards = [];
@@ -254,12 +263,29 @@ const displayGalleryImages = galleryImages.length > 0 ? galleryImages : fallback
   </div>
 </section>
 
+<!-- MEDIA GALLERY -->
+{mediaPhotos.length > 0 && (
+<section class="media-gallery">
+  <p class="label" style="text-align:center;">Media & Press Photos</p>
+  <div class="bar" style="margin:0.5rem auto 1rem;"></div>
+  <h2>In the Press</h2>
+  <div class="media-grid">
+    {mediaPhotos.map((photo: any) => (
+      <div class="media-item">
+        <img src={photo.imageUrl} alt={photo.title} loading="lazy" />
+        {photo.title && <p class="media-caption">{photo.title}</p>}
+      </div>
+    ))}
+  </div>
+</section>
+)}
+
 <!-- CTA -->
 <section class="cta">
   <h2>The story is<br/><em>still being written.</em></h2>
   <p>Press inquiries, gallery partnerships, and commission requests are always welcome.<br/>Let's create something worth recognizing.</p>
   <a href="/contact" class="btn-gold">Press & Media Inquiries →</a>
-  <a href="/" class="btn-ghost">View Portfolio →</a>
+  <a href="/gallery" class="btn-ghost">View Gallery →</a>
 </section>
 
 </Layout>
@@ -433,4 +459,11 @@ const displayGalleryImages = galleryImages.length > 0 ? galleryImages : fallback
   .highlights { grid-template-columns:1fr 1fr; }
   .gallery-strip { grid-template-columns:repeat(2,1fr); }
 }
+.media-gallery { padding:6rem 3rem; background:var(--dark); text-align:center; }
+.media-gallery h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3rem); font-weight:600; letter-spacing:-0.02em; margin-bottom:3rem; }
+.media-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:1.5rem; max-width:1200px; margin:0 auto; }
+.media-item { overflow:hidden; background:var(--card); border:1px solid rgba(255,255,255,0.05); }
+.media-item img { width:100%; height:auto; display:block; transition:transform 0.5s; }
+.media-item:hover img { transform:scale(1.03); }
+.media-caption { padding:0.75rem 1rem; font-size:0.75rem; color:var(--gray2); letter-spacing:1px; text-transform:uppercase; text-align:left; }
 </style>

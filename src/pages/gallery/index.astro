@@ -1,0 +1,234 @@
+---
+import GalleryGrid from '../../components/GalleryGrid.astro';
+import Layout from '../../layouts/Layout.astro';
+import { getArtworks, MEDIUM_SLUGS, SUBJECT_SLUGS, urlFor } from '../../lib/sanity';
+
+const allArtworks = await getArtworks();
+
+const toCard = (a: any) => ({
+	title: a.title || '',
+	slug: a.slug?.current || '',
+	image: a.image,
+	medium: a.medium || '',
+	price: a.price || null,
+	sold: !!a.sold,
+});
+
+// For Sale — product shots (the main grid, commissionable pieces)
+const forSale = allArtworks
+	.filter((a: any) => a.imageType === 'product' && a.slug?.current)
+	.map(toCard);
+
+// Murals & Installations — large-scale work, separate showcase
+const installations = allArtworks
+	.filter((a: any) => a.imageType === 'installation' && a.slug?.current)
+	.map(toCard);
+
+// Fan Photos — social proof (customers with their art)
+const fanPhotos = allArtworks
+	.filter((a: any) => a.imageType === 'social_proof' && a.slug?.current)
+	.map(toCard);
+
+// Artworks without imageType default to for-sale
+const untyped = allArtworks.filter((a: any) => !a.imageType && a.slug?.current).map(toCard);
+const artworks = [...forSale, ...untyped];
+
+const mediums = Object.entries(MEDIUM_SLUGS);
+const subjects = Object.entries(SUBJECT_SLUGS);
+
+// Count artworks per medium and subject
+const mediumCounts: Record<string, number> = {};
+const subjectCounts: Record<string, number> = {};
+for (const a of allArtworks) {
+	if (a.medium) mediumCounts[a.medium] = (mediumCounts[a.medium] || 0) + 1;
+	if (a.category) subjectCounts[a.category] = (subjectCounts[a.category] || 0) + 1;
+}
+---
+
+<Layout title="Gallery" description="Browse Justin Keishing's complete collection — resin art, canvas originals, fine art prints, murals, and more. Contemporary art for collectors and gift givers.">
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Arts by Justin — Gallery",
+      "description": "Browse the complete collection of contemporary art by Justin Keishing.",
+      "url": "https://artsbyjustin.com/gallery",
+      "author": { "@type": "Person", "name": "Justin Keishing" },
+    })}></script>
+  </Fragment>
+
+  <!-- Header -->
+  <section class="pt-32 pb-16 px-6 lg:px-12 max-w-[1600px] mx-auto">
+    <header class="mb-16 flex flex-col md:flex-row items-end justify-between gap-12 border-l border-outline-ghost/15 pl-8 lg:pl-12">
+      <div class="max-w-2xl">
+        <span class="text-xs uppercase tracking-[0.3em] text-gold-bright mb-4 block font-body">The Collection</span>
+        <h1 class="text-5xl md:text-7xl lg:text-8xl font-display leading-tight tracking-tight text-ink mb-8">
+          Every Piece<br /><span class="italic font-normal">Tells a Story</span>
+        </h1>
+        <p class="text-ink-muted font-light leading-relaxed max-w-lg">
+          Browse Justin's complete body of work — from bold resin pours to large-scale murals.
+          Every piece is available as a custom commission, made to order for your space.
+        </p>
+      </div>
+      <div class="text-right hidden md:block">
+        <div class="text-xs uppercase tracking-[0.2em] text-outline mb-2 font-body">{artworks.length} Works</div>
+        <div class="font-display italic text-xl text-ink">Justin Keishing</div>
+      </div>
+    </header>
+  </section>
+
+  <!-- Browse by Medium -->
+  <section class="bg-surface-deep py-24 px-6 lg:px-12">
+    <div class="max-w-[1600px] mx-auto">
+      <div class="flex justify-between items-end mb-12">
+        <h2 class="text-3xl font-display text-ink tracking-tight">Browse by Medium</h2>
+        <span class="text-xs uppercase tracking-[0.3em] text-gold/60 font-body">01 / Mediums</span>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-0">
+        {mediums.map(([name, slug], i) => (
+          <a href={`/gallery/medium/${slug}`} class:list={[
+            'group relative aspect-[3/4] overflow-hidden cursor-pointer',
+            i > 0 && 'border-l border-white/5'
+          ]}>
+            <div class="absolute inset-0 bg-surface-container"></div>
+            <div class="absolute inset-0 flex items-end p-6 bg-gradient-to-t from-black/80 to-transparent">
+              <div>
+                <span class="text-xs uppercase tracking-[0.2em] text-gold-bright font-bold font-body block">{name}</span>
+                {mediumCounts[name] && (
+                  <span class="text-xs text-ink-muted/60 mt-1 block">{mediumCounts[name]} works</span>
+                )}
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Browse by Subject -->
+  <section class="bg-surface py-24 px-6 lg:px-12">
+    <div class="max-w-[1600px] mx-auto">
+      <div class="flex justify-between items-end mb-12">
+        <h2 class="text-3xl font-display text-ink tracking-tight">Browse by Subject</h2>
+        <span class="text-xs uppercase tracking-[0.3em] text-gold/60 font-body">02 / Themes</span>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-0">
+        {subjects.map(([name, slug], i) => (
+          <a href={`/gallery/subject/${slug}`} class:list={[
+            'group relative aspect-[3/4] overflow-hidden cursor-pointer',
+            i > 0 && 'border-l border-white/5'
+          ]}>
+            <div class="absolute inset-0 bg-surface-container"></div>
+            <div class="absolute inset-0 flex items-end p-6 bg-gradient-to-t from-black/80 to-transparent">
+              <div>
+                <span class="text-xs uppercase tracking-[0.2em] text-gold-bright font-bold font-body block">{name}</span>
+                {subjectCounts[name] && (
+                  <span class="text-xs text-ink-muted/60 mt-1 block">{subjectCounts[name]} works</span>
+                )}
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- For Sale — Commissionable Pieces -->
+  <section class="bg-surface-deep py-24 px-6 lg:px-12">
+    <div class="max-w-[1600px] mx-auto">
+      <div class="flex justify-between items-end mb-16">
+        <h2 class="text-3xl font-display text-ink tracking-tight">Available Works</h2>
+        <span class="text-xs uppercase tracking-[0.3em] text-gold/60 font-body">03 / Order as Commission</span>
+      </div>
+      <p class="text-ink-muted font-light mb-16 max-w-lg">Every piece below is available as a custom commission. See something you love? Justin will create a version tailored to your space.</p>
+      <GalleryGrid artworks={artworks} />
+    </div>
+  </section>
+
+  <!-- Gold divider -->
+  <div class="h-px mx-auto max-w-[200px] bg-gradient-to-r from-transparent via-gold to-transparent"></div>
+
+  <!-- Murals & Installations — wide landscape cards -->
+  {installations.length > 0 && (
+    <section class="bg-surface-low py-24 px-6 lg:px-12">
+      <div class="max-w-[1600px] mx-auto">
+        <div class="flex justify-between items-end mb-16">
+          <div>
+            <h2 class="text-3xl font-display text-ink tracking-tight">Murals & Installations</h2>
+            <p class="text-ink-muted font-light mt-4 max-w-lg">Large-scale works and public art — Justin's bold vision at full scale. These aren't for sale, but they show what's possible when you commission big.</p>
+          </div>
+          <span class="text-xs uppercase tracking-[0.3em] text-gold/60 font-body">04 / Large Scale</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {installations.map((art) => {
+            const imgUrl = art.image ? urlFor(art.image).width(900).height(500).format('webp').url() : ''
+            return (
+              <a href={`/artwork/${art.slug}`} class="group block overflow-hidden bg-surface-container">
+                {imgUrl && (
+                  <div class="aspect-[16/9] overflow-hidden">
+                    <img src={imgUrl} alt={art.title} loading="lazy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                  </div>
+                )}
+                <div class="p-5 flex justify-between items-center">
+                  <div>
+                    <h3 class="font-display text-lg text-ink">{art.title}</h3>
+                    <p class="text-xs uppercase tracking-widest text-ink-muted mt-1">{art.medium}</p>
+                  </div>
+                  <span class="text-xs uppercase tracking-wider text-gold-bright opacity-0 group-hover:opacity-100 transition-opacity">View</span>
+                </div>
+              </a>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Gold divider -->
+  <div class="h-px mx-auto max-w-[200px] bg-gradient-to-r from-transparent via-gold to-transparent"></div>
+
+  <!-- In the Wild — small square mosaic, visually distinct from for-sale grid -->
+  {fanPhotos.length > 0 && (
+    <section class="bg-surface-container py-24 px-6 lg:px-12">
+      <div class="max-w-[1600px] mx-auto">
+        <div class="text-center mb-16">
+          <span class="text-xs uppercase tracking-[0.3em] text-gold-bright mb-4 block font-body">05 / Collectors</span>
+          <h2 class="text-3xl font-display text-ink tracking-tight mb-4">In the Wild</h2>
+          <p class="text-ink-muted font-light max-w-lg mx-auto">Real collectors, real spaces. Customers sharing Justin's art in their homes and offices.</p>
+        </div>
+        <div class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
+          {fanPhotos.slice(0, 36).map((art) => {
+            const imgUrl = art.image ? urlFor(art.image).width(300).height(300).format('webp').url() : ''
+            return (
+              <a href={`/artwork/${art.slug}`} class="group block aspect-square overflow-hidden bg-surface-deep relative">
+                {imgUrl && (
+                  <img src={imgUrl} alt={art.title} loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                )}
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-end p-2">
+                  <span class="text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity truncate">{art.title}</span>
+                </div>
+              </a>
+            )
+          })}
+        </div>
+        {fanPhotos.length > 36 && (
+          <p class="text-center text-ink-muted text-sm mt-8">Showing 36 of {fanPhotos.length} — browse artwork pages to see more</p>
+        )}
+      </div>
+    </section>
+  )}
+
+  <!-- Commission CTA -->
+  <section class="py-32 border-t border-outline-ghost/10 text-center px-6">
+    <div class="max-w-xl mx-auto">
+      <h2 class="font-display text-4xl md:text-5xl text-ink mb-8">Love what you see?</h2>
+      <p class="text-ink-muted max-w-xl mx-auto mb-12 font-light leading-relaxed">
+        Every piece is made to order. Tell Justin what speaks to you,
+        and he'll create something uniquely yours.
+      </p>
+      <a href="/commissions" class="inline-block bg-gradient-to-r from-gold-bright to-gold text-surface-deep px-12 py-5 font-body text-sm uppercase tracking-[0.2em] font-extrabold hover:opacity-90 transition-all">
+        Start a Commission
+      </a>
+    </div>
+  </section>
+</Layout>

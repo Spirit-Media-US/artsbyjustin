@@ -40,14 +40,19 @@ try {
 // Use Sanity categories or fall back to defaults
 const defaultCategories = [
 	{ name: 'Sports & Motion', gradient: 'linear-gradient(135deg,#000,#001133,#003399,#cc2200)' },
-	{ name: 'Portraits & Identity', gradient: 'linear-gradient(135deg,#111,#1a1400,#c9a84c,#444)' },
+	{ name: 'Portraits & Figurative', gradient: 'linear-gradient(135deg,#111,#1a1400,#c9a84c,#444)' },
 	{
-		name: 'Faith & Spirit',
+		name: 'Faith & Inspiration',
 		gradient: 'linear-gradient(135deg,#0a0010,#1a0030,#ff2200,#ffaa00,#7700cc)',
 	},
 	{
-		name: 'Abstract & Mixed Media',
+		name: 'Abstract & Expressive',
 		gradient: 'linear-gradient(135deg,#000,#001122,#ff6600,#00aacc)',
+	},
+	{ name: 'Nature & Ocean', gradient: 'linear-gradient(135deg,#001a0a,#003322,#00aacc,#006644)' },
+	{
+		name: 'Animals & Wildlife',
+		gradient: 'linear-gradient(135deg,#0a0800,#1a1000,#cc8800,#442200)',
 	},
 ];
 const CATEGORY_DEFS =
@@ -68,10 +73,13 @@ const artistName = siteSettings?.artistName || 'Justin';
 const tagline = siteSettings?.tagline || 'Art With a Purpose';
 const bio = siteSettings?.bio || '';
 
-// About section image from Sanity (with gradient fallback)
+// About section image from Sanity (with portrait artwork fallback)
 const aboutImageUrl = siteSettings?.aboutPortraitImage
 	? urlFor(siteSettings.aboutPortraitImage).width(800).url()
-	: null;
+	: (() => {
+			const portrait = rawArtworks.find((a: any) => a.imageType === 'portrait' && a.image);
+			return portrait ? urlFor(portrait.image).width(800).format('webp').url() : null;
+		})();
 
 // Testimonials with Sanity fallback
 const defaultTestimonials = [
@@ -211,7 +219,7 @@ const homeStats = siteSettings?.homePageStats
         <div class="bar"></div>
         <h2>Featured Works</h2>
       </div>
-      <a href="/portfolio" class="btn-ghost">View All Work →</a>
+      <a href="/gallery" class="btn-ghost">View All Work →</a>
     </div>
     <div class="masonry">
       {featuredArtworks.map((a, i) => (
@@ -245,7 +253,7 @@ const homeStats = siteSettings?.homePageStats
           }></div>
           <div class="cat-info">
             <h3>{cat.name}</h3>
-            <span>{cat.count > 0 ? `${cat.count} Works` : 'Coming Soon'}</span>
+            <span>{cat.count > 0 ? `${cat.count} Works` : 'Explore'}</span>
           </div>
         </div>
       ))}

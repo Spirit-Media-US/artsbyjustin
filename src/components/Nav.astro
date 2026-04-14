@@ -4,7 +4,7 @@ import { getSiteSettings } from '../lib/sanity';
 const currentPath = Astro.url.pathname;
 const isHome = currentPath === '/';
 const isAbout = currentPath === '/about';
-const isPortfolio = currentPath === '/portfolio';
+const isGallery = currentPath.startsWith('/gallery') || currentPath.startsWith('/artwork');
 const isCommissions = currentPath === '/commissions';
 const isPress = currentPath === '/press';
 
@@ -13,14 +13,14 @@ const artistName = siteSettings?.artistName || 'Arts by Justin';
 ---
 <header id="site-header">
   <nav>
-    <a href="/" class="wordmark">{artistName.split(' ')[0]} <span>by</span> {artistName.split(' ').slice(1).join(' ')}</a>
+    <a href="/" class="wordmark">Arts <span>by</span> Justin</a>
     <button class="menu-toggle" aria-label="Toggle menu" id="menuToggle">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links" id="navLinks">
       <li><a href="/" class:list={['nav-link', { active: isHome }]}>Home</a></li>
       <li><a href="/about" class:list={['nav-link', { active: isAbout }]}>The Story</a></li>
-      <li><a href="/portfolio" class:list={['nav-link', { active: isPortfolio }]}>Portfolio</a></li>
+      <li><a href="/gallery" class:list={['nav-link', { active: isGallery }]}>Gallery</a></li>
       <li><a href="/commissions" class:list={['nav-link', { active: isCommissions }]}>Commissions</a></li>
       <li><a href="/press" class:list={['nav-link', { active: isPress }]}>Press</a></li>
       <li><a href="/shop" class="nav-cta">Shop Now</a></li>

@@ -1,0 +1,85 @@
+---
+import Layout from '../../../layouts/Layout.astro'
+import GalleryGrid from '../../../components/GalleryGrid.astro'
+import { getArtworksByMedium, MEDIUM_SLUGS, SLUG_TO_MEDIUM } from '../../../lib/sanity'
+
+export function getStaticPaths() {
+  return Object.entries(MEDIUM_SLUGS).map(([name, slug]) => ({
+    params: { medium: slug },
+    props: { mediumName: name },
+  }))
+}
+
+const { mediumName } = Astro.props
+const rawArtworks = await getArtworksByMedium(mediumName)
+
+const artworks = rawArtworks
+  .map((a: any) => ({
+    title: a.title || '',
+    slug: a.slug?.current || '',
+    image: a.image,
+    medium: a.medium || '',
+    price: a.price || null,
+    sold: !!a.sold,
+  }))
+  .filter((a: any) => a.slug)
+
+// Other mediums for navigation
+const otherMediums = Object.entries(MEDIUM_SLUGS).filter(([name]) => name !== mediumName)
+---
+
+<Layout
+  title={mediumName}
+  description={`Browse Justin Keishing's ${mediumName.toLowerCase()} collection — ${artworks.length} original contemporary artworks available as custom commissions.`}
+>
+  <section class="pt-32 pb-16 px-6 lg:px-12 max-w-[1600px] mx-auto">
+    <header class="mb-16 border-l border-outline-ghost/15 pl-8 lg:pl-12">
+      <a href="/gallery" class="text-xs uppercase tracking-[0.2em] text-gold-bright hover:text-ink transition-colors mb-6 inline-flex items-center gap-2 font-body">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg>
+        All Works
+      </a>
+      <h1 class="text-5xl md:text-7xl lg:text-8xl font-display leading-tight tracking-tight text-ink mb-4">
+        {mediumName}
+      </h1>
+      <p class="text-ink-muted font-light">
+        {artworks.length} {artworks.length === 1 ? 'work' : 'works'}
+      </p>
+    </header>
+
+    <!-- Other mediums -->
+    <div class="flex flex-wrap gap-3 mb-16 px-8 lg:px-12">
+      {otherMediums.map(([name, slug]) => (
+        <a
+          href={`/gallery/medium/${slug}`}
+          class="px-4 py-2 text-xs uppercase tracking-wider border border-outline-ghost text-ink-muted hover:border-gold hover:text-gold transition-colors font-body"
+        >
+          {name}
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Grid -->
+  <section class="bg-surface-deep py-24 px-6 lg:px-12">
+    <div class="max-w-[1600px] mx-auto">
+      {artworks.length > 0 ? (
+        <GalleryGrid artworks={artworks} />
+      ) : (
+        <div class="text-center py-20">
+          <p class="font-display text-2xl text-ink mb-2">No works yet</p>
+          <p class="text-ink-muted text-sm">Check back soon for new pieces in this medium.</p>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-24 border-t border-outline-ghost/10 text-center px-6">
+    <h2 class="font-display text-3xl text-ink mb-6">Inspired by {mediumName.toLowerCase()}?</h2>
+    <a href="/commissions" class="inline-block bg-gradient-to-r from-gold-bright to-gold text-surface-deep px-10 py-4 font-body text-sm uppercase tracking-[0.2em] font-extrabold hover:opacity-90 transition-all">
+      Commission a Piece
+    </a>
+  </section>
+</Layout>
