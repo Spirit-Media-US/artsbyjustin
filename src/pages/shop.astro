@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getSiteSettings, urlFor } from '../lib/sanity';
+import { getShopItems, getSiteSettings, urlFor } from '../lib/sanity';
 
 const siteSettings = await getSiteSettings();
 const galleryImages = siteSettings?.galleryImages || [];
@@ -14,6 +14,27 @@ const printImage1 =
 const printImage2 =
 	galleryImageUrls[1] ||
 	'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764073/A34786D0-51D9-4524-B2A2-C2723CECE012_ugjrze.jpg';
+
+// Fetch shop items from Sanity
+const rawShopItems = await getShopItems();
+
+// Normalize to the shape the JS client code expects
+const shopItemsData = rawShopItems.map((item: any, i: number) => {
+	const img = item.externalImageUrl || (item.image ? urlFor(item.image).width(800).url() : '');
+	return {
+		id: i + 1,
+		type: item.shopCategory || 'original',
+		title: item.title || '',
+		series: item.series || '',
+		medium: item.medium || '',
+		size: item.dimensions || '',
+		year: item.year ? String(item.year) : '',
+		sold: !!item.sold,
+		price: item.shopPrice || 'Price on Request',
+		img,
+	};
+});
+const SHOP_ITEMS_JSON = JSON.stringify(shopItemsData);
 ---
 <Layout title="Shop" description="Own original paintings, fine art prints, and resin art by Justin Keishing — collected around the world.">
   <Fragment slot="head">
@@ -144,57 +165,10 @@ const printImage2 =
 
 </Layout>
 
-<script define:vars={{ etsyShopUrl }}>
+<script define:vars={{ etsyShopUrl, SHOP_ITEMS_JSON }}>
 const ETSY = etsyShopUrl;
 
-const shopItems = [
-  {id:1,  type:'original', title:'Music of Life',                    series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/3669243308f8d95c334488fe66124be3aedbc883-2999x3999.jpg'},
-  {id:2,  type:'original', title:'Wild Energy',                      series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/1c27a44e01ae441fc047cc29d2ae477b8f0ac2d4-3234x4851.jpg'},
-  {id:3,  type:'original', title:'Flame of Freedom',                 series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/890ed67df641aca8bdf6042bc9645bd1e499e195-2545x3831.jpg'},
-  {id:4,  type:'original', title:'Flight of Dream',                  series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/8cfa2d8ab45d7d7cd811f6fd76508a473e038809-1617x2448.jpg'},
-  {id:5,  type:'original', title:'The Perfect Swing',                series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/6f30b2b126a00f6f76a9739f1c0b798f2cfa1371-3824x5155.jpg'},
-  {id:6,  type:'original', title:'Gentleman of Whiskey and Cigar',   series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/1eba7647c8484ae02ba78e77f59bee67734f6f09-3954x5246.jpg'},
-  {id:7,  type:'original', title:'Beat the Dream',                   series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/b89ae2635f71d3533500d284eddecfd18849020e-2666x4096.jpg'},
-  {id:8,  type:'original', title:'Where Dreams Land',                series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/d3499a6176e71441ec31176550b06aecc6317a5f-3044x4096.jpg'},
-  {id:9,  type:'original', title:'Color of Commitment',              series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/ae8d25eae04051e0a3e15b1857389b2ec1faa316-2748x4096.jpg'},
-  {id:10, type:'original', title:'In His Hand',                      series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/babf45dcf48be8e113c0c9284a03cb175f66371a-3162x3792.jpg'},
-  {id:11, type:'original', title:'Destiny',                          series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/be9d3aa5a1c37da50cc92451e264031c355f1082-2744x4095.jpg'},
-  {id:12, type:'original', title:'Born to Swing',                    series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/b391824cd0e5e61cb4220212c815183946c626ec-2998x4002.jpg'},
-  {id:37, type:'original', title:'LeBron James',                     series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/dfb8ae0b828407b9525edc4bf854e50b7b2f8bc6-4096x3042.jpg'},
-  {id:38, type:'original', title:'Lions',                            series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/79a498557c242cd7a6de89454ff174fbac2c3cdc-2462x3308.jpg'},
-  {id:39, type:'original', title:'Color of Us',                      series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/0ef86d600935d92d8e0e44edd6d14d96b59f8b94-3264x4096.jpg'},
-  {id:40, type:'original', title:'Chasing',                          series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/f2767b437239d497c34529ccca1c3a3d0ef14b35-2578x3927.jpg'},
-  {id:41, type:'original', title:'Air of Dreams',                    series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/4b8b17cebe8c93131c3be7cfc7e24e6a1b9b62ec-3500x2346.jpg'},
-  {id:42, type:'original', title:'The Lion of Judah',                series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/bf396d1709bef11c8d85d2a35bd9bb784addb732-2977x3815.jpg'},
-  {id:44, type:'original', title:'Dreams From Within',               series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/8fc72ba99d1868371c152917aab906305c6ae4aa-2698x4096.jpg'},
-  {id:45, type:'original', title:'Swing for the Dream',              series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/0d55113ac18348a1846cf96c12faa51884dc5c24-2684x4096.jpg'},
-  {id:46, type:'original', title:'Paws on the Dream Road',           series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/4067ae71e510d1da30c89df4ad71aff1fca6757e-3151x3807.jpg'},
-  {id:43, type:'original', title:'Michael Jordan',                   series:'Chase Your Dreams', medium:'Acrylic on Canvas', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/8392f3f18e36555a949d1635f65864ebfc20a7c3-2685x4096.jpg'},
-  {id:13, type:'resin', title:'Resin Flow I',    series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/688634d481105ed2103a6ac63a4990e14b3a8187-2154x2690.jpg'},
-  {id:14, type:'resin', title:'Resin Flow II',   series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/808d763af9ad5b12d8a11f4583af128ab4c83890-2049x3069.jpg'},
-  {id:15, type:'resin', title:'Resin Flow III',  series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/cdcfebd19465b89d313682e1750b5ec760f0b185-3201x3201.jpg'},
-  {id:16, type:'resin', title:'Resin Flow IV',   series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/df022857f5a4579167acfafa71a457b405b4a48e-3000x4000.jpg'},
-  {id:23, type:'resin', title:'Resin Flow V',    series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/e42855eb8b2305c062f88aee83cdcf4508d5d392-1853x3465.jpg'},
-  {id:24, type:'resin', title:'Resin Flow VI',   series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/9da445cf8364cb9b2b1ef312efe4ff047237f219-4032x3024.jpg'},
-  {id:25, type:'resin', title:'Resin Flow VII',  series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/cb0ea2187ccc0b63fb1b4d89e735b585d121957b-5712x4284.jpg'},
-  {id:26, type:'resin', title:'Resin Flow VIII', series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/6476959257e805e017a2ae9a0661df94bb56ccaa-3024x4032.jpg'},
-  {id:27, type:'resin', title:'Resin Flow IX',   series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/f0cc7b9ed0c4209c978943dbf02d99cf44d25979-3465x3465.jpg'},
-  {id:28, type:'resin', title:'Resin Flow X',    series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/393026338f8ae4481238cf916df239779b73c654-3000x4000.jpg'},
-  {id:29, type:'resin', title:'Resin Flow XI',   series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/31a38aa298efcab93d7d9fe81d75f54ba5479191-3464x3464.jpg'},
-  {id:30, type:'resin', title:'Resin Flow XII',  series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/5fffc5aa444bbf283ed4d53a2a584fd27861692d-3072x4096.jpg'},
-  {id:31, type:'resin', title:'Resin Flow XIII', series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/0e468758bee6b005ddf4521eb6a7f6622ffd4c94-3000x4000.jpg'},
-  {id:32, type:'resin', title:'Resin Flow XIV',  series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/a6e4496e1736103170ef67d2f618c6fbb3e18f5f-3465x3465.jpg'},
-  {id:33, type:'resin', title:'Resin Flow XV',   series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/c8b37911615637799d97ae8f09ef69170f44c686-4032x3024.jpg'},
-  {id:34, type:'resin', title:'Resin Flow XVI',  series:'Resin Art', medium:'Resin on Board', size:'', year:'2024', sold:false, price:'Price on Request', img:'https://cdn.sanity.io/images/oqoqh3p3/production/79a91a2398b25ed31dc4812b5a244224d619a661-4284x5712.jpg'},
-  {id:17, type:'print', title:'SOAR — Fine Art Print',              series:'Chase Your Dreams', medium:'Fine Art Print', size:'11×17" or 12×18"', year:'2024', sold:false, price:'Contact for pricing', img:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764073/7F349BFB-3ACD-47D6-9AC5-56FFEB7345B9_jlvpk9.jpg'},
-  {id:18, type:'print', title:'MJ · North Carolina — Print',        series:'Chase Your Dreams', medium:'Fine Art Print', size:'11×17" or 12×18"', year:'2023', sold:false, price:'Contact for pricing', img:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764074/720AB739-426E-4A61-8F87-C9A02418F073_dshgtt.jpg'},
-  {id:19, type:'print', title:'The Crowned Lion — Print',           series:'Chase Your Dreams', medium:'Fine Art Print', size:'11×17" or 12×18"', year:'2024', sold:false, price:'Contact for pricing', img:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764074/CF7EC701-3AE5-4016-B257-AFC316897BFA_tmk55p.jpg'},
-  {id:20, type:'print', title:'Hurricanes — Fine Art Print',        series:'Chase Your Dreams', medium:'Fine Art Print', size:'11×17" or 12×18"', year:'2023', sold:false, price:'Contact for pricing', img:'https://res.cloudinary.com/dztkjeayt/image/upload/f_jpg/v1772764084/IMG_1151_zpo5cj.heic'},
-  {id:21, type:'print', title:'Ghost Rider — Fine Art Print',       series:'Chase Your Dreams', medium:'Fine Art Print', size:'11×17" or 12×18"', year:'2024', sold:false, price:'Contact for pricing', img:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764084/104544B2-B9C3-4C26-BE98-A7DFEB514A3C_efz3ud.jpg'},
-  {id:22, type:'print', title:'Skater — Fine Art Print',            series:'Chase Your Dreams', medium:'Fine Art Print', size:'11×17" or 12×18"', year:'2024', sold:false, price:'Contact for pricing', img:'https://res.cloudinary.com/dztkjeayt/image/upload/f_jpg/v1772764067/IMG_4729_dqr0sx.heic'},
-  {id:35, type:'print', title:'LeBron · Lakers — Fine Art Print',   series:'Chase Your Dreams', medium:'Fine Art Print', size:'11×17" or 12×18"', year:'2023', sold:false, price:'Contact for pricing', img:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764074/69C88F04-62F3-44FF-A719-75ADA0F583AF_tjcdmy.jpg'},
-  {id:36, type:'print', title:"The Creator's Hand — Fine Art Print", series:'Chase Your Dreams', medium:'Fine Art Print', size:'11×17" or 12×18"', year:'2024', sold:false, price:'Contact for pricing', img:'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764084/E94CB8D4-B895-4956-B7F5-CBB3CA46560F_ngybmr.jpg'},
-];
+const shopItems = JSON.parse(SHOP_ITEMS_JSON);
 
 function getBadge(item) {
   if (item.type === 'print') return '<span class="shop-badge badge-print">Fine Art Print</span>';

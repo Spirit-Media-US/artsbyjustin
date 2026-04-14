@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getSiteSettings, sanityClient, urlFor } from '../lib/sanity';
+import { getAboutSections, getSiteSettings, sanityClient, urlFor } from '../lib/sanity';
 
 const siteSettings = await getSiteSettings();
 
@@ -38,6 +38,34 @@ const ch4Img = chapterImages?.ch4?.image
 const heroImg = chapterImages?.hero?.image
 	? urlFor(chapterImages.hero.image).width(800).format('webp').url()
 	: '';
+
+// Fetch about sections from Sanity CMS (Justin can edit these in Studio)
+const aboutSections = await getAboutSections();
+
+// Helper: render portable text blocks to HTML
+function renderPortableText(blocks: any[]): string {
+	if (!Array.isArray(blocks)) return '';
+	return blocks
+		.map((block: any) => {
+			if (!block || block._type !== 'block') return '';
+			const children = Array.isArray(block.children) ? block.children : [];
+			const textContent = children
+				.map((child: any) => {
+					if (!child) return '';
+					let text = child.text || '';
+					const marks = Array.isArray(child.marks) ? child.marks : [];
+					if (marks.includes('strong')) text = `<strong>${text}</strong>`;
+					if (marks.includes('em')) text = `<em style="color:var(--gold-light);">${text}</em>`;
+					return text;
+				})
+				.join('');
+			return `<p>${textContent}</p>`;
+		})
+		.join('');
+}
+
+// Map sections by order for easy access
+const getSection = (order: number) => aboutSections.find((s: any) => s.order === order);
 ---
 <Layout title="The Story" description="From a village in Ukhrul, Manipur, India to international recognition — the story of Justin Keishing, Arts by Justin.">
   <Fragment slot="head">
@@ -109,15 +137,27 @@ const heroImg = chapterImages?.hero?.image
     </div>
   </div>
   <div class="chapter-body" style="background:#111;">
-    <p class="label">Chapter One</p>
-    <div class="bar"></div>
-    <h2>Born in Ukhrul,<br/>Raised on Faith</h2>
-    <p>Justin Keishing was born and raised in Ukhrul District, Manipur, in Northeast India — a small, mountainous community far from the art world's centers of power. His family had very little. His father passed away when Justin was just 3 years old, leaving his mother to raise him and his five siblings alone, with no income and borrowed land.</p>
-    <p>His mother — a woman of extraordinary faith and determination — refused to let circumstances define her children's futures. Despite having nothing, she made sure every one of her children received an education. She sent them all to college. Then, when Justin was 19, she too passed away from breast cancer.</p>
-    <div class="pull-quote">
-      <p>"Her last words to us were, 'Love one another.' She is the reason I never stopped believing."</p>
-    </div>
-    <p>Justin carries his mother's prayers in every brushstroke. Her sacrifice is the foundation everything else is built on.</p>
+    {(() => { const s = getSection(1); return s ? (
+      <>
+        <p class="label">{s.chapterLabel}</p>
+        <div class="bar"></div>
+        <h2 set:html={s.title.replace(',', ',<br/>')}></h2>
+        <Fragment set:html={renderPortableText(s.body)} />
+        {s.pullQuote && <div class="pull-quote"><p>"{s.pullQuote}"</p></div>}
+      </>
+    ) : (
+      <>
+        <p class="label">Chapter One</p>
+        <div class="bar"></div>
+        <h2>Born in Ukhrul,<br/>Raised on Faith</h2>
+        <p>Justin Keishing was born and raised in Ukhrul District, Manipur, in Northeast India — a small, mountainous community far from the art world's centers of power. His family had very little. His father passed away when Justin was just 3 years old, leaving his mother to raise him and his five siblings alone, with no income and borrowed land.</p>
+        <p>His mother — a woman of extraordinary faith and determination — refused to let circumstances define her children's futures. Despite having nothing, she made sure every one of her children received an education. She sent them all to college. Then, when Justin was 19, she too passed away from breast cancer.</p>
+        <div class="pull-quote">
+          <p>"Her last words to us were, 'Love one another.' She is the reason I never stopped believing."</p>
+        </div>
+        <p>Justin carries his mother's prayers in every brushstroke. Her sacrifice is the foundation everything else is built on.</p>
+      </>
+    ); })()}
   </div>
 </section>
 
@@ -136,16 +176,28 @@ const heroImg = chapterImages?.hero?.image
     </div>
   </div>
   <div class="chapter-body" style="background:#0d0d0d;">
-    <p class="label">Chapter Two</p>
-    <div class="bar"></div>
-    <h2>The Dream They Said<br/>Would Never Happen</h2>
-    <p>As a boy, Justin told his teacher he wanted to travel the world. That dream was met with doubt — not cruelty, just the quiet disbelief that surrounds children who dare to dream too big for their circumstances.</p>
-    <p>He tried four times to get a US visa. On his fourth attempt, the woman at the US Embassy didn't just deny his application — she looked him in the eye and said, <em style="color:var(--gold-light);">"Sir, you will never see the USA in your lifetime."</em></p>
-    <p>He flew back home. He applied a fifth time. On the fifth application, God granted him a 10-year US visa.</p>
-    <div class="pull-quote">
-      <p>"I was devastated. But a friend encouraged me that God always has the final word. So I applied again. And I got it. It was a miracle."</p>
-    </div>
-    <p>In January 2020, Justin entered the USA. His return flight to India was cancelled due to COVID. He was stranded — and that's when everything changed.</p>
+    {(() => { const s = getSection(2); return s ? (
+      <>
+        <p class="label">{s.chapterLabel}</p>
+        <div class="bar"></div>
+        <h2 set:html={s.title.replace(' They ', '<br/>')}></h2>
+        <Fragment set:html={renderPortableText(s.body)} />
+        {s.pullQuote && <div class="pull-quote"><p>"{s.pullQuote}"</p></div>}
+      </>
+    ) : (
+      <>
+        <p class="label">Chapter Two</p>
+        <div class="bar"></div>
+        <h2>The Dream They Said<br/>Would Never Happen</h2>
+        <p>As a boy, Justin told his teacher he wanted to travel the world. That dream was met with doubt — not cruelty, just the quiet disbelief that surrounds children who dare to dream too big for their circumstances.</p>
+        <p>He tried four times to get a US visa. On his fourth attempt, the woman at the US Embassy didn't just deny his application — she looked him in the eye and said, <em style="color:var(--gold-light);">"Sir, you will never see the USA in your lifetime."</em></p>
+        <p>He flew back home. He applied a fifth time. On the fifth application, God granted him a 10-year US visa.</p>
+        <div class="pull-quote">
+          <p>"I was devastated. But a friend encouraged me that God always has the final word. So I applied again. And I got it. It was a miracle."</p>
+        </div>
+        <p>In January 2020, Justin entered the USA. His return flight to India was cancelled due to COVID. He was stranded — and that's when everything changed.</p>
+      </>
+    ); })()}
   </div>
 </section>
 
@@ -171,16 +223,28 @@ const heroImg = chapterImages?.hero?.image
     </div>
   </div>
   <div class="chapter-body" style="background:#111;">
-    <p class="label">Chapter Three</p>
-    <div class="bar"></div>
-    <h2>A Pandemic,<br/>a Brush, a Calling</h2>
-    <p>Stranded in America during COVID-19, Justin turned to YouTube. He began watching Bob Ross. He experimented. He practiced. He had no art school, no mentor, no connections — just a burning sense that he was supposed to create.</p>
-    <p>In June 2021, he entered his first art show. He was nervous. He was unsure. And then — people loved his work. They didn't just admire it. They bought it.</p>
-    <p>His Etsy store exploded. He became a Star Seller. His work began reaching collectors in New York, Las Vegas, California, Florida, Alaska, Hawaii, the UK, France, Canada, and India.</p>
-    <div class="pull-quote">
-      <p>"Every piece of art starts with a dream. Every display of my art continues with gratitude."</p>
-    </div>
-    <p>Within a year, what started as a stranded traveler watching YouTube videos had become a thriving international art business.</p>
+    {(() => { const s = getSection(3); return s ? (
+      <>
+        <p class="label">{s.chapterLabel}</p>
+        <div class="bar"></div>
+        <h2>A Pandemic,<br/>a Brush, a Calling</h2>
+        <Fragment set:html={renderPortableText(s.body)} />
+        {s.pullQuote && <div class="pull-quote"><p>"{s.pullQuote}"</p></div>}
+      </>
+    ) : (
+      <>
+        <p class="label">Chapter Three</p>
+        <div class="bar"></div>
+        <h2>A Pandemic,<br/>a Brush, a Calling</h2>
+        <p>Stranded in America during COVID-19, Justin turned to YouTube. He began watching Bob Ross. He experimented. He practiced. He had no art school, no mentor, no connections — just a burning sense that he was supposed to create.</p>
+        <p>In June 2021, he entered his first art show. He was nervous. He was unsure. And then — people loved his work. They didn't just admire it. They bought it.</p>
+        <p>His Etsy store exploded. He became a Star Seller. His work began reaching collectors in New York, Las Vegas, California, Florida, Alaska, Hawaii, the UK, France, Canada, and India.</p>
+        <div class="pull-quote">
+          <p>"Every piece of art starts with a dream. Every display of my art continues with gratitude."</p>
+        </div>
+        <p>Within a year, what started as a stranded traveler watching YouTube videos had become a thriving international art business.</p>
+      </>
+    ); })()}
   </div>
 </section>
 
@@ -203,15 +267,27 @@ const heroImg = chapterImages?.hero?.image
     </div>
   </div>
   <div class="chapter-body" style="background:linear-gradient(135deg,#0d0800,#130900);">
-    <p class="label">Chapter Four</p>
-    <div class="bar"></div>
-    <h2>From Raleigh<br/>to Florence, Italy</h2>
-    <p>In just a few years, Justin went from watching Bob Ross alone during a pandemic to standing in the historic Palazzo Pitti in Florence, Italy — receiving the International Prize for Artist of the Year 2025.</p>
-    <p>He was recognized by Cary Magazine as a 2022 Mover & Shaker. A U.S. Congresswoman wrote him a personal letter. He was featured in newspapers in India, digital publications in Raleigh, and international art catalogs.</p>
-    <p>His "Empress" painting was published across two full pages in the international "Master Artists to Collect" publication alongside the Florence award ceremony.</p>
-    <div class="pull-quote">
-      <p>"The boy from Ukhrul who was told he'd never see America — is now recognized in Italy. God always has the final word."</p>
-    </div>
+    {(() => { const s = getSection(4); return s ? (
+      <>
+        <p class="label">{s.chapterLabel}</p>
+        <div class="bar"></div>
+        <h2>From Raleigh<br/>to Florence, Italy</h2>
+        <Fragment set:html={renderPortableText(s.body)} />
+        {s.pullQuote && <div class="pull-quote"><p>"{s.pullQuote}"</p></div>}
+      </>
+    ) : (
+      <>
+        <p class="label">Chapter Four</p>
+        <div class="bar"></div>
+        <h2>From Raleigh<br/>to Florence, Italy</h2>
+        <p>In just a few years, Justin went from watching Bob Ross alone during a pandemic to standing in the historic Palazzo Pitti in Florence, Italy — receiving the International Prize for Artist of the Year 2025.</p>
+        <p>He was recognized by Cary Magazine as a 2022 Mover &amp; Shaker. A U.S. Congresswoman wrote him a personal letter. He was featured in newspapers in India, digital publications in Raleigh, and international art catalogs.</p>
+        <p>His "Empress" painting was published across two full pages in the international "Master Artists to Collect" publication alongside the Florence award ceremony.</p>
+        <div class="pull-quote">
+          <p>"The boy from Ukhrul who was told he'd never see America — is now recognized in Italy. God always has the final word."</p>
+        </div>
+      </>
+    ); })()}
   </div>
 </section>
 
@@ -223,16 +299,33 @@ const heroImg = chapterImages?.hero?.image
     <div class="faith-verse-ref">Isaiah 41:10 — tattooed on Justin's arm</div>
   </div>
   <div class="faith-body">
-    <p class="label">Faith & Art</p>
-    <div class="bar"></div>
-    <h2>Art as an Act<br/>of Faith</h2>
-    <p>Justin's faith is not separate from his art. It is the art. Every canvas begins with prayer. Every brushstroke is an act of trust that what he creates matters — that it will reach the person who needs to see it.</p>
-    <p>He has the words <em style="color:var(--gold-light);">"Fear not, for I am with you"</em> tattooed on his arm — a daily reminder that fear is real, but faith is stronger. It is the same message woven into his most powerful works: the reaching hand, the exploding heart, the figure soaring above the world.</p>
-    <div class="tattoo-quote">
-      <p>"My faith has guided me to overcome a lifetime of fear."</p>
-      <span>— Justin Keishing</span>
-    </div>
-    <p>A portion of every sale goes toward sponsoring education for needy children and deaf children in India. Because for Justin, art with a purpose means giving back to the village that shaped him.</p>
+    {(() => { const s = getSection(5); return s ? (
+      <>
+        <p class="label">{s.chapterLabel}</p>
+        <div class="bar"></div>
+        <h2>Art as an Act<br/>of Faith</h2>
+        <Fragment set:html={renderPortableText(s.body)} />
+        {s.pullQuote && (
+          <div class="tattoo-quote">
+            <p>"{s.pullQuote}"</p>
+            <span>— Justin Keishing</span>
+          </div>
+        )}
+      </>
+    ) : (
+      <>
+        <p class="label">Faith &amp; Art</p>
+        <div class="bar"></div>
+        <h2>Art as an Act<br/>of Faith</h2>
+        <p>Justin's faith is not separate from his art. It is the art. Every canvas begins with prayer. Every brushstroke is an act of trust that what he creates matters — that it will reach the person who needs to see it.</p>
+        <p>He has the words <em style="color:var(--gold-light);">"Fear not, for I am with you"</em> tattooed on his arm — a daily reminder that fear is real, but faith is stronger. It is the same message woven into his most powerful works: the reaching hand, the exploding heart, the figure soaring above the world.</p>
+        <div class="tattoo-quote">
+          <p>"My faith has guided me to overcome a lifetime of fear."</p>
+          <span>— Justin Keishing</span>
+        </div>
+        <p>A portion of every sale goes toward sponsoring education for needy children and deaf children in India. Because for Justin, art with a purpose means giving back to the village that shaped him.</p>
+      </>
+    ); })()}
   </div>
 </section>
 

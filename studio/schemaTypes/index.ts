@@ -1,7 +1,8 @@
-import artwork from './artwork'
-import page from './page'
-import siteSettings from './siteSettings'
-import pressFeature from './pressFeature'
-import award from './award'
+import aboutSection from './aboutSection';
+import artwork from './artwork';
+import award from './award';
+import page from './page';
+import pressFeature from './pressFeature';
+import siteSettings from './siteSettings';
 
-export const schemaTypes = [artwork, page, siteSettings, pressFeature, award]
+export const schemaTypes = [artwork, page, siteSettings, pressFeature, award, aboutSection];

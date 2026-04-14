@@ -211,6 +211,51 @@ export async function getRelatedArtworks(category: string, excludeId: string, li
 	}
 }
 
+// Fetch shop items (artworks marked forSale)
+export async function getShopItems() {
+	const query = `*[_type == "artwork" && forSale == true] | order(shopCategory asc, order asc, _createdAt desc) {
+    _id,
+    title,
+    slug,
+    image,
+    externalImageUrl,
+    shopCategory,
+    shopPrice,
+    medium,
+    dimensions,
+    year,
+    sold,
+    series,
+    colorGradient
+  }`;
+	try {
+		const items = await sanityClient.fetch(query);
+		return items || [];
+	} catch (error) {
+		console.error('Error fetching shop items:', error);
+		return [];
+	}
+}
+
+// Fetch about sections
+export async function getAboutSections() {
+	const query = `*[_type == "aboutSection"] | order(order asc) {
+    _id,
+    title,
+    chapterLabel,
+    body,
+    pullQuote,
+    order
+  }`;
+	try {
+		const sections = await sanityClient.fetch(query);
+		return sections || [];
+	} catch (error) {
+		console.error('Error fetching about sections:', error);
+		return [];
+	}
+}
+
 // Fetch awards
 export async function getAwards() {
 	const query = `*[_type == "award"] | order(year desc) {
