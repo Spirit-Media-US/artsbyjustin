@@ -19,10 +19,19 @@ const artworks = rawArtworks.map((a: any) => ({
 	featured: !!a.featured,
 	heroFeature: a.heroFeature !== false,
 	colorGradient: a.colorGradient || a.fallback || '',
-	imageUrl: a.imageUrl || (a.image ? urlFor(a.image).width(1400).url() : ''),
+	imageUrl:
+		a.imageUrl || (a.image ? urlFor(a.image).width(1400).format('webp').quality(80).url() : ''),
+	imageUrlMobile:
+		a.imageUrlMobile ||
+		(a.image ? urlFor(a.image).width(640).format('webp').quality(80).url() : ''),
+	imageUrlThumb:
+		a.imageUrlThumb || (a.image ? urlFor(a.image).width(480).format('webp').quality(80).url() : ''),
 }));
 
-const heroArtworks = artworks.filter((a) => a.heroFeature).slice(0, 8);
+const heroArtworks = artworks.filter((a) => a.heroFeature && a.imageUrl).slice(0, 8);
+const firstHero = heroArtworks[0];
+const heroDesktopUrl = firstHero?.imageUrl || '';
+const heroMobileUrl = firstHero?.imageUrlMobile || '';
 const featuredArtworks = (() => {
 	const f = artworks.filter((a) => a.featured);
 	return f.length >= 3 ? f.slice(0, 5) : artworks.slice(0, 5);
@@ -134,6 +143,16 @@ const homeStats = siteSettings?.homePageStats
 ---
 <Layout title={tagline} description={bio || `Bold, expressive, spirit-led art created in ${location} — collected around the world. Original acrylic & mixed media works by ${artistName}.`}>
   <Fragment slot="head">
+    {heroMobileUrl && (
+      <link
+        rel="preload"
+        as="image"
+        href={heroMobileUrl}
+        imagesrcset={`${heroMobileUrl} 640w, ${heroDesktopUrl} 1400w`}
+        imagesizes="(max-width: 768px) 100vw, 58vw"
+        fetchpriority="high"
+      />
+    )}
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Organization",
@@ -150,10 +169,22 @@ const homeStats = siteSettings?.homePageStats
   <!-- HERO -->
   <section class="hero">
     <div class="hero-painting" id="heroPainting">
-      {heroArtworks[0] && (
-        heroArtworks[0].imageUrl
-          ? <div class="hero-bg" style={`background:url('${heroArtworks[0].imageUrl}') center/cover no-repeat`}></div>
-          : <div class="hero-bg" style={`background:${heroArtworks[0].colorGradient || '#111'}`}></div>
+      {firstHero && (
+        heroDesktopUrl
+          ? <img
+              class="hero-bg hero-img"
+              id="heroImg"
+              src={heroMobileUrl || heroDesktopUrl}
+              srcset={`${heroMobileUrl} 640w, ${heroDesktopUrl} 1400w`}
+              sizes="(max-width: 768px) 100vw, 58vw"
+              width="1400"
+              height="1000"
+              alt={firstHero.title || ''}
+              fetchpriority="high"
+              loading="eager"
+              decoding="async"
+            />
+          : <div class="hero-bg" style={`background:${firstHero.colorGradient || '#111'}`}></div>
       )}
     </div>
     <div class="hero-fade"></div>
@@ -180,7 +211,7 @@ const homeStats = siteSettings?.homePageStats
   <div class="strip">
     {stripArtworks.map((a) => (
       <div class="strip-item">
-        <div class="strip-bg" style={a.imageUrl ? `background:url('${a.imageUrl}') center/cover no-repeat` : `background:${a.colorGradient || '#222'}`}></div>
+        <div class="strip-bg" style={a.imageUrlThumb ? `background:url('${a.imageUrlThumb}') center/cover no-repeat` : (a.imageUrl ? `background:url('${a.imageUrl}') center/cover no-repeat` : `background:${a.colorGradient || '#222'}`)}></div>
         <div class="strip-caption"><span>{a.title} · {a.medium}</span></div>
       </div>
     ))}
@@ -363,10 +394,20 @@ const homeStats = siteSettings?.homePageStats
       if (wrap) {
         const bg = wrap.querySelector('.hero-bg');
         if (bg) {
-          if (a.imageUrl) {
-            bg.style.background = `url('${a.imageUrl}') center/cover no-repeat`;
+          if (bg.tagName === 'IMG') {
+            if (a.imageUrl) {
+              if (a.imageUrlMobile) {
+                bg.srcset = `${a.imageUrlMobile} 640w, ${a.imageUrl} 1400w`;
+              }
+              bg.src = a.imageUrlMobile || a.imageUrl;
+              bg.alt = a.title || '';
+            }
           } else {
-            bg.style.background = a.colorGradient || '#111';
+            if (a.imageUrl) {
+              bg.style.background = `url('${a.imageUrl}') center/cover no-repeat`;
+            } else {
+              bg.style.background = a.colorGradient || '#111';
+            }
           }
         }
       }
@@ -380,7 +421,8 @@ const homeStats = siteSettings?.homePageStats
   /* HERO */
   .hero { height:100vh; position:relative; display:flex; align-items:center; overflow:hidden; }
   .hero-painting { position:absolute; right:0; top:0; bottom:0; width:58%; overflow:hidden; }
-  .hero-bg { position:absolute; inset:0; filter:brightness(0.75); transition:background 0.8s; }
+  .hero-bg { position:absolute; inset:0; filter:brightness(0.75); transition:background 0.8s, opacity 0.8s; }
+  .hero-img { width:100%; height:100%; object-fit:cover; object-position:center; }
   .hero-fade { position:absolute; inset:0; background:linear-gradient(to right,#080808 30%,rgba(8,8,8,0.5) 60%,rgba(8,8,8,0.1) 100%); }
   .hero-content { position:relative; z-index:2; padding:0 3rem; max-width:600px; }
   .hero-eyebrow { display:inline-flex; align-items:center; gap:0.8rem; margin-bottom:2rem; }
