@@ -1,5 +1,24 @@
 @import "tailwindcss";
 
+/* Critical above-fold fonts ONLY — body text (Inter 400) + hero heading (Playfair 700).
+   Other weights/styles (Inter 300/500/600, Playfair 400, Playfair 400 italic) moved
+   to public/deferred.css so they don't compete with LCP resources. */
+@font-face {
+	font-family: "Inter";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("https://assets.spiritmediapublishing.com/fonts/inter/inter-400.woff2") format("woff2");
+}
+@font-face {
+	font-family: "Playfair Display";
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url("https://assets.spiritmediapublishing.com/fonts/playfair-display/playfair-display-700.woff2")
+		format("woff2");
+}
+
 @theme {
 	/* Aurelian Noir — surface scale */
 	--color-surface: #131313;

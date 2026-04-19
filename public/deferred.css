@@ -1,0 +1,39 @@
+/* ===== BELOW-FOLD FONTS ===== */
+/* Loaded async after LCP so they don't block the critical render path */
+@font-face {
+	font-family: "Inter";
+	font-style: normal;
+	font-weight: 300;
+	font-display: swap;
+	src: url("https://assets.spiritmediapublishing.com/fonts/inter/inter-300.woff2") format("woff2");
+}
+@font-face {
+	font-family: "Inter";
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url("https://assets.spiritmediapublishing.com/fonts/inter/inter-500.woff2") format("woff2");
+}
+@font-face {
+	font-family: "Inter";
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url("https://assets.spiritmediapublishing.com/fonts/inter/inter-600.woff2") format("woff2");
+}
+@font-face {
+	font-family: "Playfair Display";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("https://assets.spiritmediapublishing.com/fonts/playfair-display/playfair-display-400.woff2")
+		format("woff2");
+}
+@font-face {
+	font-family: "Playfair Display";
+	font-style: italic;
+	font-weight: 400;
+	font-display: swap;
+	src: url("https://assets.spiritmediapublishing.com/fonts/playfair-display/playfair-display-400-italic.woff2")
+		format("woff2");
+}
