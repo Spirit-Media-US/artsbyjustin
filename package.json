@@ -4,7 +4,7 @@
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "astro dev",
-		"build": "rm -rf public/studio && sanity build public/studio --yes && astro build",
+		"build": "rm -rf public/studio && sanity build public/studio --yes && astro build && node scripts/async-css.mjs && node scripts/100club-verify.mjs",
 		"preview": "astro preview",
 		"check": "biome check --write",
 		"prepare": "lefthook install"
@@ -27,6 +27,7 @@
 		"@biomejs/biome": "^2.4.4",
 		"@tailwindcss/vite": "^4.2.1",
 		"lefthook": "^2.1.1",
+		"playwright-core": "^1.59.1",
 		"tailwindcss": "^4.2.1"
 	}
 }

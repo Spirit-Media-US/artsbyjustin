@@ -17,6 +17,11 @@ pre-commit:
       glob: "*.{js,ts,jsx,tsx,json,css,astro}"
       run: npx biome check --write --no-errors-on-unmatched {staged_files}
       stage_fixed: true
+    100club-lint:
+      run: /home/deploy/bin/100club-lint.sh
+      skip:
+        - merge
+        - rebase
 
 # NOTE: `astro check` (TypeScript diagnostics) takes 30s+ and is intentionally
 # excluded from the pre-commit hook. Run it manually before deploying:
