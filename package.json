@@ -11,7 +11,6 @@
 	},
 	"dependencies": {
 		"@astrojs/sitemap": "^3.7.2",
-		"@playform/inline": "^0.1.4",
 		"@sanity/astro": "^3.2.11",
 		"@sanity/client": "^7.16.0",
 		"@sanity/image-url": "^2.0.3",
