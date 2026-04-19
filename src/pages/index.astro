@@ -153,7 +153,7 @@ const homeStats = siteSettings?.homePageStats
       as="image"
       href={heroMobileUrl}
       imagesrcset={`${heroMobileUrl} 640w, ${heroTabletUrl} 960w, ${heroDesktopUrl} 1200w`}
-      imagesizes="(max-width: 768px) 640px, 835px"
+      imagesizes="(max-width: 768px) 412px, 835px"
       fetchpriority="high"
     />
     <script type="application/ld+json" set:html={JSON.stringify({
@@ -177,7 +177,7 @@ const homeStats = siteSettings?.homePageStats
         id="heroImg"
         src={heroMobileUrl}
         srcset={`${heroMobileUrl} 640w, ${heroTabletUrl} 960w, ${heroDesktopUrl} 1200w`}
-        sizes="(max-width: 768px) 640px, 835px"
+        sizes="(max-width: 768px) 412px, 835px"
         width="1200"
         height="858"
         alt={firstHero?.title || 'Featured artwork by Justin Keishing'}
@@ -318,10 +318,10 @@ const homeStats = siteSettings?.homePageStats
     <h2>Let's Create Something<br/>Just for You</h2>
     <p class="comm-sub">Have a vision? A story you want told in paint? I take on a limited number of commissioned works each year. Every piece is personal, intentional, and made with purpose.</p>
     <div class="steps">
-      <div class="step"><div class="step-n">01</div><h4>Connect</h4><p>Reach out and share your idea, vision, or the story you want told.</p></div>
-      <div class="step"><div class="step-n">02</div><h4>Consult</h4><p>We discuss concept, size, medium, timeline, and investment.</p></div>
-      <div class="step"><div class="step-n">03</div><h4>Create</h4><p>Justin brings your vision to life with care, intention, and purpose.</p></div>
-      <div class="step"><div class="step-n">04</div><h4>Deliver</h4><p>Your one-of-a-kind piece arrives, ready to hang and move people.</p></div>
+      <div class="step"><div class="step-n" aria-hidden="true">01</div><h3>Connect</h3><p>Reach out and share your idea, vision, or the story you want told.</p></div>
+      <div class="step"><div class="step-n" aria-hidden="true">02</div><h3>Consult</h3><p>We discuss concept, size, medium, timeline, and investment.</p></div>
+      <div class="step"><div class="step-n" aria-hidden="true">03</div><h3>Create</h3><p>Justin brings your vision to life with care, intention, and purpose.</p></div>
+      <div class="step"><div class="step-n" aria-hidden="true">04</div><h3>Deliver</h3><p>Your one-of-a-kind piece arrives, ready to hang and move people.</p></div>
     </div>
     <a href="/commissions" class="btn-gold">Start a Commission →</a>
   </section>
@@ -506,8 +506,8 @@ const homeStats = siteSettings?.homePageStats
   .steps { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; margin-bottom:3.5rem; background:rgba(255,255,255,0.04); }
   .step { padding:2.5rem 1.5rem; background:var(--black); text-align:left; transition:background 0.3s; }
   .step:hover { background:#0d0d0d; }
-  .step-n { font-family:'Playfair Display',serif; font-size:3.5rem; color:rgba(201,168,76,0.1); line-height:1; margin-bottom:1rem; }
-  .step h4 { font-size:0.75rem; letter-spacing:2px; text-transform:uppercase; margin-bottom:0.6rem; color:var(--white); }
+  .step-n { font-family:'Playfair Display',serif; font-size:3.5rem; color:rgba(201,168,76,0.45); line-height:1; margin-bottom:1rem; }
+  .step h3 { font-size:0.75rem; letter-spacing:2px; text-transform:uppercase; margin-bottom:0.6rem; color:var(--white); font-family: 'Inter', sans-serif; font-weight: 600; }
   .step p { color:#b0b0b0; font-size:0.8rem; line-height:1.7; }
 
   /* STATS */

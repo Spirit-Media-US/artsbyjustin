@@ -148,6 +148,82 @@ const ogImage = siteSettings?.ogImage
         font-size: 1.02rem;
         line-height: 1.7;
       }
+
+      /* Nav — inline to prevent CLS when external CSS async-loads after first paint.
+         Without this, the nav <ul> defaults to block display (stacked + bullets),
+         then collapses to horizontal flex when Nav.astro's scoped style arrives — 0.4+ CLS. */
+      #site-header {
+        position: sticky;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 200;
+        padding: 1.2rem 3rem;
+        display: flex;
+        align-items: center;
+        background: rgba(8,8,8,0.95);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255,255,255,0.04);
+      }
+      #site-header nav {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .wordmark {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.3rem;
+        letter-spacing: 2px;
+        color: #f0f0f0;
+      }
+      .wordmark span { color: #c9a84c; }
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+      }
+      .nav-links li { list-style: none; }
+      .nav-link {
+        font-family: 'Inter', sans-serif;
+        color: #b8b8b8;
+        font-size: 0.78rem;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+      }
+      .nav-cta {
+        background: #c9a84c;
+        color: #080808;
+        padding: 0.55rem 1.4rem;
+        font-size: 0.75rem;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-family: 'Inter', sans-serif;
+      }
+      .menu-toggle { display: none; flex-direction: column; gap: 5px; background: none; cursor: pointer; padding: 4px; }
+      .menu-toggle span { display: block; width: 24px; height: 1.5px; background: #f0f0f0; }
+      @media (max-width: 768px) {
+        #site-header { padding: 1rem 1.5rem; }
+        .menu-toggle { display: flex; }
+        .nav-links {
+          position: fixed;
+          top: 61px;
+          left: 0;
+          right: 0;
+          flex-direction: column;
+          background: rgba(8,8,8,0.98);
+          padding: 2rem;
+          gap: 1.5rem;
+          transform: translateY(-110%);
+          opacity: 0;
+          pointer-events: none;
+        }
+      }
     }
   </style>
   <meta name="description" content={description} />
