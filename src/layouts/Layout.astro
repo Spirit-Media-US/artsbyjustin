@@ -64,6 +64,18 @@ const ogImage = siteSettings?.ogImage
     @keyframes grow { 0%,100%{width:40px;opacity:0.4;} 50%{width:65px;opacity:1;} }
 
     @layer base {
+      /* Legacy CSS custom properties — referenced by scoped <style> blocks in per-page astro files. */
+      :root {
+        --black: #080808;
+        --dark: #111;
+        --card: #161616;
+        --gold: #c9a84c;
+        --gold-light: #e8c97a;
+        --white: #e5e2e1;
+        --gray: #9a9a9a;
+        --gray2: #b8b8b8;
+      }
+
       /* Reset */
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; border: 0 solid; }
       html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; -webkit-font-smoothing: antialiased; }
@@ -150,6 +162,7 @@ const ogImage = siteSettings?.ogImage
   <meta name="twitter:title" content={fullTitle} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImage} />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <slot name="head" />
 
   <!-- Google Analytics GA4 — deferred until first user interaction to not block LCP -->
