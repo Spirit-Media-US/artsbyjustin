@@ -149,6 +149,83 @@ const ogImage = siteSettings?.ogImage
         line-height: 1.7;
       }
 
+      /* Hero — inline to prevent CLS. Without these, .hero section has no height until
+         scoped CSS async-loads, so .hero-painting collapses + snaps to 100vh (0.38 CLS). */
+      .hero {
+        height: 100vh;
+        position: relative;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+      }
+      .hero-painting {
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 58%;
+        overflow: hidden;
+      }
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        filter: brightness(0.75);
+      }
+      .hero-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+      .hero-fade {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to right, #080808 30%, rgba(8,8,8,0.5) 60%, rgba(8,8,8,0.1) 100%);
+      }
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        padding: 0 3rem;
+        max-width: 600px;
+      }
+      .hero h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(3.2rem, 5.5vw, 5.5rem);
+        line-height: 1.05;
+        margin-bottom: 1.5rem;
+        font-weight: 700;
+      }
+      .hero-sub {
+        color: #b8b8b8;
+        font-size: 0.97rem;
+        line-height: 1.9;
+        margin-bottom: 2.5rem;
+        font-weight: 300;
+        max-width: 420px;
+      }
+      .hero-btns {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+        margin-bottom: 2rem;
+      }
+      .hero-eyebrow span {
+        font-size: 0.68rem;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: #c9a84c;
+      }
+      .hero-line { width: 30px; height: 1px; background: #c9a84c; }
+      @media (max-width: 768px) {
+        .hero-painting { width: 100%; opacity: 0.3; }
+        .hero-content { max-width: 100%; padding: 0 2rem; }
+      }
+
       /* Nav — inline to prevent CLS when external CSS async-loads after first paint.
          Without this, the nav <ul> defaults to block display (stacked + bullets),
          then collapses to horizontal flex when Nav.astro's scoped style arrives — 0.4+ CLS. */
