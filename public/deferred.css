@@ -3,13 +3,6 @@
 @font-face {
 	font-family: "Inter";
 	font-style: normal;
-	font-weight: 300;
-	font-display: swap;
-	src: url("https://assets.spiritmediapublishing.com/fonts/inter/inter-300.woff2") format("woff2");
-}
-@font-face {
-	font-family: "Inter";
-	font-style: normal;
 	font-weight: 500;
 	font-display: swap;
 	src: url("https://assets.spiritmediapublishing.com/fonts/inter/inter-500.woff2") format("woff2");

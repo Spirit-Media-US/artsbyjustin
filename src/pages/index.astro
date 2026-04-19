@@ -259,7 +259,7 @@ const homeStats = siteSettings?.homePageStats
     <div class="masonry">
       {featuredArtworks.map((a, i) => (
         <div class={`art${i === 0 ? ' span-row' : ''}`}>
-          <div class="art-bg" style={a.imageUrl ? `background:url('${a.imageUrl}') center/cover no-repeat` : `background:${a.colorGradient || '#222'}`}></div>
+          <div class="art-bg" style={a.imageUrlThumb ? `background:url('${a.imageUrlThumb}') center/cover no-repeat` : (a.imageUrl ? `background:url('${a.imageUrl}') center/cover no-repeat` : `background:${a.colorGradient || '#222'}`)}></div>
           <div class="art-tag">{a.category}</div>
           <div class="art-info">
             <h3>{a.title}</h3>

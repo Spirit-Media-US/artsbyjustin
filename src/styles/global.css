@@ -1,8 +1,15 @@
 @import "tailwindcss";
 
-/* Critical above-fold fonts ONLY — body text (Inter 400) + hero heading (Playfair 700).
-   Other weights/styles (Inter 300/500/600, Playfair 400, Playfair 400 italic) moved
-   to public/deferred.css so they don't compete with LCP resources. */
+/* Critical above-fold fonts ONLY — body text (Inter 400), hero subtitle (Inter 300),
+   and hero heading (Playfair 700). Other weights (Inter 500/600, Playfair 400, italic)
+   are moved to public/deferred.css so they don't compete with LCP resources. */
+@font-face {
+	font-family: "Inter";
+	font-style: normal;
+	font-weight: 300;
+	font-display: swap;
+	src: url("https://assets.spiritmediapublishing.com/fonts/inter/inter-300.woff2") format("woff2");
+}
 @font-face {
 	font-family: "Inter";
 	font-style: normal;
