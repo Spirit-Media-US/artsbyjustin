@@ -28,7 +28,6 @@ export async function getSiteSettings() {
     instagramUrl,
     facebookUrl,
     tiktokUrl,
-    heroImage,
     logo,
     galleryImages,
     aboutPortraitImage,

@@ -33,9 +33,10 @@ const artworks = rawArtworks.map((a: any) => ({
 
 const heroArtworks = artworks.filter((a) => a.heroFeature && a.imageUrl).slice(0, 8);
 const firstHero = heroArtworks[0];
-const heroDesktopUrl = firstHero?.imageUrl || '';
-const heroTabletUrl = firstHero?.imageUrlTablet || heroDesktopUrl;
-const heroMobileUrl = firstHero?.imageUrlMobile || '';
+// Hero LCP — served from R2 (same origin as fonts, stable URL, 103 Early Hints compatible)
+const heroDesktopUrl = 'https://assets.spiritmediapublishing.com/artsbyjustin/hero-desktop.webp';
+const heroTabletUrl = 'https://assets.spiritmediapublishing.com/artsbyjustin/hero-tablet.webp';
+const heroMobileUrl = 'https://assets.spiritmediapublishing.com/artsbyjustin/hero-mobile.webp';
 const featuredArtworks = (() => {
 	const f = artworks.filter((a) => a.featured);
 	return f.length >= 3 ? f.slice(0, 5) : artworks.slice(0, 5);
@@ -147,16 +148,14 @@ const homeStats = siteSettings?.homePageStats
 ---
 <Layout title={tagline} description={bio || `Bold, expressive, spirit-led art created in ${location} — collected around the world. Original acrylic & mixed media works by ${artistName}.`}>
   <Fragment slot="head">
-    {heroMobileUrl && (
-      <link
-        rel="preload"
-        as="image"
-        href={heroMobileUrl}
-        imagesrcset={`${heroMobileUrl} 640w, ${heroTabletUrl} 960w, ${heroDesktopUrl} 1200w`}
-        imagesizes="(max-width: 768px) 100vw, 58vw"
-        fetchpriority="high"
-      />
-    )}
+    <link
+      rel="preload"
+      as="image"
+      href={heroMobileUrl}
+      imagesrcset={`${heroMobileUrl} 640w, ${heroTabletUrl} 960w, ${heroDesktopUrl} 1200w`}
+      imagesizes="(max-width: 768px) 640px, 835px"
+      fetchpriority="high"
+    />
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Organization",
@@ -173,23 +172,19 @@ const homeStats = siteSettings?.homePageStats
   <!-- HERO -->
   <section class="hero">
     <div class="hero-painting" id="heroPainting">
-      {firstHero && (
-        heroDesktopUrl
-          ? <img
-              class="hero-bg hero-img"
-              id="heroImg"
-              src={heroMobileUrl || heroDesktopUrl}
-              srcset={`${heroMobileUrl} 640w, ${heroTabletUrl} 960w, ${heroDesktopUrl} 1200w`}
-              sizes="(max-width: 768px) 100vw, 58vw"
-              width="1200"
-              height="858"
-              alt={firstHero.title || ''}
-              fetchpriority="high"
-              loading="eager"
-              decoding="async"
-            />
-          : <div class="hero-bg" style={`background:${firstHero.colorGradient || '#111'}`}></div>
-      )}
+      <img
+        class="hero-bg hero-img"
+        id="heroImg"
+        src={heroMobileUrl}
+        srcset={`${heroMobileUrl} 640w, ${heroTabletUrl} 960w, ${heroDesktopUrl} 1200w`}
+        sizes="(max-width: 768px) 640px, 835px"
+        width="1200"
+        height="858"
+        alt={firstHero?.title || 'Featured artwork by Justin Keishing'}
+        fetchpriority="high"
+        loading="eager"
+        decoding="async"
+      />
     </div>
     <div class="hero-fade"></div>
     <div class="hero-content">
