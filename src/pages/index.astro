@@ -20,12 +20,12 @@ const artworks = rawArtworks.map((a: any) => ({
 	heroFeature: a.heroFeature !== false,
 	colorGradient: a.colorGradient || a.fallback || '',
 	imageUrl:
-		a.imageUrl || (a.image ? urlFor(a.image).width(1400).format('webp').quality(80).url() : ''),
+		a.imageUrl || (a.image ? urlFor(a.image).width(1200).format('webp').quality(72).url() : ''),
 	imageUrlMobile:
 		a.imageUrlMobile ||
-		(a.image ? urlFor(a.image).width(640).format('webp').quality(80).url() : ''),
+		(a.image ? urlFor(a.image).width(640).format('webp').quality(72).url() : ''),
 	imageUrlThumb:
-		a.imageUrlThumb || (a.image ? urlFor(a.image).width(480).format('webp').quality(80).url() : ''),
+		a.imageUrlThumb || (a.image ? urlFor(a.image).width(480).format('webp').quality(65).url() : ''),
 }));
 
 const heroArtworks = artworks.filter((a) => a.heroFeature && a.imageUrl).slice(0, 8);
@@ -148,7 +148,7 @@ const homeStats = siteSettings?.homePageStats
         rel="preload"
         as="image"
         href={heroMobileUrl}
-        imagesrcset={`${heroMobileUrl} 640w, ${heroDesktopUrl} 1400w`}
+        imagesrcset={`${heroMobileUrl} 640w, ${heroDesktopUrl} 1200w`}
         imagesizes="(max-width: 768px) 100vw, 58vw"
         fetchpriority="high"
       />
@@ -175,10 +175,10 @@ const homeStats = siteSettings?.homePageStats
               class="hero-bg hero-img"
               id="heroImg"
               src={heroMobileUrl || heroDesktopUrl}
-              srcset={`${heroMobileUrl} 640w, ${heroDesktopUrl} 1400w`}
+              srcset={`${heroMobileUrl} 640w, ${heroDesktopUrl} 1200w`}
               sizes="(max-width: 768px) 100vw, 58vw"
-              width="1400"
-              height="1000"
+              width="1200"
+              height="858"
               alt={firstHero.title || ''}
               fetchpriority="high"
               loading="eager"
@@ -278,9 +278,11 @@ const homeStats = siteSettings?.homePageStats
       {categories.map((cat) => (
         <div class="cat">
           <div class="cat-bg" style={
-            cat.artwork?.imageUrl
-              ? `background:url('${cat.artwork.imageUrl}') center/cover no-repeat`
-              : `background:${cat.artwork?.colorGradient || cat.gradient}`
+            cat.artwork?.imageUrlThumb
+              ? `background:url('${cat.artwork.imageUrlThumb}') center/cover no-repeat`
+              : (cat.artwork?.imageUrl
+                ? `background:url('${cat.artwork.imageUrl}') center/cover no-repeat`
+                : `background:${cat.artwork?.colorGradient || cat.gradient}`)
           }></div>
           <div class="cat-info">
             <h3>{cat.name}</h3>
@@ -397,7 +399,7 @@ const homeStats = siteSettings?.homePageStats
           if (bg.tagName === 'IMG') {
             if (a.imageUrl) {
               if (a.imageUrlMobile) {
-                bg.srcset = `${a.imageUrlMobile} 640w, ${a.imageUrl} 1400w`;
+                bg.srcset = `${a.imageUrlMobile} 640w, ${a.imageUrl} 1200w`;
               }
               bg.src = a.imageUrlMobile || a.imageUrl;
               bg.alt = a.title || '';

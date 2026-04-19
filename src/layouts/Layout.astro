@@ -130,13 +130,28 @@ const ogImage = siteSettings?.ogImage
     }
   </style>
 
-  <!-- Google Analytics GA4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W3R21TNHTX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-W3R21TNHTX');
+  <!-- Google Analytics GA4 — deferred until first user interaction to not block LCP -->
+  <script is:inline>
+    (function () {
+      var loaded = false;
+      function loadGA() {
+        if (loaded) return;
+        loaded = true;
+        var s = document.createElement('script');
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-W3R21TNHTX';
+        s.async = true;
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', 'G-W3R21TNHTX');
+      }
+      ['scroll','click','touchstart','keydown','mousemove'].forEach(function(evt){
+        window.addEventListener(evt, loadGA, { once: true, passive: true });
+      });
+      setTimeout(loadGA, 8000);
+    })();
   </script>
   <slot name="head" />
 </head>
