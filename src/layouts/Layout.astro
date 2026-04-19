@@ -30,6 +30,114 @@ const ogImage = siteSettings?.ogImage
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://cdn.sanity.io" crossorigin />
+  <link rel="preconnect" href="https://assets.spiritmediapublishing.com" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/inter/inter-400.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/inter/inter-300.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/playfair-display/playfair-display-700.woff2" crossorigin />
+  <slot name="head-early" />
+  <style is:inline>
+    /* @font-face — CSS spec forbids inside @layer */
+    @font-face {
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 300;
+      font-display: swap;
+      src: url("https://assets.spiritmediapublishing.com/fonts/inter/inter-300.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url("https://assets.spiritmediapublishing.com/fonts/inter/inter-400.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Playfair Display";
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url("https://assets.spiritmediapublishing.com/fonts/playfair-display/playfair-display-700.woff2") format("woff2");
+    }
+
+    /* @keyframes — CSS spec forbids inside @layer */
+    @keyframes grow { 0%,100%{width:40px;opacity:0.4;} 50%{width:65px;opacity:1;} }
+
+    @layer base {
+      /* Reset */
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; border: 0 solid; }
+      html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; -webkit-font-smoothing: antialiased; }
+      body {
+        background: #080808;
+        color: #e5e2e1;
+        font-family: 'Inter', system-ui, sans-serif;
+        line-height: 1.65;
+        overflow-x: hidden;
+      }
+      img, picture, svg, video, canvas { display: block; max-width: 100%; height: auto; }
+      h1, h2, h3, h4, h5, h6 { margin: 0; font-family: 'Playfair Display', Georgia, serif; line-height: 1.2; overflow-wrap: break-word; }
+      p { margin: 0; overflow-wrap: break-word; }
+      a { color: inherit; text-decoration: none; }
+      button { font: inherit; color: inherit; background: transparent; cursor: pointer; padding: 0; border: 0; }
+
+      /* Shared utility classes — hex literals, no var() (Lighthouse contrast audit can't resolve vars) */
+      .label {
+        font-size: 0.68rem;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: #e6c364;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+      .bar {
+        width: 50px;
+        height: 2px;
+        background: #c9a84c;
+        margin-bottom: 1.5rem;
+      }
+      .btn-gold {
+        background: linear-gradient(135deg, #e6c364, #c9a84c);
+        color: #3d2e00;
+        padding: 0.75rem 1.8rem;
+        font-size: 0.75rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-weight: 700;
+        cursor: pointer;
+        transition: opacity 0.3s;
+        display: inline-block;
+        font-family: 'Inter', sans-serif;
+      }
+      .btn-gold:hover { opacity: 0.9; }
+      .btn-ghost {
+        background: transparent;
+        color: #e5e2e1;
+        padding: 0.75rem 1.8rem;
+        font-size: 0.75rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        border: 1px solid rgba(255,255,255,0.2);
+        cursor: pointer;
+        transition: border-color 0.3s, color 0.3s;
+        display: inline-block;
+        font-family: 'Inter', sans-serif;
+      }
+      .btn-ghost:hover { border-color: #c9a84c; color: #c9a84c; }
+      .pull-quote {
+        margin: 1.8rem 0;
+        padding: 1.5rem;
+        border-left: 2px solid #c9a84c;
+        background: rgba(201,168,76,0.04);
+      }
+      .pull-quote p {
+        font-family: 'Playfair Display', serif;
+        font-style: italic;
+        color: #e8c97a;
+        font-size: 1.02rem;
+        line-height: 1.7;
+      }
+    }
+  </style>
   <meta name="description" content={description} />
   <title>{fullTitle}</title>
   <link rel="canonical" href={canonicalUrl} />
@@ -42,96 +150,8 @@ const ogImage = siteSettings?.ogImage
   <meta name="twitter:title" content={fullTitle} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImage} />
-  <link rel="preconnect" href="https://cdn.sanity.io" crossorigin />
-  <link rel="preconnect" href="https://assets.spiritmediapublishing.com" crossorigin />
-  <link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/inter/inter-400.woff2" crossorigin />
-  <link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/inter/inter-300.woff2" crossorigin />
-  <link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/playfair-display/playfair-display-700.woff2" crossorigin />
   <link rel="stylesheet" href="/deferred.css" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-
-    :root {
-      --black: #080808;
-      --dark: #111;
-      --card: #161616;
-      --gold: #c9a84c;
-      --gold-light: #e8c97a;
-      --white: #e5e2e1;
-      --gray: #777;
-      --gray2: #aaa;
-    }
-
-    body {
-      background: var(--black);
-      color: var(--white);
-      font-family: 'Inter', system-ui, sans-serif;
-      line-height: 1.65;
-      overflow-x: hidden;
-    }
-
-    img { display: block; max-width: 100%; }
-    a { color: inherit; text-decoration: none; }
-
-    /* Shared utility classes */
-    .label {
-      font-size: 0.68rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 0.5rem;
-      display: block;
-    }
-    .bar {
-      width: 50px;
-      height: 2px;
-      background: var(--gold);
-      margin-bottom: 1.5rem;
-    }
-    .btn-gold {
-      background: linear-gradient(135deg, #e6c364, #c9a84c);
-      color: #3d2e00;
-      padding: 0.75rem 1.8rem;
-      font-size: 0.75rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      font-weight: 700;
-      border: none;
-      cursor: pointer;
-      transition: opacity 0.3s;
-      display: inline-block;
-      font-family: 'Inter', sans-serif;
-    }
-    .btn-gold:hover { opacity: 0.9; }
-    .btn-ghost {
-      background: transparent;
-      color: var(--white);
-      padding: 0.75rem 1.8rem;
-      font-size: 0.75rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      border: 1px solid rgba(255,255,255,0.2);
-      cursor: pointer;
-      transition: border-color 0.3s, color 0.3s;
-      display: inline-block;
-      font-family: 'Inter', sans-serif;
-    }
-    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
-    .pull-quote {
-      margin: 1.8rem 0;
-      padding: 1.5rem;
-      border-left: 2px solid var(--gold);
-      background: rgba(201,168,76,0.04);
-    }
-    .pull-quote p {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      color: var(--gold-light);
-      font-size: 1.02rem;
-      line-height: 1.7;
-    }
-  </style>
+  <slot name="head" />
 
   <!-- Google Analytics GA4 — deferred until first user interaction to not block LCP -->
   <script is:inline>
@@ -150,13 +170,12 @@ const ogImage = siteSettings?.ogImage
         gtag('js', new Date());
         gtag('config', 'G-W3R21TNHTX');
       }
-      ['scroll','click','touchstart','keydown','mousemove'].forEach(function(evt){
-        window.addEventListener(evt, loadGA, { once: true, passive: true });
-      });
-      setTimeout(loadGA, 8000);
+      var evts = ['scroll','click','touchstart','keydown','mousemove'];
+      function trigger() { evts.forEach(function(e){ window.removeEventListener(e, trigger); }); loadGA(); }
+      evts.forEach(function(e){ window.addEventListener(e, trigger, { passive: true, once: true }); });
+      setTimeout(function(){ if (!loaded) loadGA(); }, 8000);
     })();
   </script>
-  <slot name="head" />
 </head>
 <body>
   <Nav />
