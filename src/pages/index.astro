@@ -20,10 +20,13 @@ const artworks = rawArtworks.map((a: any) => ({
 	heroFeature: a.heroFeature !== false,
 	colorGradient: a.colorGradient || a.fallback || '',
 	imageUrl:
-		a.imageUrl || (a.image ? urlFor(a.image).width(1200).format('webp').quality(72).url() : ''),
+		a.imageUrl || (a.image ? urlFor(a.image).width(1200).format('webp').quality(68).url() : ''),
+	imageUrlTablet:
+		a.imageUrlTablet ||
+		(a.image ? urlFor(a.image).width(960).format('webp').quality(68).url() : ''),
 	imageUrlMobile:
 		a.imageUrlMobile ||
-		(a.image ? urlFor(a.image).width(640).format('webp').quality(72).url() : ''),
+		(a.image ? urlFor(a.image).width(640).format('webp').quality(70).url() : ''),
 	imageUrlThumb:
 		a.imageUrlThumb || (a.image ? urlFor(a.image).width(480).format('webp').quality(65).url() : ''),
 }));
@@ -31,6 +34,7 @@ const artworks = rawArtworks.map((a: any) => ({
 const heroArtworks = artworks.filter((a) => a.heroFeature && a.imageUrl).slice(0, 8);
 const firstHero = heroArtworks[0];
 const heroDesktopUrl = firstHero?.imageUrl || '';
+const heroTabletUrl = firstHero?.imageUrlTablet || heroDesktopUrl;
 const heroMobileUrl = firstHero?.imageUrlMobile || '';
 const featuredArtworks = (() => {
 	const f = artworks.filter((a) => a.featured);
@@ -148,7 +152,7 @@ const homeStats = siteSettings?.homePageStats
         rel="preload"
         as="image"
         href={heroMobileUrl}
-        imagesrcset={`${heroMobileUrl} 640w, ${heroDesktopUrl} 1200w`}
+        imagesrcset={`${heroMobileUrl} 640w, ${heroTabletUrl} 960w, ${heroDesktopUrl} 1200w`}
         imagesizes="(max-width: 768px) 100vw, 58vw"
         fetchpriority="high"
       />
@@ -175,7 +179,7 @@ const homeStats = siteSettings?.homePageStats
               class="hero-bg hero-img"
               id="heroImg"
               src={heroMobileUrl || heroDesktopUrl}
-              srcset={`${heroMobileUrl} 640w, ${heroDesktopUrl} 1200w`}
+              srcset={`${heroMobileUrl} 640w, ${heroTabletUrl} 960w, ${heroDesktopUrl} 1200w`}
               sizes="(max-width: 768px) 100vw, 58vw"
               width="1200"
               height="858"
@@ -399,7 +403,8 @@ const homeStats = siteSettings?.homePageStats
           if (bg.tagName === 'IMG') {
             if (a.imageUrl) {
               if (a.imageUrlMobile) {
-                bg.srcset = `${a.imageUrlMobile} 640w, ${a.imageUrl} 1200w`;
+                const tablet = a.imageUrlTablet || a.imageUrl;
+                bg.srcset = `${a.imageUrlMobile} 640w, ${tablet} 960w, ${a.imageUrl} 1200w`;
               }
               bg.src = a.imageUrlMobile || a.imageUrl;
               bg.alt = a.title || '';
