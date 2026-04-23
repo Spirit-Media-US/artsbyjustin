@@ -7,17 +7,17 @@ const galleryImages = siteSettings?.galleryImages || [];
 const etsyShopUrl = siteSettings?.etsyShopUrl || '';
 
 // Cloudinary URLs in this dataset were stored without transform params, so Cloudinary serves the
-// original multi-MB JPG. Inject c_limit,w_{width},f_webp,q_80 between /upload/ and /v{version}/
-// to force a resized WebP. No-op for non-Cloudinary URLs.
-function sizeExternalImage(url: string, width = 480): string {
+// original multi-MB JPG. Inject c_limit,w_{width},f_webp,q_65 between /upload/ and /v{version}/.
+function sizeExternalImage(url: string, width = 400): string {
 	if (!url || !url.includes('res.cloudinary.com')) return url;
-	if (url.includes('/upload/c_') || url.includes('/upload/w_')) return url; // already transformed
-	return url.replace('/upload/', `/upload/c_limit,w_${width},f_webp,q_80/`);
+	if (url.includes('/upload/c_') || url.includes('/upload/w_')) return url;
+	return url.replace('/upload/', `/upload/c_limit,w_${width},f_webp,q_65/`);
 }
 
-// Generate URLs for gallery images — 480w is plenty for 220px-wide print card tiles (DPR 2)
+// Card tiles display at 180px mobile 2-col / 240px desktop 4-col. 400w @ q=65 WebP covers DPR 2
+// on both and keeps per-card payload around 15-25 KB.
 const galleryImageUrls = galleryImages
-	.map((img: any) => urlFor(img).width(480).format('webp').quality(80).url())
+	.map((img: any) => urlFor(img).width(400).format('webp').quality(65).url())
 	.slice(0, 2);
 const printImage1 =
 	galleryImageUrls[0] ||
@@ -33,13 +33,11 @@ const printImage2 =
 // Fetch shop items from Sanity
 const rawShopItems = await getShopItems();
 
-// Normalize to the shape the JS client code expects
-// 480w covers both mobile 2-col (~185px @ DPR 2) and desktop 4-col (~240px @ DPR 2)
 const shopItemsData = rawShopItems.map((item: any, i: number) => {
 	const img = item.externalImageUrl
 		? sizeExternalImage(item.externalImageUrl)
 		: item.image
-			? urlFor(item.image).width(480).format('webp').quality(80).url()
+			? urlFor(item.image).width(400).format('webp').quality(65).url()
 			: '';
 	return {
 		id: i + 1,
@@ -88,7 +86,6 @@ const SHOP_ITEMS_JSON = JSON.stringify(shopItemsData);
   <section class="shop-section">
     <div class="shop-grid" id="shopGrid">
       {shopItemsData.map((item: any, i: number) => {
-        const isAbove = i < 4;
         const badge =
           item.type === 'print' ? '<span class="shop-badge badge-print">Fine Art Print</span>' :
           item.type === 'resin' ? '<span class="shop-badge badge-resin">Resin Art</span>' :
@@ -102,10 +99,10 @@ const SHOP_ITEMS_JSON = JSON.stringify(shopItemsData);
                   class="shop-img-bg"
                   src={item.img}
                   alt={item.title}
-                  loading={isAbove ? 'eager' : 'lazy'}
+                  loading="lazy"
                   decoding="async"
-                  width="480"
-                  height="640"
+                  width="400"
+                  height="533"
                 />
               )}
               <Fragment set:html={badge} />
