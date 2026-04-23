@@ -6,8 +6,10 @@ const siteSettings = await getSiteSettings();
 const galleryImages = siteSettings?.galleryImages || [];
 const etsyShopUrl = siteSettings?.etsyShopUrl || '';
 
-// Generate URLs for gallery images
-const galleryImageUrls = galleryImages.map((img: any) => urlFor(img).width(800).url()).slice(0, 2);
+// Generate URLs for gallery images — 480w is plenty for 220px-wide print card tiles (DPR 2)
+const galleryImageUrls = galleryImages
+	.map((img: any) => urlFor(img).width(480).format('webp').quality(80).url())
+	.slice(0, 2);
 const printImage1 =
 	galleryImageUrls[0] ||
 	'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764073/7F349BFB-3ACD-47D6-9AC5-56FFEB7345B9_jlvpk9.jpg';
@@ -19,8 +21,11 @@ const printImage2 =
 const rawShopItems = await getShopItems();
 
 // Normalize to the shape the JS client code expects
+// 480w covers both mobile 2-col (~185px @ DPR 2) and desktop 4-col (~240px @ DPR 2)
 const shopItemsData = rawShopItems.map((item: any, i: number) => {
-	const img = item.externalImageUrl || (item.image ? urlFor(item.image).width(800).url() : '');
+	const img =
+		item.externalImageUrl ||
+		(item.image ? urlFor(item.image).width(480).format('webp').quality(80).url() : '');
 	return {
 		id: i + 1,
 		type: item.shopCategory || 'original',
@@ -194,7 +199,7 @@ function buildShop(filter) {
     card.className = 'shop-card';
     card.innerHTML = `
       <div class="shop-img">
-        <div class="shop-img-bg" style="background:url('${item.img}') center top/cover no-repeat;"></div>
+        <img class="shop-img-bg" src="${item.img}" alt="${item.title}" loading="lazy" decoding="async" width="480" height="640" />
         ${getBadge(item)}
       </div>
       <div class="shop-info">
@@ -278,7 +283,7 @@ buildShop('all');
   .shop-card { background:var(--card); position:relative; display:flex; flex-direction:column; cursor:pointer; transition:transform 0.3s; }
   .shop-card:hover { transform:translateY(-4px); }
   .shop-img { aspect-ratio:3/4; overflow:hidden; position:relative; }
-  .shop-img-bg { width:100%; height:100%; background-size:cover; background-position:center top; transition:transform 0.6s,filter 0.4s; filter:brightness(0.85); }
+  .shop-img-bg { width:100%; height:100%; object-fit:cover; object-position:center top; display:block; transition:transform 0.6s,filter 0.4s; filter:brightness(0.85); }
   .shop-card:hover .shop-img-bg { transform:scale(1.05); filter:brightness(1); }
   .shop-badge { position:absolute; top:0.8rem; left:0.8rem; font-size:0.55rem; letter-spacing:1.5px; text-transform:uppercase; padding:0.3rem 0.7rem; font-weight:600; }
   .badge-available { background:rgba(201,168,76,0.9); color:var(--black); }

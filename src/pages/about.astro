@@ -4,12 +4,6 @@ import { getAboutSections, getSiteSettings, sanityClient, urlFor } from '../lib/
 
 const siteSettings = await getSiteSettings();
 
-// Use dedicated aboutPortraitImage, fall back to profilePhoto
-const portraitUrl = siteSettings?.aboutPortraitImage
-	? urlFor(siteSettings.aboutPortraitImage).width(800).url()
-	: siteSettings?.profilePhoto
-		? urlFor(siteSettings.profilePhoto).width(800).url()
-		: null;
 const instagramUrl = siteSettings?.instagramUrl;
 const facebookUrl = siteSettings?.facebookUrl;
 const tiktokUrl = siteSettings?.tiktokUrl;
@@ -35,9 +29,21 @@ const ch3Img = chapterImages?.ch3?.image
 const ch4Img = chapterImages?.ch4?.image
 	? urlFor(chapterImages.ch4.image).width(800).format('webp').url()
 	: '';
-const heroImg = chapterImages?.hero?.image
-	? urlFor(chapterImages.hero.image).width(800).format('webp').url()
-	: '';
+
+// Hero portrait — try Sanity CMS fields first (Justin uploads via Studio),
+// fall back to the portrait-tagged artwork found in chapterImages.hero.
+// Whichever resolves is the LCP element on this page; preload + fetchpriority applied to that one.
+const portraitSource =
+	siteSettings?.aboutPortraitImage ||
+	siteSettings?.profilePhoto ||
+	chapterImages?.hero?.image ||
+	null;
+const portraitMobileUrl = portraitSource
+	? urlFor(portraitSource).width(480).format('webp').quality(80).url()
+	: null;
+const portraitDesktopUrl = portraitSource
+	? urlFor(portraitSource).width(800).format('webp').quality(80).url()
+	: null;
 
 // Fetch about sections from Sanity CMS (Justin can edit these in Studio)
 const aboutSections = await getAboutSections();
@@ -68,6 +74,18 @@ function renderPortableText(blocks: any[]): string {
 const getSection = (order: number) => aboutSections.find((s: any) => s.order === order);
 ---
 <Layout title="The Story" description="From a village in Ukhrul, Manipur, India to international recognition — the story of Justin Keishing, Arts by Justin.">
+  {portraitMobileUrl && (
+    <Fragment slot="head-early">
+      <link
+        rel="preload"
+        as="image"
+        href={portraitMobileUrl}
+        imagesrcset={`${portraitMobileUrl} 480w, ${portraitDesktopUrl} 800w`}
+        imagesizes="(max-width: 768px) 100vw, 50vw"
+        fetchpriority="high"
+      />
+    </Fragment>
+  )}
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
@@ -108,16 +126,25 @@ const getSection = (order: number) => aboutSections.find((s: any) => s.order ===
     </div>
   </div>
   <div class="hero-right">
-    {portraitUrl
-      ? <img src={portraitUrl} alt="Justin Keishing" class="portrait-img" loading="eager"/>
-      : heroImg
-        ? <img src={heroImg} alt="Justin Keishing — Artist Portrait" class="portrait-img" loading="eager"/>
-        : <div class="portrait-placeholder">
-            <div class="portrait-placeholder-inner">
-              <div style="font-size:4rem; opacity:0.2;">📷</div>
-              <div style="font-size:0.65rem; letter-spacing:3px; text-transform:uppercase; margin-top:1rem; opacity:0.2;">Portrait Photo</div>
-            </div>
+    {portraitDesktopUrl
+      ? <img
+          src={portraitDesktopUrl}
+          srcset={`${portraitMobileUrl} 480w, ${portraitDesktopUrl} 800w`}
+          sizes="(max-width: 768px) 100vw, 50vw"
+          width="800"
+          height="1000"
+          alt="Justin Keishing"
+          class="portrait-img"
+          fetchpriority="high"
+          loading="eager"
+          decoding="async"
+        />
+      : <div class="portrait-placeholder">
+          <div class="portrait-placeholder-inner">
+            <div style="font-size:4rem; opacity:0.2;">📷</div>
+            <div style="font-size:0.65rem; letter-spacing:3px; text-transform:uppercase; margin-top:1rem; opacity:0.2;">Portrait Photo</div>
           </div>
+        </div>
     }
   </div>
 </section>
