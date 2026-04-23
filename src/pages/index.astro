@@ -153,7 +153,7 @@ const homeStats = siteSettings?.homePageStats
       as="image"
       href={heroMobileUrl}
       imagesrcset={`${heroMobileUrl} 640w, ${heroTabletUrl} 960w, ${heroDesktopUrl} 1200w`}
-      imagesizes="(max-width: 768px) 412px, 835px"
+      imagesizes="(max-width: 768px) 360px, 835px"
       fetchpriority="high"
     />
     <script type="application/ld+json" set:html={JSON.stringify({
@@ -177,7 +177,7 @@ const homeStats = siteSettings?.homePageStats
         id="heroImg"
         src={heroMobileUrl}
         srcset={`${heroMobileUrl} 640w, ${heroTabletUrl} 960w, ${heroDesktopUrl} 1200w`}
-        sizes="(max-width: 768px) 412px, 835px"
+        sizes="(max-width: 768px) 360px, 835px"
         width="1200"
         height="858"
         alt={firstHero?.title || 'Featured artwork by Justin Keishing'}
