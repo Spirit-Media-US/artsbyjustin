@@ -42,7 +42,13 @@ const featuredArtworks = (() => {
 	const f = artworks.filter((a) => a.featured);
 	return f.length >= 3 ? f.slice(0, 5) : artworks.slice(0, 5);
 })();
-const stripArtworks = artworks.slice(0, 5);
+// Gallery strip — prefer the first 5 artworks that actually have an image.
+// Prevents "title but no image" tiles when the first 5 in Sanity lack assets.
+// Connected to Sanity: as soon as an editor uploads images to any artwork,
+// those appear automatically (no code change needed).
+const artworksWithImages = artworks.filter((a) => a.imageUrlThumb || a.imageUrl);
+const stripArtworks =
+	artworksWithImages.length >= 5 ? artworksWithImages.slice(0, 5) : artworks.slice(0, 5);
 
 // Fetch siteSettings first
 let siteSettings: any = {};
@@ -234,12 +240,24 @@ const homeStats = siteSettings?.homePageStats
   <template id="below-fold-deferred">
   <!-- GALLERY STRIP -->
   <div class="strip">
-    {stripArtworks.map((a) => (
-      <div class="strip-item">
-        <div class="strip-bg" style={a.imageUrlThumb ? `background:url('${a.imageUrlThumb}') center/cover no-repeat` : (a.imageUrl ? `background:url('${a.imageUrl}') center/cover no-repeat` : `background:${a.colorGradient || '#222'}`)}></div>
-        <div class="strip-caption"><span>{a.title} · {a.medium}</span></div>
-      </div>
-    ))}
+    {stripArtworks.map((a) => {
+      const bg = a.imageUrlThumb
+        ? `background:url('${a.imageUrlThumb}') center/cover no-repeat`
+        : a.imageUrl
+          ? `background:url('${a.imageUrl}') center/cover no-repeat`
+          : a.colorGradient
+            ? `background:${a.colorGradient}`
+            // Sanity-missing fallback — decorative gold-tinted gradient so the
+            // tile reads as intentional, not broken. Editor upload in Studio
+            // replaces it automatically.
+            : 'background:linear-gradient(135deg,#1a1400,#2a2000,#3d2e00,#1a1400)';
+      return (
+        <div class="strip-item">
+          <div class="strip-bg" style={bg}></div>
+          <div class="strip-caption"><span>{a.title} · {a.medium}</span></div>
+        </div>
+      );
+    })}
   </div>
 
   <!-- ABOUT -->

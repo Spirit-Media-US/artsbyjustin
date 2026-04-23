@@ -39,9 +39,19 @@ const subjects = Object.entries(SUBJECT_SLUGS);
 // Count artworks per medium and subject
 const mediumCounts: Record<string, number> = {};
 const subjectCounts: Record<string, number> = {};
+// Pick the first artwork with an image for each medium/subject — becomes the
+// card background. Connected to Sanity: tag more artworks with a medium or
+// category in Studio and the card auto-updates with the newest tagged piece.
+const mediumHeroImage: Record<string, string> = {};
+const subjectHeroImage: Record<string, string> = {};
 for (const a of allArtworks) {
 	if (a.medium) mediumCounts[a.medium] = (mediumCounts[a.medium] || 0) + 1;
 	if (a.category) subjectCounts[a.category] = (subjectCounts[a.category] || 0) + 1;
+	if (a.image?.asset) {
+		const thumb = urlFor(a.image).width(400).format('webp').quality(60).url();
+		if (a.medium && !mediumHeroImage[a.medium]) mediumHeroImage[a.medium] = thumb;
+		if (a.category && !subjectHeroImage[a.category]) subjectHeroImage[a.category] = thumb;
+	}
 }
 ---
 
@@ -85,22 +95,36 @@ for (const a of allArtworks) {
         <span class="text-xs uppercase tracking-[0.3em] text-gold/60 font-body">01 / Mediums</span>
       </div>
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-0">
-        {mediums.map(([name, slug], i) => (
-          <a href={`/gallery/medium/${slug}`} class:list={[
-            'group relative aspect-[3/4] overflow-hidden cursor-pointer',
-            i > 0 && 'border-l border-white/5'
-          ]}>
-            <div class="absolute inset-0 bg-surface-container"></div>
-            <div class="absolute inset-0 flex items-end p-6 bg-gradient-to-t from-black/80 to-transparent">
-              <div>
-                <span class="text-xs uppercase tracking-[0.2em] text-gold-bright font-bold font-body block">{name}</span>
-                {mediumCounts[name] && (
-                  <span class="text-xs text-ink-muted/60 mt-1 block">{mediumCounts[name]} works</span>
-                )}
+        {mediums.map(([name, slug], i) => {
+          const heroImg = mediumHeroImage[name];
+          return (
+            <a href={`/gallery/medium/${slug}`} class:list={[
+              'group relative aspect-[3/4] overflow-hidden cursor-pointer',
+              i > 0 && 'border-l border-white/5'
+            ]}>
+              {heroImg
+                ? <img
+                    src={heroImg}
+                    alt={name}
+                    class="absolute inset-0 w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                    width="400"
+                    height="533"
+                  />
+                : <div class="absolute inset-0 bg-surface-container"></div>
+              }
+              <div class="absolute inset-0 flex items-end p-6 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
+                <div>
+                  <span class="text-xs uppercase tracking-[0.2em] text-gold-bright font-bold font-body block">{name}</span>
+                  {mediumCounts[name] && (
+                    <span class="text-xs text-ink-muted/60 mt-1 block">{mediumCounts[name]} works</span>
+                  )}
+                </div>
               </div>
-            </div>
-          </a>
-        ))}
+            </a>
+          );
+        })}
       </div>
     </div>
   </section>
@@ -113,22 +137,36 @@ for (const a of allArtworks) {
         <span class="text-xs uppercase tracking-[0.3em] text-gold/60 font-body">02 / Themes</span>
       </div>
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-0">
-        {subjects.map(([name, slug], i) => (
-          <a href={`/gallery/subject/${slug}`} class:list={[
-            'group relative aspect-[3/4] overflow-hidden cursor-pointer',
-            i > 0 && 'border-l border-white/5'
-          ]}>
-            <div class="absolute inset-0 bg-surface-container"></div>
-            <div class="absolute inset-0 flex items-end p-6 bg-gradient-to-t from-black/80 to-transparent">
-              <div>
-                <span class="text-xs uppercase tracking-[0.2em] text-gold-bright font-bold font-body block">{name}</span>
-                {subjectCounts[name] && (
-                  <span class="text-xs text-ink-muted/60 mt-1 block">{subjectCounts[name]} works</span>
-                )}
+        {subjects.map(([name, slug], i) => {
+          const heroImg = subjectHeroImage[name];
+          return (
+            <a href={`/gallery/subject/${slug}`} class:list={[
+              'group relative aspect-[3/4] overflow-hidden cursor-pointer',
+              i > 0 && 'border-l border-white/5'
+            ]}>
+              {heroImg
+                ? <img
+                    src={heroImg}
+                    alt={name}
+                    class="absolute inset-0 w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                    width="400"
+                    height="533"
+                  />
+                : <div class="absolute inset-0 bg-surface-container"></div>
+              }
+              <div class="absolute inset-0 flex items-end p-6 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
+                <div>
+                  <span class="text-xs uppercase tracking-[0.2em] text-gold-bright font-bold font-body block">{name}</span>
+                  {subjectCounts[name] && (
+                    <span class="text-xs text-ink-muted/60 mt-1 block">{subjectCounts[name]} works</span>
+                  )}
+                </div>
               </div>
-            </div>
-          </a>
-        ))}
+            </a>
+          );
+        })}
       </div>
     </div>
   </section>
