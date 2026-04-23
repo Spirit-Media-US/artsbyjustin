@@ -443,7 +443,7 @@ const homeStats = siteSettings?.homePageStats
       }
       // Desktop has CPU headroom — hydrate immediately so desktop scores 100.
       // Mobile waits for idle so Lighthouse LCP window only measures the hero.
-      if (window.innerWidth >= 1024) {
+      if (window.matchMedia('(min-width: 1024px)').matches) {
         hydrate();
       } else if ('requestIdleCallback' in window) {
         requestIdleCallback(hydrate, { timeout: 2000 });
