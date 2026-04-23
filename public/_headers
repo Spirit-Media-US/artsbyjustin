@@ -9,6 +9,4 @@
   Link: <https://assets.spiritmediapublishing.com/fonts/playfair-display/playfair-display-700.woff2>; rel=preload; as=font; type=font/woff2; crossorigin
 
 /
-  # Mobile hero is inlined as a base64 data URI in /index.html; no separate preload.
-  # Early Hints for desktop/tablet hero not added (CF Early Hints don't respect
-  # media queries and we don't want mobile to fetch the large desktop variant).
+  Link: <https://assets.spiritmediapublishing.com/artsbyjustin/hero-mobile-v2.webp>; rel=preload; as=image
