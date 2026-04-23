@@ -30,11 +30,14 @@
 	font-display: swap;
 	src: url("https://assets.spiritmediapublishing.com/fonts/inter/inter-600.woff2") format("woff2");
 }
+/* Playfair uses font-display: optional — prevents late font swap from triggering
+   LCP re-paint on text-LCP pages (shop, about). On first visit with slow network
+   the fallback serif stays; on repeat visits Playfair loads from cache. */
 @font-face {
 	font-family: "Playfair Display";
 	font-style: normal;
 	font-weight: 400;
-	font-display: swap;
+	font-display: optional;
 	src: url("https://assets.spiritmediapublishing.com/fonts/playfair-display/playfair-display-400.woff2")
 		format("woff2");
 }
@@ -42,7 +45,7 @@
 	font-family: "Playfair Display";
 	font-style: italic;
 	font-weight: 400;
-	font-display: swap;
+	font-display: optional;
 	src: url("https://assets.spiritmediapublishing.com/fonts/playfair-display/playfair-display-400-italic.woff2")
 		format("woff2");
 }
@@ -50,7 +53,7 @@
 	font-family: "Playfair Display";
 	font-style: normal;
 	font-weight: 700;
-	font-display: swap;
+	font-display: optional;
 	src: url("https://assets.spiritmediapublishing.com/fonts/playfair-display/playfair-display-700.woff2")
 		format("woff2");
 }
