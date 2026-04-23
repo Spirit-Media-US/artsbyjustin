@@ -345,6 +345,26 @@ const ogImage = siteSettings?.ogImage
 <body>
   <Nav />
   <main><slot /></main>
-  <Footer />
+  {/* Footer is deferred via <template> so browser doesn't style/layout it
+      during the LCP window. Hydrated after DOMContentLoaded + requestIdleCallback.
+      Same pattern used for homepage sections 2-11. */}
+  <template id="footer-deferred"><Footer /></template>
+  <div id="footer-mount"></div>
+  <script is:inline>
+    (function () {
+      var tpl = document.getElementById('footer-deferred');
+      var mount = document.getElementById('footer-mount');
+      if (!tpl || !mount) return;
+      function hydrate() {
+        mount.appendChild(tpl.content.cloneNode(true));
+        tpl.remove();
+      }
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(hydrate, { timeout: 2000 });
+      } else {
+        setTimeout(hydrate, 200);
+      }
+    })();
+  </script>
 </body>
 </html>
