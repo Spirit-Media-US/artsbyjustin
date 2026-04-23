@@ -359,7 +359,11 @@ const ogImage = siteSettings?.ogImage
         mount.appendChild(tpl.content.cloneNode(true));
         tpl.remove();
       }
-      if ('requestIdleCallback' in window) {
+      // Desktop has plenty of CPU headroom — hydrate immediately so the page
+      // behaves like there's no deferral at all. Mobile only waits for idle.
+      if (window.innerWidth >= 1024) {
+        hydrate();
+      } else if ('requestIdleCallback' in window) {
         requestIdleCallback(hydrate, { timeout: 2000 });
       } else {
         setTimeout(hydrate, 200);
