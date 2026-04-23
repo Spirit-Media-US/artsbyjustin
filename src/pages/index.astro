@@ -36,7 +36,9 @@ const firstHero = heroArtworks[0];
 // Hero LCP — served from R2 (same origin as fonts, stable URL, 103 Early Hints compatible)
 const heroDesktopUrl = 'https://assets.spiritmediapublishing.com/artsbyjustin/hero-desktop.webp';
 const heroTabletUrl = 'https://assets.spiritmediapublishing.com/artsbyjustin/hero-tablet.webp';
-const heroMobileUrl = 'https://assets.spiritmediapublishing.com/artsbyjustin/hero-mobile.webp';
+// hero-mobile-v2.webp is a 480w q=70 re-encode of hero-mobile.webp (128KB → 63KB).
+// Same visual under the darkening brightness filter + gradient overlay.
+const heroMobileUrl = 'https://assets.spiritmediapublishing.com/artsbyjustin/hero-mobile-v2.webp';
 const featuredArtworks = (() => {
 	const f = artworks.filter((a) => a.featured);
 	return f.length >= 3 ? f.slice(0, 5) : artworks.slice(0, 5);
