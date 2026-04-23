@@ -78,6 +78,9 @@ const categories = CATEGORY_DEFS.map((cat) => ({
 	artwork: artworks.find((a) => a.category === cat.name) || null,
 }));
 
+// Pass artworks as JSON for client-side hero rotation
+const artworksJson = JSON.stringify(heroArtworks);
+
 // Extract values from siteSettings with sensible defaults
 const location = siteSettings?.location || 'Raleigh, NC';
 const foundingYear = siteSettings?.foundingYear || 2020;
@@ -381,6 +384,41 @@ const homeStats = siteSettings?.homePageStats
   </section>
 
 </Layout>
+
+<script define:vars={{ artworksJson }}>
+  const heroArtworks = JSON.parse(artworksJson);
+  if (heroArtworks.length > 1) {
+    let idx = 1;
+    const wrap = document.getElementById('heroPainting');
+    const caption = document.getElementById('heroCaption');
+    setInterval(() => {
+      const a = heroArtworks[idx % heroArtworks.length];
+      if (wrap) {
+        const bg = wrap.querySelector('.hero-bg');
+        if (bg) {
+          if (bg.tagName === 'IMG') {
+            if (a.imageUrl) {
+              if (a.imageUrlMobile) {
+                const tablet = a.imageUrlTablet || a.imageUrl;
+                bg.srcset = `${a.imageUrlMobile} 640w, ${tablet} 960w, ${a.imageUrl} 1200w`;
+              }
+              bg.src = a.imageUrlMobile || a.imageUrl;
+              bg.alt = a.title || '';
+            }
+          } else {
+            if (a.imageUrl) {
+              bg.style.background = `url('${a.imageUrl}') center/cover no-repeat`;
+            } else {
+              bg.style.background = a.colorGradient || '#111';
+            }
+          }
+        }
+      }
+      if (caption) caption.textContent = `${a.title} · ${a.medium}`;
+      idx++;
+    }, 5000);
+  }
+</script>
 
 <style>
   /* HERO */
