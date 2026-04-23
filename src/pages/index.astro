@@ -149,12 +149,16 @@ const homeStats = siteSettings?.homePageStats
 ---
 <Layout title={tagline} description={bio || `Bold, expressive, spirit-led art created in ${location} — collected around the world. Original acrylic & mixed media works by ${artistName}.`}>
   <Fragment slot="head">
+    {/* Hero painting is hidden on mobile (<1024px) — see §6 text-first LCP
+        pattern in performance-gate.md. Preload gated to desktop so PSI mobile
+        never fetches the hero image. */}
     <link
       rel="preload"
       as="image"
-      href={heroMobileUrl}
-      imagesrcset={`${heroMobileUrl} 640w, ${heroTabletUrl} 960w, ${heroDesktopUrl} 1200w`}
-      imagesizes="(max-width: 768px) 360px, 835px"
+      href={heroDesktopUrl}
+      imagesrcset={`${heroTabletUrl} 960w, ${heroDesktopUrl} 1200w`}
+      imagesizes="835px"
+      media="(min-width: 1024px)"
       fetchpriority="high"
     />
     <script type="application/ld+json" set:html={JSON.stringify({
@@ -176,14 +180,13 @@ const homeStats = siteSettings?.homePageStats
       <img
         class="hero-bg hero-img"
         id="heroImg"
-        src={heroMobileUrl}
-        srcset={`${heroMobileUrl} 640w, ${heroTabletUrl} 960w, ${heroDesktopUrl} 1200w`}
-        sizes="(max-width: 768px) 360px, 835px"
+        src={heroDesktopUrl}
+        srcset={`${heroTabletUrl} 960w, ${heroDesktopUrl} 1200w`}
+        sizes="835px"
         width="1200"
         height="858"
         alt={firstHero?.title || 'Featured artwork by Justin Keishing'}
-        fetchpriority="high"
-        loading="eager"
+        loading="lazy"
         decoding="async"
       />
     </div>
@@ -557,8 +560,16 @@ const homeStats = siteSettings?.homePageStats
     .stats-nums { width:100%; max-width:400px; }
     .mag { grid-template-columns:1fr; gap:3rem; }
   }
+  @media (max-width:1023px) {
+    /* §6 text-first mobile LCP pattern — hide hero painting on mobile so the
+       LCP element becomes the H1 text (paints from HTML instantly). Desktop
+       (≥1024px) keeps the full image-hero unchanged. */
+    .hero-painting { display:none; }
+    .hero-fade { display:none; }
+    .hero-caption { display:none; }
+    .hero-content { max-width:100%; padding:0 2rem; }
+  }
   @media (max-width:768px) {
-    .hero-painting { width:100%; opacity:0.3; }
     .hero-content { max-width:100%; padding:0 2rem; }
     .strip { grid-template-columns:repeat(3,1fr); height:180px; }
     .strip-item:nth-child(4), .strip-item:nth-child(5) { display:none; }

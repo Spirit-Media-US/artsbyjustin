@@ -9,4 +9,6 @@
   Link: <https://assets.spiritmediapublishing.com/fonts/playfair-display/playfair-display-700.woff2>; rel=preload; as=font; type=font/woff2; crossorigin
 
 /
-  Link: <https://assets.spiritmediapublishing.com/artsbyjustin/hero-mobile-v2.webp>; rel=preload; as=image
+  # Hero painting is desktop-only (§6 text-first mobile pattern in index.astro).
+  # No mobile hero preload; desktop preload lives in index.astro head with media
+  # query gating so PSI mobile never fetches the image.
