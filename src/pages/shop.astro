@@ -6,16 +6,29 @@ const siteSettings = await getSiteSettings();
 const galleryImages = siteSettings?.galleryImages || [];
 const etsyShopUrl = siteSettings?.etsyShopUrl || '';
 
+// Cloudinary URLs in this dataset were stored without transform params, so Cloudinary serves the
+// original multi-MB JPG. Inject c_limit,w_{width},f_webp,q_80 between /upload/ and /v{version}/
+// to force a resized WebP. No-op for non-Cloudinary URLs.
+function sizeExternalImage(url: string, width = 480): string {
+	if (!url || !url.includes('res.cloudinary.com')) return url;
+	if (url.includes('/upload/c_') || url.includes('/upload/w_')) return url; // already transformed
+	return url.replace('/upload/', `/upload/c_limit,w_${width},f_webp,q_80/`);
+}
+
 // Generate URLs for gallery images — 480w is plenty for 220px-wide print card tiles (DPR 2)
 const galleryImageUrls = galleryImages
 	.map((img: any) => urlFor(img).width(480).format('webp').quality(80).url())
 	.slice(0, 2);
 const printImage1 =
 	galleryImageUrls[0] ||
-	'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764073/7F349BFB-3ACD-47D6-9AC5-56FFEB7345B9_jlvpk9.jpg';
+	sizeExternalImage(
+		'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764073/7F349BFB-3ACD-47D6-9AC5-56FFEB7345B9_jlvpk9.jpg',
+	);
 const printImage2 =
 	galleryImageUrls[1] ||
-	'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764073/A34786D0-51D9-4524-B2A2-C2723CECE012_ugjrze.jpg';
+	sizeExternalImage(
+		'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764073/A34786D0-51D9-4524-B2A2-C2723CECE012_ugjrze.jpg',
+	);
 
 // Fetch shop items from Sanity
 const rawShopItems = await getShopItems();
@@ -23,9 +36,11 @@ const rawShopItems = await getShopItems();
 // Normalize to the shape the JS client code expects
 // 480w covers both mobile 2-col (~185px @ DPR 2) and desktop 4-col (~240px @ DPR 2)
 const shopItemsData = rawShopItems.map((item: any, i: number) => {
-	const img =
-		item.externalImageUrl ||
-		(item.image ? urlFor(item.image).width(480).format('webp').quality(80).url() : '');
+	const img = item.externalImageUrl
+		? sizeExternalImage(item.externalImageUrl)
+		: item.image
+			? urlFor(item.image).width(480).format('webp').quality(80).url()
+			: '';
 	return {
 		id: i + 1,
 		type: item.shopCategory || 'original',
@@ -42,11 +57,6 @@ const shopItemsData = rawShopItems.map((item: any, i: number) => {
 const SHOP_ITEMS_JSON = JSON.stringify(shopItemsData);
 ---
 <Layout title="Shop" description="Own original paintings, fine art prints, and resin art by Justin Keishing — collected around the world.">
-  {shopItemsData[0]?.img && (
-    <Fragment slot="head-early">
-      <link rel="preload" as="image" href={shopItemsData[0].img} fetchpriority="high" />
-    </Fragment>
-  )}
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
@@ -94,7 +104,6 @@ const SHOP_ITEMS_JSON = JSON.stringify(shopItemsData);
                   alt={item.title}
                   loading={isAbove ? 'eager' : 'lazy'}
                   decoding="async"
-                  fetchpriority={i === 0 ? 'high' : 'auto'}
                   width="480"
                   height="640"
                 />
