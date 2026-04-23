@@ -472,14 +472,6 @@ const homeStats = siteSettings?.homePageStats
   .about-body p { color:var(--gray2); font-size:0.93rem; line-height:1.9; margin-bottom:1rem; font-weight:300; }
 
   /* WORKS / MASONRY */
-  /* content-visibility: auto defers layout/paint for below-fold sections.
-     Each gets contain-intrinsic-size as a size hint so scroll-bar doesn't
-     jump when content paints in. Reduces PSI mobile variance by cutting
-     layout work during initial page load. */
-  .works, .cats, .mag, .comm, .stats-band, .testi, .shop, .cta-section {
-    content-visibility: auto;
-    contain-intrinsic-size: auto 1000px;
-  }
   .works { padding:6rem 3rem; background:var(--black); }
   .works-hdr { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:2.5rem; }
   .works-hdr h2 { font-family:'Playfair Display',serif; font-size:2.2rem; }
