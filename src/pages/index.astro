@@ -177,18 +177,27 @@ const homeStats = siteSettings?.homePageStats
   <!-- HERO -->
   <section class="hero">
     <div class="hero-painting" id="heroPainting">
-      <img
-        class="hero-bg hero-img"
-        id="heroImg"
-        src={heroDesktopUrl}
-        srcset={`${heroTabletUrl} 960w, ${heroDesktopUrl} 1200w`}
-        sizes="835px"
-        width="1200"
-        height="858"
-        alt={firstHero?.title || 'Featured artwork by Justin Keishing'}
-        loading="lazy"
-        decoding="async"
-      />
+      {/* <picture> with a media-gated <source> for desktop and a 1-byte
+          transparent GIF fallback img. Mobile browsers see no matching
+          <source> and use the transparent fallback (zero network bytes).
+          CSS display:none on .hero-painting hides the placeholder on mobile. */}
+      <picture>
+        <source
+          media="(min-width: 1024px)"
+          srcset={`${heroTabletUrl} 960w, ${heroDesktopUrl} 1200w`}
+          sizes="835px"
+        />
+        <img
+          class="hero-bg hero-img"
+          id="heroImg"
+          src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+          width="1200"
+          height="858"
+          alt={firstHero?.title || 'Featured artwork by Justin Keishing'}
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
     </div>
     <div class="hero-fade"></div>
     <div class="hero-content">
