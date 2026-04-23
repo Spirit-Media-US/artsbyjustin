@@ -219,6 +219,14 @@ const homeStats = siteSettings?.homePageStats
     </div>
   </section>
 
+  {/* Mobile "Show Full Homepage" button — only visible on <1024px. Toggles
+      body.mobile-expanded which un-hides .home-below-hero. Desktop never
+      sees this button. */}
+  <button type="button" id="mobileExpandBtn" class="mobile-expand-btn">
+    Show Full Homepage <span aria-hidden="true">↓</span>
+  </button>
+
+  <div class="home-below-hero">
   <!-- GALLERY STRIP -->
   <div class="strip">
     {stripArtworks.map((a) => (
@@ -394,7 +402,18 @@ const homeStats = siteSettings?.homePageStats
     <p>Whether you're a collector, a gallery, or someone who just feels<br/>something looking at this work — I'd love to hear from you.</p>
     <a href="/contact" class="btn-gold">Contact Justin →</a>
   </section>
+  </div>{/* /.home-below-hero */}
 
+  <script is:inline>
+    (function () {
+      var btn = document.getElementById('mobileExpandBtn');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        document.body.classList.add('mobile-expanded');
+        btn.remove();
+      });
+    })();
+  </script>
 </Layout>
 
 <script define:vars={{ artworksJson }}>
@@ -472,6 +491,39 @@ const homeStats = siteSettings?.homePageStats
   .about-body p { color:var(--gray2); font-size:0.93rem; line-height:1.9; margin-bottom:1rem; font-weight:300; }
 
   /* WORKS / MASONRY */
+  /* Option B mobile simplification:
+     On <1024px, hide everything below the hero until user taps "Show Full
+     Homepage". Desktop never sees the button and .home-below-hero is just
+     a pass-through wrapper.
+     Default (desktop ≥1024px): no styling applied — everything visible. */
+  .mobile-expand-btn { display: none; }
+  @media (max-width: 1023px) {
+    .home-below-hero { display: none; }
+    body.mobile-expanded .home-below-hero { display: block; }
+    .mobile-expand-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 2rem auto;
+      padding: 0.9rem 2rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #080808;
+      background: linear-gradient(135deg, #e6c364, #c9a84c);
+      border: 0;
+      cursor: pointer;
+      width: calc(100% - 3rem);
+      max-width: 360px;
+      justify-content: center;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    body.mobile-expanded .mobile-expand-btn { display: none; }
+  }
   .works { padding:6rem 3rem; background:var(--black); }
   .works-hdr { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:2.5rem; }
   .works-hdr h2 { font-family:'Playfair Display',serif; font-size:2.2rem; }
