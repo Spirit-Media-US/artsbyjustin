@@ -42,6 +42,11 @@ const shopItemsData = rawShopItems.map((item: any, i: number) => {
 const SHOP_ITEMS_JSON = JSON.stringify(shopItemsData);
 ---
 <Layout title="Shop" description="Own original paintings, fine art prints, and resin art by Justin Keishing — collected around the world.">
+  {shopItemsData[0]?.img && (
+    <Fragment slot="head-early">
+      <link rel="preload" as="image" href={shopItemsData[0].img} fetchpriority="high" />
+    </Fragment>
+  )}
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
@@ -68,9 +73,61 @@ const SHOP_ITEMS_JSON = JSON.stringify(shopItemsData);
     <button class="filter-btn" data-filter="resin">Resin Art</button>
   </div>
 
-  <!-- SHOP GRID -->
+  <!-- SHOP GRID — server-rendered so images are in HTML from first paint.
+       Filter buttons toggle .hidden on cards via JS; no re-render required. -->
   <section class="shop-section">
-    <div class="shop-grid" id="shopGrid"></div>
+    <div class="shop-grid" id="shopGrid">
+      {shopItemsData.map((item: any, i: number) => {
+        const isAbove = i < 4;
+        const badge =
+          item.type === 'print' ? '<span class="shop-badge badge-print">Fine Art Print</span>' :
+          item.type === 'resin' ? '<span class="shop-badge badge-resin">Resin Art</span>' :
+          item.sold ? '<span class="shop-badge badge-sold">Sold</span>' :
+          '<span class="shop-badge badge-available">Available</span>';
+        return (
+          <div class="shop-card" data-filter-type={item.type} data-item-id={item.id}>
+            <div class="shop-img">
+              {item.img && (
+                <img
+                  class="shop-img-bg"
+                  src={item.img}
+                  alt={item.title}
+                  loading={isAbove ? 'eager' : 'lazy'}
+                  decoding="async"
+                  fetchpriority={i === 0 ? 'high' : 'auto'}
+                  width="480"
+                  height="640"
+                />
+              )}
+              <Fragment set:html={badge} />
+            </div>
+            <div class="shop-info">
+              <div class="shop-cat">{item.series}</div>
+              <div class="shop-title">{item.title}</div>
+              <div class="shop-meta">{item.medium} · {item.size} · {item.year}</div>
+              <div class={`shop-price ${item.sold ? 'sold' : ''}`}>{item.sold ? 'Sold' : item.price}</div>
+            </div>
+            <div class="shop-actions">
+              {item.type === 'print' && (
+                <a class="btn-gold" href={etsyShopUrl} target="_blank" rel="noopener">Shop Prints on Etsy →</a>
+              )}
+              {item.type !== 'print' && item.sold && (
+                <button type="button" class="btn-ghost" data-inquire={item.id} data-inquire-type="general">Inquire About Similar Work →</button>
+              )}
+              {item.type === 'resin' && !item.sold && (
+                <a class="btn-gold" href={etsyShopUrl} target="_blank" rel="noopener">Request Pricing on Etsy →</a>
+              )}
+              {item.type === 'original' && !item.sold && (
+                <>
+                  <a class="btn-gold" href={etsyShopUrl} target="_blank" rel="noopener">Buy on Etsy — {item.price} →</a>
+                  <button type="button" class="btn-ghost" data-inquire={item.id} data-inquire-type="print">Inquire About a Print</button>
+                </>
+              )}
+            </div>
+          </div>
+        );
+      })}
+    </div>
   </section>
 
   <!-- PRINTS SECTION -->
@@ -170,74 +227,42 @@ const SHOP_ITEMS_JSON = JSON.stringify(shopItemsData);
 
 </Layout>
 
-<script define:vars={{ etsyShopUrl, SHOP_ITEMS_JSON }}>
-const ETSY = etsyShopUrl;
-
+<script define:vars={{ SHOP_ITEMS_JSON }}>
 const shopItems = JSON.parse(SHOP_ITEMS_JSON);
 
-function getBadge(item) {
-  if (item.type === 'print') return '<span class="shop-badge badge-print">Fine Art Print</span>';
-  if (item.type === 'resin') return '<span class="shop-badge badge-resin">Resin Art</span>';
-  if (item.sold) return '<span class="shop-badge badge-sold">Sold</span>';
-  return '<span class="shop-badge badge-available">Available</span>';
-}
-
-function getActions(item) {
-  if (item.type === 'print') return `<a class="btn-gold" href="${ETSY}" target="_blank" rel="noopener">Shop Prints on Etsy →</a>`;
-  if (item.sold) return `<button class="btn-ghost" onclick="openInquiry(${item.id},'general')">Inquire About Similar Work →</button>`;
-  if (item.type === 'resin') return `<a class="btn-gold" href="${ETSY}" target="_blank" rel="noopener">Request Pricing on Etsy →</a>`;
-  return `<a class="btn-gold" href="${ETSY}" target="_blank" rel="noopener">Buy on Etsy — ${item.price} →</a>
-          <button class="btn-ghost" onclick="openInquiry(${item.id},'print')">Inquire About a Print</button>`;
-}
-
-function buildShop(filter) {
-  const grid = document.getElementById('shopGrid');
-  grid.innerHTML = '';
-  const items = filter === 'all' ? shopItems : shopItems.filter(i => i.type === filter);
-  items.forEach(item => {
-    const card = document.createElement('div');
-    card.className = 'shop-card';
-    card.innerHTML = `
-      <div class="shop-img">
-        <img class="shop-img-bg" src="${item.img}" alt="${item.title}" loading="lazy" decoding="async" width="480" height="640" />
-        ${getBadge(item)}
-      </div>
-      <div class="shop-info">
-        <div class="shop-cat">${item.series}</div>
-        <div class="shop-title">${item.title}</div>
-        <div class="shop-meta">${item.medium} · ${item.size} · ${item.year}</div>
-        <div class="shop-price ${item.sold ? 'sold' : ''}">${item.sold ? 'Sold' : item.price}</div>
-      </div>
-      <div class="shop-actions">${getActions(item)}</div>`;
-    grid.appendChild(card);
+// FILTER — toggle visibility by type, no re-render
+function applyFilter(filter) {
+  document.querySelectorAll('.shop-card').forEach(card => {
+    const t = card.getAttribute('data-filter-type');
+    card.style.display = (filter === 'all' || t === filter) ? '' : 'none';
   });
-  document.getElementById('printsSection').style.display = (filter === 'original') ? 'none' : '';
+  const prints = document.getElementById('printsSection');
+  if (prints) prints.style.display = (filter === 'original') ? 'none' : '';
 }
 
-// Filter buttons
 document.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    buildShop(btn.dataset.filter);
+    applyFilter(btn.dataset.filter);
   });
 });
 
-// Inquiry modal
-let currentInquiryId = null;
+// INQUIRY MODAL — delegated from card action buttons
 function openInquiry(id, type) {
-  currentInquiryId = id;
-  document.getElementById('inqForm').style.display = '';
-  document.getElementById('inqSuccess').style.display = 'none';
+  const form = document.getElementById('inqForm');
+  const success = document.getElementById('inqSuccess');
+  form.style.display = '';
+  success.style.display = 'none';
   const sel = document.getElementById('inqType');
   const titleEl = document.getElementById('inqTitle');
   if (type === 'print') { sel.value = 'print'; titleEl.textContent = 'Inquire About a Print'; }
   else { sel.value = 'general'; titleEl.textContent = 'Get in Touch'; }
   const f = document.getElementById('inqFor');
   if (id) {
-    const item = shopItems.find(x => x.id === id);
+    const item = shopItems.find(x => x.id === Number(id));
     f.style.display = '';
-    f.innerHTML = `Regarding: <strong>${item.title}</strong> · ${item.medium}`;
+    f.innerHTML = item ? `Regarding: <strong>${item.title}</strong> · ${item.medium}` : '';
   } else f.style.display = 'none';
   document.getElementById('inquiryModal').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -246,6 +271,13 @@ function closeInquiry() {
   document.getElementById('inquiryModal').classList.remove('open');
   document.body.style.overflow = '';
 }
+document.addEventListener('click', e => {
+  const inq = e.target.closest('[data-inquire]');
+  if (inq) {
+    e.preventDefault();
+    openInquiry(inq.getAttribute('data-inquire'), inq.getAttribute('data-inquire-type'));
+  }
+});
 document.getElementById('inquiryModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeInquiry(); });
 document.getElementById('inqCloseBtn').addEventListener('click', closeInquiry);
 document.getElementById('inqSubmitBtn').addEventListener('click', () => {
@@ -257,8 +289,6 @@ document.getElementById('inqSubmitBtn').addEventListener('click', () => {
   setTimeout(closeInquiry, 3500);
 });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeInquiry(); });
-
-buildShop('all');
 </script>
 
 <style>

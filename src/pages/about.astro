@@ -74,14 +74,13 @@ function renderPortableText(blocks: any[]): string {
 const getSection = (order: number) => aboutSections.find((s: any) => s.order === order);
 ---
 <Layout title="The Story" description="From a village in Ukhrul, Manipur, India to international recognition — the story of Justin Keishing, Arts by Justin.">
-  {portraitMobileUrl && (
+  {portraitDesktopUrl && (
     <Fragment slot="head-early">
       <link
         rel="preload"
         as="image"
-        href={portraitMobileUrl}
-        imagesrcset={`${portraitMobileUrl} 480w, ${portraitDesktopUrl} 800w`}
-        imagesizes="(max-width: 768px) 100vw, 50vw"
+        href={portraitDesktopUrl}
+        media="(min-width: 1024px)"
         fetchpriority="high"
       />
     </Fragment>
@@ -135,8 +134,7 @@ const getSection = (order: number) => aboutSections.find((s: any) => s.order ===
           height="1000"
           alt="Justin Keishing"
           class="portrait-img"
-          fetchpriority="high"
-          loading="eager"
+          loading="lazy"
           decoding="async"
         />
       : <div class="portrait-placeholder">
