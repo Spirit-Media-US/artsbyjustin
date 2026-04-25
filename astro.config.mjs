@@ -6,6 +6,9 @@ export default defineConfig({
 	site: 'https://artsbyjustin.com',
 	server: { host: true, port: 4322 },
 	integrations: [sitemap()],
+	build: {
+		inlineStylesheets: 'auto',
+	},
 	vite: {
 		server: { allowedHosts: true },
 		plugins: [tailwindcss()],

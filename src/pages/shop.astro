@@ -6,21 +6,39 @@ const siteSettings = await getSiteSettings();
 const galleryImages = siteSettings?.galleryImages || [];
 const etsyShopUrl = siteSettings?.etsyShopUrl || '';
 
-// Generate URLs for gallery images
-const galleryImageUrls = galleryImages.map((img: any) => urlFor(img).width(800).url()).slice(0, 2);
+// Cloudinary URLs in this dataset were stored without transform params, so Cloudinary serves the
+// original multi-MB JPG. Inject c_limit,w_{width},f_webp,q_65 between /upload/ and /v{version}/.
+function sizeExternalImage(url: string, width = 400): string {
+	if (!url || !url.includes('res.cloudinary.com')) return url;
+	if (url.includes('/upload/c_') || url.includes('/upload/w_')) return url;
+	return url.replace('/upload/', `/upload/c_limit,w_${width},f_webp,q_65/`);
+}
+
+// Card tiles display at 180px mobile 2-col / 240px desktop 4-col. 400w @ q=65 WebP covers DPR 2
+// on both and keeps per-card payload around 15-25 KB.
+const galleryImageUrls = galleryImages
+	.map((img: any) => urlFor(img).width(400).format('webp').quality(65).url())
+	.slice(0, 2);
 const printImage1 =
 	galleryImageUrls[0] ||
-	'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764073/7F349BFB-3ACD-47D6-9AC5-56FFEB7345B9_jlvpk9.jpg';
+	sizeExternalImage(
+		'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764073/7F349BFB-3ACD-47D6-9AC5-56FFEB7345B9_jlvpk9.jpg',
+	);
 const printImage2 =
 	galleryImageUrls[1] ||
-	'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764073/A34786D0-51D9-4524-B2A2-C2723CECE012_ugjrze.jpg';
+	sizeExternalImage(
+		'https://res.cloudinary.com/dztkjeayt/image/upload/v1772764073/A34786D0-51D9-4524-B2A2-C2723CECE012_ugjrze.jpg',
+	);
 
 // Fetch shop items from Sanity
 const rawShopItems = await getShopItems();
 
-// Normalize to the shape the JS client code expects
 const shopItemsData = rawShopItems.map((item: any, i: number) => {
-	const img = item.externalImageUrl || (item.image ? urlFor(item.image).width(800).url() : '');
+	const img = item.externalImageUrl
+		? sizeExternalImage(item.externalImageUrl)
+		: item.image
+			? urlFor(item.image).width(400).format('webp').quality(65).url()
+			: '';
 	return {
 		id: i + 1,
 		type: item.shopCategory || 'original',
@@ -63,9 +81,59 @@ const SHOP_ITEMS_JSON = JSON.stringify(shopItemsData);
     <button class="filter-btn" data-filter="resin">Resin Art</button>
   </div>
 
-  <!-- SHOP GRID -->
+  <!-- SHOP GRID — server-rendered so images are in HTML from first paint.
+       Filter buttons toggle .hidden on cards via JS; no re-render required. -->
   <section class="shop-section">
-    <div class="shop-grid" id="shopGrid"></div>
+    <div class="shop-grid" id="shopGrid">
+      {shopItemsData.map((item: any, i: number) => {
+        const badge =
+          item.type === 'print' ? '<span class="shop-badge badge-print">Fine Art Print</span>' :
+          item.type === 'resin' ? '<span class="shop-badge badge-resin">Resin Art</span>' :
+          item.sold ? '<span class="shop-badge badge-sold">Sold</span>' :
+          '<span class="shop-badge badge-available">Available</span>';
+        return (
+          <div class="shop-card" data-filter-type={item.type} data-item-id={item.id}>
+            <div class="shop-img">
+              {item.img && (
+                <img
+                  class="shop-img-bg"
+                  src={item.img}
+                  alt={item.title}
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="533"
+                />
+              )}
+              <Fragment set:html={badge} />
+            </div>
+            <div class="shop-info">
+              <div class="shop-cat">{item.series}</div>
+              <div class="shop-title">{item.title}</div>
+              <div class="shop-meta">{item.medium} · {item.size} · {item.year}</div>
+              <div class={`shop-price ${item.sold ? 'sold' : ''}`}>{item.sold ? 'Sold' : item.price}</div>
+            </div>
+            <div class="shop-actions">
+              {item.type === 'print' && (
+                <a class="btn-gold" href={etsyShopUrl} target="_blank" rel="noopener">Shop Prints on Etsy →</a>
+              )}
+              {item.type !== 'print' && item.sold && (
+                <button type="button" class="btn-ghost" data-inquire={item.id} data-inquire-type="general">Inquire About Similar Work →</button>
+              )}
+              {item.type === 'resin' && !item.sold && (
+                <a class="btn-gold" href={etsyShopUrl} target="_blank" rel="noopener">Request Pricing on Etsy →</a>
+              )}
+              {item.type === 'original' && !item.sold && (
+                <>
+                  <a class="btn-gold" href={etsyShopUrl} target="_blank" rel="noopener">Buy on Etsy — {item.price} →</a>
+                  <button type="button" class="btn-ghost" data-inquire={item.id} data-inquire-type="print">Inquire About a Print</button>
+                </>
+              )}
+            </div>
+          </div>
+        );
+      })}
+    </div>
   </section>
 
   <!-- PRINTS SECTION -->
@@ -165,74 +233,42 @@ const SHOP_ITEMS_JSON = JSON.stringify(shopItemsData);
 
 </Layout>
 
-<script define:vars={{ etsyShopUrl, SHOP_ITEMS_JSON }}>
-const ETSY = etsyShopUrl;
-
+<script define:vars={{ SHOP_ITEMS_JSON }}>
 const shopItems = JSON.parse(SHOP_ITEMS_JSON);
 
-function getBadge(item) {
-  if (item.type === 'print') return '<span class="shop-badge badge-print">Fine Art Print</span>';
-  if (item.type === 'resin') return '<span class="shop-badge badge-resin">Resin Art</span>';
-  if (item.sold) return '<span class="shop-badge badge-sold">Sold</span>';
-  return '<span class="shop-badge badge-available">Available</span>';
-}
-
-function getActions(item) {
-  if (item.type === 'print') return `<a class="btn-gold" href="${ETSY}" target="_blank" rel="noopener">Shop Prints on Etsy →</a>`;
-  if (item.sold) return `<button class="btn-ghost" onclick="openInquiry(${item.id},'general')">Inquire About Similar Work →</button>`;
-  if (item.type === 'resin') return `<a class="btn-gold" href="${ETSY}" target="_blank" rel="noopener">Request Pricing on Etsy →</a>`;
-  return `<a class="btn-gold" href="${ETSY}" target="_blank" rel="noopener">Buy on Etsy — ${item.price} →</a>
-          <button class="btn-ghost" onclick="openInquiry(${item.id},'print')">Inquire About a Print</button>`;
-}
-
-function buildShop(filter) {
-  const grid = document.getElementById('shopGrid');
-  grid.innerHTML = '';
-  const items = filter === 'all' ? shopItems : shopItems.filter(i => i.type === filter);
-  items.forEach(item => {
-    const card = document.createElement('div');
-    card.className = 'shop-card';
-    card.innerHTML = `
-      <div class="shop-img">
-        <div class="shop-img-bg" style="background:url('${item.img}') center top/cover no-repeat;"></div>
-        ${getBadge(item)}
-      </div>
-      <div class="shop-info">
-        <div class="shop-cat">${item.series}</div>
-        <div class="shop-title">${item.title}</div>
-        <div class="shop-meta">${item.medium} · ${item.size} · ${item.year}</div>
-        <div class="shop-price ${item.sold ? 'sold' : ''}">${item.sold ? 'Sold' : item.price}</div>
-      </div>
-      <div class="shop-actions">${getActions(item)}</div>`;
-    grid.appendChild(card);
+// FILTER — toggle visibility by type, no re-render
+function applyFilter(filter) {
+  document.querySelectorAll('.shop-card').forEach(card => {
+    const t = card.getAttribute('data-filter-type');
+    card.style.display = (filter === 'all' || t === filter) ? '' : 'none';
   });
-  document.getElementById('printsSection').style.display = (filter === 'original') ? 'none' : '';
+  const prints = document.getElementById('printsSection');
+  if (prints) prints.style.display = (filter === 'original') ? 'none' : '';
 }
 
-// Filter buttons
 document.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    buildShop(btn.dataset.filter);
+    applyFilter(btn.dataset.filter);
   });
 });
 
-// Inquiry modal
-let currentInquiryId = null;
+// INQUIRY MODAL — delegated from card action buttons
 function openInquiry(id, type) {
-  currentInquiryId = id;
-  document.getElementById('inqForm').style.display = '';
-  document.getElementById('inqSuccess').style.display = 'none';
+  const form = document.getElementById('inqForm');
+  const success = document.getElementById('inqSuccess');
+  form.style.display = '';
+  success.style.display = 'none';
   const sel = document.getElementById('inqType');
   const titleEl = document.getElementById('inqTitle');
   if (type === 'print') { sel.value = 'print'; titleEl.textContent = 'Inquire About a Print'; }
   else { sel.value = 'general'; titleEl.textContent = 'Get in Touch'; }
   const f = document.getElementById('inqFor');
   if (id) {
-    const item = shopItems.find(x => x.id === id);
+    const item = shopItems.find(x => x.id === Number(id));
     f.style.display = '';
-    f.innerHTML = `Regarding: <strong>${item.title}</strong> · ${item.medium}`;
+    f.innerHTML = item ? `Regarding: <strong>${item.title}</strong> · ${item.medium}` : '';
   } else f.style.display = 'none';
   document.getElementById('inquiryModal').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -241,6 +277,13 @@ function closeInquiry() {
   document.getElementById('inquiryModal').classList.remove('open');
   document.body.style.overflow = '';
 }
+document.addEventListener('click', e => {
+  const inq = e.target.closest('[data-inquire]');
+  if (inq) {
+    e.preventDefault();
+    openInquiry(inq.getAttribute('data-inquire'), inq.getAttribute('data-inquire-type'));
+  }
+});
 document.getElementById('inquiryModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeInquiry(); });
 document.getElementById('inqCloseBtn').addEventListener('click', closeInquiry);
 document.getElementById('inqSubmitBtn').addEventListener('click', () => {
@@ -252,8 +295,6 @@ document.getElementById('inqSubmitBtn').addEventListener('click', () => {
   setTimeout(closeInquiry, 3500);
 });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeInquiry(); });
-
-buildShop('all');
 </script>
 
 <style>
@@ -278,7 +319,7 @@ buildShop('all');
   .shop-card { background:var(--card); position:relative; display:flex; flex-direction:column; cursor:pointer; transition:transform 0.3s; }
   .shop-card:hover { transform:translateY(-4px); }
   .shop-img { aspect-ratio:3/4; overflow:hidden; position:relative; }
-  .shop-img-bg { width:100%; height:100%; background-size:cover; background-position:center top; transition:transform 0.6s,filter 0.4s; filter:brightness(0.85); }
+  .shop-img-bg { width:100%; height:100%; object-fit:cover; object-position:center top; display:block; transition:transform 0.6s,filter 0.4s; filter:brightness(0.85); }
   .shop-card:hover .shop-img-bg { transform:scale(1.05); filter:brightness(1); }
   .shop-badge { position:absolute; top:0.8rem; left:0.8rem; font-size:0.55rem; letter-spacing:1.5px; text-transform:uppercase; padding:0.3rem 0.7rem; font-weight:600; }
   .badge-available { background:rgba(201,168,76,0.9); color:var(--black); }

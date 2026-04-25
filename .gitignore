@@ -54,3 +54,9 @@ studio/node_modules/
 .mcp.json
 .netlify/
 public/studio/
+
+# Playwright MCP session logs
+.playwright-mcp/
+
+# Per-machine Claude Code settings
+.claude/settings.local.json

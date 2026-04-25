@@ -4,12 +4,6 @@ import { getAboutSections, getSiteSettings, sanityClient, urlFor } from '../lib/
 
 const siteSettings = await getSiteSettings();
 
-// Use dedicated aboutPortraitImage, fall back to profilePhoto
-const portraitUrl = siteSettings?.aboutPortraitImage
-	? urlFor(siteSettings.aboutPortraitImage).width(800).url()
-	: siteSettings?.profilePhoto
-		? urlFor(siteSettings.profilePhoto).width(800).url()
-		: null;
 const instagramUrl = siteSettings?.instagramUrl;
 const facebookUrl = siteSettings?.facebookUrl;
 const tiktokUrl = siteSettings?.tiktokUrl;
@@ -23,21 +17,35 @@ const chapterImages = await sanityClient.fetch(`{
 	"ch3": *[_type == "artwork" && medium == "Mixed Media" && defined(image.asset)] | order(order asc) [0]{ image, title },
 	"ch4": *[_type == "artwork" && imageType == "press" && defined(image.asset)] | order(order asc) [0]{ image, title }
 }`);
+// Chapter images — 600w @ q=70 is plenty for the chapter-visual boxes (roughly
+// full width on mobile, half viewport on desktop). Below-fold, no preload needed.
 const ch1Img = chapterImages?.ch1?.image
-	? urlFor(chapterImages.ch1.image).width(800).format('webp').url()
+	? urlFor(chapterImages.ch1.image).width(600).format('webp').quality(70).url()
 	: '';
 const ch2Img = chapterImages?.ch2?.image
-	? urlFor(chapterImages.ch2.image).width(800).format('webp').url()
+	? urlFor(chapterImages.ch2.image).width(600).format('webp').quality(70).url()
 	: '';
 const ch3Img = chapterImages?.ch3?.image
-	? urlFor(chapterImages.ch3.image).width(800).format('webp').url()
+	? urlFor(chapterImages.ch3.image).width(600).format('webp').quality(70).url()
 	: '';
 const ch4Img = chapterImages?.ch4?.image
-	? urlFor(chapterImages.ch4.image).width(800).format('webp').url()
+	? urlFor(chapterImages.ch4.image).width(600).format('webp').quality(70).url()
 	: '';
-const heroImg = chapterImages?.hero?.image
-	? urlFor(chapterImages.hero.image).width(800).format('webp').url()
-	: '';
+
+// Hero portrait — try Sanity CMS fields first (Justin uploads via Studio),
+// fall back to the portrait-tagged artwork found in chapterImages.hero.
+// Whichever resolves is the LCP element on this page; preload + fetchpriority applied to that one.
+const portraitSource =
+	siteSettings?.aboutPortraitImage ||
+	siteSettings?.profilePhoto ||
+	chapterImages?.hero?.image ||
+	null;
+const portraitMobileUrl = portraitSource
+	? urlFor(portraitSource).width(480).format('webp').quality(70).url()
+	: null;
+const portraitDesktopUrl = portraitSource
+	? urlFor(portraitSource).width(800).format('webp').quality(70).url()
+	: null;
 
 // Fetch about sections from Sanity CMS (Justin can edit these in Studio)
 const aboutSections = await getAboutSections();
@@ -68,6 +76,17 @@ function renderPortableText(blocks: any[]): string {
 const getSection = (order: number) => aboutSections.find((s: any) => s.order === order);
 ---
 <Layout title="The Story" description="From a village in Ukhrul, Manipur, India to international recognition — the story of Justin Keishing, Arts by Justin.">
+  {portraitDesktopUrl && (
+    <Fragment slot="head-early">
+      <link
+        rel="preload"
+        as="image"
+        href={portraitDesktopUrl}
+        media="(min-width: 1024px)"
+        fetchpriority="high"
+      />
+    </Fragment>
+  )}
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
@@ -108,16 +127,24 @@ const getSection = (order: number) => aboutSections.find((s: any) => s.order ===
     </div>
   </div>
   <div class="hero-right">
-    {portraitUrl
-      ? <img src={portraitUrl} alt="Justin Keishing" class="portrait-img" loading="eager"/>
-      : heroImg
-        ? <img src={heroImg} alt="Justin Keishing — Artist Portrait" class="portrait-img" loading="eager"/>
-        : <div class="portrait-placeholder">
-            <div class="portrait-placeholder-inner">
-              <div style="font-size:4rem; opacity:0.2;">📷</div>
-              <div style="font-size:0.65rem; letter-spacing:3px; text-transform:uppercase; margin-top:1rem; opacity:0.2;">Portrait Photo</div>
-            </div>
+    {portraitDesktopUrl
+      ? <img
+          src={portraitDesktopUrl}
+          srcset={`${portraitMobileUrl} 480w, ${portraitDesktopUrl} 800w`}
+          sizes="(max-width: 768px) 100vw, 50vw"
+          width="800"
+          height="1000"
+          alt="Justin Keishing"
+          class="portrait-img"
+          loading="lazy"
+          decoding="async"
+        />
+      : <div class="portrait-placeholder">
+          <div class="portrait-placeholder-inner">
+            <div style="font-size:4rem; opacity:0.2;">📷</div>
+            <div style="font-size:0.65rem; letter-spacing:3px; text-transform:uppercase; margin-top:1rem; opacity:0.2;">Portrait Photo</div>
           </div>
+        </div>
     }
   </div>
 </section>
@@ -128,7 +155,7 @@ const getSection = (order: number) => aboutSections.find((s: any) => s.order ===
     <div class="chapter-num">01</div>
     <div class="chapter-visual-inner">
       {ch1Img
-        ? <div class="chapter-img-box"><img src={ch1Img} alt={chapterImages?.ch1?.title || 'Faith & Inspiration'} style="width:100%;height:100%;object-fit:cover;" /></div>
+        ? <div class="chapter-img-box"><img src={ch1Img} alt={chapterImages?.ch1?.title || 'Faith & Inspiration'} loading="lazy" decoding="async" width="600" height="800" style="width:100%;height:100%;object-fit:cover;" /></div>
         : <div class="chapter-img-box chapter-img-box--placeholder">
             <div style="font-size:3rem; opacity:0.15;">🏔️</div>
             <div style="font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; margin-top:1rem; color:var(--gold); opacity:0.5;">Ukhrul, Manipur · India</div>
@@ -167,7 +194,7 @@ const getSection = (order: number) => aboutSections.find((s: any) => s.order ===
     <div class="chapter-num" style="right:2rem; left:auto;">02</div>
     <div class="chapter-visual-inner">
       {ch2Img
-        ? <div class="chapter-img-box"><img src={ch2Img} alt={chapterImages?.ch2?.title || 'The Journey to America'} style="width:100%;height:100%;object-fit:cover;" /></div>
+        ? <div class="chapter-img-box"><img src={ch2Img} alt={chapterImages?.ch2?.title || 'The Journey to America'} loading="lazy" decoding="async" width="600" height="800" style="width:100%;height:100%;object-fit:cover;" /></div>
         : <div class="chapter-img-box chapter-img-box--placeholder" style="background:linear-gradient(135deg,#1a0a00,#110800); border-color:rgba(201,168,76,0.08);">
             <div style="font-size:3rem; opacity:0.15;">✈️</div>
             <div style="font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; margin-top:1rem; color:var(--gold); opacity:0.5;">The Journey to America</div>
@@ -215,7 +242,7 @@ const getSection = (order: number) => aboutSections.find((s: any) => s.order ===
     <div class="chapter-num">03</div>
     <div class="chapter-visual-inner">
       {ch3Img
-        ? <div class="chapter-img-box"><img src={ch3Img} alt={chapterImages?.ch3?.title || 'Mixed Media Art'} style="width:100%;height:100%;object-fit:cover;" /></div>
+        ? <div class="chapter-img-box"><img src={ch3Img} alt={chapterImages?.ch3?.title || 'Mixed Media Art'} loading="lazy" decoding="async" width="600" height="800" style="width:100%;height:100%;object-fit:cover;" /></div>
         : <div class="chapter-img-box" style="background:linear-gradient(135deg,#000,#111,#ff6600,#00aacc); display:flex; align-items:center; justify-content:center;">
             <div style="font-size:0.65rem; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,0.4); text-align:center; padding:1rem;">The Creator's Hand · Mixed Media</div>
           </div>
@@ -254,7 +281,7 @@ const getSection = (order: number) => aboutSections.find((s: any) => s.order ===
     <div class="chapter-num" style="right:2rem; left:auto; color:rgba(201,168,76,0.06);">04</div>
     <div class="chapter-visual-inner">
       {ch4Img
-        ? <div class="chapter-img-box"><img src={ch4Img} alt={chapterImages?.ch4?.title || 'Artist of the Year'} style="width:100%;height:100%;object-fit:cover;" /></div>
+        ? <div class="chapter-img-box"><img src={ch4Img} alt={chapterImages?.ch4?.title || 'Artist of the Year'} loading="lazy" decoding="async" width="600" height="800" style="width:100%;height:100%;object-fit:cover;" /></div>
         : <div class="chapter-img-box" style="background:linear-gradient(135deg,#1a1000,#0d0800); border:1px solid rgba(201,168,76,0.2); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1rem; padding:2rem;">
             <div style="font-size:3rem;">🏆</div>
             <div style="text-align:center;">

@@ -27,24 +27,48 @@ const {
     <div class="contact-grid">
       <div class="contact-form">
         <h2>Send a Message</h2>
-        <iframe
-          src="https://mail.spiritmediaone.com/widget/form/IxtnXlhtcek1OBe4UlZY"
-          style="width:100%;height:580px;border:none;border-radius:4px"
-          id="inline-IxtnXlhtcek1OBe4UlZY"
-          data-layout="{'id':'INLINE'}"
-          data-trigger-type="alwaysShow"
-          data-trigger-value=""
-          data-activation-type="alwaysActivated"
-          data-activation-value=""
-          data-deactivation-type="neverDeactivate"
-          data-deactivation-value=""
-          data-form-name="Arts by Justin - Contact Form"
-          data-height="580"
-          data-layout-iframe-id="inline-IxtnXlhtcek1OBe4UlZY"
+        <div
+          id="ghl-form-mount"
+          style="width:100%;height:580px;border-radius:4px;background:#111;display:flex;align-items:center;justify-content:center;color:#9a9a9a;font-size:0.9rem"
           data-form-id="IxtnXlhtcek1OBe4UlZY"
-          title="Arts by Justin - Contact Form"
-        ></iframe>
-        <script src="https://mail.spiritmediaone.com/js/form_embed.js"></script>
+        >Loading form…</div>
+        <script is:inline>
+          (function () {
+            var loaded = false;
+            function loadForm() {
+              if (loaded) return;
+              loaded = true;
+              var mount = document.getElementById('ghl-form-mount');
+              if (!mount) return;
+              var id = mount.getAttribute('data-form-id');
+              mount.innerHTML = '';
+              mount.removeAttribute('style');
+              mount.style.cssText = 'width:100%;height:580px;border-radius:4px;';
+              var iframe = document.createElement('iframe');
+              iframe.src = 'https://mail.spiritmediaone.com/widget/form/' + id;
+              iframe.id = 'inline-' + id;
+              iframe.title = 'Arts by Justin - Contact Form';
+              iframe.style.cssText = 'width:100%;height:580px;border:none;border-radius:4px;';
+              iframe.setAttribute('data-layout', "{'id':'INLINE'}");
+              iframe.setAttribute('data-trigger-type', 'alwaysShow');
+              iframe.setAttribute('data-activation-type', 'alwaysActivated');
+              iframe.setAttribute('data-deactivation-type', 'neverDeactivate');
+              iframe.setAttribute('data-form-name', 'Arts by Justin - Contact Form');
+              iframe.setAttribute('data-height', '580');
+              iframe.setAttribute('data-layout-iframe-id', 'inline-' + id);
+              iframe.setAttribute('data-form-id', id);
+              mount.appendChild(iframe);
+              var s = document.createElement('script');
+              s.src = 'https://mail.spiritmediaone.com/js/form_embed.js';
+              s.async = true;
+              document.body.appendChild(s);
+            }
+            var evts = ['scroll','click','touchstart','keydown','mousemove'];
+            function trigger() { evts.forEach(function(e){ window.removeEventListener(e, trigger); }); loadForm(); }
+            evts.forEach(function(e){ window.addEventListener(e, trigger, { passive: true, once: true }); });
+            setTimeout(function(){ if (!loaded) loadForm(); }, 4000);
+          })();
+        </script>
       </div>
 
       <div class="contact-info">

@@ -30,6 +30,279 @@ const ogImage = siteSettings?.ogImage
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://cdn.sanity.io" crossorigin />
+  <link rel="preconnect" href="https://assets.spiritmediapublishing.com" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/inter/inter-400.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/inter/inter-300.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/playfair-display/playfair-display-700.woff2" crossorigin />
+  <slot name="head-early" />
+  <style is:inline>
+    /* @font-face — CSS spec forbids inside @layer */
+    @font-face {
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 300;
+      font-display: swap;
+      src: url("https://assets.spiritmediapublishing.com/fonts/inter/inter-300.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url("https://assets.spiritmediapublishing.com/fonts/inter/inter-400.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Playfair Display";
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url("https://assets.spiritmediapublishing.com/fonts/playfair-display/playfair-display-700.woff2") format("woff2");
+    }
+
+    /* @keyframes — CSS spec forbids inside @layer */
+    @keyframes grow { 0%,100%{width:40px;opacity:0.4;} 50%{width:65px;opacity:1;} }
+
+    @layer base {
+      /* Legacy CSS custom properties — referenced by scoped <style> blocks in per-page astro files. */
+      :root {
+        --black: #080808;
+        --dark: #111;
+        --card: #161616;
+        --gold: #c9a84c;
+        --gold-light: #e8c97a;
+        --white: #e5e2e1;
+        --gray: #9a9a9a;
+        --gray2: #b8b8b8;
+      }
+
+      /* Reset */
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; border: 0 solid; }
+      html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; -webkit-font-smoothing: antialiased; }
+      body {
+        background: #080808;
+        color: #e5e2e1;
+        font-family: 'Inter', system-ui, sans-serif;
+        line-height: 1.65;
+        overflow-x: hidden;
+      }
+      img, picture, svg, video, canvas { display: block; max-width: 100%; height: auto; }
+      h1, h2, h3, h4, h5, h6 { margin: 0; font-family: 'Playfair Display', Georgia, serif; line-height: 1.2; overflow-wrap: break-word; }
+      p { margin: 0; overflow-wrap: break-word; }
+      a { color: inherit; text-decoration: none; }
+      button { font: inherit; color: inherit; background: transparent; cursor: pointer; padding: 0; border: 0; }
+
+      /* Shared utility classes — hex literals, no var() (Lighthouse contrast audit can't resolve vars) */
+      .label {
+        font-size: 0.68rem;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: #e6c364;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+      .bar {
+        width: 50px;
+        height: 2px;
+        background: #c9a84c;
+        margin-bottom: 1.5rem;
+      }
+      .btn-gold {
+        background: linear-gradient(135deg, #e6c364, #c9a84c);
+        color: #3d2e00;
+        padding: 0.75rem 1.8rem;
+        font-size: 0.75rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-weight: 700;
+        cursor: pointer;
+        transition: opacity 0.3s;
+        display: inline-block;
+        font-family: 'Inter', sans-serif;
+      }
+      .btn-gold:hover { opacity: 0.9; }
+      .btn-ghost {
+        background: transparent;
+        color: #e5e2e1;
+        padding: 0.75rem 1.8rem;
+        font-size: 0.75rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        border: 1px solid rgba(255,255,255,0.2);
+        cursor: pointer;
+        transition: border-color 0.3s, color 0.3s;
+        display: inline-block;
+        font-family: 'Inter', sans-serif;
+      }
+      .btn-ghost:hover { border-color: #c9a84c; color: #c9a84c; }
+      .pull-quote {
+        margin: 1.8rem 0;
+        padding: 1.5rem;
+        border-left: 2px solid #c9a84c;
+        background: rgba(201,168,76,0.04);
+      }
+      .pull-quote p {
+        font-family: 'Playfair Display', serif;
+        font-style: italic;
+        color: #e8c97a;
+        font-size: 1.02rem;
+        line-height: 1.7;
+      }
+
+      /* Hero — inline to prevent CLS. Without these, .hero section has no height until
+         scoped CSS async-loads, so .hero-painting collapses + snaps to 100vh (0.38 CLS). */
+      .hero {
+        height: 100vh;
+        position: relative;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+      }
+      .hero-painting {
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 58%;
+        overflow: hidden;
+      }
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        filter: brightness(0.75);
+      }
+      .hero-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+      .hero-fade {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to right, #080808 30%, rgba(8,8,8,0.5) 60%, rgba(8,8,8,0.1) 100%);
+      }
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        padding: 0 3rem;
+        max-width: 600px;
+      }
+      .hero h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(3.2rem, 5.5vw, 5.5rem);
+        line-height: 1.05;
+        margin-bottom: 1.5rem;
+        font-weight: 700;
+      }
+      .hero-sub {
+        color: #b8b8b8;
+        font-size: 0.97rem;
+        line-height: 1.9;
+        margin-bottom: 2.5rem;
+        font-weight: 300;
+        max-width: 420px;
+      }
+      .hero-btns {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+        margin-bottom: 2rem;
+      }
+      .hero-eyebrow span {
+        font-size: 0.68rem;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: #c9a84c;
+      }
+      .hero-line { width: 30px; height: 1px; background: #c9a84c; }
+      @media (max-width: 768px) {
+        .hero-painting { width: 100%; opacity: 0.3; }
+        .hero-content { max-width: 100%; padding: 0 2rem; }
+      }
+
+      /* Nav — inline to prevent CLS when external CSS async-loads after first paint.
+         Without this, the nav <ul> defaults to block display (stacked + bullets),
+         then collapses to horizontal flex when Nav.astro's scoped style arrives — 0.4+ CLS. */
+      #site-header {
+        position: sticky;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 200;
+        padding: 1.2rem 3rem;
+        display: flex;
+        align-items: center;
+        background: rgba(8,8,8,0.95);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255,255,255,0.04);
+      }
+      #site-header nav {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .wordmark {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.3rem;
+        letter-spacing: 2px;
+        color: #f0f0f0;
+      }
+      .wordmark span { color: #c9a84c; }
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+      }
+      .nav-links li { list-style: none; }
+      .nav-link {
+        font-family: 'Inter', sans-serif;
+        color: #b8b8b8;
+        font-size: 0.78rem;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+      }
+      .nav-cta {
+        background: #c9a84c;
+        color: #080808;
+        padding: 0.55rem 1.4rem;
+        font-size: 0.75rem;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-family: 'Inter', sans-serif;
+      }
+      .menu-toggle { display: none; flex-direction: column; gap: 5px; background: none; cursor: pointer; padding: 4px; }
+      .menu-toggle span { display: block; width: 24px; height: 1.5px; background: #f0f0f0; }
+      @media (max-width: 768px) {
+        #site-header { padding: 1rem 1.5rem; }
+        .menu-toggle { display: flex; }
+        .nav-links {
+          position: fixed;
+          top: 61px;
+          left: 0;
+          right: 0;
+          flex-direction: column;
+          background: rgba(8,8,8,0.98);
+          padding: 2rem;
+          gap: 1.5rem;
+          transform: translateY(-110%);
+          opacity: 0;
+          pointer-events: none;
+        }
+      }
+    }
+  </style>
   <meta name="description" content={description} />
   <title>{fullTitle}</title>
   <link rel="canonical" href={canonicalUrl} />
@@ -42,107 +315,56 @@ const ogImage = siteSettings?.ogImage
   <meta name="twitter:title" content={fullTitle} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImage} />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-
-    :root {
-      --black: #080808;
-      --dark: #111;
-      --card: #161616;
-      --gold: #c9a84c;
-      --gold-light: #e8c97a;
-      --white: #e5e2e1;
-      --gray: #777;
-      --gray2: #aaa;
-    }
-
-    body {
-      background: var(--black);
-      color: var(--white);
-      font-family: 'Inter', system-ui, sans-serif;
-      line-height: 1.65;
-      overflow-x: hidden;
-    }
-
-    img { display: block; max-width: 100%; }
-    a { color: inherit; text-decoration: none; }
-
-    /* Shared utility classes */
-    .label {
-      font-size: 0.68rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 0.5rem;
-      display: block;
-    }
-    .bar {
-      width: 50px;
-      height: 2px;
-      background: var(--gold);
-      margin-bottom: 1.5rem;
-    }
-    .btn-gold {
-      background: linear-gradient(135deg, #e6c364, #c9a84c);
-      color: #3d2e00;
-      padding: 0.75rem 1.8rem;
-      font-size: 0.75rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      font-weight: 700;
-      border: none;
-      cursor: pointer;
-      transition: opacity 0.3s;
-      display: inline-block;
-      font-family: 'Inter', sans-serif;
-    }
-    .btn-gold:hover { opacity: 0.9; }
-    .btn-ghost {
-      background: transparent;
-      color: var(--white);
-      padding: 0.75rem 1.8rem;
-      font-size: 0.75rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      border: 1px solid rgba(255,255,255,0.2);
-      cursor: pointer;
-      transition: border-color 0.3s, color 0.3s;
-      display: inline-block;
-      font-family: 'Inter', sans-serif;
-    }
-    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
-    .pull-quote {
-      margin: 1.8rem 0;
-      padding: 1.5rem;
-      border-left: 2px solid var(--gold);
-      background: rgba(201,168,76,0.04);
-    }
-    .pull-quote p {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      color: var(--gold-light);
-      font-size: 1.02rem;
-      line-height: 1.7;
-    }
-  </style>
-
-  <!-- Google Analytics GA4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W3R21TNHTX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-W3R21TNHTX');
-  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <slot name="head" />
+
+  <!-- Google Analytics GA4 — deferred until first user interaction to not block LCP -->
+  <script is:inline>
+    (function () {
+      var loaded = false;
+      function loadGA() {
+        if (loaded) return;
+        loaded = true;
+        var s = document.createElement('script');
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-W3R21TNHTX';
+        s.async = true;
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', 'G-W3R21TNHTX');
+      }
+      var evts = ['scroll','click','touchstart','keydown','mousemove'];
+      function trigger() { evts.forEach(function(e){ window.removeEventListener(e, trigger); }); loadGA(); }
+      evts.forEach(function(e){ window.addEventListener(e, trigger, { passive: true, once: true }); });
+      setTimeout(function(){ if (!loaded) loadGA(); }, 8000);
+    })();
+  </script>
 </head>
 <body>
   <Nav />
   <main><slot /></main>
-  <Footer />
+  {/* Footer is deferred via <template> so browser doesn't style/layout it
+      during the LCP window. Hydrated after DOMContentLoaded + requestIdleCallback.
+      Same pattern used for homepage sections 2-11. */}
+  <template id="footer-deferred"><Footer /></template>
+  <div id="footer-mount"></div>
+  <script is:inline>
+    (function () {
+      var tpl = document.getElementById('footer-deferred');
+      var mount = document.getElementById('footer-mount');
+      if (!tpl || !mount) return;
+      function hydrate() {
+        mount.appendChild(tpl.content.cloneNode(true));
+        tpl.remove();
+      }
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(hydrate, { timeout: 2000 });
+      } else {
+        setTimeout(hydrate, 200);
+      }
+    })();
+  </script>
 </body>
 </html>

@@ -29,7 +29,23 @@ Then run: `git checkout dev && git pull origin dev`
 **Sanity Studio:** Embedded at artsbyjustin.com/studio/ (static build)
 **Infrastructure:** Deploy webhook wired, CORS origins configured, studio deployed
 
-## Status — as of 2026-04-08
+## Status — as of 2026-04-19
+
+### 100 Club — Wave 1 PSI Performance Pass (on dev, NOT yet merged to main)
+- **Baseline:** Mobile 64, Desktop 97
+- **After Wave 1:** Mobile 95, Desktop 99-100 (LCP mobile ~3s, target <2.5s)
+- **Changes applied (all 5 proven patterns + Beasties):**
+  - Replaced Google Fonts + Beasties trap (`<noscript><link stylesheet>`) with R2-self-hosted fonts (Inter 300/400/500/600, Playfair 400/400i/700 at `assets.spiritmediapublishing.com/fonts/…`)
+  - Critical CSS: Inter 300/400 + Playfair 700 in `src/styles/global.css`; below-fold weights moved to `public/deferred.css`
+  - Preloads for Inter 300, Inter 400, Playfair 700 in Layout.astro head
+  - Preconnect hints for cdn.sanity.io + R2 host
+  - CSP updated (removed Google Fonts origins, added R2 origin)
+  - `astro.config.mjs` — added `build.inlineStylesheets: 'auto'` + `@playform/inline` (Beasties)
+  - Hero image: 1400w q=80 → 1200w q=68, added 960w intermediate tier for mobile DPR-scaled needs
+  - Masonry `.art-bg` + category `.cat-bg`: now use imageUrlThumb (480w q=65) instead of imageUrl (1200w)
+  - GA4 deferred until first user interaction (was async-loaded blocking LCP)
+  - `fetchpriority="high"` scoped to the hero LCP element only (no change needed — already correct)
+- **Blocker:** Mobile LCP stable at ~2.9-3.0s in PSI slow-4G emulation; need to cross 2.5s for mobile 98+. Likely needs: hero image served from R2 (not Sanity CDN) or even smaller mobile variant. Deferred to a follow-up wave.
 
 ### Completed & Merged to Main
 - **Full site redesign** — dark/gold theme replacing cream/rust
@@ -78,25 +94,3 @@ Then run: `git checkout dev && git pull origin dev`
 - All work goes to the **dev** branch — never push directly to main
 - Only merge dev to main when Kevin says "push to main"
 - Never push without local preview first
-
----
-
-## Stitch MCP — AI Design Tool
-
-Google Stitch 2.0 is an MCP server available in this project for AI-powered design work. It generates full page designs and auto-creates design systems (colors, typography, component rules). The MCP config is already symlinked into this repo (`.mcp.json`).
-
-**When to use:** When Kevin asks for design work, new page layouts, or visual redesigns. Use Stitch first to get 80–90% of the design done visually, then implement in Astro/Tailwind.
-
-**Available tools (prefixed `mcp__stitch__`):**
-`create_project`, `generate_screen_from_text`, `create_design_system`, `apply_design_system`, `edit_screens`, `generate_variants`, `list_projects`, `list_screens`, `get_screen`, `get_project`, `list_design_systems`, `update_design_system`
-
-**Workflow:**
-1. Screenshot or paste URL into Stitch as style reference
-2. Stitch generates full design + auto-creates design system
-3. Export design.md / design system from Stitch
-4. Hand off to Claude Code for Astro/Tailwind implementation
-
-**Rules:**
-- Use Gemini 3.1 Pro in Stitch (not 3.0 Flash)
-- Stitch auto-generates a `design.md` — keep it in the project root for consistency
-- This is the standard SMP workflow for all new site builds and major redesigns
