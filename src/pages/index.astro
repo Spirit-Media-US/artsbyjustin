@@ -204,6 +204,11 @@ const homeStats = siteSettings?.homePageStats
           decoding="async"
         />
       </picture>
+      {/* Hero video (YouTube Short, muted loop). Iframe is injected on first
+          user interaction (8s fallback) per the trait-5 third-party-JS defer
+          pattern — the hero image above acts as the poster until then, so
+          LCP and the 100 Club mobile score are unaffected. */}
+      <div class="hero-video" id="heroVideo"></div>
     </div>
     <div class="hero-fade"></div>
     <div class="hero-content">
@@ -450,6 +455,43 @@ const homeStats = siteSettings?.homePageStats
     })();
   </script>
 
+  <script is:inline>
+    /* Hero video — YouTube Short on muted loop. Deferred to first user
+       interaction with an 8s fallback (same pattern as GA4) so the YouTube
+       player JS never lands inside the LCP window. */
+    (function () {
+      var YT_ID = 'mBxVxlrSfa4';
+      var loaded = false;
+      function loadHeroVideo() {
+        if (loaded) return;
+        loaded = true;
+        var slot = document.getElementById('heroVideo');
+        var painting = document.getElementById('heroPainting');
+        var hero = document.querySelector('.hero');
+        if (!slot || !painting) return;
+        var iframe = document.createElement('iframe');
+        iframe.src = 'https://www.youtube-nocookie.com/embed/' + YT_ID +
+          '?autoplay=1&mute=1&loop=1&playlist=' + YT_ID +
+          '&controls=0&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1';
+        iframe.title = 'Arts by Justin — featured video';
+        iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
+        iframe.setAttribute('frameborder', '0');
+        iframe.addEventListener('load', function () {
+          slot.classList.add('is-live');
+          painting.classList.add('has-video');
+          if (hero) hero.classList.add('has-video');
+          var caption = document.getElementById('heroCaption');
+          if (caption) caption.textContent = '';
+        });
+        slot.appendChild(iframe);
+      }
+      ['scroll', 'click', 'touchstart', 'keydown', 'mousemove'].forEach(function (e) {
+        window.addEventListener(e, loadHeroVideo, { once: true, passive: true });
+      });
+      setTimeout(loadHeroVideo, 8000);
+    })();
+  </script>
+
   {/* SEO / no-JS fallback: same content rendered inline so bots and users
       with JavaScript disabled see the full homepage. */}
   <noscript>
@@ -470,6 +512,8 @@ const homeStats = siteSettings?.homePageStats
     const wrap = document.getElementById('heroPainting');
     const caption = document.getElementById('heroCaption');
     setInterval(() => {
+      // Video hero took over — stop rotating the painting (it sits underneath).
+      if (wrap?.classList.contains('has-video')) return;
       const a = heroArtworks[idx % heroArtworks.length];
       if (wrap) {
         const bg = wrap.querySelector('.hero-bg');
@@ -505,6 +549,12 @@ const homeStats = siteSettings?.homePageStats
   .hero-bg { position:absolute; inset:0; filter:brightness(0.75); transition:background 0.8s, opacity 0.8s; }
   .hero-img { width:100%; height:100%; object-fit:cover; object-position:center; }
   .hero-fade { position:absolute; inset:0; background:linear-gradient(to right,#080808 30%,rgba(8,8,8,0.5) 60%,rgba(8,8,8,0.1) 100%); }
+  /* Hero video — 9:16 Short, scaled to cover the painting panel. Fades in
+     over the poster image once the iframe has loaded. pointer-events:none
+     keeps it decorative (no YouTube UI) and the CTA buttons clickable. */
+  .hero-video { position:absolute; inset:0; z-index:1; overflow:hidden; opacity:0; transition:opacity 1.2s ease; pointer-events:none; }
+  .hero-video.is-live { opacity:1; }
+  .hero-video iframe { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:max(100%, 56.25vh); aspect-ratio:9/16; height:auto; min-height:100%; border:0; }
   .hero-content { position:relative; z-index:2; padding:0 3rem; max-width:600px; }
   .hero-eyebrow { display:inline-flex; align-items:center; gap:0.8rem; margin-bottom:2rem; }
   .hero-line { width:30px; height:1px; background:var(--gold); }
@@ -643,6 +693,11 @@ const homeStats = siteSettings?.homePageStats
     .hero-fade { display:none; }
     .hero-caption { display:none; }
     .hero-content { max-width:100%; padding:0 2rem; }
+    /* Once the deferred hero video loads (post-interaction, never in the LCP
+       window) it becomes a full-width background behind the text, with a
+       dark scrim so the H1/CTAs stay readable. */
+    .hero-painting.has-video { display:block; width:100%; }
+    .hero.has-video .hero-fade { display:block; background:linear-gradient(to top, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.55) 45%, rgba(8,8,8,0.35) 100%); }
   }
   @media (max-width:768px) {
     .hero-content { max-width:100%; padding:0 2rem; }
