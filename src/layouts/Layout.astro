@@ -18,12 +18,57 @@ try {
 const defaultDescription =
 	siteSettings?.tagline ||
 	'Bold acrylic paintings, mixed media works, resin art, murals, and 3D pieces — each one a story, each one made with purpose.';
-const { title, description = defaultDescription } = Astro.props;
+const { title, description = defaultDescription, ogImage: ogImageProp } = Astro.props;
 const fullTitle = title === 'Home' ? 'Arts by Justin' : `${title} — Arts by Justin`;
 const canonicalUrl = new URL(Astro.url.pathname, 'https://artsbyjustin.com').href;
-const ogImage = siteSettings?.ogImage
-	? urlFor(siteSettings.ogImage).width(1200).height(630).url()
-	: 'https://cdn.sanity.io/images/oqoqh3p3/production/og-default.jpg';
+// Per-page ogImage prop wins (e.g. artwork pages pass their own image);
+// falls back to the branded siteSettings.ogImage (set in Sanity 2026-06-05).
+const ogImage =
+	ogImageProp ||
+	(siteSettings?.ogImage
+		? urlFor(siteSettings.ogImage).width(1200).height(630).url()
+		: 'https://cdn.sanity.io/images/oqoqh3p3/production/abj-og-default.jpg');
+
+// BreadcrumbList JSON-LD on every non-home page, derived from the URL path.
+// Artwork detail pages hang off the Gallery hub; /gallery/subject|medium have
+// no index pages so those segments are skipped as crumbs.
+const SEGMENT_NAMES: Record<string, string> = {
+	about: 'The Story',
+	gallery: 'Gallery',
+	commissions: 'Commissions',
+	press: 'Press & Recognition',
+	shop: 'Shop',
+	contact: 'Contact',
+};
+const pathSegs = Astro.url.pathname.split('/').filter(Boolean);
+let crumbLd: object | null = null;
+if (pathSegs.length > 0) {
+	const items = [{ name: 'Home', item: 'https://artsbyjustin.com/' }];
+	let acc = '';
+	pathSegs.forEach((seg, i) => {
+		const isLast = i === pathSegs.length - 1;
+		acc += `/${seg}`;
+		if (!isLast && seg === 'artwork') {
+			items.push({ name: 'Gallery', item: 'https://artsbyjustin.com/gallery/' });
+			return;
+		}
+		if (!isLast && (seg === 'subject' || seg === 'medium')) return;
+		items.push({
+			name: isLast ? title : SEGMENT_NAMES[seg] || seg.replace(/-/g, ' '),
+			item: isLast ? canonicalUrl : `https://artsbyjustin.com${acc}/`,
+		});
+	});
+	crumbLd = {
+		'@context': 'https://schema.org',
+		'@type': 'BreadcrumbList',
+		itemListElement: items.map((c, i) => ({
+			'@type': 'ListItem',
+			position: i + 1,
+			name: c.name,
+			item: c.item,
+		})),
+	};
+}
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -316,6 +361,7 @@ const ogImage = siteSettings?.ogImage
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImage} />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  {crumbLd && <script type="application/ld+json" set:html={JSON.stringify(crumbLd)}></script>}
   <slot name="head" />
 
   <!-- Google Analytics GA4 — deferred until first user interaction to not block LCP -->

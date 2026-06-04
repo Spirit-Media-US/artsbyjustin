@@ -98,7 +98,15 @@ const getSection = (order: number) => aboutSections.find((s: any) => s.order ===
         "@type": "Person",
         "name": "Justin Keishing",
         "jobTitle": "Contemporary Artist",
-        "url": "https://artsbyjustin.com"
+        "url": "https://artsbyjustin.com",
+        "sameAs": [
+          "https://artsbyjustin.etsy.com",
+          "https://fineartamerica.com/profiles/justin-keishing",
+          "https://artmo.com/user/Artsbyjustin",
+          ...(siteSettings?.instagramUrl ? [siteSettings.instagramUrl] : []),
+          ...(siteSettings?.facebookUrl ? [siteSettings.facebookUrl] : []),
+          ...(siteSettings?.tiktokUrl ? [siteSettings.tiktokUrl] : [])
+        ]
       }
     })}></script>
   </Fragment>

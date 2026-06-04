@@ -1,41 +1,45 @@
 ---
-import Layout from '../../layouts/Layout.astro'
-import { getArtworkBySlug, getAllArtworkSlugs, getRelatedArtworks, urlFor } from '../../lib/sanity'
+import Layout from '../../layouts/Layout.astro';
+import { getAllArtworkSlugs, getArtworkBySlug, getRelatedArtworks, urlFor } from '../../lib/sanity';
 
 export async function getStaticPaths() {
-  const slugs = await getAllArtworkSlugs()
-  return slugs.map((s: any) => ({ params: { slug: s.slug } }))
+	const slugs = await getAllArtworkSlugs();
+	return slugs.map((s: any) => ({ params: { slug: s.slug } }));
 }
 
-const { slug } = Astro.params
-const artwork = await getArtworkBySlug(slug!)
-if (!artwork) return Astro.redirect('/gallery')
+const { slug } = Astro.params;
+const artwork = await getArtworkBySlug(slug!);
+if (!artwork) return Astro.redirect('/gallery');
 
-const related = artwork.category
-  ? await getRelatedArtworks(artwork.category, artwork._id)
-  : []
+const related = artwork.category ? await getRelatedArtworks(artwork.category, artwork._id) : [];
 
-const imageUrl = artwork.image ? urlFor(artwork.image).width(1400).format('webp').url() : ''
-const thumbUrl = artwork.image ? urlFor(artwork.image).width(400).format('webp').url() : ''
-const isSold = !!artwork.sold
-const isAvailable = !!artwork.available && !isSold
+const imageUrl = artwork.image ? urlFor(artwork.image).width(1400).format('webp').url() : '';
+const thumbUrl = artwork.image ? urlFor(artwork.image).width(400).format('webp').url() : '';
+const isSold = !!artwork.sold;
+const isAvailable = !!artwork.available && !isSold;
 const priceDisplay = isSold
-  ? 'Sold'
-  : artwork.price
-    ? `$${Number(artwork.price).toLocaleString()}.00`
-    : 'Inquire'
+	? 'Sold'
+	: artwork.price
+		? `$${Number(artwork.price).toLocaleString()}.00`
+		: 'Inquire';
 
 const ctaText = isSold
-  ? 'Commission Similar'
-  : artwork.price
-    ? 'Order This Piece'
-    : 'Inquire About This Piece'
-const ctaHref = isSold || !artwork.price ? '/commissions' : '/commissions'
+	? 'Commission Similar'
+	: artwork.price
+		? 'Order This Piece'
+		: 'Inquire About This Piece';
+const ctaHref = isSold || !artwork.price ? '/commissions' : '/commissions';
 
-const description = artwork.description || `${artwork.title} — original ${artwork.medium || 'artwork'} by Justin Keishing`
+const description =
+	artwork.description ||
+	`${artwork.title} — original ${artwork.medium || 'artwork'} by Justin Keishing`;
+// Social share image = the artwork itself (1200x630 crop), not the site default
+const ogImageUrl = artwork.image
+	? urlFor(artwork.image).width(1200).height(630).format('jpg').quality(80).url()
+	: undefined;
 ---
 
-<Layout title={artwork.title} description={description}>
+<Layout title={artwork.title} description={description} ogImage={ogImageUrl}>
   <Fragment slot="head">
     <meta property="og:type" content="product" />
     {imageUrl && <meta property="og:image" content={imageUrl} />}

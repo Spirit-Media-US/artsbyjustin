@@ -13,6 +13,15 @@ const {
 } = siteSettings;
 ---
 <Layout title="Contact" description={`Get in touch with ${artistName} about commissions, inquiries, and collaborations.`}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "ContactPage",
+      "name": "Contact — Arts by Justin",
+      "url": "https://artsbyjustin.com/contact/",
+      "about": { "@type": "Person", "name": "Justin Keishing", "jobTitle": "Visual Artist" }
+    })}></script>
+  </Fragment>
 
   <section class="contact-hero">
     <div class="hero-tag">

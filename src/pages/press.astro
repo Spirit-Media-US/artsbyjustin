@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getAwards, getArtworks, getPressFeatures, getSiteSettings, urlFor } from '../lib/sanity';
+import { getArtworks, getAwards, getPressFeatures, getSiteSettings, urlFor } from '../lib/sanity';
 
 const sanityAwards = await getAwards();
 const sanityPress = await getPressFeatures();
@@ -9,11 +9,11 @@ const allArtworks = await getArtworks();
 
 // Press/media photos from artwork collection
 const mediaPhotos = allArtworks
-  .filter((a: any) => a.imageType === 'press' && a.image)
-  .map((a: any) => ({
-    title: a.title || '',
-    imageUrl: urlFor(a.image).width(600).format('webp').url(),
-  }));
+	.filter((a: any) => a.imageType === 'press' && a.image)
+	.map((a: any) => ({
+		title: a.title || '',
+		imageUrl: urlFor(a.image).width(600).format('webp').url(),
+	}));
 
 // Minimal fallback awards data — primary data should come from Sanity CMS
 const fallbackAwards = [];
@@ -35,9 +35,11 @@ const defaultPressStats = {
 	internationalAwards: '1',
 	majorAwards: '3+',
 	pressFeatures: '4+',
-	congressionalRecognition: '1'
+	congressionalRecognition: '1',
 };
-const pressStats = siteSettings?.pressPageStats ? { ...defaultPressStats, ...siteSettings.pressPageStats } : defaultPressStats;
+const pressStats = siteSettings?.pressPageStats
+	? { ...defaultPressStats, ...siteSettings.pressPageStats }
+	: defaultPressStats;
 
 // Get hero image URL from siteSettings
 const heroImageUrl = siteSettings?.profilePhoto
@@ -54,13 +56,23 @@ const fallbackGalleryImages = [
 	'https://cdn.sanity.io/images/oqoqh3p3/production/206f139dbbdef97c494412f828b09b5e90c02426-3000x4000.jpg',
 	'https://cdn.sanity.io/images/oqoqh3p3/production/b43f0ad0aaa2fc715b9fc21c167ce61b2655b78e-3068x4096.jpg',
 	'https://cdn.sanity.io/images/oqoqh3p3/production/f3a9d25d94594823daa99b03f822163d2bb87403-2730x4096.jpg',
-	'https://cdn.sanity.io/images/oqoqh3p3/production/bd955a438c41cc596b4438c8eff37378f6c6f2ce-4096x2785.jpg'
+	'https://cdn.sanity.io/images/oqoqh3p3/production/bd955a438c41cc596b4438c8eff37378f6c6f2ce-4096x2785.jpg',
 ];
 
 // Use gallery images from Sanity if available, otherwise fall back
 const displayGalleryImages = galleryImages.length > 0 ? galleryImages : fallbackGalleryImages;
 ---
 <Layout title="Press & Recognition" description="Justin Keishing's awards, press features, and recognition — from Raleigh, NC to Florence, Italy.">
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Press & Recognition — Arts by Justin",
+      "url": "https://artsbyjustin.com/press/",
+      "description": "Justin Keishing's awards, press features, and recognition — from Raleigh, NC to Florence, Italy.",
+      "about": { "@type": "Person", "name": "Justin Keishing", "jobTitle": "Visual Artist" }
+    })}></script>
+  </Fragment>
 
 <!-- HERO -->
 <section class="hero">
