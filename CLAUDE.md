@@ -29,7 +29,28 @@ Then run: `git checkout dev && git pull origin dev`
 **Sanity Studio:** Embedded at artsbyjustin.com/studio/ (static build)
 **Infrastructure:** Deploy webhook wired, CORS origins configured, studio deployed
 
-## Status — as of 2026-04-19
+## Status — as of 2026-06-05
+
+### On dev, awaiting Kevin's merge to main (deploy requested)
+- **Hero video** — YouTube Short `mBxVxlrSfa4` muted loop replaces the painting image entirely; deferred injection (interaction/8s) with CSS gradient poster; fit/contain mode (Justin: cover looked stretched); iframe sized via inline styles (Astro-scoped CSS can't reach JS-injected elements)
+- **Gallery strip** — 3 columns / 3 tiles: the America 250 mural photos (uploaded to Sanity as artwork docs)
+- **Home story section** — new `siteSettings.homeAboutImage` field (magazine-spread photo); childhood photo now exclusive to /about
+- **SEO hardening (2026-06-05):**
+  - og:image was HTTP 400 sitewide → real 1200×630 in Sanity (`siteSettings.ogImage`) + per-artwork OG crops
+  - BreadcrumbList JSON-LD on all non-home pages (generated in Layout from URL path)
+  - Page-type JSON-LD: ContactPage / Service / WebPage on contact, commissions, press
+  - Person `sameAs`: Etsy + Fine Art America + ARTMO (IG/FB/TikTok URLs pending from Justin)
+  - www → apex 301 redirect rule on the CF zone (was serving 200 = duplicate content)
+  - Malformed DMARC (`p=none;p=reject;p=quarantine`) normalized to `v=DMARC1; p=none;` — raise after DKIM
+  - IndexNow key file `public/1e361ccb...txt` + `scripts/indexnow-ping.sh` — **run after merge to main**
+
+### Still Pending
+- **GSC + Bing Webmaster** — verify property under admin@spiritmedia.us, submit `sitemap-index.xml` (manual browser task, Bitwarden creds); then run `scripts/indexnow-ping.sh` post-merge
+- **DKIM** — Justin generates in his Google Workspace Admin (apps → Gmail → authenticate email), we add the TXT to the CF zone; then raise DMARC to `p=quarantine`
+- **Justin's Sanity Studio tasks** — fill `medium` fields, update categories, set `heroFeature` flags, upload profilePhoto in siteSettings, set IG/FB/TikTok URLs (feeds Person sameAs)
+- **Sanity Studio redeploy** — so Justin sees the new `homeAboutImage` field in the Studio UI
+
+## Previous status — 2026-04-19
 
 ### 100 Club — Wave 1 PSI Performance Pass (on dev, NOT yet merged to main)
 - **Baseline:** Mobile 64, Desktop 97
