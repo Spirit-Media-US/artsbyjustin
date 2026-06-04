@@ -48,6 +48,7 @@ Then run: `git checkout dev && git pull origin dev`
 - **Blocker:** Mobile LCP stable at ~2.9-3.0s in PSI slow-4G emulation; need to cross 2.5s for mobile 98+. Likely needs: hero image served from R2 (not Sanity CDN) or even smaller mobile variant. Deferred to a follow-up wave.
 
 ### Completed & Merged to Main
+- **🚀 LIVE on artsbyjustin.com (2026-06-04)** — domain cut over from GoDaddy DNS/WP Engine to Cloudflare. Zone `27d3ffbd680fcb0735d51b7e10a3df09` on the SMP CF account; NS = alexandra/bart.ns.cloudflare.com (changed in Justin's personal GoDaddy via delegate access — SMP GoDaddy API key has NO access to this domain). apex+www → Pages project `artsbyjustin` (main). Replicated to CF: Google MX ×5, SPF, 4 google-site-verification TXT, DMARC, `crm`→GHL funnel (DNS-only), `email.replies`→Mailgun (DNS-only). SMP zone settings + bot management applied per cf-zone-settings.md
 - **Full site redesign** — dark/gold theme replacing cream/rust
 - **Layout.astro** — global dark theme foundation
 - **Home page** — hero with auto-rotating slideshow, gallery strip, featured masonry, 4-category grid, press spotlight, 4-step commissions, stats band, testimonials, shop outlet cards, CTA
@@ -66,7 +67,7 @@ Then run: `git checkout dev && git pull origin dev`
 ### Still Pending
 - **Portfolio page: Sanity images not rendering** — `urlFor()` never called; 336 artworks have images but aren't wired to the grid. Fix needed: Option B — fetch all artworks from Sanity, pass to client script, use `urlFor()` for images, category filtering (skip series filtering for now)
 - **Justin's Sanity Studio tasks** — fill medium fields on artworks, update categories to: Sports & Motion, Portraits & Identity, Faith & Spirit, Abstract & Mixed Media; set `heroFeature: true` on hero slideshow artworks; upload profilePhoto in siteSettings
-- **Custom domain** — artsbyjustin.com not connected in Cloudflare Pages yet (waiting on Justin's review before launch)
+- **DKIM check** — pre-cutover, `google._domainkey.artsbyjustin.com` was empty; confirm with Justin whether his Google Workspace DKIM uses a custom selector and add it to the CF zone. Also: live DMARC was replicated as-is but is malformed (`v=DMARC1;p=none;p=reject;p=quarantine`) — clean up with Justin's OK
 
 ## Artwork Rename Script
 
