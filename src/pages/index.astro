@@ -31,24 +31,16 @@ const artworks = rawArtworks.map((a: any) => ({
 		a.imageUrlThumb || (a.image ? urlFor(a.image).width(480).format('webp').quality(55).url() : ''),
 }));
 
-const heroArtworks = artworks.filter((a) => a.heroFeature && a.imageUrl).slice(0, 8);
-const firstHero = heroArtworks[0];
-// Hero LCP — served from R2 (same origin as fonts, stable URL, 103 Early Hints compatible)
-const heroDesktopUrl = 'https://assets.spiritmediapublishing.com/artsbyjustin/hero-desktop.webp';
-const heroTabletUrl = 'https://assets.spiritmediapublishing.com/artsbyjustin/hero-tablet.webp';
-// hero-mobile-v2.webp is a 480w q=70 re-encode of hero-mobile.webp (128KB → 63KB).
-const heroMobileUrl = 'https://assets.spiritmediapublishing.com/artsbyjustin/hero-mobile-v2.webp';
 const featuredArtworks = (() => {
 	const f = artworks.filter((a) => a.featured);
 	return f.length >= 3 ? f.slice(0, 5) : artworks.slice(0, 5);
 })();
-// Gallery strip — prefer the first 5 artworks that actually have an image.
-// Prevents "title but no image" tiles when the first 5 in Sanity lack assets.
-// Connected to Sanity: as soon as an editor uploads images to any artwork,
-// those appear automatically (no code change needed).
+// Gallery strip — 3 tiles (Justin's request, 2026-06-04). Prefer the first 3
+// artworks that actually have an image. Connected to Sanity: editors reorder
+// via the `order` field in Studio (no code change needed).
 const artworksWithImages = artworks.filter((a) => a.imageUrlThumb || a.imageUrl);
 const stripArtworks =
-	artworksWithImages.length >= 5 ? artworksWithImages.slice(0, 5) : artworks.slice(0, 5);
+	artworksWithImages.length >= 3 ? artworksWithImages.slice(0, 3) : artworks.slice(0, 3);
 
 // Fetch siteSettings first
 let siteSettings: any = {};
@@ -83,9 +75,6 @@ const categories = CATEGORY_DEFS.map((cat) => ({
 	count: artworks.filter((a) => a.category === cat.name).length,
 	artwork: artworks.find((a) => a.category === cat.name) || null,
 }));
-
-// Pass artworks as JSON for client-side hero rotation
-const artworksJson = JSON.stringify(heroArtworks);
 
 // Extract values from siteSettings with sensible defaults
 const location = siteSettings?.location || 'Raleigh, NC';
@@ -155,18 +144,9 @@ const homeStats = siteSettings?.homePageStats
 ---
 <Layout title={tagline} description={bio || `Bold, expressive, spirit-led art created in ${location} — collected around the world. Original acrylic & mixed media works by ${artistName}.`}>
   <Fragment slot="head">
-    {/* Hero painting is hidden on mobile (<1024px) — see §6 text-first LCP
-        pattern in performance-gate.md. Preload gated to desktop so PSI mobile
-        never fetches the hero image. */}
-    <link
-      rel="preload"
-      as="image"
-      href={heroDesktopUrl}
-      imagesrcset={`${heroTabletUrl} 960w, ${heroDesktopUrl} 1200w`}
-      imagesizes="835px"
-      media="(min-width: 1024px)"
-      fetchpriority="high"
-    />
+    {/* No hero image preload — the hero visual is the deferred YouTube video
+        (poster is a pure-CSS gradient), so the LCP element is the H1 text on
+        every viewport. §6 text-first LCP pattern in performance-gate.md. */}
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Organization",
@@ -183,31 +163,13 @@ const homeStats = siteSettings?.homePageStats
   <!-- HERO -->
   <section class="hero">
     <div class="hero-painting" id="heroPainting">
-      {/* <picture> with a media-gated <source> for desktop and a 1-byte
-          transparent GIF fallback img. Mobile browsers see no matching
-          <source> and use the transparent fallback (zero network bytes).
-          CSS display:none on .hero-painting hides the placeholder on mobile. */}
-      <picture>
-        <source
-          media="(min-width: 1024px)"
-          srcset={`${heroTabletUrl} 960w, ${heroDesktopUrl} 1200w`}
-          sizes="835px"
-        />
-        <img
-          class="hero-bg hero-img"
-          id="heroImg"
-          src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-          width="1200"
-          height="858"
-          alt={firstHero?.title || 'Featured artwork by Justin Keishing'}
-          fetchpriority="high"
-          decoding="async"
-        />
-      </picture>
-      {/* Hero video (YouTube Short, muted loop). Iframe is injected on first
-          user interaction (8s fallback) per the trait-5 third-party-JS defer
-          pattern — the hero image above acts as the poster until then, so
-          LCP and the 100 Club mobile score are unaffected. */}
+      {/* Hero video (YouTube Short, muted loop) — replaces the old painting
+          image entirely (Justin's request, 2026-06-04). The iframe is
+          injected on first user interaction (8s fallback) per the trait-5
+          third-party-JS defer pattern; until then a zero-byte CSS gradient
+          poster fills the panel, so the LCP element is the H1 text on every
+          viewport and the 100 Club score is unaffected. */}
+      <div class="hero-bg hero-poster"></div>
       <div class="hero-video" id="heroVideo"></div>
     </div>
     <div class="hero-fade"></div>
@@ -223,7 +185,6 @@ const homeStats = siteSettings?.homePageStats
         <a href="/about" class="btn-ghost">My Story</a>
       </div>
     </div>
-    <div class="hero-caption" id="heroCaption">{heroArtworks[0] ? `${heroArtworks[0].title} · ${heroArtworks[0].medium}` : ''}</div>
     <div class="scroll-hint">
       <div class="scroll-line"></div>
       <span>Scroll</span>
@@ -480,8 +441,6 @@ const homeStats = siteSettings?.homePageStats
           slot.classList.add('is-live');
           painting.classList.add('has-video');
           if (hero) hero.classList.add('has-video');
-          var caption = document.getElementById('heroCaption');
-          if (caption) caption.textContent = '';
         });
         slot.appendChild(iframe);
       }
@@ -505,49 +464,13 @@ const homeStats = siteSettings?.homePageStats
   </noscript>
 </Layout>
 
-<script define:vars={{ artworksJson }}>
-  const heroArtworks = JSON.parse(artworksJson);
-  if (heroArtworks.length > 1) {
-    let idx = 1;
-    const wrap = document.getElementById('heroPainting');
-    const caption = document.getElementById('heroCaption');
-    setInterval(() => {
-      // Video hero took over — stop rotating the painting (it sits underneath).
-      if (wrap?.classList.contains('has-video')) return;
-      const a = heroArtworks[idx % heroArtworks.length];
-      if (wrap) {
-        const bg = wrap.querySelector('.hero-bg');
-        if (bg) {
-          if (bg.tagName === 'IMG') {
-            if (a.imageUrl) {
-              if (a.imageUrlMobile) {
-                const tablet = a.imageUrlTablet || a.imageUrl;
-                bg.srcset = `${a.imageUrlMobile} 640w, ${tablet} 960w, ${a.imageUrl} 1200w`;
-              }
-              bg.src = a.imageUrlMobile || a.imageUrl;
-              bg.alt = a.title || '';
-            }
-          } else {
-            if (a.imageUrl) {
-              bg.style.background = `url('${a.imageUrl}') center/cover no-repeat`;
-            } else {
-              bg.style.background = a.colorGradient || '#111';
-            }
-          }
-        }
-      }
-      if (caption) caption.textContent = `${a.title} · ${a.medium}`;
-      idx++;
-    }, 5000);
-  }
-</script>
-
 <style>
   /* HERO */
   .hero { height:100vh; position:relative; display:flex; align-items:center; overflow:hidden; }
   .hero-painting { position:absolute; right:0; top:0; bottom:0; width:58%; overflow:hidden; }
   .hero-bg { position:absolute; inset:0; filter:brightness(0.75); transition:background 0.8s, opacity 0.8s; }
-  .hero-img { width:100%; height:100%; object-fit:cover; object-position:center; }
+  /* Zero-byte CSS poster shown until the deferred video iframe loads. */
+  .hero-poster { background:linear-gradient(135deg,#0a0a0a 0%,#1a1400 45%,#2a2000 60%,#0a0a0a 100%); }
   .hero-fade { position:absolute; inset:0; background:linear-gradient(to right,#080808 30%,rgba(8,8,8,0.5) 60%,rgba(8,8,8,0.1) 100%); }
   /* Hero video — 9:16 Short, scaled to cover the painting panel. Fades in
      over the poster image once the iframe has loaded. pointer-events:none
@@ -568,8 +491,8 @@ const homeStats = siteSettings?.homePageStats
   .scroll-line { width:40px; height:1px; background:var(--gold); animation:grow 2s ease-in-out infinite; }
   @keyframes grow { 0%,100%{width:40px;opacity:0.4;} 50%{width:65px;opacity:1;} }
 
-  /* STRIP */
-  .strip { display:grid; grid-template-columns:repeat(5,1fr); height:260px; gap:2px; }
+  /* STRIP — 3 tiles, one per mural photo (Justin's request, 2026-06-04) */
+  .strip { display:grid; grid-template-columns:repeat(3,1fr); height:300px; gap:2px; }
   .strip-item { overflow:hidden; position:relative; cursor:pointer; }
   .strip-bg { width:100%; height:100%; transition:transform 0.6s,filter 0.4s; filter:brightness(0.65) saturate(0.8); }
   .strip-item:hover .strip-bg { transform:scale(1.08); filter:brightness(0.9) saturate(1.2); }
@@ -701,8 +624,7 @@ const homeStats = siteSettings?.homePageStats
   }
   @media (max-width:768px) {
     .hero-content { max-width:100%; padding:0 2rem; }
-    .strip { grid-template-columns:repeat(3,1fr); height:180px; }
-    .strip-item:nth-child(4), .strip-item:nth-child(5) { display:none; }
+    .strip { height:180px; }
     .about { grid-template-columns:1fr; }
     .about-img { min-height:300px; }
     .about-body { padding:3rem 2rem; }
@@ -714,8 +636,6 @@ const homeStats = siteSettings?.homePageStats
     .works, .cats, .mag, .comm, .stats-band, .testi, .shop, .cta-section { padding-inline:1.5rem; }
   }
   @media (max-width:480px) {
-    .strip { grid-template-columns:repeat(2,1fr); }
-    .strip-item:nth-child(3) { display:none; }
     .cat-grid { grid-template-columns:1fr 1fr; }
     .steps { grid-template-columns:1fr; }
     .hero-btns { flex-direction:column; }
