@@ -439,11 +439,13 @@ const homeStats = siteSettings?.homePageStats
         iframe.setAttribute('frameborder', '0');
         /* Sizing must be inline — Astro's scoped <style> can't match a
            JS-injected element (no data-astro-cid attribute), which left the
-           iframe at the 300x150 default. 9:16 Short scaled to cover the
-           panel at 115% so YouTube's title bar + watermark crop offscreen. */
+           iframe at the 300x150 default. 9:16 Short FIT (contained) inside
+           the panel — whole video visible, no crop/zoom; the gradient
+           poster fills the space around it. (Justin: cover mode looked
+           stretched, 2026-06-05.) */
         iframe.style.cssText =
           'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);' +
-          'width:max(115%, 64.7vh);aspect-ratio:9/16;height:auto;border:0;';
+          'width:min(100%, 56.25vh);aspect-ratio:9/16;height:auto;border:0;';
         iframe.addEventListener('load', function () {
           slot.classList.add('is-live');
           painting.classList.add('has-video');
