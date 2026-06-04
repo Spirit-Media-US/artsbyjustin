@@ -83,9 +83,13 @@ const artistName = siteSettings?.artistName || 'Justin';
 const tagline = siteSettings?.tagline || 'Art With a Purpose';
 const bio = siteSettings?.bio || '';
 
-// About section image from Sanity (with portrait artwork fallback)
-const aboutImageUrl = siteSettings?.aboutPortraitImage
-	? urlFor(siteSettings.aboutPortraitImage).width(800).url()
+// About section image from Sanity. Home page uses its own field
+// (homeAboutImage — the magazine spread) so the childhood photo stays
+// exclusive to the About/story page (Justin's request, 2026-06-05).
+// Falls back to aboutPortraitImage, then the portrait-tagged artwork.
+const homeAboutSource = siteSettings?.homeAboutImage || siteSettings?.aboutPortraitImage;
+const aboutImageUrl = homeAboutSource
+	? urlFor(homeAboutSource).width(800).format('webp').quality(75).url()
 	: (() => {
 			const portrait = rawArtworks.find((a: any) => a.imageType === 'portrait' && a.image);
 			return portrait ? urlFor(portrait.image).width(800).format('webp').url() : null;

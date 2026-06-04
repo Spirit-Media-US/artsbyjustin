@@ -31,6 +31,7 @@ export async function getSiteSettings() {
     logo,
     galleryImages,
     aboutPortraitImage,
+    homeAboutImage,
     commissionInfo,
     commissionTimeline,
     commissionsPerSeason,
