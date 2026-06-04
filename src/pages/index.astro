@@ -437,6 +437,13 @@ const homeStats = siteSettings?.homePageStats
         iframe.title = 'Arts by Justin — featured video';
         iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
         iframe.setAttribute('frameborder', '0');
+        /* Sizing must be inline — Astro's scoped <style> can't match a
+           JS-injected element (no data-astro-cid attribute), which left the
+           iframe at the 300x150 default. 9:16 Short scaled to cover the
+           panel at 115% so YouTube's title bar + watermark crop offscreen. */
+        iframe.style.cssText =
+          'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);' +
+          'width:max(115%, 64.7vh);aspect-ratio:9/16;height:auto;border:0;';
         iframe.addEventListener('load', function () {
           slot.classList.add('is-live');
           painting.classList.add('has-video');
@@ -477,7 +484,8 @@ const homeStats = siteSettings?.homePageStats
      keeps it decorative (no YouTube UI) and the CTA buttons clickable. */
   .hero-video { position:absolute; inset:0; z-index:1; overflow:hidden; opacity:0; transition:opacity 1.2s ease; pointer-events:none; }
   .hero-video.is-live { opacity:1; }
-  .hero-video iframe { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:max(100%, 56.25vh); aspect-ratio:9/16; height:auto; min-height:100%; border:0; }
+  /* iframe sizing lives inline in the injection script — Astro-scoped rules
+     can't reach JS-injected elements (no data-astro-cid attribute). */
   .hero-content { position:relative; z-index:2; padding:0 3rem; max-width:600px; }
   .hero-eyebrow { display:inline-flex; align-items:center; gap:0.8rem; margin-bottom:2rem; }
   .hero-line { width:30px; height:1px; background:var(--gold); }
