@@ -42,7 +42,7 @@ const ogImageUrl = artwork.image
 <Layout title={artwork.title} description={description} ogImage={ogImageUrl}>
   <Fragment slot="head">
     <meta property="og:type" content="product" />
-    {imageUrl && <meta property="og:image" content={imageUrl} />}
+    {/* og:image comes from Layout via the ogImage prop (1200x630 crop) */}
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Product",
