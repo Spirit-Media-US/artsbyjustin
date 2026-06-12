@@ -87,6 +87,14 @@ export default {
 			options: { hotspot: true },
 		},
 		{
+			name: 'homeAboutImage',
+			title: 'Home Page — Story Section Image',
+			type: 'image',
+			description:
+				'Image for the "From Poverty to Fine Art" section on the home page. Falls back to the About Page Portrait Image if empty.',
+			options: { hotspot: true },
+		},
+		{
 			name: 'commissionInfo',
 			title: 'Commission Information',
 			type: 'text',

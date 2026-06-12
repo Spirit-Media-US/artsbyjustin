@@ -1,19 +1,31 @@
 ---
-import Layout from '../layouts/Layout.astro';
 import MailtoLink from '../components/MailtoLink.astro';
+import Layout from '../layouts/Layout.astro';
 import { getSiteSettings } from '../lib/sanity';
 
 const siteSettings = await getSiteSettings();
 const {
-  artistName = 'Justin',
-  email = '',
-  instagramUrl = '',
-  commissionInfo = '',
-  commissionTimeline = '8–12 weeks',
-  commissionsPerSeason = '2–3'
+	artistName = 'Justin',
+	email = '',
+	instagramUrl = '',
+	commissionInfo = '',
+	commissionTimeline = '8–12 weeks',
+	commissionsPerSeason = '2–3',
 } = siteSettings;
 ---
 <Layout title="Commissions" description={`Commission custom work from ${artistName}. Learn about the process and get in touch.`}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Custom Art Commissions",
+      "serviceType": "Commissioned Artwork",
+      "url": "https://artsbyjustin.com/commissions/",
+      "description": `Commission custom acrylic, mixed media, resin, and mural work from ${artistName}. Typical timeline ${commissionTimeline}.`,
+      "provider": { "@type": "Person", "name": "Justin Keishing", "jobTitle": "Visual Artist", "url": "https://artsbyjustin.com/about/" },
+      "areaServed": "Worldwide"
+    })}></script>
+  </Fragment>
 
   <section class="comm-hero">
     <div class="comm-hero-tag">

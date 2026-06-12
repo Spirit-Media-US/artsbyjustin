@@ -29,7 +29,28 @@ Then run: `git checkout dev && git pull origin dev`
 **Sanity Studio:** Embedded at artsbyjustin.com/studio/ (static build)
 **Infrastructure:** Deploy webhook wired, CORS origins configured, studio deployed
 
-## Status — as of 2026-04-19
+## Status — as of 2026-06-05
+
+### On dev, awaiting Kevin's merge to main (deploy requested)
+- **Hero video** — YouTube Short `mBxVxlrSfa4` muted loop replaces the painting image entirely; deferred injection (interaction/8s) with CSS gradient poster; fit/contain mode (Justin: cover looked stretched); iframe sized via inline styles (Astro-scoped CSS can't reach JS-injected elements)
+- **Gallery strip** — 3 columns / 3 tiles: the America 250 mural photos (uploaded to Sanity as artwork docs)
+- **Home story section** — new `siteSettings.homeAboutImage` field (magazine-spread photo); childhood photo now exclusive to /about
+- **SEO hardening (2026-06-05):**
+  - og:image was HTTP 400 sitewide → real 1200×630 in Sanity (`siteSettings.ogImage`) + per-artwork OG crops
+  - BreadcrumbList JSON-LD on all non-home pages (generated in Layout from URL path)
+  - Page-type JSON-LD: ContactPage / Service / WebPage on contact, commissions, press
+  - Person `sameAs`: Etsy + Fine Art America + ARTMO (IG/FB/TikTok URLs pending from Justin)
+  - www → apex 301 redirect rule on the CF zone (was serving 200 = duplicate content)
+  - Malformed DMARC (`p=none;p=reject;p=quarantine`) normalized to `v=DMARC1; p=none;` — raise after DKIM
+  - IndexNow key file `public/1e361ccb...txt` + `scripts/indexnow-ping.sh` — **run after merge to main**
+
+### Still Pending
+- **GSC + Bing Webmaster** — verify property under admin@spiritmedia.us, submit `sitemap-index.xml` (manual browser task, Bitwarden creds); then run `scripts/indexnow-ping.sh` post-merge
+- **DKIM** — Justin generates in his Google Workspace Admin (apps → Gmail → authenticate email), we add the TXT to the CF zone; then raise DMARC to `p=quarantine`
+- **Justin's Sanity Studio tasks** — fill `medium` fields, update categories, set `heroFeature` flags, upload profilePhoto in siteSettings, set IG/FB/TikTok URLs (feeds Person sameAs)
+- **Sanity Studio redeploy** — so Justin sees the new `homeAboutImage` field in the Studio UI
+
+## Previous status — 2026-04-19
 
 ### 100 Club — Wave 1 PSI Performance Pass (on dev, NOT yet merged to main)
 - **Baseline:** Mobile 64, Desktop 97
@@ -48,6 +69,7 @@ Then run: `git checkout dev && git pull origin dev`
 - **Blocker:** Mobile LCP stable at ~2.9-3.0s in PSI slow-4G emulation; need to cross 2.5s for mobile 98+. Likely needs: hero image served from R2 (not Sanity CDN) or even smaller mobile variant. Deferred to a follow-up wave.
 
 ### Completed & Merged to Main
+- **🚀 LIVE on artsbyjustin.com (2026-06-04)** — domain cut over from GoDaddy DNS/WP Engine to Cloudflare. Zone `27d3ffbd680fcb0735d51b7e10a3df09` on the SMP CF account; NS = alexandra/bart.ns.cloudflare.com (changed in Justin's personal GoDaddy via delegate access — SMP GoDaddy API key has NO access to this domain). apex+www → Pages project `artsbyjustin` (main). Replicated to CF: Google MX ×5, SPF, 4 google-site-verification TXT, DMARC, `crm`→GHL funnel (DNS-only), `email.replies`→Mailgun (DNS-only). SMP zone settings + bot management applied per cf-zone-settings.md
 - **Full site redesign** — dark/gold theme replacing cream/rust
 - **Layout.astro** — global dark theme foundation
 - **Home page** — hero with auto-rotating slideshow, gallery strip, featured masonry, 4-category grid, press spotlight, 4-step commissions, stats band, testimonials, shop outlet cards, CTA
@@ -66,7 +88,7 @@ Then run: `git checkout dev && git pull origin dev`
 ### Still Pending
 - **Portfolio page: Sanity images not rendering** — `urlFor()` never called; 336 artworks have images but aren't wired to the grid. Fix needed: Option B — fetch all artworks from Sanity, pass to client script, use `urlFor()` for images, category filtering (skip series filtering for now)
 - **Justin's Sanity Studio tasks** — fill medium fields on artworks, update categories to: Sports & Motion, Portraits & Identity, Faith & Spirit, Abstract & Mixed Media; set `heroFeature: true` on hero slideshow artworks; upload profilePhoto in siteSettings
-- **Custom domain** — artsbyjustin.com not connected in Cloudflare Pages yet (waiting on Justin's review before launch)
+- **DKIM check** — pre-cutover, `google._domainkey.artsbyjustin.com` was empty; confirm with Justin whether his Google Workspace DKIM uses a custom selector and add it to the CF zone. Also: live DMARC was replicated as-is but is malformed (`v=DMARC1;p=none;p=reject;p=quarantine`) — clean up with Justin's OK
 
 ## Artwork Rename Script
 
